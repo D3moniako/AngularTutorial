@@ -1,0 +1,38 @@
+.cerchioVerde , .cerchioRosso{
+width:10px;
+height:10px;
+border-radius: 50% !important;
+}
+
+
+
+
+.cerchioVerde{
+  background-color: green ;
+
+}
+
+
+.cerchioRosso{
+  background-color: red ;
+
+}
+.cerchio{
+  width:10px;
+  height:10px;
+  border-radius: 50% !important;
+  background-color:blue
+  }
+
+.cerchioOnline{
+  background-color: green;
+  color:white
+}
+.cerchioOffline{
+  background-color: red;
+  color:black;
+}
+
+.squadrato{
+  border-radius: 0%;
+}
