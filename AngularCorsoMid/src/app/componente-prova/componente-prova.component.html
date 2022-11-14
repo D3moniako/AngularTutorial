@@ -11,7 +11,7 @@
     <p>{{testo}}</p>
     <p> Ciao {{ numero>0 ?primoNome: secondoNome}}, string interpolation con un operatore ternario numero>0 ?primoNome: secondoNome</p>
   </mat-card-content>
-  
+
   <mat-card-actions>
     <button mat-button>LIKE</button>
     <button mat-button>SHARE</button>
@@ -24,3 +24,16 @@
                                                                              da variabili typescript che contengono lo stato
   -->
 </div>
+
+
+<div  *ngFor="let persona of data ;">
+  <p  [ngStyle]="{color:persona.color}">{{persona.nome}} {{persona.cognome}}</p>
+<!-- ngstyle dentro[] perchè è un propriety binding, apro oggetto {} e metto chiave : valore,
+   se valore preso da ts allora senza '' essendo una variabile,
+  la chaive è la proprietà css in questo caso color -->
+</div>
+
+<!--Passaggio dati da componente figlio a padre-->
+
+<button (click)="mandaDati()">Manda dati al parente</button>
+

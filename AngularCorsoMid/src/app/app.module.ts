@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import{FormsModule} from '@angular/forms';
-
-// componenti dell'applicativo//
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ComponenteProvaComponent } from './componente-prova/componente-prova.component';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSliderModule } from '@angular/material/slider'; // uso angular material che è framework css di angular
                                                              //MatSliderModule l'ho aggiungo cosi uso angular material per usare componenti prefatti
@@ -15,12 +11,13 @@ import { MatSliderModule } from '@angular/material/slider'; // uso angular mater
 import { MatCardModule } from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
-
-
+import{FormsModule} from '@angular/forms';
+import { HigelightDirective } from './direttive/higelight.directive';
 @NgModule({
   declarations: [
     AppComponent,
-    ComponenteProvaComponent
+    ComponenteProvaComponent,
+    HigelightDirective
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 
 @Component({ // il mio decoratore che fa diventare la classe di tipo component , gli passo un oggetto
   selector: 'app-root', // oggetto ha prima chiave selettore , che si riferisce a un conteiner html
@@ -6,11 +6,46 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css'] // e questo stile
 })
 export class AppComponent { // qui invece c'è la logica del mio template
-  title = 'AngularCorsoMid'; // title verrà richiamato tramite binding nell'html
+
+                /////VIEW_CHILD E VARIABILI DI TEMPLATE
+  /////VOGLIO PRENDERE I DATI DA UN ELEMNTO HTML SENZA CREARE NEL TS UN VALORE PER OGNI VARIABILE, ESEMPIO SE NEL FORM HO TANTI CAMPI
+  ///// CON NGONIT DOVREI CREARE TANTE VARIABILI, MENTRE CON
+
+ @ViewChild('inputSaluti') inputSaluti!:ElementRef<HTMLInputElement>;// Gli dico che mi arriverà un figlio dall'html di nome inputSaluti che nel ts gli do nome inputSaluti e tipo ElementRef, con ! gli dico che non sarà mai
+
+title:string="";
+VisibileBoolen:boolean=true;
+//////////
+  primoCaso:boolean=true; // variabili usate con ng-module e variabili
+  secondoCaso:boolean=false;
+
+persone=[ // oggetto per spiegare ngFor e PASSAGGIO DI VARIABILI DA COMPONENTE GENITORE A FIGLIO
+  {nome:"luca",cognome:"rossi",isOnline:false,color:"red"},
+  {nome:"marco",cognome:"verdi",isOnline:true,color:"green"},
+  {nome:"anna",cognome:"gialli",isOnline:false,color:"yellow"},
+  {nome:"pino",cognome:"neri",isOnline:true,color:"black"}
+]
+
+  numero:number=5;// variabile per testare ng switch
+
+  colori=[
+    {scelto:"green"},
+    {scelto:"red"},
+    {scelto:"grey"},
+    {scelto:"blue"}
+  ]
+
 
 
   onClick():void{   // questa funzione è passata ad un evento con l'event binding evento tra parentesi () =" metodo che gli passo da typescript  (click)="onclick"
     console.log('hai cliccato il bottone del event binding');
+
+this.persone=[ // metodo usato nell'on change,cambia i valori, all'azionarsi dell'evento
+{nome:"ciao",cognome:"rossi",isOnline:false,color:"red"},
+{nome:"questoe",cognome:"verdi",isOnline:true,color:"green"},
+{nome:"onchange",cognome:"gialli",isOnline:false,color:"yellow"},
+{nome:"applicato",cognome:"neri",isOnline:true,color:"black"}
+]
   } // ad un evento in html si attiva questo metodo che printa a console una qualcosa
 
   onClickTitolo(e:any):void {// prende in ingresso una variabile di tipo qualsiasi che printa all'innescarsi di unn evento su html
@@ -48,6 +83,12 @@ modificaTutto(evento:Event){// in questo caso ho legato l'even binding con la st
 
   this.title="ho cliccato sul bottone"
 }
+
+onRiceviDati(value:string):void {// in questo caso parte una volta ricevuti i dati dal figlio
+  console.log(value)
+
+}
+
 }
 
 
