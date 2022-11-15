@@ -1,0 +1,146 @@
+<!-- <!-- <app-componente-prova></app-componente-prova> posso richiamare nel mio componente principale  app.coponent.html gli altri componenti da visualizzare
+                                                 e a loro volta posso comporre pagine con componenti -->
+
+<button mat-raised-button color="primary" (click)="onClick()">Event binding</button> / <!-- con angular NON USO GLI EVENT LISTENER-->
+
+<button mat-raised-button color="primary" (click)="onClickTitolo(this)">Event binding</button> / <!-- passo una variabile che con this è l'intero componente app.component.ts-->
+
+<button mat-raised-button color="primary" (click)="onClickTitolo(this.title)">VariabileComponente</button>
+<!-- se nel ts avessi messo come argomento della f onClickTitolo
+  un altra funzione che mi tornava qualcosa allora avrei potuto passare anche una funzione con this
+-->
+
+  <mat-form-field class="example-full-width" appearance="fill">
+    <mat-label>Message</mat-label>
+    <input matInput #message maxlength="256" placeholder="" (input)="onClickInput($event)" (input)="modificaTitolo($event)"> <!--sta volta come variabile gli passo una con dollaro, che sono VARIABILI DI ANGULAR-->
+  </mat-form-field>
+  <h1>{{title}}</h1>
+  <!-- passandogli $event lui all'evento di input farà partire la funzione di onclicktitolo che mi printa ciò che gli passo
+  in questo caso i dati creati dalla generazione dell'evento , Un dato interessante dell'event è il VALUE!!!
+  presente nel TARGET!!!
+ESEMPI USO
+posso usare quel value in realtime facendo ricerca tra i dati che ho , nel frattempo che lui scrive, prima che lui mandi il form
+  -->
+
+<!----------------------------------------------------ESEMPIO 2WAYBINDING BANANA IN DE BOX----------------------------------------------------->
+<!-------------------------------------Si dice cosi perchè mischio l'event binding con() e il proprety binding[], ma internamente uso NGmodule -------------------------------------------------->
+
+<button mat-raised-button color="primary" (click)="modificaTutto($event)">VariabileComponente</button>
+<mat-form-field class="example-full-width" appearance="fill">
+  <mat-label>Message</mat-label>
+  <input matInput #message maxlength="256" placeholder="cambia" [(ngModel)]="title"> <!--sta volta come variabile gli passo una con dollaro, che sono VARIABILI DI ANGULAR-->
+</mat-form-field>
+<h1>{{title}}</h1>
+                                                      <!--*ngIf è una direttiva strutturale di angular lo si nota dall'asterisco-->
+                                                      <!--LE DIRETTIVE STRUTTURALI ELIMINANO E AGGIUNGO ELEMENTI AL DOM !!!-->
+
+ <p *ngIf="!VisibileBoolen"> visibileboolean  di defaul vale true , negandola false allora non mostra componente  </p>  <!-- la condizione si mette all'interno  delle "" e ci passo una variabidi default le o altro-->
+
+ <p *ngIf="VisibileBoolen"> visibile di default è true allora mostra componente</p> <!--QUESTI DUE SONO COME UN IF ELSE MA SPEZZATI-->
+
+
+ <!-------------------------------------------------------------------Template variable e <ng-module> ----------------------------------------------->
+
+ <!-----------------------------------------nell'ng if se verifico la prima condizione allpra mostra contenuto(o meglio crea)
+                                            altrimenti imposta una variabile come false che passo a un ng-template con #nomevariabile
+                                            i componenti contenuti in questo <ng-template> è come avessero un ngif con condizione a false!!!
+                                            quindi non sono mostrati(distrutti)
+                                            -->
+
+ <p *ngIf="!VisibileBoolen; else variabTemplate ">variabile template permette di mostrare il div sotto condizione<p>
+  <ng-template #variabTemplate>        <!--basta mettere un ! per far si che sia visibile o no, o qualcosa che faccia si che lo neghi esempio una funzione dipendente da un evento che nega l'if-->
+  <p>Non è visibile</p>
+  </ng-template>
+
+
+
+  <!-- metodo migliore  a livello di lettura
+       metto un ng-template che tramite due variavili si riferisce a due div contenuti in un ng-template
+       se  -->
+
+
+  <ng-template *ngIf="VisibileBoolen; then primoCaso else secondoCaso " >    </ng-template>
+
+    <ng-template #primoCaso>
+    <p>sono visibile</p>
+    </ng-template>
+
+    <ng-template #secondoCaso>
+    <p> non sono visibile</p>
+  </ng-template>
+
+<div *ngFor="let persona of persone ;index as indice">
+<p  *ngIf="persona.isOnline" class="cerchioVerde"></p>
+  <p>
+    Sono online !!! scrivimi pure,mi presento il mio nome e  <strong>{{persona.nome.toUpperCase()}} {{persona.cognome.toUpperCase() }}</strong> e sono il numero <mark >{{indice}}</mark>
+  </p>
+</div> <!-- crea una variabile persona per ciclare oggetto persone
+ ora posso usare la variabile creata con i suoi elementi che verrà ciclata-->
+
+
+<!-----------------------------NGSWITCH non è strutturale!!!! mentre *ngSwitchCase è strutturale -------------------------------------->
+
+
+
+<div  [ngSwitch]="numero" class="cerchioRosso">
+  <p *ngSwitchCase="1" >geografia</p>
+  <p *ngSwitchCase="2">storia</p> <!-- se il valore dello switchcase combacia con il valore di numero allora si mostrerà il contenuto di quel div-->
+  <p *ngSwitchCase="3">inglese</p><!--  se nessuno dei casi rispecchia il valore allora si passa al caso di default-->
+  <p *ngSwitchCase="4">diritto</p>
+  <p *ngSwitchCase="5">economia</p>
+  <p *ngSwitchDefault>default</p>
+
+</div>
+
+<!------------------------------------------DIRITTIVE CONDIZIONALI sono dentro proprietybinding [] ------------------------------------->
+<!-------------------------------------------------ngStyle es[ngStyle]={"'chiavenomeattributocss': valore"} , il valore può essere una variabile oppure scirtto a mano ''-------------------------------------------->
+  <h1>Lista utenti e loro stati ngStyle,cambio tutto stile a mano</h1>
+
+  <div *ngFor="let persona of persone ;index as indice">
+
+    <div  class="cerchio" [ngStyle]="{'background': (persona.isOnline ? 'green' : 'red')}"></div>
+    <p> <strong>{{indice}} </strong><strong>{{persona.nome.toUpperCase()}} {{persona.cognome.toUpperCase() }}</strong></p>
+
+  </div>
+
+<!--------------------------------------------ngClass--------------------------------------------------->
+<h1>Lista utenti e loro stati ngClass, cambio le classi css </h1>
+
+<div *ngFor="let persona of persone ;index as indice">
+
+  <div  class="cerchio" [ngClass]="{'cerchioOnline squadrato': persona.isOnline, 'cerchioOffline': !persona.isOnline}"></div> <!--PIU CONDIZIONI-->
+  <div  class="cerchio" [ngClass]=" persona.isOnline ? 'cerchioOnline': 'squadrato'  "></div><!-- UNA SOLA CONDIZIONE TANTI STILI con ternary operator non devo mettere tra"{}" ma solo ""-->
+
+  <p> <strong>{{indice}} </strong><strong>{{persona.nome.toUpperCase()}} {{persona.cognome.toUpperCase() }}</strong></p>
+
+</div>
+
+
+
+<!---------------------PASSAGGIO DI VARIABILI DA PADRE A FIGLIO--------------------->
+
+
+<P>{{persone[0].nome}}</P> <!-- se passo tramite string interpolation da padre a figlio non ho problemi ma se lo faccio da padre a figlio si-->
+
+<app-componente-prova [data]="persone"></app-componente-prova>
+<!-- cosi sa che app prova è il nostro componente che ha proprietà di tipo data che
+    sa vien collegata con persone disponibile in app component
+
+    da altra parte sappiamo che data è presa da esterno
+-->
+<button (click)="onClick()" >ONCHANGE</button>
+
+
+
+<!--------------------------PASSARE DATI DA COMPONENTE FIGLIO A GENITORE- CON EVENT BINDING CREANDO EVENTO PERSONALIZZATO---------------------->
+
+<app-componente-prova  (mandaDatiEvento)="onRiceviDati($event)"></app-componente-prova>
+
+                     <!--viewchild per passare tutti i dati di un elemnto html-->
+<input #inputSaluti value="ciao">  <!-- creo una variabile di template di nome inputSaluti che rappresenta il mio elemento html, questo input specifico-->
+
+
+
+
+<h3 [appHigelight]='colore'>Paragrafo che cambia colore con una direttiva creata appositamente</h3>
+ -->

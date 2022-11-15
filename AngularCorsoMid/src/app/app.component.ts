@@ -19,6 +19,7 @@ VisibileBoolen:boolean=true;
   primoCaso:boolean=true; // variabili usate con ng-module e variabili
   secondoCaso:boolean=false;
 
+  colore='purple';
 persone=[ // oggetto per spiegare ngFor e PASSAGGIO DI VARIABILI DA COMPONENTE GENITORE A FIGLIO
   {nome:"luca",cognome:"rossi",isOnline:false,color:"red"},
   {nome:"marco",cognome:"verdi",isOnline:true,color:"green"},
