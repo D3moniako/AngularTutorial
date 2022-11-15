@@ -13,13 +13,22 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import{FormsModule} from '@angular/forms';
 import { HigelightDirective } from './direttive/higelight.directive';
+
+import { ServizioPortaService } from './service/servizio-porta.service';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './Componenti/contact/contact.component';
+import { HomeComponent } from './Componenti/home/home.component';
+
 @NgModule({
-  declarations: [
+  declarations: [ // nella declarations abbiamo i mattoncini , vari componenti
     AppComponent,
     ComponenteProvaComponent,
-    HigelightDirective
+    HigelightDirective,
+    AboutComponent,
+    ContactComponent,
+    HomeComponent
   ],
-  imports: [
+  imports: [ // abbiamo le librerie ossia i moduli che permettono di fare varie cose senza scrivere codice nuovo
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -33,7 +42,7 @@ import { HigelightDirective } from './direttive/higelight.directive';
     MatButtonModule,
     MatInputModule
   ],
-  providers: [],
+  providers: [ServizioPortaService], //posso avere i services direttamente referenziati qui, che sono librerie nostre con logica riusabile ovunque
   bootstrap: [AppComponent]
 })
 export class AppModule { }

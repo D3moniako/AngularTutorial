@@ -1,7 +1,6 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { interval, Observable, Observer } from 'rxjs';
 // con comando ng g c , mi crea una classe a cui applica un decoratore component in cui crea template css e selettori con nome uguale al component
-
 @Component({
   selector: 'app-componente-prova',
   templateUrl: './componente-prova.component.html',
@@ -10,14 +9,16 @@ import { interval, Observable, Observer } from 'rxjs';
 export class ComponenteProvaComponent implements OnInit ,OnChanges ,AfterViewInit{ // implementa anche Interfaccia OnInit che è la prima cosa che viene avviata
 //DIFFERENZA RISPETTO APPCOMPONENT SONO ONINIT E COSTRUTTORE
 
+constructor() { } // un costruttore dove mettere i vari elementi della classe
+
+
 @Input() data: any;// creo una variabile che avrà valore che arriva da fuori
 
 @Output() mandaDatiEvento=new EventEmitter<string>();
 
 @ViewChild('inputSaluti') inputSaluti!:ElementRef;// Gli dico che mi arriverà un figlio dall'html di nome inputSaluti che nel ts gli do nome inputSaluti e tipo ElementRef, con ! gli dico che non sarà mai nullo
+   // nel costruttore posso richiamare i services
 
-
-  constructor() { } // un costruttore dove mettere i vari elementi della classe
 
   cani:any=[ // array di any quindi ci posso mettere tutto, non devo mettere il tipo all'interno ma solo chiave valore
     {
@@ -102,6 +103,8 @@ export class ComponenteProvaComponent implements OnInit ,OnChanges ,AfterViewIni
 
 
                     console.log(this.data)// per passaggio dati componente figlio a padre e OnChange
+
+
 
 
 
