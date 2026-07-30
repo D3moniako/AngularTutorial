@@ -1,0 +1,128 @@
+<p>planner works!</p>
+<div class="planner-page">
+
+
+
+<section class="planner-hero">
+
+
+<h1>
+
+Trova il planner perfetto
+
+</h1>
+
+
+<p>
+
+Ogni obiettivo ha il suo spazio.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+<section class="planner-types">
+
+
+<div
+
+*ngFor="let c of categories">
+
+
+<h2>
+
+{{c}}
+
+</h2>
+
+
+<p>
+
+Planner dedicato per organizzare
+questa area della tua vita.
+
+</p>
+
+
+<button>
+
+Scopri
+
+</button>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+<section class="featured">
+
+
+<h2>
+
+✨ I nostri Planner
+
+</h2>
+
+
+
+<div class="grid">
+
+
+<div
+
+class="card"
+
+*ngFor="let p of products">
+
+
+<img [src]="p.image">
+
+
+<h3>
+
+{{p.name}}
+
+</h3>
+
+
+<p>
+
+{{p.description}}
+
+</p>
+
+
+<strong>
+
+{{p.price | currency:'EUR'}}
+
+</strong>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+</div>

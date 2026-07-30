@@ -3,46 +3,167 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ComponenteProvaComponent } from './componente-prova/componente-prova.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider'; // uso angular material che è framework css di angular
-                                                             //MatSliderModule l'ho aggiungo cosi uso angular material per usare componenti prefatti
-                                                              //DEVO RIAVVIARE IL SERVER QUANDO USO COMPONENTI O MODULI ANGULAR MATERIAL SENNO NON VENGONO REIINDERIZZATI
+
+
+// Angular Material
+import { MatSliderModule } from '@angular/material/slider';
 import { MatCardModule } from '@angular/material/card';
-import {MatButtonModule} from '@angular/material/button';
-import {MatInputModule} from '@angular/material/input';
-import{FormsModule} from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+
+
+// Forms
+import { FormsModule } from '@angular/forms';
+
+
+// Common
+import { CommonModule } from '@angular/common';
+
+
+// Direttive
 import { HigelightDirective } from './direttive/higelight.directive';
 
+
+// Services
 import { ServizioPortaService } from './service/servizio-porta.service';
+import { PlannerService } from './services/planner.service';
+
+
+// Componenti principali
+import { ComponenteProvaComponent } from './componente-prova/componente-prova.component';
+
 import { AboutComponent } from './about/about.component';
+
+
+// Componenti cartella Componenti
 import { ContactComponent } from './Componenti/contact/contact.component';
 import { HomeComponent } from './Componenti/home/home.component';
 
+import { MyPlannersComponent } from './Componenti/my-planners/my-planners.component';
+
+import { ShopComponent } from './Componenti/shop/shop.component';
+import { ProductsComponent } from './Componenti/products/products.component';
+
+import { CartComponent } from './Componenti/cart/cart.component';
+import { FavoritesComponent } from './Componenti/favorites/favorites.component';
+
+import { PlannerComponent } from './Componenti/planner/planner.component';
+
+
+// Shared
+import { HeaderComponent } from './Componenti/shared/header/header.component';
+import { FooterComponent } from './Componenti/shared/footer/footer.component';
+
+
+// Checkout
+import { CheckoutComponent } from './Componenti/checkout/checkout.component';
+
+
+// Login Register Profile
+import { LoginComponent } from './Componenti/login/login.component';
+import { RegisterComponent } from './Componenti/register/register.component';
+import { ProfileComponent } from './Componenti/profile/profile.component';
+
+
+
 @NgModule({
-  declarations: [ // nella declarations abbiamo i mattoncini , vari componenti
+
+  declarations: [
+
     AppComponent,
+
     ComponenteProvaComponent,
+
     HigelightDirective,
+
+
     AboutComponent,
+
+
     ContactComponent,
-    HomeComponent
+
+    HomeComponent,
+
+
+    MyPlannersComponent,
+
+
+    ShopComponent,
+
+    ProductsComponent,
+
+
+    CartComponent,
+
+    FavoritesComponent,
+
+
+    PlannerComponent,
+
+
+    HeaderComponent,
+
+    FooterComponent,
+
+
+    CheckoutComponent,
+
+
+    LoginComponent,
+
+    RegisterComponent,
+
+    ProfileComponent
+
   ],
-  imports: [ // abbiamo le librerie ossia i moduli che permettono di fare varie cose senza scrivere codice nuovo
+
+
+
+  imports: [
+
     BrowserModule,
+
+    CommonModule,
+
     AppRoutingModule,
+
     BrowserAnimationsModule,
+
+
     FormsModule,
 
 
-    MatSliderModule,// BEST PRATICES CREARE UN MODULO APPPARTE DOVE BUTTARCI DENTRO TUTTI I COMPONENTI MATERIAL ANGULAR E POI IMPORTARLO QUI IN APP MODULE,
-                    // PROBLEMA: NELLA CREAZIONE DEI COMPONENT AVRÒ NECESSITA DI USARE DEI FALG SE FACCIO COSI
+    MatSliderModule,
 
     MatCardModule,
+
     MatButtonModule,
+
     MatInputModule
+
   ],
-  providers: [ServizioPortaService], //posso avere i services direttamente referenziati qui, che sono librerie nostre con logica riusabile ovunque
-  bootstrap: [AppComponent]
+
+
+
+  providers: [
+
+    ServizioPortaService,
+
+    PlannerService
+
+  ],
+
+
+
+  bootstrap: [
+
+    AppComponent
+
+  ]
+
 })
+
+
 export class AppModule { }

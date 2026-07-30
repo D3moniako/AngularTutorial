@@ -1,0 +1,125 @@
+<header>
+
+
+<div class="logo">
+
+<div class="brand">
+🌸 DreamCalendar
+</div>
+
+<small>
+Digital Planner Boutique
+</small>
+
+</div>
+
+
+
+
+
+<button
+class="hamburger"
+(click)="toggleMenu()">
+
+☰
+
+</button>
+
+
+
+
+
+
+<nav
+[class.active]="menuOpen">
+
+
+<a
+*ngFor="let item of menuItems"
+
+[routerLink]="item.link"
+
+routerLinkActive="active"
+
+[routerLinkActiveOptions]="{exact:true}"
+
+(click)="menuOpen=false">
+
+
+<span>
+{{item.icon}}
+</span>
+
+
+{{item.label}}
+
+
+</a>
+
+
+</nav>
+<div class="account">
+
+
+<!-- NON LOGGATO -->
+
+<div *ngIf="!user">
+
+
+<a routerLink="/login">
+
+👤 Login
+
+</a>
+
+
+<a routerLink="/register">
+
+📝 Registrati
+
+</a>
+
+
+</div>
+
+
+
+
+
+<!-- LOGGATO -->
+
+<div *ngIf="user">
+
+
+<a routerLink="/profile">
+
+🌸 {{user.name}}
+
+</a>
+
+
+
+<button
+
+(click)="logout()">
+
+🚪
+
+</button>
+
+
+</div>
+
+
+
+</div>
+<a 
+routerLink="/cart"
+class="cart-link">
+
+🛒 Carrello
+
+</a>
+
+
+</header>

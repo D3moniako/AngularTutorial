@@ -1,2 +1,429 @@
-<p>Lista Contatti</p>
-<div *ngFor="let persona in persone"><h1>{{persona.nome}} {{persona.cognome}}</h1></div>
+<div class="page">
+
+
+
+<header class="contact-header">
+
+
+<div class="logo">
+
+🌸 DreamCalendar
+
+</div>
+
+
+<a routerLink="/" class="home-link">
+
+🏠 Home
+
+</a>
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<section class="hero-contact">
+
+
+<h1>
+
+Contattaci 💌
+
+</h1>
+
+
+<p>
+
+Hai bisogno di aiuto?
+Vuoi creare il tuo planner personalizzato?
+Siamo qui per te.
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="contact-cards">
+
+
+<div
+class="card"
+*ngFor="let c of contactCards">
+
+
+<div class="icon">
+
+{{c.icon}}
+
+</div>
+
+
+<h3>
+
+{{c.title}}
+
+</h3>
+
+
+<a [href]="c.link">
+
+{{c.text}}
+
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="form-section">
+
+
+
+<div class="form-box">
+
+
+<h2>
+
+Scrivici un messaggio ✨
+
+</h2>
+
+
+
+<form
+(ngSubmit)="sendMessage()">
+
+
+
+<label>
+
+Nome
+
+</label>
+
+
+<input
+
+type="text"
+
+[(ngModel)]="name"
+
+name="name"
+
+placeholder="Inserisci il tuo nome"
+
+>
+
+
+
+
+<label>
+
+Email
+
+</label>
+
+
+<input
+
+type="email"
+
+[(ngModel)]="email"
+
+name="email"
+
+placeholder="La tua email"
+
+>
+
+
+
+
+<label>
+
+Messaggio
+
+</label>
+
+
+<textarea
+
+[(ngModel)]="message"
+
+name="message"
+
+rows="6"
+
+placeholder="Scrivi il tuo messaggio..."
+
+></textarea>
+
+
+
+
+
+<button type="submit">
+
+Invia messaggio 💕
+
+</button>
+
+
+
+</form>
+
+
+
+<div
+class="success"
+*ngIf="sent">
+
+
+✨ Grazie {{name}}!
+Il tuo messaggio è stato inviato.
+
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="contact-image">
+
+
+<div class="floating-card">
+
+
+🌸
+
+<br>
+
+Dream Calendar Support
+
+
+<br>
+
+💖
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="faq">
+
+
+<h2>
+
+Domande frequenti
+
+</h2>
+
+
+
+<div
+
+class="faq-box"
+
+*ngFor="let item of faq">
+
+
+<h3>
+
+{{item.question}}
+
+</h3>
+
+
+<p>
+
+{{item.answer}}
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="social">
+
+
+<h2>
+
+Seguici sui social
+
+</h2>
+
+
+
+<div class="social-grid">
+
+
+<a
+
+*ngFor="let s of social"
+
+[href]="s.url"
+
+>
+
+
+<span>
+
+{{s.icon}}
+
+</span>
+
+
+{{s.name}}
+
+
+</a>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="newsletter">
+
+
+<h2>
+
+Resta aggiornata 🌷
+
+</h2>
+
+
+<p>
+
+Ricevi nuovi planner, offerte e idee organizzative.
+
+</p>
+
+
+<input
+
+placeholder="La tua email">
+
+
+<button>
+
+Iscriviti
+
+</button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<footer>
+
+
+<h2>
+
+DreamCalendar 🌸
+
+</h2>
+
+
+<div>
+
+
+<a routerLink="/about">
+
+About
+
+</a>
+
+
+<a routerLink="/shop">
+
+Shop
+
+</a>
+
+
+<a routerLink="/">
+
+Home
+
+</a>
+
+
+</div>
+
+
+</footer>
+
+
+
+</div>
