@@ -1,5 +1,9 @@
-header{
+/* ==========================================
+HEADER DESKTOP + MOBILE FIRST
+========================================== */
 
+
+header{
 
 height:90px;
 
@@ -9,7 +13,9 @@ align-items:center;
 
 justify-content:space-between;
 
-padding:20px 50px;
+gap:15px;
+
+padding:15px 40px;
 
 background:white;
 
@@ -24,15 +30,28 @@ box-shadow:
 
 0 10px 35px rgba(190,130,160,.15);
 
-
 }
 
 
 
 
+/* ==========================================
+LOGO
+========================================== */
+
 
 .logo{
 
+display:flex;
+
+flex-direction:column;
+
+flex-shrink:0;
+
+}
+
+
+.brand{
 
 font-size:28px;
 
@@ -40,18 +59,13 @@ font-weight:700;
 
 color:#d48aa9;
 
-
-display:flex;
-
-flex-direction:column;
-
+white-space:nowrap;
 
 }
 
 
 
 .logo small{
-
 
 font-size:11px;
 
@@ -61,20 +75,25 @@ font-weight:400;
 
 color:#9b7c8b;
 
-
 }
 
 
 
 
 
+/* ==========================================
+NAV
+========================================== */
+
+
 nav{
+
 
 display:flex;
 
 align-items:center;
 
-gap:10px;
+gap:5px;
 
 
 background:
@@ -86,7 +105,7 @@ linear-gradient(
 );
 
 
-padding:8px 15px;
+padding:8px 12px;
 
 
 border-radius:50px;
@@ -97,11 +116,12 @@ box-shadow:
 0 8px 25px rgba(190,130,160,.18);
 
 
-border:1px solid rgba(220,170,200,.25);
+border:
+
+1px solid rgba(220,170,200,.25);
 
 
 }
-
 
 
 
@@ -110,26 +130,22 @@ nav a{
 
 text-decoration:none;
 
-
 color:#60465c;
-
 
 font-weight:600;
 
+font-size:14px;
 
-padding:12px 18px;
-
+padding:10px 14px;
 
 border-radius:30px;
 
 
 display:flex;
 
-
 align-items:center;
 
-
-gap:7px;
+gap:6px;
 
 
 transition:.3s;
@@ -146,10 +162,13 @@ background:#ffe5f0;
 
 color:#d06d99;
 
-transform:translateY(-3px);
+transform:translateY(-2px);
 
 
 }
+
+
+
 
 nav a.active{
 
@@ -175,18 +194,149 @@ box-shadow:
 
 
 
+
+
+/* ==========================================
+ACCOUNT
+========================================== */
+
+
+.account{
+
+display:flex;
+
+align-items:center;
+
+gap:8px;
+
+}
+
+
+
+.account div{
+
+display:flex;
+
+gap:8px;
+
+align-items:center;
+
+}
+
+
+
+
+.account a,
+.account button{
+
+
+text-decoration:none;
+
+border:none;
+
+cursor:pointer;
+
+padding:10px 14px;
+
+border-radius:30px;
+
+
+background:#ffe2ee;
+
+color:#bb678d;
+
+
+font-weight:600;
+
+font-size:14px;
+
+
+}
+
+
+
+.account a:hover,
+.account button:hover{
+
+
+background:#d583aa;
+
+color:white;
+
+
+}
+
+
+
+
+
+
+
+/* ==========================================
+CARRELLO
+========================================== */
+
+
+.cart-link{
+
+
+text-decoration:none;
+
+padding:10px 16px;
+
+border-radius:30px;
+
+
+background:#ffe2ee;
+
+
+color:#bb678d;
+
+
+font-weight:600;
+
+
+white-space:nowrap;
+
+
+}
+
+
+
+.cart-link:hover{
+
+
+background:#d583aa;
+
+color:white;
+
+
+}
+
+
+
+
+
+/* ==========================================
+HAMBURGER
+========================================== */
+
+
 .hamburger{
 
 
 display:none;
 
+
 border:none;
 
 background:none;
 
+
 font-size:32px;
 
 cursor:pointer;
+
 
 color:#d06d99;
 
@@ -198,25 +348,105 @@ color:#d06d99;
 
 
 
+/* ==========================================
+TABLET
+========================================== */
+
+
+@media(max-width:1100px){
+
+
+header{
+
+
+padding:15px 20px;
+
+
+}
+
+
+
+nav a{
+
+
+padding:9px 10px;
+
+font-size:13px;
+
+
+}
+
+
+.brand{
+
+font-size:24px;
+
+}
+
+
+
+}
+
+
+
+
+
+/* ==========================================
+SMARTPHONE
+========================================== */
+
+
 @media(max-width:768px){
 
 
 
 header{
 
-padding:20px;
+
+height:80px;
+
+padding:15px;
+
 
 }
 
+
+
+.brand{
+
+
+font-size:22px;
+
+
+}
+
+
+.logo small{
+
+
+display:none;
+
+
+}
+
+
+
+/* mostra hamburger */
 
 
 .hamburger{
 
+
 display:block;
+
+order:2;
+
 
 }
 
 
+
+/* nasconde nav desktop */
 
 
 nav{
@@ -224,13 +454,13 @@ nav{
 
 position:absolute;
 
-top:90px;
+
+top:80px;
 
 left:0;
 
-width:100%;
 
-background:white;
+width:100%;
 
 
 display:none;
@@ -239,18 +469,29 @@ display:none;
 flex-direction:column;
 
 
-padding:30px;
+align-items:stretch;
 
 
-box-shadow:
+border-radius:0;
 
-0 20px 40px rgba(190,130,160,.2);
+
+padding:20px;
+
+
+background:white;
 
 
 }
 
 
 
+nav.active{
+
+
+display:flex;
+
+
+}
 
 
 
@@ -261,77 +502,147 @@ nav a{
 
 width:100%;
 
-text-align:center;
+justify-content:center;
+
+
+padding:15px;
+
+
+font-size:16px;
 
 
 }
+
+
+
+
+/* account */
+
+
+.account{
+
+
+display:none;
+
+
+}
+
+
+
+
+
 .cart-link{
 
-text-decoration:none;
 
-padding:12px 20px;
+font-size:0;
 
-border-radius:30px;
 
-background:#ffe2ee;
+padding:12px;
 
-color:#bb678d;
-
-font-weight:600;
-
-transition:.3s;
 
 }
 
 
-.cart-link:hover{
 
-background:#d583aa;
+.cart-link::after{
 
-color:white;
+
+content:"🛒";
+
+font-size:22px;
+
 
 }
-.account{
+
+
+
+
+
+}
+
+
+
+
+
+
+/* ==========================================
+PICCOLISSIMI 320px
+========================================== */
+
+
+@media(max-width:380px){
+
+
+
+.brand{
+
+font-size:19px;
+
+}
+
+
+.hamburger{
+
+font-size:28px;
+
+}
+
+
+
+}
+
+/* =================================
+   PULSANTE DASHBOARD ADMIN HEADER
+================================= */
+
+.admin-link{
 
 display:flex;
 
 align-items:center;
 
-gap:10px;
+gap:8px;
+
+padding:10px 18px;
+
+border-radius:25px;
+
+background:linear-gradient(135deg,#b76e79,#8f4d5c) !important;
+
+color:white !important;
+
+text-decoration:none !important;
+
+font-weight:700;
+
+font-size:14px;
+
+box-shadow:0 6px 15px rgba(183,110,121,.35);
+
+transition:.3s ease;
 
 }
 
 
 
-.account a,
-.account button{
+.admin-link:hover{
 
-text-decoration:none;
+background:linear-gradient(135deg,#8f4d5c,#6d3542) !important;
 
-border:none;
+color:white !important;
 
-cursor:pointer;
-
-padding:12px 18px;
-
-border-radius:30px;
-
-background:#ffe2ee;
-
-color:#bb678d;
-
-font-weight:600;
+transform:translateY(-2px);
 
 }
 
 
 
-.account a:hover,
-.account button:hover{
+/* icona corona */
 
-background:#d583aa;
+.admin-link::before{
 
-color:white;
+content:"👑";
 
-}
+font-size:18px;
+
 }

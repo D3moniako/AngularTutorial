@@ -2,16 +2,16 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { UserService } from '../../services/user.service';
 import { OrderService } from '../../services/order.service';
+import { PlannerService } from '../../services/planner.service';
 
 import { User } from '../../models/user';
-
 import { Product } from '../../models/product';
 
 import { Subscription } from 'rxjs';
 
 
 
-interface Planner {
+interface PlannerView {
 
 id:number;
 
@@ -37,9 +37,9 @@ color:string;
 
 updated:boolean;
 
+product:Product;
+
 }
-
-
 
 
 
@@ -54,7 +54,6 @@ styleUrls:['./my-planners.component.css']
 })
 
 
-
 export class MyPlannersComponent implements OnInit, OnDestroy {
 
 
@@ -63,42 +62,33 @@ private userSubscription?:Subscription;
 
 
 
-currentYear =
-new Date().getFullYear();
-
-
-
 user:User|null=null;
+
+
+currentYear:number =
+new Date().getFullYear();
 
 
 
 searchText:string='';
 
 
-
 selectedCategory:string='Tutti';
-
 
 
 downloadMessage:string='';
 
 
 
-plannerSelected:Planner|null=null;
+plannerSelected:PlannerView|null=null;
 
 
 
-planners:Planner[]=[];
-
-
-
-
-
+planners:PlannerView[]=[];
 
 
 
 categories:string[]=[
-
 
 'Tutti',
 
@@ -110,12 +100,7 @@ categories:string[]=[
 
 'Business'
 
-
 ];
-
-
-
-
 
 
 
@@ -125,7 +110,9 @@ constructor(
 
 private userService:UserService,
 
-private orderService:OrderService
+private orderService:OrderService,
+
+private plannerService:PlannerService
 
 ){}
 
@@ -133,12 +120,7 @@ private orderService:OrderService
 
 
 
-
-
-
-
 ngOnInit(){
-
 
 
 this.userSubscription =
@@ -148,52 +130,31 @@ this.userService.user$
 .subscribe(user=>{
 
 
-
 this.user=user;
-
-
 
 
 if(user){
 
-
-
 this.loadUserPlanners(user.id);
 
-
-
 }
-
 
 
 });
 
 
-
 }
 
 
 
 
-
-
-
-
-
-
-
-// =================================
-// CARICA PLANNER ACQUISTATI
-// =================================
 
 
 private loadUserPlanners(userId:number){
 
 
 
-const purchasedProducts:
-
-Product[] =
+const products:Product[]=
 
 this.orderService.getUserPlanners(userId);
 
@@ -201,7 +162,7 @@ this.orderService.getUserPlanners(userId);
 
 
 
-this.planners = purchasedProducts.map(product=>({
+this.planners = products.map(product=>({
 
 
 
@@ -224,15 +185,11 @@ category:product.category,
 
 purchaseDate:
 
-new Date()
-
-.toLocaleDateString('it-IT'),
+new Date().toLocaleDateString('it-IT'),
 
 
 
-version:
-
-'2026 Premium',
+version:'2026 Premium',
 
 
 
@@ -240,15 +197,13 @@ downloads:0,
 
 
 
-size:
-
-'20 MB',
+size:'20 MB',
 
 
 
 favorite:
 
-product.favorite,
+this.plannerService.isFavorite(product.id),
 
 
 
@@ -258,7 +213,10 @@ this.getPlannerColor(product.category),
 
 
 
-updated:false
+updated:false,
+
+
+product:product
 
 
 
@@ -274,13 +232,6 @@ updated:false
 
 
 
-
-
-// =================================
-// COLORE CARD
-// =================================
-
-
 private getPlannerColor(category:string):string{
 
 
@@ -292,11 +243,9 @@ case 'Elegant':
 return '#f8c4dd';
 
 
-
 case 'Wellness':
 
 return '#dbc8ff';
-
 
 
 case 'Business':
@@ -304,11 +253,9 @@ case 'Business':
 return '#ffdcb8';
 
 
-
 case 'Lifestyle':
 
 return '#c8f0df';
-
 
 
 default:
@@ -316,7 +263,6 @@ default:
 return '#eeeeee';
 
 
-
 }
 
 
@@ -329,20 +275,11 @@ return '#eeeeee';
 
 
 
-
-
-// =================================
-// FILTRO
-// =================================
-
-
-get filteredPlanners():Planner[]{
+get filteredPlanners(){
 
 
 
-const text =
-
-this.searchText
+const text=this.searchText
 
 .trim()
 
@@ -351,54 +288,49 @@ this.searchText
 
 
 
-
-return this.planners.filter(planner=>{
-
+return this.planners.filter(p=>{
 
 
-const searchMatch =
 
-!text
+const search =
+
+
+!text ||
+
+
+p.name.toLowerCase().includes(text)
+
 
 ||
 
-planner.name
-.toLowerCase()
-.includes(text)
+
+p.category.toLowerCase().includes(text);
+
+
+
+
+
+const category =
+
+
+this.selectedCategory==='Tutti'
+
 
 ||
 
-planner.category
-.toLowerCase()
-.includes(text);
+
+p.category===this.selectedCategory;
 
 
 
-
-
-const categoryMatch =
-
-
-this.selectedCategory === 'Tutti'
-
-||
-
-planner.category === this.selectedCategory;
-
-
-
-
-
-return searchMatch && categoryMatch;
+return search && category;
 
 
 
 });
 
 
-
 }
-
 
 
 
@@ -410,9 +342,7 @@ return searchMatch && categoryMatch;
 selectCategory(category:string){
 
 
-
 this.selectedCategory=category;
-
 
 
 }
@@ -425,18 +355,25 @@ this.selectedCategory=category;
 
 
 
-// =================================
-// PREFERITI
-// =================================
+toggleFavorite(planner:PlannerView){
 
 
-toggleFavorite(planner:Planner){
+
+this.plannerService.toggleFavorite(
+
+planner.product
+
+);
 
 
 
 planner.favorite =
 
-!planner.favorite;
+this.plannerService.isFavorite(
+
+planner.id
+
+);
 
 
 
@@ -450,41 +387,29 @@ planner.favorite =
 
 
 
-// =================================
-// DOWNLOAD
-// =================================
-
-
-download(planner:Planner){
+download(planner:PlannerView){
 
 
 
 if(!planner.file){
 
 
-
-this.downloadMessage =
+this.downloadMessage=
 
 '❌ File non disponibile';
 
 
-
 return;
-
 
 
 }
 
 
 
-
-
 const link=document.createElement('a');
 
 
-
 link.href=planner.file;
-
 
 
 link.download=
@@ -493,18 +418,13 @@ planner.name+'.pdf';
 
 
 
-
-
 document.body.appendChild(link);
-
 
 
 link.click();
 
 
-
 document.body.removeChild(link);
-
 
 
 
@@ -513,9 +433,7 @@ planner.downloads++;
 
 
 
-
-
-this.downloadMessage =
+this.downloadMessage=
 
 '✅ Download completato: '
 
@@ -525,16 +443,10 @@ planner.name;
 
 
 
-
-
-
-
 setTimeout(()=>{
 
 
-
 this.downloadMessage='';
-
 
 
 },3000);
@@ -551,9 +463,32 @@ this.downloadMessage='';
 
 
 
-// =================================
-// STATISTICHE
-// =================================
+preview(planner:PlannerView){
+
+
+this.plannerSelected=planner;
+
+
+}
+
+
+
+
+
+
+
+closePreview(){
+
+
+this.plannerSelected=null;
+
+
+}
+
+
+
+
+
 
 
 get totalDownloads(){
@@ -562,15 +497,9 @@ get totalDownloads(){
 
 return this.planners.reduce(
 
-
-
-(total,planner)=>
-
-total + planner.downloads,
+(total,p)=>total+p.downloads,
 
 0
-
-
 
 );
 
@@ -584,55 +513,10 @@ total + planner.downloads,
 
 
 
-
-
-// =================================
-// ANTEPRIMA
-// =================================
-
-
-preview(planner:Planner){
-
-
-
-this.plannerSelected=planner;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-closePreview(){
-
-
-
-this.plannerSelected=null;
-
-
-
-}
-
-
-
-
-
-
-
-
-
 ngOnDestroy(){
 
 
-
 this.userSubscription?.unsubscribe();
-
 
 
 }

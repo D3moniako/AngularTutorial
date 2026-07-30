@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 
+import { BehaviorSubject } from 'rxjs';
+
 import { Order } from '../models/order';
+
 import { Product } from '../models/product';
 
 
+
 @Injectable({
+
 providedIn:'root'
+
 })
 
 
@@ -13,22 +19,21 @@ export class OrderService {
 
 
 
-/*
-================================================
- DATABASE TEMPORANEO ORDINI
-
- Futuro:
- Angular
-    |
- Spring Boot
-    |
- PostgreSQL
-
-================================================
-*/
+private orders:Order[] =
+this.loadOrders();
 
 
-private orders:Order[] = this.loadOrders();
+
+
+// comunica modifiche ordini a tutta l'app
+
+private ordersSubject =
+new BehaviorSubject<Order[]>(this.orders);
+
+
+
+orders$ =
+this.ordersSubject.asObservable();
 
 
 
@@ -48,7 +53,7 @@ constructor(){}
 
 /*
 ================================================
- AGGIUNGI ORDINE
+ CREA ORDINE
 ================================================
 */
 
@@ -60,7 +65,9 @@ addOrder(order:Order){
 this.orders.push(order);
 
 
+
 this.saveOrders();
+
 
 
 }
@@ -93,6 +100,7 @@ order=>order.userId===userId
 );
 
 
+
 }
 
 
@@ -105,10 +113,7 @@ order=>order.userId===userId
 
 /*
 ================================================
- I MIEI PLANNER DIGITALI
-
- Recupera tutti i prodotti acquistati
-
+ PLANNER DIGITALI ACQUISTATI
 ================================================
 */
 
@@ -116,43 +121,67 @@ order=>order.userId===userId
 getUserPlanners(userId:number):Product[]{
 
 
-const orders=this.getUserOrders(userId);
+
+const orders =
+this.getUserOrders(userId);
+
 
 
 const products:Product[]=[];
 
 
+
+
 orders.forEach(order=>{
+
 
 
 if(order.downloadAvailable){
 
 
+
 order.products.forEach(product=>{
 
 
-const alreadyExists = products.some(
+
+const exists =
+products.some(
+
 p=>p.id===product.id
+
 );
 
 
-if(!alreadyExists){
+
+
+
+if(!exists){
+
+
 
 products.push(product);
 
-}
-
-
-});
 
 
 }
 
 
+
 });
+
+
+
+}
+
+
+
+});
+
+
 
 
 return products;
+
 
 
 }
@@ -167,10 +196,7 @@ return products;
 
 /*
 ================================================
- TUTTI GLI ORDINI
-
- Futuro ADMIN PANEL
-
+ TUTTI ORDINI ADMIN
 ================================================
 */
 
@@ -179,7 +205,192 @@ getAllOrders():Order[]{
 
 
 
-return [...this.orders];
+return this.orders.map(
+
+order=>({...order})
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+================================================
+ CONTROLLO ACQUISTO
+================================================
+*/
+
+
+hasPurchased(
+
+userId:number,
+
+productId:number
+
+):boolean{
+
+
+
+return this.getUserOrders(userId).some(
+
+
+order=>
+
+
+order.downloadAvailable &&
+
+
+order.products.some(
+
+
+product=>
+
+product.id===productId
+
+
+)
+
+
+);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+================================================
+ CAMBIO STATO ORDINE ADMIN
+================================================
+*/
+
+
+updateStatus(
+
+id:number,
+
+status:Order['status']
+
+){
+
+
+const index=this.orders.findIndex(
+
+o=>o.id===id
+
+);
+
+
+
+if(index!==-1){
+
+
+
+this.orders[index]={
+
+...this.orders[index],
+
+status:status
+
+};
+
+
+
+this.saveOrders();
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+/*
+================================================
+ ELIMINA ORDINE ADMIN
+================================================
+*/
+
+
+deleteOrder(id:number){
+
+
+
+this.orders=this.orders.filter(
+
+
+o=>o.id!==id
+
+
+);
+
+
+
+// forza aggiornamento immediato
+
+this.ordersSubject.next(
+
+[...this.orders]
+
+);
+
+
+
+this.saveOrders();
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+================================================
+ CERCA ORDINE
+ FUTURO ADMIN
+================================================
+*/
+
+
+getOrderById(id:number):Order|null{
+
+
+
+return this.orders.find(
+
+order=>order.id===id
+
+) || null;
 
 
 }
@@ -195,9 +406,6 @@ return [...this.orders];
 /*
 ================================================
  LOCAL STORAGE
-
- Temporaneo lato frontend
-
 ================================================
 */
 
@@ -215,6 +423,17 @@ JSON.stringify(this.orders)
 );
 
 
+
+// aggiorna tutte le pagine collegate
+
+this.ordersSubject.next(
+
+[...this.orders]
+
+);
+
+
+
 }
 
 
@@ -228,30 +447,42 @@ JSON.stringify(this.orders)
 private loadOrders():Order[]{
 
 
+
 try{
 
 
-const data = JSON.parse(
 
-localStorage.getItem('orders') || '[]'
+const data=
 
-);
+localStorage.getItem('orders');
 
 
-return data as Order[];
+
+
+return data ?
+
+JSON.parse(data)
+
+:
+
+[];
+
 
 
 }
+
 catch{
+
 
 
 return [];
 
-
 }
 
 
+
 }
+
 
 
 }

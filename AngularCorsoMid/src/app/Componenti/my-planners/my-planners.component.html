@@ -472,7 +472,7 @@ class="close"
 
 <img
 
-[src]="plannerSelected.image"
+[src]="plannerSelected?.image"
 
 loading="lazy">
 
@@ -484,7 +484,7 @@ loading="lazy">
 
 <h2>
 
-{{plannerSelected.name}}
+{{plannerSelected?.name}}
 
 </h2>
 
@@ -508,7 +508,7 @@ Anteprima digitale del tuo planner.
 
 <button
 
-(click)="download(plannerSelected)">
+(click)="plannerSelected && download(plannerSelected)">
 
 
 ⬇ Scarica PDF

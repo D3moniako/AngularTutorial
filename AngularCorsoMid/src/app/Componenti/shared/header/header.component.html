@@ -1,27 +1,41 @@
 <header>
 
 
+
 <div class="logo">
 
+
 <div class="brand">
+
 🌸 DreamCalendar
+
 </div>
+
 
 <small>
+
 Digital Planner Boutique
+
 </small>
 
+
 </div>
+
+
 
 
 
 
 
 <button
+
 class="hamburger"
+
 (click)="toggleMenu()">
 
+
 ☰
+
 
 </button>
 
@@ -30,11 +44,17 @@ class="hamburger"
 
 
 
+
+
+
 <nav
+
 [class.active]="menuOpen">
 
 
+
 <a
+
 *ngFor="let item of menuItems"
 
 [routerLink]="item.link"
@@ -47,7 +67,9 @@ routerLinkActive="active"
 
 
 <span>
+
 {{item.icon}}
+
 </span>
 
 
@@ -57,11 +79,20 @@ routerLinkActive="active"
 </a>
 
 
+
 </nav>
+
+
+
+
+
+
+
+
+
 <div class="account">
 
 
-<!-- NON LOGGATO -->
 
 <div *ngIf="!user">
 
@@ -73,11 +104,13 @@ routerLinkActive="active"
 </a>
 
 
+
 <a routerLink="/register">
 
 📝 Registrati
 
 </a>
+
 
 
 </div>
@@ -86,7 +119,8 @@ routerLinkActive="active"
 
 
 
-<!-- LOGGATO -->
+
+
 
 <div *ngIf="user">
 
@@ -103,23 +137,45 @@ routerLinkActive="active"
 
 (click)="logout()">
 
+
 🚪
 
 </button>
 
 
+
+</div>
+
+
+
 </div>
 
 
 
-</div>
-<a 
+
+
+
+
+<a
+
 routerLink="/cart"
+
 class="cart-link">
+
 
 🛒 Carrello
 
+
 </a>
+
+<a 
+*ngIf="user?.role?.toLowerCase() === 'admin'"
+routerLink="/admin/dashboard">
+
+👑 DASHBOARD
+
+</a>
+
 
 
 </header>

@@ -4,6 +4,9 @@
 <section class="register-box">
 
 
+
+
+
 <h1>
 
 🌸 Crea il tuo account
@@ -14,14 +17,33 @@
 
 
 
+<p>
+
+Inizia a creare e gestire i tuoi planner digitali
+
+</p>
+
+
+
+
+
+
+
+
+
 <input
+
 
 type="text"
 
-placeholder="Nome"
+
+placeholder="Nome completo"
+
 
 [(ngModel)]="user.name"
 
+
+
 >
 
 
@@ -29,14 +51,22 @@ placeholder="Nome"
 
 
 
+
+
+
 <input
+
 
 type="email"
 
+
 placeholder="Email"
+
 
 [(ngModel)]="user.email"
 
+
+
 >
 
 
@@ -45,15 +75,23 @@ placeholder="Email"
 
 
 
+
+
 <input
+
 
 type="tel"
 
+
 placeholder="Telefono"
+
 
 [(ngModel)]="user.phone"
 
+
+
 >
+
 
 
 
@@ -64,11 +102,16 @@ placeholder="Telefono"
 
 <input
 
+
 type="password"
+
 
 placeholder="Password"
 
+
 [(ngModel)]="user.password"
+
+
 
 >
 
@@ -78,13 +121,20 @@ placeholder="Password"
 
 
 
+
+
 <input
+
 
 type="password"
 
+
 placeholder="Conferma password"
 
+
 [(ngModel)]="confirmPassword"
+
+
 
 >
 
@@ -95,19 +145,27 @@ placeholder="Conferma password"
 
 
 
-<label>
+
+<label class="two-factor">
+
 
 
 <input
 
+
 type="checkbox"
 
+
 [(ngModel)]="user.twoFactorEnabled"
+
+
 
 >
 
 
+
 Attiva autenticazione a due fattori
+
 
 </label>
 
@@ -118,14 +176,70 @@ Attiva autenticazione a due fattori
 
 
 
-<button
 
-(click)="register()"
+<p
+
+
+class="error"
+
+
+*ngIf="errorMessage"
+
+
 
 >
 
 
-Registrati
+{{errorMessage}}
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<button
+
+
+(click)="register()"
+
+
+[disabled]="loading"
+
+
+
+>
+
+
+
+<span *ngIf="!loading">
+
+
+🌸 Registrati
+
+
+</span>
+
+
+
+
+
+
+<span *ngIf="loading">
+
+
+⏳ Creazione account...
+
+
+</span>
+
+
+
 
 
 </button>
@@ -136,22 +250,35 @@ Registrati
 
 
 
+
+
 <p>
+
 
 Hai già un account?
 
 
+
+
+
 <a routerLink="/login">
+
 
 Accedi
 
+
 </a>
+
 
 
 </p>
 
 
 
+
+
+
 </section>
+
 
 </div>

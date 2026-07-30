@@ -2,6 +2,11 @@
 
 
 
+<!-- ============================= -->
+<!-- HEADER -->
+<!-- ============================= -->
+
+
 <section class="checkout-header">
 
 
@@ -12,10 +17,13 @@
 </h1>
 
 
+
 <p>
 
 Acquista i tuoi planner digitali e inizia subito a organizzarti 🌸
+
 </p>
+
 
 
 </section>
@@ -27,18 +35,63 @@ Acquista i tuoi planner digitali e inizia subito a organizzarti 🌸
 
 
 
-<section 
+<!-- ============================= -->
+<!-- MESSAGGI ERRORE -->
+<!-- ============================= -->
+
+
+<p
+
+class="error"
+
+*ngIf="errorMessage">
+
+
+{{errorMessage}}
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<!-- ============================= -->
+<!-- ORDINE COMPLETATO -->
+<!-- ============================= -->
+
+
+<section
+
 class="success"
 
 *ngIf="orderCompleted">
 
 
 
+
+
+<div class="success-icon">
+
+🎉
+
+</div>
+
+
+
+
+
 <h2>
 
-🎉 Ordine completato!
+Ordine completato!
 
 </h2>
+
+
 
 
 
@@ -52,11 +105,64 @@ I tuoi planner sono ora disponibili nella sezione "I miei Planner".
 
 
 
+
+
+
+
+<div class="order-number">
+
+
+Numero ordine:
+
+
+<strong>
+
+#{{lastOrderId}}
+
+</strong>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="success-buttons">
+
+
+
 <a routerLink="/my-planners">
+
 
 📚 Vai ai miei Planner
 
+
 </a>
+
+
+
+
+
+
+<a routerLink="/shop">
+
+
+🛍 Continua gli acquisti
+
+
+</a>
+
+
+
+</div>
+
+
+
 
 
 
@@ -70,7 +176,15 @@ I tuoi planner sono ora disponibili nella sezione "I miei Planner".
 
 
 
-<section 
+
+
+
+<!-- ============================= -->
+<!-- CHECKOUT -->
+<!-- ============================= -->
+
+
+<section
 
 class="checkout-content"
 
@@ -84,15 +198,133 @@ class="checkout-content"
 
 
 
-<div class="products">
+
+<!-- ============================= -->
+<!-- CARRELLO VUOTO -->
+<!-- ============================= -->
+
+
+
+<div
+
+class="empty-cart"
+
+*ngIf="cart.length===0">
 
 
 
 <h2>
 
-Riepilogo ordine
+🛒 Carrello vuoto
 
 </h2>
+
+
+
+<p>
+
+Non hai prodotti da acquistare.
+
+</p>
+
+
+
+
+<a routerLink="/shop">
+
+Vai allo Shop 🌸
+
+</a>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ============================= -->
+<!-- CONTENUTO ORDINE -->
+<!-- ============================= -->
+
+
+<div
+
+class="products"
+
+*ngIf="cart.length>0">
+
+
+
+
+
+<h2>
+
+📦 Riepilogo ordine
+
+</h2>
+
+
+
+
+
+
+
+
+<div class="order-info">
+
+
+
+<p>
+
+Prodotti:
+
+
+<strong>
+
+{{totalItems}}
+
+</strong>
+
+
+</p>
+
+
+
+
+
+
+<p>
+
+Totale:
+
+
+<strong>
+
+{{total | currency:'EUR'}}
+
+</strong>
+
+
+</p>
+
+
+
+
+</div>
+
+
+
+
 
 
 
@@ -108,18 +340,29 @@ class="checkout-item"
 
 
 
+<div class="image">
+
+
 <img
 
 [src]="item.product.image"
 
-[alt]="item.product.name">
+[alt]="item.product.name"
+
+loading="lazy">
+
+
+</div>
 
 
 
 
 
 
-<div>
+
+
+<div class="details">
+
 
 
 <h3>
@@ -127,6 +370,9 @@ class="checkout-item"
 {{item.product.name}}
 
 </h3>
+
+
+
 
 
 <p>
@@ -138,6 +384,19 @@ Quantità:
 </p>
 
 
+
+
+
+
+<p>
+
+{{item.product.description}}
+
+</p>
+
+
+
+
 </div>
 
 
@@ -145,14 +404,28 @@ Quantità:
 
 
 
+
+
+
+<div class="price">
+
+
 <strong>
 
+
 {{item.subtotal | currency:'EUR'}}
+
 
 </strong>
 
 
 
+</div>
+
+
+
+
+
 
 
 </div>
@@ -164,13 +437,32 @@ Quantità:
 
 
 
+
+<div class="total-box">
+
+
 <h2>
 
-Totale:
+Totale ordine
+
+</h2>
+
+
+
+<div class="total">
+
 
 {{total | currency:'EUR'}}
 
-</h2>
+
+</div>
+
+
+
+</div>
+
+
+
 
 
 
@@ -185,13 +477,30 @@ Totale:
 
 
 
-<div class="form">
+
+
+
+
+
+<!-- ============================= -->
+<!-- DATI CLIENTE -->
+<!-- ============================= -->
+
+
+<div
+
+class="form"
+
+*ngIf="cart.length>0">
+
+
+
 
 
 
 <h2>
 
-Dati cliente
+👤 Dati cliente
 
 </h2>
 
@@ -202,41 +511,86 @@ Dati cliente
 
 
 
+<label>
+
+Nome completo
+
+</label>
+
+
+
 <input
+
 
 type="text"
 
-placeholder="Nome"
 
-[(ngModel)]="customer.name">
-
+placeholder="Inserisci nome"
 
 
+[(ngModel)]="customer.name"
 
+>
+
+
+
+
+
+
+
+
+
+<label>
+
+Email
+
+</label>
 
 
 
 <input
+
 
 type="email"
 
-placeholder="Email"
 
-[(ngModel)]="customer.email">
-
+placeholder="Inserisci email"
 
 
+[(ngModel)]="customer.email"
 
+>
+
+
+
+
+
+
+
+
+
+<label>
+
+Indirizzo fatturazione
+
+</label>
 
 
 
 <input
 
+
 type="text"
 
-placeholder="Indirizzo"
 
-[(ngModel)]="customer.address">
+placeholder="Inserisci indirizzo"
+
+
+[(ngModel)]="customer.address"
+
+>
+
+
 
 
 
@@ -246,14 +600,48 @@ placeholder="Indirizzo"
 
 <button
 
-(click)="completeOrder()">
+
+type="button"
+
+
+(click)="completeOrder()"
+
+
+[disabled]="loading">
 
 
 
-Conferma acquisto 💳
+
+
+<span *ngIf="!loading">
+
+
+💳 Conferma acquisto
+
+
+</span>
+
+
+
+
+
+
+<span *ngIf="loading">
+
+
+⏳ Elaborazione...
+
+
+</span>
+
+
+
 
 
 </button>
+
+
+
 
 
 
@@ -265,8 +653,9 @@ Conferma acquisto 💳
 
 
 
-</section>
 
+
+</section>
 
 
 

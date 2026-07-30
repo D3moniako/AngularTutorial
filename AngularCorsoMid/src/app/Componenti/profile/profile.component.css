@@ -911,3 +911,30 @@ color:white;
 background:#ddd;
 
 }
+
+.admin-button{
+
+display:inline-block;
+
+padding:12px 25px;
+
+background:#b76e79;
+
+color:white;
+
+border-radius:25px;
+
+text-decoration:none;
+
+font-weight:bold;
+
+margin-top:20px;
+
+}
+
+
+.admin-button:hover{
+
+background:#8f4d5c;
+
+}

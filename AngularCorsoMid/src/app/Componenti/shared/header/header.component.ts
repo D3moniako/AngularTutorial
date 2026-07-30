@@ -28,7 +28,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 menuOpen:boolean=false;
 
 
-
 user:User|null=null;
 
 
@@ -46,97 +45,51 @@ menuItems=[
 
 
 {
-
 label:'Home',
-
 link:'/',
-
 icon:'🏠'
-
 },
 
 
-
 {
-
 label:'Shop',
-
 link:'/shop',
-
 icon:'🛒'
-
 },
 
 
-
 {
-
-label:'Checkout',
-
-link:'/checkout',
-
-icon:'💳'
-
-},
-
-
-
-{
-
 label:'I miei Planner',
-
 link:'/my-planners',
-
 icon:'📅'
-
 },
 
 
-
 {
-
 label:'Preferiti',
-
 link:'/favorites',
-
 icon:'❤️'
-
 },
 
 
-
 {
-
 label:'Chi siamo',
-
 link:'/about',
-
 icon:'🌸'
-
 },
 
 
-
 {
-
 label:'Contatti',
-
 link:'/contact',
-
 icon:'✉️'
-
 },
 
 
-
 {
-
 label:'Carrello',
-
 link:'/cart',
-
 icon:'🛍️'
-
 }
 
 
@@ -171,65 +124,21 @@ ngOnInit(){
 
 
 
-this.userSubscription = this.userService.user$
+this.userSubscription =
 
-.subscribe(
+this.userService.user$
 
-
-
-(user)=>{
+.subscribe(user=>{
 
 
 this.user=user;
 
 
-
-}
-
-
-
-);
+});
 
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-logout(){
-
-
-
-// elimina utente dal servizio
-
-this.userService.logout();
-
-
-
-// chiude menu mobile
-
-this.menuOpen=false;
-
-
-
-// torna alla pagina login
-
-this.router.navigate(['/login']);
-
-
-
-}
-
-
 
 
 
@@ -243,15 +152,32 @@ this.router.navigate(['/login']);
 toggleMenu(){
 
 
-
 this.menuOpen=!this.menuOpen;
-
 
 
 }
 
 
 
+
+
+
+
+
+
+logout(){
+
+
+this.userService.logout();
+
+
+this.menuOpen=false;
+
+
+this.router.navigate(['/login']);
+
+
+}
 
 
 
@@ -264,17 +190,13 @@ this.menuOpen=!this.menuOpen;
 ngOnDestroy(){
 
 
-
 if(this.userSubscription){
-
 
 
 this.userSubscription.unsubscribe();
 
 
-
 }
-
 
 
 }

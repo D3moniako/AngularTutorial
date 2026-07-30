@@ -1,0 +1,388 @@
+<div class="admin-orders">
+
+
+<h1>
+📦 Gestione Ordini
+</h1>
+
+
+<p class="message">
+{{message}}
+</p>
+
+
+
+
+
+<!-- STATISTICHE -->
+
+<div class="stats">
+
+
+<div class="stat">
+
+<span>
+Ordini totali
+</span>
+
+<strong>
+{{totalOrders}}
+</strong>
+
+</div>
+
+
+
+
+<div class="stat">
+
+<span>
+Incasso totale
+</span>
+
+<strong>
+{{totalRevenue | currency:'EUR'}}
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+<!-- FILTRI -->
+
+<div class="filters">
+
+
+<input
+
+type="text"
+
+placeholder="🔎 Cerca cliente o email"
+
+[(ngModel)]="searchText"
+
+(input)="filterOrders()">
+
+
+
+
+
+<select
+
+[(ngModel)]="selectedStatus"
+
+(change)="filterOrders()">
+
+
+
+<option value="Tutti">
+
+Tutti gli stati
+
+</option>
+
+
+<option value="PAGATO">
+
+✅ PAGATO
+
+</option>
+
+
+<option value="IN_ATTESA">
+
+⏳ IN_ATTESA
+
+</option>
+
+
+<option value="ANNULLATO">
+
+❌ ANNULLATO
+
+</option>
+
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ORDINI -->
+
+
+<section class="orders">
+
+
+<div
+
+class="order-card"
+
+*ngFor="let order of filteredOrders; trackBy:trackByOrder">
+
+
+
+
+
+
+<div class="header">
+
+
+<h2>
+
+📦 Ordine #{{order.id}}
+
+</h2>
+
+
+
+
+
+<span
+
+class="status"
+
+[class.pagato]="order.status==='PAGATO'"
+
+[class.attesa]="order.status==='IN_ATTESA'"
+
+[class.annullato]="order.status==='ANNULLATO'">
+
+
+{{order.status}}
+
+
+</span>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<!-- CLIENTE -->
+
+
+<div class="customer">
+
+
+<p>
+
+👤
+
+{{order.customerName || 'Cliente non registrato'}}
+
+</p>
+
+
+
+<p>
+
+📧
+
+{{order.customerEmail || 'Email non disponibile'}}
+
+</p>
+
+
+
+<p>
+
+📅
+
+{{order.purchaseDate | date:'dd/MM/yyyy'}}
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- PRODOTTI -->
+
+
+<h3>
+
+🛒 Prodotti acquistati
+
+</h3>
+
+
+
+
+
+<div
+
+class="products"
+
+*ngFor="let product of order.products">
+
+
+
+<img
+
+*ngIf="product.image"
+
+[src]="product.image"
+
+[alt]="product.name">
+
+
+
+
+
+<div>
+
+
+<strong>
+
+{{product.name}}
+
+</strong>
+
+
+<p>
+
+{{product.price | currency:'EUR'}}
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- FOOTER -->
+
+
+<div class="footer">
+
+
+
+<strong>
+
+Totale ordine:
+
+{{order.total | currency:'EUR'}}
+
+</strong>
+
+
+
+
+
+
+<div class="actions">
+
+
+
+<button
+
+(click)="changeStatus(order)">
+
+🔄 Cambia stato
+
+</button>
+
+
+
+
+
+<button
+
+class="delete"
+
+(click)="deleteOrder(order.id)">
+
+🗑 Elimina
+
+</button>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- NESSUN ORDINE -->
+
+
+<div
+
+class="empty"
+
+*ngIf="filteredOrders.length===0">
+
+
+📭 Nessun ordine trovato
+
+
+</div>
+
+
+
+
+
+</div>

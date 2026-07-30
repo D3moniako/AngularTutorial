@@ -1,7 +1,6 @@
 <div class="product-page">
 
 
-
 <!-- ============================= -->
 <!-- PRODOTTO NON TROVATO -->
 <!-- ============================= -->
@@ -52,9 +51,6 @@ class="product-main"
 
 
 
-<!-- IMMAGINE -->
-
-
 <div class="gallery">
 
 
@@ -72,10 +68,6 @@ class="product-main"
 
 
 
-
-
-
-<!-- INFORMAZIONI -->
 
 
 <div class="info">
@@ -97,7 +89,6 @@ class="product-main"
 {{product.name}}
 
 </h1>
-
 
 
 
@@ -177,7 +168,6 @@ class="product-main"
 
 
 
-
 <div class="price">
 
 {{product.price | currency:'EUR'}}
@@ -189,9 +179,6 @@ class="product-main"
 
 
 
-
-
-<!-- AZIONI -->
 
 
 <div class="actions">
@@ -244,7 +231,6 @@ class="product-main"
 
 
 
-
 <button
 
 class="cart-button"
@@ -252,11 +238,12 @@ class="cart-button"
 (click)="addCart()">
 
 
+
 🛒 Aggiungi al carrello
 
 
-</button>
 
+</button>
 
 
 
@@ -284,9 +271,7 @@ class="fav"
 
 
 
-
 </div>
-
 
 
 
@@ -395,9 +380,12 @@ class="reviews"
 
 
 
+
+
+
 <h2>
 
-Recensioni clienti
+⭐ Recensioni clienti
 
 </h2>
 
@@ -406,21 +394,100 @@ Recensioni clienti
 
 
 
-<div class="review-card">
+
+
+
+
+<div
+
+class="review-card"
+
+*ngFor="let review of product.reviews">
+
+
+
+
+
+
+<div class="review-header">
+
+
+
+<strong>
+
+👤 {{review.user}}
+
+</strong>
+
+
+
+
+
+
+<span
+
+class="verified"
+
+*ngIf="review.verified">
+
+
+✔ Cliente verificato
+
+</span>
+
+
+
+
+
+
+
+<small>
+
+{{review.date}}
+
+</small>
+
+
+</div>
+
+
+
+
+
+
+
 
 
 <div class="review-stars">
 
-⭐⭐⭐⭐⭐
+
+<span
+
+*ngFor="let star of [].constructor(review.rating)">
+
+⭐
+
+</span>
+
 
 </div>
+
+
+
+
+
+
+
 
 
 <p>
 
-Bellissimo planner, elegante e semplice da usare.
+{{review.comment}}
 
 </p>
+
+
+
 
 
 </div>
@@ -431,30 +498,208 @@ Bellissimo planner, elegante e semplice da usare.
 
 
 
-<div class="review-card">
 
 
-<div class="review-stars">
+<div
+
+class="empty-review"
+
+*ngIf="!product.reviews || product.reviews.length===0">
+
+
+Ancora nessuna recensione 🌸
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- ============================= -->
+<!-- FORM RECENSIONE -->
+<!-- ============================= -->
+
+
+
+<div
+
+class="review-login-message"
+
+*ngIf="!canReview">
+
+
+<p *ngIf="!user">
+
+
+🔒 Devi effettuare il login per lasciare una recensione.
+
+</p>
+
+
+
+<p *ngIf="user">
+
+
+🔒 Puoi lasciare una recensione solo dopo aver acquistato questo planner.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div
+
+class="add-review"
+
+*ngIf="canReview">
+
+
+
+
+
+<h3>
+
+Lascia la tua recensione
+
+</h3>
+
+
+
+
+
+
+
+<p class="logged-user">
+
+
+Recensione di:
+
+
+<strong>
+
+{{user?.name}}
+
+</strong>
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<select
+
+[(ngModel)]="newReview.rating">
+
+
+<option [value]="5">
 
 ⭐⭐⭐⭐⭐
 
+</option>
+
+
+<option [value]="4">
+
+⭐⭐⭐⭐
+
+</option>
+
+
+<option [value]="3">
+
+⭐⭐⭐
+
+</option>
+
+
+<option [value]="2">
+
+⭐⭐
+
+</option>
+
+
+<option [value]="1">
+
+⭐
+
+</option>
+
+
+</select>
+
+
+
+
+
+
+
+
+<textarea
+
+placeholder="Scrivi il tuo commento"
+
+[(ngModel)]="newReview.comment">
+
+</textarea>
+
+
+
+
+
+
+
+
+<button
+
+(click)="addReview()">
+
+
+
+Invia recensione 🌸
+
+
+
+</button>
+
+
+
+
+
+
 </div>
 
 
-<p>
 
-Perfetto per organizzare lavoro e vita personale.
-
-</p>
-
-
-</div>
 
 
 
 
 
 </section>
+
+
+
+
 
 
 
@@ -479,6 +724,7 @@ class="related"
 
 
 
+
 <h2>
 
 Potrebbero piacerti anche
@@ -491,7 +737,11 @@ Potrebbero piacerti anche
 
 
 
+
+
 <div class="related-grid">
+
+
 
 
 
@@ -509,12 +759,12 @@ class="small-card"
 
 
 
+
 <img
 
 [src]="p.image"
 
 [alt]="p.name">
-
 
 
 
@@ -546,6 +796,7 @@ class="small-card"
 
 
 
+
 <div class="related-actions">
 
 
@@ -559,10 +810,13 @@ class="details"
 [routerLink]="['/products',p.id]">
 
 
+
 👁 Vedi prodotto
 
 
+
 </a>
+
 
 
 
@@ -581,6 +835,7 @@ class="related-cart"
 🛒
 
 
+
 </button>
 
 
@@ -588,6 +843,8 @@ class="related-cart"
 
 
 </div>
+
+
 
 
 
@@ -612,6 +869,8 @@ class="related-cart"
 
 
 </section>
+
+
 
 
 

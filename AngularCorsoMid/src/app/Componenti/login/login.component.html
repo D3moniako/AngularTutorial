@@ -5,6 +5,8 @@
 
 
 
+
+
 <h1>
 
 🌸 Bentornato
@@ -14,13 +16,37 @@
 
 
 
+
+<p>
+
+Accedi al tuo spazio DreamCalendar
+
+</p>
+
+
+
+
+
+
+
+
+
 <input
+
 
 type="email"
 
+
 placeholder="Email"
 
-[(ngModel)]="email">
+
+[(ngModel)]="email"
+
+
+>
+
+
+
 
 
 
@@ -29,11 +55,21 @@ placeholder="Email"
 
 <input
 
+
 type="password"
+
 
 placeholder="Password"
 
-[(ngModel)]="password">
+
+[(ngModel)]="password"
+
+
+>
+
+
+
+
 
 
 
@@ -41,9 +77,42 @@ placeholder="Password"
 
 <button
 
-(click)="login()">
+
+(click)="login()"
+
+
+[disabled]="loading"
+
+
+
+>
+
+
+
+<span *ngIf="!loading">
+
 
 Accedi
+
+
+</span>
+
+
+
+
+
+
+<span *ngIf="loading">
+
+
+⏳ Accesso...
+
+
+</span>
+
+
+
+
 
 </button>
 
@@ -51,15 +120,31 @@ Accedi
 
 
 
+
+
+
+
 <p
+
 
 class="error"
 
-*ngIf="errorMessage">
+
+*ngIf="errorMessage"
+
+
+
+>
+
+
 
 {{errorMessage}}
 
+
 </p>
+
+
+
 
 
 
@@ -69,17 +154,27 @@ class="error"
 <p>
 
 
+
 Non hai un account?
+
+
+
 
 
 <a routerLink="/register">
 
+
 Registrati
+
 
 </a>
 
 
+
 </p>
+
+
+
 
 
 

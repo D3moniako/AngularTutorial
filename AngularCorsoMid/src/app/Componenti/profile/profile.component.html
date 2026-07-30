@@ -255,7 +255,14 @@ class="cancel-photo"
 
 <!-- DATI PERSONALI -->
 
+<a 
+*ngIf="user?.role?.toLowerCase() === 'admin'"
+routerLink="/admin/dashboard"
+class="admin-button">
 
+👑 Area Amministratore
+
+</a>
 <div class="profile-section">
 
 

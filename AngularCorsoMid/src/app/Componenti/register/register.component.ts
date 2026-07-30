@@ -8,6 +8,8 @@ import { User } from '../../models/user';
 
 
 
+
+
 @Component({
 
 selector:'app-register',
@@ -23,7 +25,10 @@ export class RegisterComponent {
 
 
 
+
+
 user:User={
+
 
 
 id:0,
@@ -56,7 +61,11 @@ createdAt:'',
 avatar:''
 
 
+
 };
+
+
+
 
 
 
@@ -65,13 +74,31 @@ confirmPassword:string='';
 
 
 
+errorMessage:string='';
+
+
+
+
+
+
+loading:boolean=false;
+
+
+
+
+
+
+
 
 
 constructor(
 
+
 private userService:UserService,
 
+
 private router:Router
+
 
 ){}
 
@@ -83,58 +110,75 @@ private router:Router
 
 
 
+
+
+
+
 register(){
 
-this.user.name = this.user.name.trim();
 
-this.user.email = this.user.email.trim();
 
-this.user.phone = this.user.phone?.trim() || '';
+this.errorMessage='';
+
+
+
+
+
+// pulizia dati inseriti
+
+
+this.user.name=this.user.name.trim();
+
+
+
+this.user.email=this.user.email.trim();
+
+
+
+this.user.phone=this.user.phone?.trim() || '';
+
+
+
+
+
+
+
+
+
+// =================================
+// CONTROLLI CAMPI
+// =================================
+
+
 
 if(
-  !this.user.name ||
-  !this.user.email ||
-  !this.user.password
-){
-  alert('Compila tutti i campi obbligatori');
-  return;
-}
 
-if(this.user.name.length < 2){
-  alert('Nome troppo corto');
-  return;
-}
-if(!this.user.email.includes('@')){
-    alert('Email non valida');
-    return;
-}
-if(
-    this.user.phone &&
-    this.user.phone.length < 8
-){
-    alert('Numero di telefono non valido');
-    return;
-}
-if(this.user.password.length < 6){
 
-    alert('La password deve avere almeno 6 caratteri');
 
-    return;
+!this.user.name ||
 
-}
-if(
 
-this.user.password !== this.confirmPassword
+!this.user.email ||
+
+
+!this.user.password
+
+
 
 ){
 
 
-alert('❌ Le password non coincidono');
+
+this.errorMessage=
+
+'Compila tutti i campi obbligatori';
+
 
 
 return;
 
 
+
 }
 
 
@@ -143,11 +187,175 @@ return;
 
 
 
-const result=this.userService.register(
+
+
+if(this.user.name.length < 2){
+
+
+
+this.errorMessage=
+
+'Nome troppo corto';
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+if(!this.user.email.includes('@')){
+
+
+
+this.errorMessage=
+
+'Email non valida';
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+if(
+
+
+
+this.user.phone &&
+
+
+this.user.phone.length < 8
+
+
+
+){
+
+
+
+this.errorMessage=
+
+'Numero di telefono non valido';
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+if(this.user.password.length < 6){
+
+
+
+this.errorMessage=
+
+'La password deve avere almeno 6 caratteri';
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+if(
+
+
+
+this.user.password !== this.confirmPassword
+
+
+
+){
+
+
+
+this.errorMessage=
+
+'❌ Le password non coincidono';
+
+
+
+return;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+this.loading=true;
+
+
+
+
+
+
+
+
+
+// =================================
+// REGISTRAZIONE UTENTE
+// =================================
+
+
+
+const result = this.userService.register(
+
+
 
 this.user
 
+
+
 );
+
+
+
 
 
 
@@ -161,6 +369,7 @@ if(result){
 alert('🌸 Registrazione completata');
 
 
+
 this.router.navigate(['/login']);
 
 
@@ -171,14 +380,28 @@ else{
 
 
 
-alert('⚠️ Email già utilizzata');
+this.errorMessage=
+
+'⚠️ Email già utilizzata';
+
 
 
 }
 
 
 
+
+
+this.loading=false;
+
+
+
+
+
+
+
 }
+
 
 
 

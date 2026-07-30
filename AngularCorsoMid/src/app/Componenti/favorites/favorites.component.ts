@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { PlannerService } from '../../services/planner.service';
 
+import { CartService } from '../../services/cart.service';
+
 import { Product } from '../../models/product';
 
 
@@ -27,9 +29,12 @@ favorites:Product[]=[];
 
 constructor(
 
-private plannerService:PlannerService
+private plannerService:PlannerService,
+
+private cartService:CartService
 
 ){}
+
 
 
 
@@ -47,13 +52,18 @@ this.loadFavorites();
 
 
 
+
 loadFavorites(){
 
 
-this.favorites=this.plannerService.getFavorites();
+this.favorites =
+
+this.plannerService.getFavorites();
 
 
 }
+
+
 
 
 
@@ -69,6 +79,23 @@ this.loadFavorites();
 
 
 }
+
+
+
+
+
+
+
+addCart(product:Product){
+
+
+this.cartService.add(product);
+
+
+}
+
+
+
 
 
 

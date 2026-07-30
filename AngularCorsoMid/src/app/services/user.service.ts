@@ -16,13 +16,12 @@ export class UserService {
 
 
 
-// ================================================
-// LOCAL STORAGE TEMPORANEO FINO AL BACKEND
-// ================================================
+// =================================================
+// DATABASE TEMPORANEO LOCAL STORAGE
+// =================================================
 
 
 private users:User[] = this.loadUsers();
-
 
 
 private currentUser:User|null = this.loadCurrentUser();
@@ -30,17 +29,32 @@ private currentUser:User|null = this.loadCurrentUser();
 
 
 
+// =================================================
+// STREAM LISTA UTENTI ADMIN
+// =================================================
 
-// comunica cambio utente a tutta l'app
+
+private usersSubject =
+new BehaviorSubject<User[]>(this.users);
+
+
+users$ =
+this.usersSubject.asObservable();
+
+
+
+
+// =================================================
+// STREAM UTENTE LOGGATO
+// =================================================
 
 
 private userSubject =
-
-new BehaviorSubject<User | null>(this.currentUser);
-
+new BehaviorSubject<User|null>(this.currentUser);
 
 
-user$ = this.userSubject.asObservable();
+user$ =
+this.userSubject.asObservable();
 
 
 
@@ -56,11 +70,9 @@ constructor(){}
 
 
 
-
-
-// ================================================
-// LETTURA LOCAL STORAGE
-// ================================================
+// =================================================
+// LOAD USERS
+// =================================================
 
 
 private loadUsers():User[]{
@@ -69,15 +81,13 @@ private loadUsers():User[]{
 try{
 
 
-return JSON.parse(
+const data=localStorage.getItem('users');
 
-localStorage.getItem('users') || '[]'
 
-);
+return data ? JSON.parse(data) : [];
 
 
 }
-
 catch{
 
 
@@ -101,15 +111,13 @@ private loadCurrentUser():User|null{
 try{
 
 
-return JSON.parse(
+const data=localStorage.getItem('currentUser');
 
-localStorage.getItem('currentUser') || 'null'
 
-);
+return data ? JSON.parse(data) : null;
 
 
 }
-
 catch{
 
 
@@ -129,31 +137,29 @@ return null;
 
 
 
-/*
-================================================
-
-REGISTRAZIONE UTENTE
-
-================================================
-*/
+// =================================================
+// REGISTRAZIONE
+// =================================================
 
 
 register(user:User):boolean{
 
 
-
 const exists=this.users.find(
 
+
 u=>u.email.toLowerCase()===user.email.toLowerCase()
+
 
 );
 
 
 
-
 if(exists){
 
+
 return false;
+
 
 }
 
@@ -165,33 +171,23 @@ return false;
 const newUser:User={
 
 
-
 id:Date.now(),
-
 
 name:user.name,
 
-
 email:user.email,
-
 
 password:user.password,
 
-
 phone:user.phone,
-
 
 role:user.role || 'USER',
 
-
 enabled:true,
-
 
 twoFactorEnabled:false,
 
-
 createdAt:new Date().toISOString(),
-
 
 avatar:user.avatar
 
@@ -201,14 +197,10 @@ avatar:user.avatar
 
 
 
-
-
 this.users.push(newUser);
 
 
-
 this.saveUsers();
-
 
 
 
@@ -225,13 +217,9 @@ return true;
 
 
 
-/*
-================================================
-
-LOGIN
-
-================================================
-*/
+// =================================================
+// LOGIN
+// =================================================
 
 
 login(
@@ -241,8 +229,6 @@ email:string,
 password:string
 
 ):boolean{
-
-
 
 
 
@@ -275,8 +261,6 @@ return false;
 
 
 
-
-
 if(!user.enabled){
 
 return false;
@@ -288,8 +272,7 @@ return false;
 
 
 
-
-this.currentUser=user;
+this.currentUser={...user};
 
 
 
@@ -297,15 +280,12 @@ this.saveCurrentUser();
 
 
 
-
-this.userSubject.next(user);
-
-
-
+this.userSubject.next(this.currentUser);
 
 
 
 return true;
+
 
 
 }
@@ -318,13 +298,9 @@ return true;
 
 
 
-/*
-================================================
-
-LOGOUT
-
-================================================
-*/
+// =================================================
+// LOGOUT
+// =================================================
 
 
 logout(){
@@ -335,11 +311,7 @@ this.currentUser=null;
 
 
 
-localStorage.removeItem(
-
-'currentUser'
-
-);
+localStorage.removeItem('currentUser');
 
 
 
@@ -357,23 +329,47 @@ this.userSubject.next(null);
 
 
 
-/*
-================================================
-
-UTENTE CORRENTE
-
-================================================
-*/
+// =================================================
+// UTENTE CORRENTE
+// =================================================
 
 
 getCurrentUser():User|null{
 
 
-if(!this.currentUser){
+return this.currentUser
+?
 
-return null;
+{...this.currentUser}
+
+:
+
+null;
+
 
 }
+
+
+
+
+
+
+
+
+
+requireUser():User{
+
+
+if(!this.currentUser){
+
+
+throw new Error(
+'Utente non autenticato'
+);
+
+
+}
+
 
 
 return {...this.currentUser};
@@ -388,59 +384,11 @@ return {...this.currentUser};
 
 
 
-/*
-================================================
-
-UTENTE OBBLIGATORIO
-
-Utile per checkout
-
-================================================
-*/
-
-
-requireUser():User{
-
-
-if(!this.currentUser){
-
-
-throw new Error(
-
-'Utente non autenticato'
-
-);
-
-
-}
-
-
-return this.currentUser;
-
-
-}
-
-
-
-
-
-
-
-
-
-/*
-================================================
-
-CONTROLLO LOGIN
-
-================================================
-*/
-
 
 isLogged():boolean{
 
 
-return this.currentUser !== null;
+return this.currentUser!==null;
 
 
 }
@@ -453,25 +401,12 @@ return this.currentUser !== null;
 
 
 
-/*
-================================================
-
-AGGIORNA PROFILO
-
-================================================
-*/
+// =================================================
+// AGGIORNA PROFILO UTENTE
+// =================================================
 
 
 updateProfile(updatedUser:User):boolean{
-
-
-
-if(!this.currentUser){
-
-return false;
-
-}
-
 
 
 
@@ -480,7 +415,6 @@ const index=this.users.findIndex(
 u=>u.id===updatedUser.id
 
 );
-
 
 
 
@@ -494,28 +428,33 @@ return false;
 
 
 
-
-this.users[index]=updatedUser;
-
+this.users[index]={...updatedUser};
 
 
-this.currentUser=updatedUser;
+
+if(this.currentUser?.id===updatedUser.id){
+
+
+this.currentUser={...updatedUser};
+
+
+this.saveCurrentUser();
+
+
+this.userSubject.next(this.currentUser);
+
+
+}
+
 
 
 
 this.saveUsers();
 
-this.saveCurrentUser();
-
-
-
-
-this.userSubject.next(updatedUser);
-
-
 
 
 return true;
+
 
 
 }
@@ -528,13 +467,87 @@ return true;
 
 
 
-/*
-================================================
+// =================================================
+// ADMIN MODIFICA UTENTE
+// =================================================
 
-CAMBIO PASSWORD
 
-================================================
-*/
+adminUpdateUser(updatedUser:User):boolean{
+
+
+
+const index=this.users.findIndex(
+
+u=>u.id===updatedUser.id
+
+);
+
+
+
+
+if(index===-1){
+
+
+return false;
+
+
+}
+
+
+
+
+this.users[index]={...updatedUser};
+
+
+
+
+
+// se è l'utente loggato aggiorna anche header
+
+
+if(this.currentUser?.id===updatedUser.id){
+
+
+
+this.currentUser={...updatedUser};
+
+
+
+this.saveCurrentUser();
+
+
+
+this.userSubject.next(this.currentUser);
+
+
+
+}
+
+
+
+
+
+this.saveUsers();
+
+
+
+return true;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =================================================
+// CAMBIO PASSWORD
+// =================================================
 
 
 changePassword(
@@ -544,7 +557,6 @@ oldPassword:string,
 newPassword:string
 
 ):boolean{
-
 
 
 if(!this.currentUser){
@@ -584,23 +596,23 @@ u=>u.id===this.currentUser!.id
 
 if(index!==-1){
 
-this.users[index]=this.currentUser;
+
+this.users[index]={...this.currentUser};
+
 
 }
 
 
 
 
-
 this.saveUsers();
+
 
 this.saveCurrentUser();
 
 
 
-
-this.userSubject.next(this.currentUser);
-
+this.userSubject.next({...this.currentUser});
 
 
 
@@ -617,13 +629,40 @@ return true;
 
 
 
-/*
-================================================
+// =================================================
+// SINCRONIZZA DOPO REFRESH
+// =================================================
 
-SALVATAGGIO LOCAL STORAGE
 
-================================================
-*/
+refreshUser(){
+
+
+
+const user=this.loadCurrentUser();
+
+
+
+this.currentUser=user;
+
+
+
+this.userSubject.next(user);
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =================================================
+// SALVATAGGI
+// =================================================
 
 
 private saveUsers(){
@@ -639,6 +678,15 @@ JSON.stringify(this.users)
 );
 
 
+
+this.usersSubject.next(
+
+this.getUsers()
+
+);
+
+
+
 }
 
 
@@ -649,6 +697,7 @@ JSON.stringify(this.users)
 
 
 private saveCurrentUser(){
+
 
 
 if(this.currentUser){
@@ -664,6 +713,7 @@ JSON.stringify(this.currentUser)
 );
 
 
+
 }
 
 else{
@@ -675,6 +725,7 @@ localStorage.removeItem('currentUser');
 }
 
 
+
 }
 
 
@@ -685,22 +736,166 @@ localStorage.removeItem('currentUser');
 
 
 
-/*
-================================================
+// =================================================
+// ADMIN
+// =================================================
 
-ADMIN FUTURO
 
-================================================
-*/
+isAdmin():boolean{
+
+
+return this.currentUser?.role==='ADMIN';
+
+
+}
+
+
+
+
+
 
 
 getUsers():User[]{
 
 
-return [...this.users];
+return this.users.map(
+
+u=>({...u})
+
+);
 
 
 }
+
+
+
+
+
+
+
+
+
+deleteUser(id:number){
+
+
+
+this.users=this.users.filter(
+
+u=>u.id!==id
+
+);
+
+
+
+if(this.currentUser?.id===id){
+
+
+this.currentUser=null;
+
+
+this.saveCurrentUser();
+
+
+this.userSubject.next(null);
+
+
+}
+
+
+
+this.saveUsers();
+
+
+}
+
+
+
+
+
+
+
+
+
+toggleUserStatus(id:number){
+
+
+
+const user=this.users.find(
+
+u=>u.id===id
+
+);
+
+
+
+if(user){
+
+
+
+user.enabled=!user.enabled;
+
+
+
+this.saveUsers();
+
+
+
+}
+
+
+
+}
+
+
+
+
+
+
+
+
+
+changeRole(id:number){
+
+
+
+const user=this.users.find(
+
+u=>u.id===id
+
+);
+
+
+
+if(user){
+
+
+
+user.role=
+
+user.role==='ADMIN'
+
+?
+
+'USER'
+
+:
+
+'ADMIN';
+
+
+
+
+this.adminUpdateUser(user);
+
+
+
+}
+
+
+
+}
+
+
 
 
 

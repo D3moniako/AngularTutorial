@@ -39,6 +39,7 @@ user:User|null=null;
 
 
 
+
 customer={
 
 name:'',
@@ -51,10 +52,24 @@ address:''
 
 
 
+
 orderCompleted=false;
 
 
 loading=false;
+
+
+
+lastOrderId:number=0;
+
+
+
+errorMessage:string='';
+
+
+successMessage:string='';
+
+
 
 
 
@@ -82,6 +97,10 @@ private router:Router
 
 
 
+
+
+
+
 ngOnInit(){
 
 
@@ -94,13 +113,17 @@ this.user=this.userService.getCurrentUser();
 if(this.user){
 
 
+
 this.customer.name=this.user.name;
 
 
 this.customer.email=this.user.email;
 
 
+
 }
+
+
 
 
 
@@ -117,16 +140,53 @@ this.loadCart();
 
 
 
+
+
 loadCart(){
+
 
 
 this.cart=this.cartService.getCart();
 
 
+
 this.total=this.cartService.getTotal();
 
 
+
 }
+
+
+
+
+
+
+
+
+
+get totalItems():number{
+
+
+
+return this.cart.reduce(
+
+
+
+(total,item)=>
+
+
+total + item.quantity,
+
+
+0
+
+
+);
+
+
+
+}
+
 
 
 
@@ -139,27 +199,51 @@ completeOrder(){
 
 
 
+this.errorMessage='';
+
+
+this.successMessage='';
+
+
+
+
+
 if(this.loading){
 
+
 return;
+
 
 }
 
 
+
+
+
+
+
+
+
+// ================================================
+// CONTROLLO LOGIN
+// ================================================
 
 
 
 if(!this.user){
 
 
-alert(
-'Devi effettuare il login prima di acquistare'
-);
+
+this.errorMessage =
+
+'Devi effettuare il login prima di acquistare';
+
 
 
 this.router.navigate(['/login']);
 
 
+
 return;
 
 
@@ -168,29 +252,43 @@ return;
 
 
 
+
+
+
+
+
+// ================================================
+// CONTROLLO DATI CLIENTE
+// ================================================
 
 
 
 if(
 
-!this.customer.name ||
 
-!this.customer.email ||
 
-!this.customer.address
+!this.customer.name.trim() ||
+
+
+!this.customer.email.trim() ||
+
+
+!this.customer.address.trim()
+
+
 
 ){
 
 
 
-alert(
+this.errorMessage =
 
-'Inserisci tutti i dati richiesti'
+'Inserisci tutti i dati richiesti';
 
-);
 
 
 return;
+
 
 
 }
@@ -199,6 +297,13 @@ return;
 
 
 
+
+
+
+
+// ================================================
+// CONTROLLO CARRELLO
+// ================================================
 
 
 
@@ -206,17 +311,19 @@ if(this.cart.length===0){
 
 
 
-alert(
+this.errorMessage =
 
-'Il carrello è vuoto'
+'Il carrello è vuoto';
 
-);
 
 
 return;
 
 
+
 }
+
+
 
 
 
@@ -230,11 +337,28 @@ this.loading=true;
 
 
 
+
+
+
+
+// ================================================
+// CREAZIONE ORDINE
+// ================================================
+
+
+
+const orderId = Date.now();
+
+
+
+
+
+
 const order:Order={
 
 
 
-id:Date.now(),
+id:orderId,
 
 
 
@@ -242,11 +366,11 @@ userId:this.user.id,
 
 
 
-products:this.cart.map(
+products:
 
-item=>item.product
 
-),
+
+this.cart.map(item=>item.product),
 
 
 
@@ -254,7 +378,11 @@ total:this.total,
 
 
 
-purchaseDate:new Date().toISOString(),
+purchaseDate:
+
+
+
+new Date().toISOString(),
 
 
 
@@ -262,7 +390,33 @@ status:'COMPLETED',
 
 
 
-downloadAvailable:true
+downloadAvailable:true,
+
+
+
+
+
+customerName:
+
+
+
+this.customer.name,
+
+
+
+customerEmail:
+
+
+
+this.customer.email,
+
+
+
+customerAddress:
+
+
+
+this.customer.address
 
 
 
@@ -276,7 +430,28 @@ downloadAvailable:true
 
 
 
+// ================================================
+// SALVATAGGIO ORDINE
+// ================================================
+
+
+
 this.orderService.addOrder(order);
+
+
+
+
+
+
+
+
+this.lastOrderId=orderId;
+
+
+
+this.successMessage=
+
+'Ordine completato correttamente';
 
 
 
@@ -288,9 +463,17 @@ this.orderCompleted=true;
 
 
 
+
+
+
+
+// ================================================
+// PULIZIA CARRELLO
+// ================================================
+
+
+
 this.cartService.clear();
-
-
 
 
 
@@ -298,6 +481,7 @@ this.cart=[];
 
 
 this.total=0;
+
 
 
 this.loading=false;
@@ -313,13 +497,36 @@ this.loading=false;
 
 
 
+
 goToPlanners(){
+
 
 
 this.router.navigate(['/my-planners']);
 
 
+
 }
+
+
+
+
+
+
+
+
+
+
+continueShopping(){
+
+
+
+this.router.navigate(['/shop']);
+
+
+
+}
+
 
 
 
