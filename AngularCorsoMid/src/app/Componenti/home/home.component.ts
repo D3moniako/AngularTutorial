@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-
+import { NotificationService } 
+from '../../services/notification.service';
 
 
 interface Product {
@@ -52,6 +53,11 @@ styleUrls:['./home.component.css']
 
 export class HomeComponent {
 
+constructor(
+
+private notificationService: NotificationService
+
+){}
 
 
 menuOpen:boolean=false;
@@ -700,7 +706,6 @@ alert(
 );
 
 
-
 }
 
 
@@ -743,34 +748,39 @@ return this.cartProducts.reduce(
 subscribe(){
 
 
-
 if(this.email.trim()===''){
 
 
 alert(
-
 'Inserisci la tua email ✉️'
-
 );
 
 
 return;
+
+}
+
+
+alert(
+'💖 Grazie! Riceverai presto il tuo planner gratuito.'
+);
+
+
+this.email='';
 
 
 }
 
 
 
-alert(
 
-'💖 Grazie! Riceverai presto il tuo planner gratuito.'
 
+testNotification(){
+
+
+this.notificationService.success(
+'🌸 Notifica DreamCalendar funzionante!'
 );
-
-
-
-this.email='';
-
 
 
 }

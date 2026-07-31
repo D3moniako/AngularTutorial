@@ -34,17 +34,20 @@ purchaseDate:string;
 // stato ordine
 
 status:
+
 'PAGATO'
+
 |
+
 'IN_ATTESA'
+
 |
-'ANNULLATO'
-|
-'COMPLETED'
-|
-'PENDING'
-|
-'CANCELLED';
+
+'ANNULLATO';
+
+
+
+
 
 // download disponibili
 
@@ -54,11 +57,15 @@ downloadAvailable:boolean;
 
 
 
+
+
 // informazioni cliente
 
 customerName?:string;
 
+
 customerEmail?:string;
+
 
 customerAddress?:string;
 
@@ -66,9 +73,22 @@ customerAddress?:string;
 
 
 
-// futuro pagamento
 
-paymentId?:string;
+
+
+// collegamento pagamento
+
+paymentId?:number;
+
+
+
+// futura integrazione Stripe
+
+stripeSessionId?:string;
+
+
+
+stripePaymentIntentId?:string;
 
 
 

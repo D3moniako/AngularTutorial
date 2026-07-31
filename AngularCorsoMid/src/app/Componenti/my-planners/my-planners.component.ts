@@ -21,6 +21,8 @@ image:string;
 
 file:string;
 
+pdfPreview:string;
+
 category:string;
 
 purchaseDate:string;
@@ -60,9 +62,12 @@ export class MyPlannersComponent implements OnInit, OnDestroy {
 
 private userSubscription?:Subscription;
 
+private ordersSubscription?:Subscription;
+
 
 
 user:User|null=null;
+
 
 
 currentYear:number =
@@ -73,7 +78,9 @@ new Date().getFullYear();
 searchText:string='';
 
 
+
 selectedCategory:string='Tutti';
+
 
 
 downloadMessage:string='';
@@ -133,28 +140,39 @@ this.userService.user$
 this.user=user;
 
 
+
 if(user){
 
+
 this.loadUserPlanners(user.id);
+
+
+
+if(!this.ordersSubscription){
+
+this.listenOrders(user.id);
+
+}
+
 
 }
 
 
 });
 
-
 }
 
 
 
-
-
+//
+// CARICA PLANNER ACQUISTATI
+//
 
 private loadUserPlanners(userId:number){
 
 
 
-const products:Product[]=
+const products:Product[] =
 
 this.orderService.getUserPlanners(userId);
 
@@ -175,7 +193,14 @@ name:product.name,
 image:product.image,
 
 
+
 file:product.downloadUrl || '',
+
+
+
+pdfPreview:
+
+product.downloadUrl || '',
 
 
 
@@ -185,35 +210,56 @@ category:product.category,
 
 purchaseDate:
 
-new Date().toLocaleDateString('it-IT'),
+this.getPurchaseDate(
+
+product.id,
+
+userId
+
+),
 
 
 
-version:'2026 Premium',
+version:
+
+'2026 Premium',
 
 
 
-downloads:0,
+downloads:
+
+this.getDownloads(product.id),
 
 
 
-size:'20 MB',
+size:
+
+'20 MB',
 
 
 
 favorite:
 
-this.plannerService.isFavorite(product.id),
+this.plannerService.isFavorite(
+
+product.id
+
+),
 
 
 
 color:
 
-this.getPlannerColor(product.category),
+this.getPlannerColor(
+
+product.category
+
+),
 
 
 
 updated:false,
+
 
 
 product:product
@@ -231,6 +277,130 @@ product:product
 
 
 
+//
+// DATA ACQUISTO
+//
+
+private getPurchaseDate(
+
+productId:number,
+
+userId:number
+
+):string{
+
+
+
+const orders =
+
+this.orderService.getUserOrders(userId);
+
+
+
+for(const order of orders){
+
+
+
+const product =
+
+order.products.find(
+
+p=>p.id===productId
+
+);
+
+
+
+if(product){
+
+
+
+return new Date(
+
+order.purchaseDate
+
+)
+
+.toLocaleDateString('it-IT');
+
+}
+
+
+}
+
+
+
+return '';
+
+}
+
+
+
+
+
+
+//
+// DOWNLOAD SALVATI
+//
+
+private getDownloads(productId:number):number{
+
+
+const value =
+
+localStorage.getItem(
+
+'downloads_'+productId
+
+);
+
+
+
+return value ?
+
+Number(value)
+
+:
+
+0;
+
+
+}
+
+
+
+
+
+
+private saveDownloads(
+
+productId:number,
+
+value:number
+
+){
+
+
+localStorage.setItem(
+
+'downloads_'+productId,
+
+String(value)
+
+);
+
+
+}
+
+
+
+
+
+
+
+//
+// COLORI CARD
+//
 
 private getPlannerColor(category:string):string{
 
@@ -243,9 +413,11 @@ case 'Elegant':
 return '#f8c4dd';
 
 
+
 case 'Wellness':
 
 return '#dbc8ff';
+
 
 
 case 'Business':
@@ -253,9 +425,11 @@ case 'Business':
 return '#ffdcb8';
 
 
+
 case 'Lifestyle':
 
 return '#c8f0df';
+
 
 
 default:
@@ -266,7 +440,6 @@ return '#eeeeee';
 }
 
 
-
 }
 
 
@@ -275,11 +448,16 @@ return '#eeeeee';
 
 
 
+//
+// FILTRO
+//
+
 get filteredPlanners(){
 
 
+const text =
 
-const text=this.searchText
+this.searchText
 
 .trim()
 
@@ -287,37 +465,30 @@ const text=this.searchText
 
 
 
-
 return this.planners.filter(p=>{
-
 
 
 const search =
 
-
 !text ||
 
+p.name.toLowerCase()
 
-p.name.toLowerCase().includes(text)
-
+.includes(text)
 
 ||
 
+p.category.toLowerCase()
 
-p.category.toLowerCase().includes(text);
-
-
+.includes(text);
 
 
 
 const category =
 
-
 this.selectedCategory==='Tutti'
 
-
 ||
-
 
 p.category===this.selectedCategory;
 
@@ -338,11 +509,10 @@ return search && category;
 
 
 
-
 selectCategory(category:string){
 
 
-this.selectedCategory=category;
+this.selectedCategory = category;
 
 
 }
@@ -353,10 +523,11 @@ this.selectedCategory=category;
 
 
 
-
+//
+// PREFERITI
+//
 
 toggleFavorite(planner:PlannerView){
-
 
 
 this.plannerService.toggleFavorite(
@@ -376,7 +547,6 @@ planner.id
 );
 
 
-
 }
 
 
@@ -386,61 +556,87 @@ planner.id
 
 
 
+ // =======================================
+// DOWNLOAD PDF
+// =======================================
 
-download(planner:PlannerView){
+download(planner: PlannerView) {
 
-
-
-if(!planner.file){
-
-
-this.downloadMessage=
-
-'❌ File non disponibile';
+  console.log('ENTRATO NEL DOWNLOAD');
+  console.log('PLANNER:', planner);
+  console.log('FILE:', planner.file);
 
 
-return;
+  if (!this.user) {
 
+    this.downloadMessage = '🔒 Devi effettuare il login';
+    this.clearDownloadMessage();
+    return;
+
+  }
+
+
+  if (!planner.file) {
+
+    this.downloadMessage = '❌ PDF non disponibile';
+    this.clearDownloadMessage();
+    return;
+
+  }
+
+
+  try {
+
+    const link = document.createElement('a');
+
+    link.href = planner.file;
+
+    link.target = '_blank';
+
+    link.download = planner.name + '.pdf';
+
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+
+    planner.downloads++;
+
+    this.saveDownloads(
+      planner.id,
+      planner.downloads
+    );
+
+
+    this.downloadMessage =
+      '✅ Download completato: ' + planner.name;
+
+    this.clearDownloadMessage();
+
+
+  } catch(e) {
+
+    console.error('Errore download PDF:', e);
+
+    this.downloadMessage =
+      '❌ Errore durante il download';
+
+    this.clearDownloadMessage();
+
+  }
 
 }
 
 
 
-const link=document.createElement('a');
-
-
-link.href=planner.file;
-
-
-link.download=
-
-planner.name+'.pdf';
-
-
-
-document.body.appendChild(link);
-
-
-link.click();
-
-
-document.body.removeChild(link);
 
 
 
 
-planner.downloads++;
-
-
-
-this.downloadMessage=
-
-'✅ Download completato: '
-
-+
-
-planner.name;
-
+private clearDownloadMessage(){
 
 
 setTimeout(()=>{
@@ -452,7 +648,6 @@ this.downloadMessage='';
 },3000);
 
 
-
 }
 
 
@@ -462,12 +657,40 @@ this.downloadMessage='';
 
 
 
+//
+// ANTEPRIMA
+//
 
 preview(planner:PlannerView){
 
 
-this.plannerSelected=planner;
 
+this.plannerSelected = planner;
+
+
+}
+
+
+
+
+
+
+openPdf(planner:PlannerView){
+
+
+if(planner.pdfPreview){
+
+
+window.open(
+
+planner.pdfPreview,
+
+'_blank'
+
+);
+
+
+}
 
 }
 
@@ -491,18 +714,51 @@ this.plannerSelected=null;
 
 
 
+
 get totalDownloads(){
 
 
 
 return this.planners.reduce(
 
-(total,p)=>total+p.downloads,
+(total,p)=>
+
+total+p.downloads,
 
 0
 
 );
 
+
+}
+
+
+
+
+
+
+
+
+//
+// AGGIORNA ORDINI
+//
+
+private listenOrders(userId:number){
+
+
+
+this.ordersSubscription =
+
+this.orderService.orders$
+
+.subscribe(()=>{
+
+
+this.loadUserPlanners(userId);
+
+
+
+});
 
 
 }
@@ -517,6 +773,9 @@ ngOnDestroy(){
 
 
 this.userSubscription?.unsubscribe();
+
+
+this.ordersSubscription?.unsubscribe();
 
 
 }

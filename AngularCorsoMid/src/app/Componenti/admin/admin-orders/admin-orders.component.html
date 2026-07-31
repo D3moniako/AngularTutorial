@@ -1,14 +1,34 @@
 <div class="admin-orders">
 
 
+<header class="page-header">
+
 <h1>
 📦 Gestione Ordini
 </h1>
 
-
-<p class="message">
-{{message}}
+<p>
+Pannello amministrazione vendite e pagamenti
 </p>
+
+</header>
+
+
+
+
+
+<!-- MESSAGGIO -->
+
+<div 
+class="message"
+*ngIf="message">
+
+{{message}}
+
+</div>
+
+
+
 
 
 
@@ -16,10 +36,11 @@
 
 <!-- STATISTICHE -->
 
-<div class="stats">
+<section class="stats">
 
 
-<div class="stat">
+
+<div class="stat-card">
 
 <span>
 Ordini totali
@@ -34,10 +55,11 @@ Ordini totali
 
 
 
-<div class="stat">
+
+<div class="stat-card green">
 
 <span>
-Incasso totale
+Incasso pagato
 </span>
 
 <strong>
@@ -48,7 +70,57 @@ Incasso totale
 
 
 
+
+
+<div class="stat-card blue">
+
+<span>
+Prodotti venduti
+</span>
+
+<strong>
+{{totalProducts}}
+</strong>
+
 </div>
+
+
+
+
+
+<div class="stat-card yellow">
+
+<span>
+In attesa
+</span>
+
+<strong>
+{{pendingOrders}}
+</strong>
+
+</div>
+
+
+
+
+
+<div class="stat-card red">
+
+<span>
+Annullati
+</span>
+
+<strong>
+{{cancelledOrders}}
+</strong>
+
+</div>
+
+
+
+</section>
+
+
 
 
 
@@ -58,18 +130,27 @@ Incasso totale
 
 <!-- FILTRI -->
 
-<div class="filters">
+<section class="filters">
 
 
 <input
 
+
 type="text"
 
-placeholder="🔎 Cerca cliente o email"
+
+placeholder="🔎 Cerca cliente, email o ID ordine"
+
 
 [(ngModel)]="searchText"
 
-(input)="filterOrders()">
+
+(input)="filterOrders()"
+
+
+>
+
+
 
 
 
@@ -77,10 +158,11 @@ placeholder="🔎 Cerca cliente o email"
 
 <select
 
+
 [(ngModel)]="selectedStatus"
 
-(change)="filterOrders()">
 
+(change)="filterOrders()">
 
 
 <option value="Tutti">
@@ -92,30 +174,30 @@ Tutti gli stati
 
 <option value="PAGATO">
 
-✅ PAGATO
+🟢 Pagato
 
 </option>
 
 
 <option value="IN_ATTESA">
 
-⏳ IN_ATTESA
+🟡 In attesa
 
 </option>
 
 
 <option value="ANNULLATO">
 
-❌ ANNULLATO
+🔴 Annullato
 
 </option>
-
 
 
 </select>
 
 
-</div>
+
+</section>
 
 
 
@@ -131,6 +213,9 @@ Tutti gli stati
 <section class="orders">
 
 
+
+
+
 <div
 
 class="order-card"
@@ -141,8 +226,10 @@ class="order-card"
 
 
 
+<div class="order-top">
 
-<div class="header">
+
+<div>
 
 
 <h2>
@@ -150,6 +237,20 @@ class="order-card"
 📦 Ordine #{{order.id}}
 
 </h2>
+
+
+<p>
+
+📅
+
+{{order.purchaseDate | date:'dd/MM/yyyy HH:mm'}}
+
+</p>
+
+
+</div>
+
+
 
 
 
@@ -163,7 +264,9 @@ class="status"
 
 [class.attesa]="order.status==='IN_ATTESA'"
 
-[class.annullato]="order.status==='ANNULLATO'">
+[class.annullato]="order.status==='ANNULLATO'"
+
+>
 
 
 {{order.status}}
@@ -182,17 +285,26 @@ class="status"
 
 
 
+
 <!-- CLIENTE -->
 
 
-<div class="customer">
+<div class="customer-box">
+
+
+<h3>
+👤 Cliente
+</h3>
+
 
 
 <p>
 
-👤
+<strong>
 
 {{order.customerName || 'Cliente non registrato'}}
+
+</strong>
 
 </p>
 
@@ -202,7 +314,7 @@ class="status"
 
 📧
 
-{{order.customerEmail || 'Email non disponibile'}}
+{{order.customerEmail || 'N/D'}}
 
 </p>
 
@@ -210,9 +322,19 @@ class="status"
 
 <p>
 
-📅
+🏠
 
-{{order.purchaseDate | date:'dd/MM/yyyy'}}
+{{order.customerAddress || 'N/D'}}
+
+</p>
+
+
+
+<p>
+
+🆔 User ID:
+
+{{order.userId}}
 
 </p>
 
@@ -231,10 +353,11 @@ class="status"
 <!-- PRODOTTI -->
 
 
+<div class="products-box">
+
+
 <h3>
-
 🛒 Prodotti acquistati
-
 </h3>
 
 
@@ -243,9 +366,11 @@ class="status"
 
 <div
 
-class="products"
+class="product"
 
 *ngFor="let product of order.products">
+
+
 
 
 
@@ -255,8 +380,9 @@ class="products"
 
 [src]="product.image"
 
-[alt]="product.name">
+[alt]="product.name"
 
+>
 
 
 
@@ -264,11 +390,11 @@ class="products"
 <div>
 
 
-<strong>
+<h4>
 
 {{product.name}}
 
-</strong>
+</h4>
 
 
 <p>
@@ -278,7 +404,93 @@ class="products"
 </p>
 
 
+<span>
+
+⬇ Download digitale
+
+</span>
+
+
 </div>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- PAGAMENTO -->
+
+
+<div class="payment-box">
+
+
+<h3>
+💳 Pagamento
+</h3>
+
+
+
+<p>
+
+Metodo:
+
+<strong>
+
+{{getPaymentMethod(order)}}
+
+</strong>
+
+
+</p>
+
+
+
+<p *ngIf="order.paymentId">
+
+
+Payment ID:
+
+{{order.paymentId}}
+
+
+</p>
+
+
+
+
+<p *ngIf="order.stripeSessionId">
+
+
+Stripe Session:
+
+{{order.stripeSessionId}}
+
+</p>
+
+
+
+
+<p *ngIf="order.stripePaymentIntentId">
+
+
+Intent:
+
+{{order.stripePaymentIntentId}}
+
+</p>
+
+
 
 
 
@@ -295,17 +507,24 @@ class="products"
 <!-- FOOTER -->
 
 
-<div class="footer">
+<div class="order-footer">
 
 
+
+<div class="total">
+
+
+Totale:
 
 <strong>
-
-Totale ordine:
 
 {{order.total | currency:'EUR'}}
 
 </strong>
+
+
+</div>
+
 
 
 
@@ -315,14 +534,17 @@ Totale ordine:
 <div class="actions">
 
 
-
 <button
 
 (click)="changeStatus(order)">
 
+
 🔄 Cambia stato
 
+
 </button>
+
+
 
 
 
@@ -334,7 +556,10 @@ class="delete"
 
 (click)="deleteOrder(order.id)">
 
+
+
 🗑 Elimina
+
 
 </button>
 
@@ -352,7 +577,12 @@ class="delete"
 
 
 
+
 </div>
+
+
+
+
 
 
 
@@ -366,9 +596,6 @@ class="delete"
 
 
 
-<!-- NESSUN ORDINE -->
-
-
 <div
 
 class="empty"
@@ -379,7 +606,11 @@ class="empty"
 📭 Nessun ordine trovato
 
 
+
 </div>
+
+
+
 
 
 

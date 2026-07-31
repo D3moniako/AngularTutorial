@@ -1,7 +1,16 @@
 <div class="favorites-page">
 
 
+
+<!-- ========================= -->
+<!-- HEADER -->
+<!-- ========================= -->
+
+
 <section class="favorites-header">
+
+
+<div class="header-content">
 
 
 <h1>
@@ -13,9 +22,31 @@
 
 <p>
 
-I planner che hai salvato per ritrovarli facilmente.
+Gestisci i tuoi planner salvati, quelli già acquistati e quelli ancora da scoprire.
 
 </p>
+
+
+
+
+<div class="favorite-counter">
+
+
+❤️
+
+<strong>
+
+{{favorites.length}}
+
+</strong>
+
+planner salvati
+
+
+</div>
+
+
+</div>
 
 
 </section>
@@ -24,29 +55,155 @@ I planner che hai salvato per ritrovarli facilmente.
 
 
 
-<section class="favorites-grid">
+
+
+<!-- ========================= -->
+<!-- MESSAGGIO -->
+<!-- ========================= -->
+
+
+<p
+
+class="message"
+
+*ngIf="message">
+
+
+{{message}}
+
+
+</p>
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- STRUMENTI -->
+<!-- ========================= -->
+
+
+<section class="tools">
+
+
+<input
+
+
+type="text"
+
+
+placeholder="🔍 Cerca nei tuoi preferiti..."
+
+
+[(ngModel)]="searchText">
+
+
+<div class="categories">
+
+
+<button
+
+
+*ngFor="let c of categories"
+
+
+(click)="selectCategory(c)"
+
+
+[class.active]="selectedCategory===c">
+
+
+{{c}}
+
+
+</button>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- PLANNER ACQUISTATI -->
+<!-- ========================= -->
+
+
+<section
+
+class="favorite-section"
+
+*ngIf="filteredPurchased.length">
+
+
+
+<h2>
+
+📦 I tuoi planner acquistati
+
+</h2>
+
+
+
+<p>
+
+Questi prodotti fanno già parte della tua libreria digitale.
+
+</p>
+
+
+
+
+
+<div class="favorites-grid">
 
 
 
 <div
 
-class="empty"
 
-*ngIf="favorites.length===0">
-
-
-<h2>
-
-Nessun preferito ancora 🌸
-
-</h2>
+class="favorite-card purchased"
 
 
-<a routerLink="/shop">
+*ngFor="let p of filteredPurchased; trackBy:trackByProduct">
 
-Vai allo Shop
 
-</a>
+
+
+
+
+<div class="image-box">
+
+
+<img
+
+[src]="p.image"
+
+[alt]="p.name"
+
+loading="lazy">
+
+
+<div class="owned-badge">
+
+
+✅ Possiedi già questo planner
+
+
+</div>
 
 
 </div>
@@ -56,19 +213,300 @@ Vai allo Shop
 
 
 
+
+
+<div class="card-content">
+
+
+<span class="badge">
+
+{{p.category}}
+
+</span>
+
+
+
+<h2>
+
+{{p.name}}
+
+</h2>
+
+
+
+<p class="description">
+
+{{p.description}}
+
+</p>
+
+
+
+
+
+
+<div class="extra-info">
+
+
+<div>
+
+📥
+
+<strong>
+
+Download
+
+</strong>
+
+Immediato
+
+</div>
+
+
+
+<div>
+
+📱
+
+<strong>
+
+Compatibile
+
+</strong>
+
+iPad / GoodNotes
+
+</div>
+
+
+<div>
+
+💎
+
+<strong>
+
+Premium
+
+</strong>
+
+Design
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="price">
+
+
+{{p.price | currency:'EUR'}}
+
+
+</div>
+
+
+
+
+
+
+<div class="rating">
+
+
+<span
+
+*ngFor="let star of [].constructor(p.rating)">
+
+⭐
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card-actions">
+
+
+
+<a
+
+class="details"
+
+[routerLink]="['/products',p.id]">
+
+
+👁 Apri planner
+
+
+</a>
+
+
+
+
+
+<button
+
+class="owned-button"
+
+
+disabled>
+
+
+🔒 Già acquistato
+
+
+</button>
+
+
+
+
+
+<button
+
+class="remove"
+
+
+(click)="remove(p)">
+
+
+💔 Rimuovi
+
+
+</button>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- PLANNER DA ACQUISTARE -->
+<!-- ========================= -->
+
+
+
+<section
+
+class="favorite-section"
+
+*ngIf="filteredAvailable.length">
+
+
+
+<h2>
+
+🛒 Planner ancora da acquistare
+
+</h2>
+
+
+
+<p>
+
+Hai salvato questi planner ma non li hai ancora nella tua libreria.
+
+</p>
+
+
+
+
+
+
+
+<div class="favorites-grid">
+
+
+
 <div
+
 
 class="favorite-card"
 
-*ngFor="let p of favorites">
 
+*ngFor="let p of filteredAvailable; trackBy:trackByProduct">
+
+
+
+
+
+
+
+<div class="image-box">
 
 
 <img
 
 [src]="p.image"
 
-[alt]="p.name">
+[alt]="p.name"
+
+loading="lazy">
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="card-content">
+
+
+
+<span class="badge">
+
+
+{{p.category}}
+
+
+</span>
 
 
 
@@ -82,7 +520,10 @@ class="favorite-card"
 
 
 
-<p>
+
+
+
+<p class="description">
 
 {{p.description}}
 
@@ -90,48 +531,252 @@ class="favorite-card"
 
 
 
+
+
+<div class="extra-info">
+
+
+<div>
+
+📅
+
 <strong>
 
-{{p.price | currency:'EUR'}}
+Tipo
 
 </strong>
 
+Planner digitale
+
+</div>
+
+
+<div>
+
+✨
+
+<strong>
+
+Stile
+
+</strong>
+
+{{p.category}}
+
+</div>
+
+
+</div>
 
 
 
 
-<div class="buttons">
+
+
+
+
+
+<div class="price">
+
+
+{{p.price | currency:'EUR'}}
+
+
+</div>
+
+
+
+
+
+
+
+<div class="rating">
+
+
+<span
+
+*ngFor="let star of [].constructor(p.rating)">
+
+
+⭐
+
+
+</span>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="card-actions">
+
+
+
 
 
 <a
 
+class="details"
+
 [routerLink]="['/products',p.id]">
 
-Vedi
+
+👁 Dettagli
+
 
 </a>
 
 
 
+
+
+
+
 <button
 
-(click)="remove(p)">
+class="cart"
 
-❌
+(click)="addCart(p)">
+
+
+
+🛒 Aggiungi
+
 
 </button>
 
 
+
+
+
+
+<button
+
+class="remove"
+
+
+(click)="remove(p)">
+
+
+
+❤️ Rimuovi
+
+
+</button>
+
+
+
+
+
 </div>
 
 
 
 
+
+
+
 </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+</div>
+
 
 
 
 </section>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- VUOTO -->
+<!-- ========================= -->
+
+
+
+<section
+
+class="empty"
+
+*ngIf="favorites.length===0">
+
+
+
+<div class="empty-icon">
+
+🌸
+
+</div>
+
+
+
+<h2>
+
+Nessun preferito
+
+</h2>
+
+
+
+<p>
+
+Salva i planner che ami per ritrovarli qui.
+
+</p>
+
+
+
+
+<a routerLink="/shop">
+
+
+✨ Vai allo Shop
+
+
+</a>
+
+
+
+</section>
+
+
+
+
+
+
+
+<footer>
+
+
+🌸 DreamCalendar
+
+
+</footer>
+
 
 
 </div>

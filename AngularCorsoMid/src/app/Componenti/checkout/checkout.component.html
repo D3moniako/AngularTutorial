@@ -97,9 +97,11 @@ Ordine completato!
 
 <p>
 
-Grazie per il tuo acquisto.
+Pagamento ricevuto correttamente. 🎉
 
-I tuoi planner sono ora disponibili nella sezione "I miei Planner".
+Stiamo preparando i tuoi planner digitali.
+
+Li troverai nella sezione "I miei Planner".
 
 </p>
 
@@ -600,27 +602,19 @@ placeholder="Inserisci indirizzo"
 
 <button
 
-
 type="button"
 
-
 (click)="completeOrder()"
-
 
 [disabled]="loading">
 
 
 
-
-
 <span *ngIf="!loading">
-
 
 💳 Conferma acquisto
 
-
 </span>
-
 
 
 
@@ -628,13 +622,9 @@ type="button"
 
 <span *ngIf="loading">
 
-
-⏳ Elaborazione...
-
+⏳ Connessione pagamento...
 
 </span>
-
-
 
 
 

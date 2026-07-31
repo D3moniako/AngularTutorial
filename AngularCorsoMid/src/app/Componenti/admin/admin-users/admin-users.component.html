@@ -2,23 +2,214 @@
 
 
 
+
+
+
+<!-- HEADER -->
+
+<header class="page-header">
+
+
+<div>
+
+
 <h1>
 👥 Gestione Utenti
 </h1>
 
 
+<p>
 
-<p class="subtitle">
-Controllo account DreamCalendar
+Controllo account, ruoli e sicurezza DreamCalendar
+
 </p>
 
 
+</div>
 
 
 
-<p class="message">
+<div class="online">
+
+🟢 Sistema utenti attivo
+
+</div>
+
+
+</header>
+
+
+
+
+
+
+
+
+<!-- MESSAGGIO -->
+
+
+<p
+
+class="message"
+
+*ngIf="message">
+
+
 {{message}}
+
+
 </p>
+
+
+
+
+
+
+
+
+
+<!-- STATISTICHE -->
+
+
+<section class="stats">
+
+
+
+
+
+<div class="stat-card">
+
+
+<div class="icon">
+👥
+</div>
+
+
+<div>
+
+
+<span>
+Utenti totali
+</span>
+
+
+<strong>
+{{totalUsers}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card admin">
+
+
+<div class="icon">
+🛡️
+</div>
+
+
+<div>
+
+
+<span>
+Amministratori
+</span>
+
+
+<strong>
+{{adminCount}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card active">
+
+
+<div class="icon">
+🟢
+</div>
+
+
+<div>
+
+
+<span>
+Account attivi
+</span>
+
+
+<strong>
+{{activeCount}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="stat-card blocked">
+
+
+<div class="icon">
+🔒
+</div>
+
+
+<div>
+
+
+<span>
+Bloccati
+</span>
+
+
+<strong>
+{{blockedCount}}
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+
 
 
 
@@ -29,19 +220,29 @@ Controllo account DreamCalendar
 
 <!-- FILTRI -->
 
+
 <section class="filters">
 
 
 
 <input
 
+
 type="text"
 
-placeholder="🔎 Cerca nome o email..."
+
+placeholder="🔎 Cerca nome o email"
+
 
 [(ngModel)]="searchText"
 
-(input)="filterUsers()">
+
+(input)="filterUsers()"
+
+
+>
+
+
 
 
 
@@ -49,15 +250,18 @@ placeholder="🔎 Cerca nome o email..."
 
 <select
 
+
 [(ngModel)]="selectedRole"
 
-(change)="filterUsers()">
 
+(change)="filterUsers()"
+
+>
 
 
 <option value="Tutti">
 
-Tutti
+Tutti i ruoli
 
 </option>
 
@@ -83,78 +287,6 @@ USER
 
 
 
-</section>
-
-
-
-
-
-
-
-
-
-<!-- STATISTICHE -->
-
-<section class="stats">
-
-
-
-<div class="stat-card">
-
-
-<h2>
-{{users.length}}
-</h2>
-
-
-<p>
-Utenti totali
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="stat-card">
-
-
-<h2>
-{{adminCount}}
-</h2>
-
-
-<p>
-Amministratori
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="stat-card">
-
-
-<h2>
-{{activeCount}}
-</h2>
-
-
-<p>
-Account attivi
-</p>
-
-
-</div>
 
 
 
@@ -168,13 +300,19 @@ Account attivi
 
 
 
-<!-- TABELLA UTENTI -->
+<!-- TABELLA -->
+
 
 <section class="table-box">
 
 
 
+
+
 <table>
+
+
+
 
 
 
@@ -185,34 +323,45 @@ Account attivi
 
 
 <th>
+
 Nome
+
 </th>
 
 
 <th>
+
 Email
+
 </th>
 
 
 <th>
+
 Ruolo
+
 </th>
 
 
 <th>
+
 Stato
+
 </th>
 
 
 <th>
-Registrato
+
+Registrazione
+
 </th>
 
 
 <th>
+
 Azioni
-</th>
 
+</th>
 
 
 </tr>
@@ -232,13 +381,23 @@ Azioni
 
 
 
-<tr *ngFor="let user of filteredUsers">
+
+
+<tr
+
+*ngFor="let user of filteredUsers; trackBy:trackByUser"
+
+>
 
 
 
 
 
-<td>
+
+<td class="name">
+
+
+👤
 
 {{user.name}}
 
@@ -267,9 +426,14 @@ Azioni
 
 <span
 
+
 class="role"
 
-[class.admin]="user.role==='ADMIN'">
+
+[class.admin]="user.role==='ADMIN'"
+
+
+>
 
 
 {{user.role}}
@@ -286,25 +450,51 @@ class="role"
 
 
 
+
 <td>
+
 
 
 <span
 
+
 class="status"
+
 
 [class.active]="user.enabled"
 
-[class.blocked]="!user.enabled">
+
+[class.blocked]="!user.enabled"
 
 
-{{user.enabled ? 'Attivo':'Bloccato'}}
+>
+
+
+{{
+
+
+user.enabled
+
+?
+
+'Attivo'
+
+:
+
+'Bloccato'
+
+
+}}
+
 
 
 </span>
 
 
+
 </td>
+
+
 
 
 
@@ -326,6 +516,8 @@ class="status"
 
 
 
+
+
 <td class="actions">
 
 
@@ -334,14 +526,20 @@ class="status"
 
 <button
 
+
 class="role-btn"
 
-(click)="changeRole(user)">
+
+(click)="changeRole(user)"
 
 
+>
 
-🔄 Ruolo
 
+🔄
+
+
+Ruolo
 
 
 </button>
@@ -353,17 +551,22 @@ class="role-btn"
 
 
 
-
 <button
+
 
 class="status-btn"
 
-(click)="toggleStatus(user.id)">
+
+(click)="toggleStatus(user.id)"
 
 
+>
 
-🔒 Stato
 
+{{user.enabled ? '🔒':'🔓'}}
+
+
+Stato
 
 
 </button>
@@ -375,20 +578,23 @@ class="status-btn"
 
 
 
-
 <button
+
 
 class="delete"
 
-(click)="deleteUser(user.id)">
 
+(click)="deleteUser(user.id)"
+
+
+>
 
 
 🗑
 
-
-
 </button>
+
+
 
 
 
@@ -409,13 +615,17 @@ class="delete"
 
 
 
-
 </tbody>
 
 
 
 
+
+
 </table>
+
+
+
 
 
 
@@ -431,12 +641,15 @@ class="delete"
 
 
 
+
 <!-- NESSUN RISULTATO -->
 
 
 <div
 
+
 class="empty"
+
 
 *ngIf="filteredUsers.length===0">
 

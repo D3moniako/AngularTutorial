@@ -6,13 +6,18 @@ min-height:100vh;
 
 padding-bottom:80px;
 
+font-family:'Segoe UI',sans-serif;
+
 }
 
 
 
-.favorites-header{
+/* =========================
+HEADER
+========================= */
 
-text-align:center;
+
+.favorites-header{
 
 padding:80px 20px;
 
@@ -30,67 +35,71 @@ linear-gradient(
 
 border-radius:0 0 60px 60px;
 
+text-align:center;
+
+}
+
+
+
+.header-content{
+
+max-width:900px;
+
+margin:auto;
+
 }
 
 
 
 .favorites-header h1{
 
-font-family:'Playfair Display';
+font-family:'Playfair Display',serif;
 
 font-size:50px;
 
 color:#674d5c;
 
-}
-
-
-
-.favorites-grid{
-
-padding:50px 8%;
-
-display:grid;
-
-grid-template-columns:repeat(3,1fr);
-
-gap:30px;
+margin-bottom:15px;
 
 }
 
 
 
-.favorite-card{
+.favorites-header p{
+
+color:#927383;
+
+font-size:18px;
+
+}
+
+
+
+.favorite-counter{
+
+display:inline-block;
+
+margin-top:25px;
+
+padding:15px 30px;
 
 background:white;
 
-padding:25px;
+border-radius:40px;
 
-border-radius:35px;
+color:#8b5870;
+
+font-weight:bold;
 
 box-shadow:
 
-0 20px 40px rgba(190,130,160,.15);
+0 15px 35px rgba(190,130,160,.18);
 
 }
 
 
 
-.favorite-card img{
-
-width:100%;
-
-height:250px;
-
-object-fit:cover;
-
-border-radius:25px;
-
-}
-
-
-
-.favorite-card strong{
+.favorite-counter strong{
 
 font-size:24px;
 
@@ -100,11 +109,142 @@ color:#d27da1;
 
 
 
-.buttons{
+
+
+
+
+
+
+/* =========================
+MESSAGGIO
+========================= */
+
+
+.message{
+
+margin:30px auto;
+
+max-width:500px;
+
+background:#fde7f2;
+
+color:#9d174d;
+
+padding:15px 25px;
+
+border-radius:30px;
+
+text-align:center;
+
+font-weight:bold;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+SEZIONI
+========================= */
+
+
+.wishlist-section,
+
+.purchased-section{
+
+padding:50px 8%;
+
+}
+
+
+
+.wishlist-section h2,
+
+.purchased-section h2{
+
+font-family:'Playfair Display';
+
+font-size:34px;
+
+color:#674d5c;
+
+margin-bottom:10px;
+
+}
+
+
+
+.section-description{
+
+color:#927383;
+
+margin-bottom:30px;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+STRUMENTI
+========================= */
+
+
+.tools{
+
+background:white;
+
+padding:25px;
+
+border-radius:30px;
+
+box-shadow:
+
+0 15px 35px rgba(190,130,160,.12);
+
+margin-bottom:35px;
+
+}
+
+
+
+.tools input{
+
+width:100%;
+
+padding:16px 20px;
+
+border:none;
+
+background:#fff5fa;
+
+border-radius:30px;
+
+font-size:16px;
+
+outline:none;
+
+}
+
+
+
+.categories{
 
 display:flex;
 
-justify-content:space-between;
+gap:12px;
+
+flex-wrap:wrap;
 
 margin-top:20px;
 
@@ -112,13 +252,411 @@ margin-top:20px;
 
 
 
-.buttons a,
+.categories button{
 
-.buttons button{
-
-padding:12px 20px;
+padding:10px 22px;
 
 border:none;
+
+border-radius:30px;
+
+background:#f4dbea;
+
+color:#674d5c;
+
+cursor:pointer;
+
+font-weight:bold;
+
+}
+
+
+
+.categories button.active{
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#d889ad,
+
+#a879c8
+
+);
+
+color:white;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+GRID WISHLIST
+========================= */
+
+
+.favorites-grid,
+
+.purchased-grid{
+
+display:grid;
+
+grid-template-columns:
+
+repeat(3,1fr);
+
+gap:30px;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+CARD GENERICA
+========================= */
+
+
+.favorite-card,
+
+.purchased-card{
+
+background:white;
+
+border-radius:35px;
+
+padding:25px;
+
+box-shadow:
+
+0 20px 45px rgba(190,130,160,.15);
+
+transition:.3s;
+
+}
+
+
+
+.favorite-card:hover,
+
+.purchased-card:hover{
+
+transform:translateY(-8px);
+
+box-shadow:
+
+0 30px 60px rgba(190,130,160,.25);
+
+}
+
+
+
+
+
+
+
+
+
+.image-box{
+
+width:100%;
+
+height:270px;
+
+overflow:hidden;
+
+border-radius:25px;
+
+margin-bottom:20px;
+
+}
+
+
+
+.image-box img{
+
+width:100%;
+
+height:100%;
+
+object-fit:cover;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+TESTI
+========================= */
+
+
+.card-content h2,
+
+.purchased-card h2{
+
+font-size:24px;
+
+color:#604554;
+
+}
+
+
+
+.description{
+
+color:#927383;
+
+line-height:1.5;
+
+min-height:45px;
+
+}
+
+
+
+.price{
+
+font-size:26px;
+
+font-weight:800;
+
+color:#d27da1;
+
+margin:15px 0;
+
+}
+
+
+
+.rating{
+
+margin-bottom:20px;
+
+}
+
+
+
+
+
+
+
+/* =========================
+BADGE
+========================= */
+
+
+.badge{
+
+display:inline-block;
+
+padding:7px 18px;
+
+border-radius:30px;
+
+background:#fce7f3;
+
+color:#be185d;
+
+font-weight:bold;
+
+font-size:13px;
+
+}
+
+
+
+.owned{
+
+display:inline-block;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+background:#ede9fe;
+
+color:#6d28d9;
+
+font-weight:bold;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+BOTTONI
+========================= */
+
+
+.card-actions{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-top:25px;
+
+}
+
+
+
+.card-actions a,
+
+.card-actions button,
+
+.open-planner{
+
+flex:1;
+
+text-align:center;
+
+padding:13px;
+
+border:none;
+
+border-radius:30px;
+
+text-decoration:none;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+.card-actions a{
+
+background:#e9ddff;
+
+color:#674d5c;
+
+}
+
+
+
+.cart{
+
+background:#d889ad;
+
+color:white;
+
+}
+
+
+
+.remove{
+
+background:#f3b5c8;
+
+color:#8b2948;
+
+}
+
+
+
+
+
+
+
+.open-planner{
+
+display:block;
+
+margin-top:20px;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#b794f4,
+
+#805ad5
+
+);
+
+color:white;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+VUOTO
+========================= */
+
+
+.empty{
+
+grid-column:1/-1;
+
+background:white;
+
+padding:50px;
+
+border-radius:35px;
+
+text-align:center;
+
+box-shadow:
+
+0 20px 40px rgba(190,130,160,.12);
+
+}
+
+
+
+.empty-icon{
+
+font-size:60px;
+
+}
+
+
+
+.empty a{
+
+display:inline-block;
+
+margin-top:20px;
+
+padding:14px 30px;
 
 border-radius:30px;
 
@@ -132,9 +670,103 @@ text-decoration:none;
 
 
 
-.empty{
+
+
+
+
+
+
+footer{
 
 text-align:center;
+
+padding:40px;
+
+color:#927383;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+MOBILE
+========================= */
+
+
+@media(max-width:1000px){
+
+
+.favorites-grid,
+
+.purchased-grid{
+
+grid-template-columns:repeat(2,1fr);
+
+}
+
+
+}
+
+
+
+
+@media(max-width:700px){
+
+
+
+.favorites-header{
+
+padding:50px 20px;
+
+}
+
+
+
+.favorites-header h1{
+
+font-size:35px;
+
+}
+
+
+
+.wishlist-section,
+
+.purchased-section{
+
+padding:35px 20px;
+
+}
+
+
+
+.favorites-grid,
+
+.purchased-grid{
+
+grid-template-columns:1fr;
+
+}
+
+
+
+.card-actions{
+
+flex-direction:column;
+
+}
+
+
+
+.card-actions a,
+
+.card-actions button{
 
 width:100%;
 
@@ -142,14 +774,50 @@ width:100%;
 
 
 
-@media(max-width:900px){
+}
+.favorite-section{
 
-
-.favorites-grid{
-
-grid-template-columns:1fr;
+padding:50px 8%;
 
 }
 
+
+.favorite-section h2{
+
+font-family:'Playfair Display';
+
+font-size:34px;
+
+color:#674d5c;
+
+margin-bottom:10px;
+
+}
+.owned-badge{
+
+position:absolute;
+
+top:15px;
+
+left:15px;
+
+background:#d7f9df;
+
+color:#23733a;
+
+padding:10px 18px;
+
+border-radius:30px;
+
+font-weight:bold;
+
+font-size:13px;
+
+}
+
+
+.image-box{
+
+position:relative;
 
 }

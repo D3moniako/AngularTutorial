@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+
+import { Subscription } from 'rxjs';
 
 import { OrderService } from '../../../services/order.service';
-
 import { Order } from '../../../models/order';
-
 
 
 @Component({
@@ -17,12 +17,10 @@ styleUrls:['./admin-orders.component.css']
 })
 
 
-export class AdminOrdersComponent implements OnInit {
-
+export class AdminOrdersComponent implements OnInit, OnDestroy {
 
 
 orders:Order[]=[];
-
 
 filteredOrders:Order[]=[];
 
@@ -31,7 +29,26 @@ filteredOrders:Order[]=[];
 searchText:string='';
 
 
-selectedStatus:string='Tutti';
+selectedStatus:
+
+'Tutti'
+
+|
+
+'PAGATO'
+
+|
+
+'IN_ATTESA'
+
+|
+
+'ANNULLATO'
+
+=
+
+'Tutti';
+
 
 
 
@@ -39,10 +56,25 @@ message:string='';
 
 
 
+private ordersSubscription?:Subscription;
+
+
+
+// STATISTICHE
+
 totalOrders:number=0;
 
-
 totalRevenue:number=0;
+
+paidOrders:number=0;
+
+pendingOrders:number=0;
+
+cancelledOrders:number=0;
+
+totalProducts:number=0;
+
+
 
 
 
@@ -63,6 +95,7 @@ private orderService:OrderService
 ngOnInit(){
 
 
+this.ordersSubscription =
 
 this.orderService.orders$
 
@@ -78,32 +111,8 @@ this.calculateStats();
 this.filterOrders();
 
 
+
 });
-
-
-
-}
-
-
-
-
-
-
-
-
-
-loadOrders(){
-
-
-
-this.orders=this.orderService.getAllOrders();
-
-
-this.calculateStats();
-
-
-this.filterOrders();
-
 
 
 }
@@ -124,11 +133,60 @@ this.totalOrders=this.orders.length;
 
 
 
-this.totalRevenue=this.orders.reduce(
+this.totalRevenue=this.orders
 
-(total,order)=>
+.filter(o=>o.status==='PAGATO')
 
-total + order.total,
+.reduce(
+
+(sum,o)=>sum+o.total,
+
+0
+
+);
+
+
+
+
+this.paidOrders=
+
+this.orders.filter(
+
+o=>o.status==='PAGATO'
+
+).length;
+
+
+
+this.pendingOrders=
+
+this.orders.filter(
+
+o=>o.status==='IN_ATTESA'
+
+).length;
+
+
+
+
+this.cancelledOrders=
+
+this.orders.filter(
+
+o=>o.status==='ANNULLATO'
+
+).length;
+
+
+
+
+this.totalProducts=
+
+this.orders.reduce(
+
+(sum,o)=>
+
+sum + o.products.length,
 
 0
 
@@ -159,14 +217,15 @@ let result=[...this.orders];
 if(this.searchText.trim()){
 
 
+const text=
 
-const text=this.searchText.toLowerCase();
+this.searchText
+
+.toLowerCase();
 
 
 
 result=result.filter(order=>
-
-
 
 (order.customerName || '')
 
@@ -188,6 +247,18 @@ result=result.filter(order=>
 
 
 
+||
+
+
+
+order.id
+
+.toString()
+
+.includes(text)
+
+
+
 );
 
 
@@ -203,18 +274,15 @@ result=result.filter(order=>
 if(this.selectedStatus!=='Tutti'){
 
 
-
 result=result.filter(order=>
 
-
 order.status===this.selectedStatus
-
 
 );
 
 
-
 }
+
 
 
 
@@ -238,37 +306,43 @@ changeStatus(order:Order){
 
 
 
-let newStatus:Order['status'];
+let newStatus:
+
+Order['status'];
 
 
 
 
+switch(order.status){
 
-if(order.status==='PAGATO'){
 
 
+case 'PAGATO':
 
 newStatus='IN_ATTESA';
 
+break;
 
 
-}
 
-else if(order.status==='IN_ATTESA'){
-
-
+case 'IN_ATTESA':
 
 newStatus='ANNULLATO';
 
-
-
-}
-
-else{
+break;
 
 
 
-newStatus='PAGATO';
+default:
+
+
+this.message=
+
+'⚠️ Ordine già annullato';
+
+
+
+return;
 
 
 
@@ -288,7 +362,10 @@ newStatus
 
 
 
-this.message='✅ Stato ordine aggiornato';
+
+this.message=
+
+'✅ Stato ordine aggiornato';
 
 
 
@@ -306,7 +383,11 @@ deleteOrder(id:number){
 
 
 
-if(confirm('Eliminare definitivamente questo ordine?')){
+if(confirm(
+
+'Eliminare definitivamente questo ordine?'
+
+)){
 
 
 
@@ -314,7 +395,9 @@ this.orderService.deleteOrder(id);
 
 
 
-this.message='🗑 Ordine eliminato';
+this.message=
+
+'🗑 Ordine eliminato';
 
 
 
@@ -324,6 +407,29 @@ this.message='🗑 Ordine eliminato';
 
 }
 
+
+
+
+
+
+
+
+
+getPaymentMethod(order:Order){
+
+
+return order.paymentId
+
+?
+
+'STRIPE'
+
+:
+
+'N/D';
+
+
+}
 
 
 
@@ -341,15 +447,25 @@ order:Order
 ){
 
 
-
 return order.id;
-
 
 
 }
 
 
 
+
+
+
+
+
+ngOnDestroy(){
+
+
+this.ordersSubscription?.unsubscribe();
+
+
+}
 
 
 

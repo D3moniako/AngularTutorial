@@ -1,89 +1,44 @@
 import { NgModule } from '@angular/core';
-
 import { RouterModule, Routes } from '@angular/router';
+
+
+// =============================
+// GUARD
+// =============================
 
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 
-// =============================
-// PAGINE PRINCIPALI
-// =============================
 
 
-import { HomeComponent } 
+// =============================
+// PAGINE PUBBLICHE
+// =============================
+
+import { HomeComponent }
 from './Componenti/home/home.component';
 
-
-import { ShopComponent } 
+import { ShopComponent }
 from './Componenti/shop/shop.component';
 
-
-import { ProductsComponent } 
+import { ProductsComponent }
 from './Componenti/products/products.component';
 
+import { AboutComponent }
+from './Componenti/about/about.component';
 
-import { MyPlannersComponent } 
-from './Componenti/my-planners/my-planners.component';
-
-
-import { ContactComponent } 
+import { ContactComponent }
 from './Componenti/contact/contact.component';
 
 
-import { AboutComponent } 
-from './Componenti/about/about.component';
-
-import { AdminComponent } 
-from './Componenti/admin/admin.component'; 
-
-import { AdminPlannersComponent } 
-from './Componenti/admin/admin-planners/admin-planners.component';
-
-import { AdminOrdersComponent } from './Componenti/admin/admin-orders/admin-orders.component';
-import { DashboardComponent } 
-from './Componenti/admin/dashboard/dashboard.component';
-
-import { AdminUploadComponent } 
-from './Componenti/admin-upload-planner/admin-upload-planner.component';
-
-// =============================
-// CARRELLO
-// ATTIVO
-// =============================
-
-
-import { CartComponent }
-from './Componenti/cart/cart.component';
-
-
-
-
 
 
 // =============================
-// FUTURO
-// PAGINA 404
+// AUTENTICAZIONE
 // =============================
-
-
-// import { Pag404Component }
-// from './Componenti/pag404/pag404.component';
-
-
-
-
-
-
-// =============================
-// FUTURO LOGIN
-// =============================
-
 
 import { LoginComponent }
 from './Componenti/login/login.component';
-
-
-
 
 import { RegisterComponent }
 from './Componenti/register/register.component';
@@ -92,37 +47,68 @@ from './Componenti/register/register.component';
 
 
 
-
-
-
 // =============================
-// FUTURO CHECKOUT
+// UTENTE
 // =============================
 
+import { ProfileComponent }
+from './Componenti/profile/profile.component';
 
-import { CheckoutComponent }
-from './Componenti/checkout/checkout.component';
+import { MyPlannersComponent }
+from './Componenti/my-planners/my-planners.component';
 
-
-
-
-
-
-// =============================
-// FUTURO UTENTE
-// =============================
-import { AdminUsersComponent } from './Componenti/admin/admin-users/admin-users.component';
+import { MyOrdersComponent }
+from './Componenti/my-orders/my-orders.component';
 
 import { FavoritesComponent }
 from './Componenti/favorites/favorites.component';
 
 
 
-import { ProfileComponent }
-from './Componenti/profile/profile.component';
+
+
+// =============================
+// E-COMMERCE
+// =============================
+
+import { CartComponent }
+from './Componenti/cart/cart.component';
+
+import { CheckoutComponent }
+from './Componenti/checkout/checkout.component';
+
+import { PaymentSuccessComponent }
+from './Componenti/payment-success/payment-success.component';
 
 
 
+
+
+
+// =============================
+// ADMIN
+// =============================
+
+import { AdminComponent }
+from './Componenti/admin/admin.component';
+
+import { DashboardComponent }
+from './Componenti/admin/dashboard/dashboard.component';
+
+import { AdminPlannersComponent }
+from './Componenti/admin/admin-planners/admin-planners.component';
+
+import { AdminOrdersComponent }
+from './Componenti/admin/admin-orders/admin-orders.component';
+
+import { AdminPaymentsComponent }
+from './Componenti/admin/admin-payments/admin-payments.component';
+
+import { AdminUsersComponent }
+from './Componenti/admin/admin-users/admin-users.component';
+
+import { AdminUploadComponent }
+from './Componenti/admin-upload-planner/admin-upload-planner.component';
 
 
 
@@ -134,119 +120,68 @@ const routes: Routes = [
 
 
 
-
-
-
-
-// =============================
+// =================================================
 // HOME
-// URL:
-// /
-// =============================
-
+// URL: /
+// =================================================
 
 {
-path:'',
-component:HomeComponent
+ path:'',
+ component:HomeComponent
 },
 
 
 
 
 
-
-
-
-
-// =============================
+// =================================================
 // SHOP
-// URL:
-// /shop
-// =============================
-
+// URL: /shop
+// =================================================
 
 {
-path:'shop',
-component:ShopComponent
+ path:'shop',
+ component:ShopComponent
 },
 
 
 
 
 
-
-
-
-
-// =============================
+// =================================================
 // DETTAGLIO PRODOTTO
-// esempio:
-// /products/1
-// =============================
-
+// URL: /products/1
+// =================================================
 
 {
-path:'products/:id',
-component:ProductsComponent
+ path:'products/:id',
+ component:ProductsComponent
 },
 
 
 
 
 
-
-
-
-
-// =============================
-// I MIEI PLANNER
-// =============================
-
-
-{
-path:'my-planners',
-component:MyPlannersComponent,
-canActivate:[AuthGuard]
-
-},
-
-
-
-
-
-
-
-
-
-
-
-// =============================
+// =================================================
 // ABOUT
-// =============================
-
+// =================================================
 
 {
-path:'about',
-component:AboutComponent
+ path:'about',
+ component:AboutComponent
 },
 
 
 
 
 
-
-
-
-
-
-// =============================
+// =================================================
 // CONTATTI
-// =============================
-
+// =================================================
 
 {
-path:'contact',
-component:ContactComponent
+ path:'contact',
+ component:ContactComponent
 },
 
 
@@ -254,32 +189,34 @@ component:ContactComponent
 
 
 
+// =================================================
+// AUTENTICAZIONE
+// =================================================
+
+{
+ path:'login',
+ component:LoginComponent
+},
+
+
+
+{
+ path:'register',
+ component:RegisterComponent
+},
 
 
 
 
-// =============================
+
+
+// =================================================
 // CARRELLO
-// ATTIVO
-// =============================
-
+// =================================================
 
 {
-path:'cart',
-component:CartComponent
-},
-
-
-// =============================
-// FAVORITI
-// =============================
-
-
-{
-path:'favorites',
-component:FavoritesComponent,
-canActivate:[AuthGuard]
-
+ path:'cart',
+ component:CartComponent
 },
 
 
@@ -287,58 +224,68 @@ canActivate:[AuthGuard]
 
 
 
-
-
-
-
-
-// =============================
-// LOGIN
-// =============================
-
-
-{
-path:'login',
-component:LoginComponent
-},
-
-
-
-
-
-
-
-
-
-
-// =============================
-// REGISTRAZIONE
-// =============================
-
-
-{
-path:'register',
-component:RegisterComponent
-},
-
-
-
-
-
-
-
-
-
-
-// =============================
+// =================================================
 // CHECKOUT
-// =============================
+// Utente autenticato
+// =================================================
+
+{
+ path:'checkout',
+ component:CheckoutComponent,
+ canActivate:[AuthGuard]
+},
+
+
+
+
+
+// =================================================
+// PAGAMENTO COMPLETATO
+// Stripe success
+// =================================================
+
+{
+ path:'payment-success',
+ component:PaymentSuccessComponent
+},
+
+
+
+
+
+
+// =================================================
+// AREA UTENTE
+// =================================================
+
+{
+ path:'profile',
+ component:ProfileComponent,
+ canActivate:[AuthGuard]
+},
+
 
 
 {
-path:'checkout',
-component:CheckoutComponent,
-canActivate:[AuthGuard]
+ path:'favorites',
+ component:FavoritesComponent,
+ canActivate:[AuthGuard]
+},
+
+
+
+{
+ path:'my-orders',
+ component:MyOrdersComponent,
+ canActivate:[AuthGuard]
+},
+
+
+
+{
+ path:'my-planners',
+ component:MyPlannersComponent,
+ canActivate:[AuthGuard]
 },
 
 
@@ -347,65 +294,129 @@ canActivate:[AuthGuard]
 
 
 
+// =================================================
+// AREA ADMIN
+//
+// URL BASE:
+// /admin
+//
+// Protetta da AdminGuard
+//
+// Figli:
+// /admin/dashboard
+// /admin/planners
+// /admin/orders
+// /admin/payments
+// /admin/users
+// =================================================
 
-
-
-// =============================
-// PROFILO UTENTE
-// ATTIVO
-// =============================
-
-
-{
-path:'profile',
-component:ProfileComponent,
-canActivate:[AuthGuard]
-
-},
 
 {
  path:'admin',
+
  component:AdminComponent,
+
  canActivate:[AdminGuard],
+
 
  children:[
 
 
-   {
-    path:'',
-    redirectTo:'dashboard',
-    pathMatch:'full'
-   },
+
+ // -------------------------
+ // Default admin
+ // /admin
+ // -------------------------
+
+ {
+  path:'',
+  redirectTo:'dashboard',
+  pathMatch:'full'
+ },
 
 
-   {
-    path:'dashboard',
-    component:DashboardComponent
-   },
 
 
-   {
-    path:'planners',
-    component:AdminPlannersComponent
-   },
+ // -------------------------
+ // Dashboard
+ // /admin/dashboard
+ // -------------------------
+
+ {
+  path:'dashboard',
+  component:DashboardComponent
+ },
 
 
-   {
-    path:'upload',
-    component:AdminUploadComponent
-   },
 
 
-   {
-    path:'users',
-    component:AdminUsersComponent
-   },
+
+ // -------------------------
+ // Planner
+ // /admin/planners
+ // -------------------------
+
+ {
+  path:'planners',
+  component:AdminPlannersComponent
+ },
 
 
-   {
-    path:'orders',
-    component:AdminOrdersComponent
-   }
+
+
+
+ // -------------------------
+ // Upload planner
+ // /admin/upload
+ // -------------------------
+
+ {
+  path:'upload',
+  component:AdminUploadComponent
+ },
+
+
+
+
+
+ // -------------------------
+ // Utenti
+ // /admin/users
+ // -------------------------
+
+ {
+  path:'users',
+  component:AdminUsersComponent
+ },
+
+
+
+
+
+ // -------------------------
+ // Ordini
+ // /admin/orders
+ // -------------------------
+
+ {
+  path:'orders',
+  component:AdminOrdersComponent
+ },
+
+
+
+
+
+ // -------------------------
+ // Pagamenti
+ // /admin/payments
+ // -------------------------
+
+ {
+  path:'payments',
+  component:AdminPaymentsComponent
+ }
+
 
 
  ]
@@ -418,31 +429,15 @@ canActivate:[AuthGuard]
 
 
 
-
-// =============================
-// FUTURO PAGINA 404
-// deve essere sempre ultima
-// =============================
-
-
-// {
-// path:'**',
-// component:Pag404Component
-// }
-
-
-
-
-
-
-// temporaneo finché non crei Pag404Component
-
+// =================================================
+// PAGINA NON TROVATA
+// Deve stare SEMPRE alla fine
+// =================================================
 
 {
-path:'**',
-redirectTo:''
+ path:'**',
+ redirectTo:''
 }
-
 
 
 
@@ -454,13 +449,23 @@ redirectTo:''
 
 
 
-
-
 @NgModule({
 
 imports:[
 
-RouterModule.forRoot(routes)
+RouterModule.forRoot(
+
+routes,
+
+{
+
+scrollPositionRestoration:'top',
+
+anchorScrolling:'enabled'
+
+}
+
+)
 
 ],
 

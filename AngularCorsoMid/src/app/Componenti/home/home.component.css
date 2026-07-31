@@ -1184,3 +1184,63 @@ width:100%;
 
 
 }
+
+.btn-notification{
+
+margin:20px 0;
+
+padding:14px 28px;
+
+border:none;
+
+border-radius:30px;
+
+background:linear-gradient(
+135deg,
+#e9a7c8,
+#c77dff
+);
+
+color:white;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+box-shadow:
+
+0 8px 20px rgba(199,125,255,.35);
+
+transition:
+
+all .3s ease;
+
+display:inline-flex;
+
+align-items:center;
+
+gap:8px;
+
+}
+
+
+
+.btn-notification:hover{
+
+transform:translateY(-3px);
+
+box-shadow:
+
+0 12px 30px rgba(199,125,255,.5);
+
+}
+
+
+
+.btn-notification:active{
+
+transform:scale(.96);
+
+}

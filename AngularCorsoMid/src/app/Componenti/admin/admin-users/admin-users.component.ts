@@ -44,10 +44,17 @@ selectedRole:string='Tutti';
 
 
 
+
+
+totalUsers:number=0;
+
 adminCount:number=0;
 
-
 activeCount:number=0;
+
+blockedCount:number=0;
+
+
 
 
 
@@ -65,11 +72,14 @@ private userService:UserService
 
 
 
+
+
 ngOnInit(){
 
 
 
 this.loadUsers();
+
 
 
 
@@ -103,16 +113,21 @@ this.filterUsers();
 
 
 
+
 loadUsers(){
 
 
-this.users=this.userService.getUsers();
 
+this.users=
 
-this.filteredUsers=[...this.users];
+this.userService.getUsers();
+
 
 
 this.updateCounters();
+
+
+this.filterUsers();
 
 
 
@@ -124,7 +139,16 @@ this.updateCounters();
 
 
 
+
+
 updateCounters(){
+
+
+
+this.totalUsers=
+
+this.users.length;
+
 
 
 
@@ -139,11 +163,24 @@ u=>u.role==='ADMIN'
 
 
 
+
 this.activeCount=
 
 this.users.filter(
 
 u=>u.enabled
+
+).length;
+
+
+
+
+
+this.blockedCount=
+
+this.users.filter(
+
+u=>!u.enabled
 
 ).length;
 
@@ -158,11 +195,13 @@ u=>u.enabled
 
 
 
+
 filterUsers(){
 
 
 
 let result=[...this.users];
+
 
 
 
@@ -183,11 +222,23 @@ result=result.filter(user=>
 
 
 
-user.name.toLowerCase().includes(text)
+(user.name || '')
+
+.toLowerCase()
+
+.includes(text)
+
+
 
 ||
 
-user.email.toLowerCase().includes(text)
+
+
+(user.email || '')
+
+.toLowerCase()
+
+.includes(text)
 
 
 
@@ -196,6 +247,9 @@ user.email.toLowerCase().includes(text)
 
 
 }
+
+
+
 
 
 
@@ -219,6 +273,16 @@ user.role===this.selectedRole
 
 
 
+result.sort((a,b)=>
+
+a.name.localeCompare(b.name)
+
+);
+
+
+
+
+
 this.filteredUsers=result;
 
 
@@ -232,15 +296,19 @@ this.filteredUsers=result;
 
 
 
+
 toggleStatus(id:number){
 
 
 
-const user=this.users.find(
+const user=
+
+this.users.find(
 
 u=>u.id===id
 
 );
+
 
 
 
@@ -256,19 +324,22 @@ return;
 
 const updatedUser:User={
 
-
 ...user,
 
-
 enabled:!user.enabled
-
 
 };
 
 
 
 
-this.userService.adminUpdateUser(updatedUser);
+
+this.userService.adminUpdateUser(
+
+updatedUser
+
+);
+
 
 
 
@@ -297,7 +368,9 @@ changeRole(user:User){
 const updatedUser:User={
 
 
+
 ...user,
+
 
 
 role:
@@ -313,19 +386,26 @@ user.role==='ADMIN'
 'ADMIN'
 
 
+
 };
 
 
 
 
 
-this.userService.adminUpdateUser(updatedUser);
+this.userService.adminUpdateUser(
+
+updatedUser
+
+);
+
+
 
 
 
 this.showMessage(
 
-'✅ Ruolo modificato'
+'🔄 Ruolo modificato'
 
 );
 
@@ -347,7 +427,7 @@ deleteUser(id:number){
 
 if(confirm(
 
-'Eliminare definitivamente questo utente?'
+'Vuoi eliminare definitivamente questo account?'
 
 )){
 
@@ -378,6 +458,7 @@ this.showMessage(
 
 
 
+
 private showMessage(text:string){
 
 
@@ -397,6 +478,31 @@ this.message='';
 
 
 }
+
+
+
+
+
+
+
+
+
+trackByUser(
+
+index:number,
+
+user:User
+
+){
+
+
+
+return user.id;
+
+
+
+}
+
 
 
 

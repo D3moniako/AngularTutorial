@@ -19,9 +19,18 @@ class="message"
 
 
 
-
-
 <div class="form-box">
+
+
+
+<div class="info-box">
+
+💡 Il planner pubblicato sarà disponibile nello Shop,
+dopo essere stato salvato nel catalogo.
+
+</div>
+
+
 
 
 
@@ -40,7 +49,11 @@ type="text"
 
 [(ngModel)]="planner.name"
 
-placeholder="Nome planner">
+placeholder="Es. Rose Gold Luxury Planner"
+
+required>
+
+
 
 
 
@@ -53,7 +66,6 @@ placeholder="Nome planner">
 Immagine Copertina
 
 </label>
-
 
 
 <input
@@ -70,11 +82,13 @@ accept="image/*"
 
 
 
-<!-- PREVIEW IMMAGINE -->
 
 
-<div 
+
+<div
+
 class="preview"
+
 *ngIf="planner.image">
 
 
@@ -86,6 +100,7 @@ alt="Preview Planner">
 
 
 </div>
+
 
 
 
@@ -107,7 +122,12 @@ type="number"
 
 [(ngModel)]="planner.price"
 
-placeholder="14.99">
+placeholder="14.99"
+
+min="0">
+
+
+
 
 
 
@@ -123,13 +143,49 @@ Categoria
 </label>
 
 
-<input
+<select
 
-type="text"
+[(ngModel)]="planner.category">
 
-[(ngModel)]="planner.category"
 
-placeholder="Elegant">
+
+<option value="">
+
+Seleziona categoria
+
+</option>
+
+
+<option value="Elegant">
+
+Elegant
+
+</option>
+
+
+<option value="Lifestyle">
+
+Lifestyle
+
+</option>
+
+
+<option value="Wellness">
+
+Wellness
+
+</option>
+
+
+<option value="Business">
+
+Business
+
+</option>
+
+
+</select>
+
 
 
 
@@ -140,7 +196,7 @@ placeholder="Elegant">
 
 <label>
 
-Badge
+Badge prodotto
 
 </label>
 
@@ -151,7 +207,10 @@ type="text"
 
 [(ngModel)]="planner.badge"
 
-placeholder="PREMIUM">
+placeholder="PREMIUM / BEST SELLER">
+
+
+
 
 
 
@@ -166,12 +225,11 @@ File PDF Planner
 </label>
 
 
-
 <input
 
 type="file"
 
-accept=".pdf"
+accept="application/pdf"
 
 (change)="onPdfSelected($event)">
 
@@ -181,14 +239,28 @@ accept=".pdf"
 
 
 
-<p 
-class="file-name"
-*ngIf="planner.downloadUrl">
 
 
-📄 {{planner.downloadUrl}}
+<div
 
-</p>
+class="pdf-box"
+
+*ngIf="pdfName">
+
+
+📄 PDF selezionato:
+
+
+<strong>
+
+{{pdfName}}
+
+</strong>
+
+
+</div>
+
+
 
 
 
@@ -209,7 +281,9 @@ Descrizione
 
 [(ngModel)]="planner.description"
 
-placeholder="Descrizione planner">
+placeholder="Descrizione dettagliata del planner..."
+
+required>
 
 </textarea>
 

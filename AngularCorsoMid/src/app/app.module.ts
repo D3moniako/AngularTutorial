@@ -1,16 +1,24 @@
 import { NgModule } from '@angular/core';
+
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { CommonModule } from '@angular/common';
+
+import { FormsModule } from '@angular/forms';
+
+import { HttpClientModule } from '@angular/common/http';
+
+import { RouterModule } from '@angular/router';
 
 import { BrowserAnimationsModule } 
 from '@angular/platform-browser/animations';
 
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { AppRoutingModule } 
+from './app-routing.module';
+
 
 // Angular Material
+
 import { MatSliderModule } 
 from '@angular/material/slider';
 
@@ -24,19 +32,33 @@ import { MatInputModule }
 from '@angular/material/input';
 
 
+
+// App
+
+import { AppComponent } 
+from './app.component';
+
+
+
 // Direttive
+
 import { HigelightDirective } 
 from './direttive/higelight.directive';
 
 
+
 // Services
+
 import { ServizioPortaService } 
 from './service/servizio-porta.service';
 
 import { PlannerService } 
 from './services/planner.service';
 
+
+
 // Componenti principali
+
 import { ComponenteProvaComponent } 
 from './componente-prova/componente-prova.component';
 
@@ -44,7 +66,9 @@ import { AboutComponent }
 from './about/about.component';
 
 
-// Componenti
+
+// Componenti sito
+
 import { ContactComponent } 
 from './Componenti/contact/contact.component';
 
@@ -57,20 +81,21 @@ from './Componenti/my-planners/my-planners.component';
 import { ShopComponent } 
 from './Componenti/shop/shop.component';
 
-import { ProductsComponent } 
-from './Componenti/products/products.component';
+import {ProductsComponent} from './Componenti/products/products.component';
 
 import { CartComponent } 
 from './Componenti/cart/cart.component';
 
-import { FavoritesComponent } 
-from './Componenti/favorites/favorites.component';
-
 import { PlannerComponent } 
 from './Componenti/planner/planner.component';
 
+import { FavoritesComponent } 
+from './Componenti/favorites/favorites.component';
+
+
 
 // Shared
+
 import { HeaderComponent } 
 from './Componenti/shared/header/header.component';
 
@@ -78,12 +103,16 @@ import { FooterComponent }
 from './Componenti/shared/footer/footer.component';
 
 
+
 // Checkout
+
 import { CheckoutComponent } 
 from './Componenti/checkout/checkout.component';
 
 
+
 // User
+
 import { LoginComponent } 
 from './Componenti/login/login.component';
 
@@ -94,7 +123,16 @@ import { ProfileComponent }
 from './Componenti/profile/profile.component';
 
 
+
+// Ordini
+
+import { MyOrdersComponent } 
+from './Componenti/my-orders/my-orders.component';
+
+
+
 // Admin
+
 import { AdminComponent } 
 from './Componenti/admin/admin.component';
 
@@ -106,14 +144,24 @@ from './Componenti/admin/admin-planners/admin-planners.component';
 
 import { AdminUploadComponent } 
 from './Componenti/admin-upload-planner/admin-upload-planner.component';
-import { AdminUsersComponent } from './Componenti/admin/admin-users/admin-users.component';
-import { AdminOrdersComponent } from './Componenti/admin/admin-orders/admin-orders.component';
+
+import { AdminUsersComponent } 
+from './Componenti/admin/admin-users/admin-users.component';
+
+import { AdminOrdersComponent } 
+from './Componenti/admin/admin-orders/admin-orders.component';
+
+import { AdminPaymentsComponent } 
+from './Componenti/admin/admin-payments/admin-payments.component';
+import { NotificationComponent } from './Componenti/notification/notification.component';
+
+
 
 
 
 @NgModule({
 
-declarations: [
+declarations:[
 
 
 AppComponent,
@@ -146,10 +194,10 @@ ProductsComponent,
 CartComponent,
 
 
-FavoritesComponent,
-
-
 PlannerComponent,
+
+
+FavoritesComponent,
 
 
 HeaderComponent,
@@ -170,22 +218,37 @@ RegisterComponent,
 ProfileComponent,
 
 
+MyOrdersComponent,
+
+
 AdminComponent,
+
+
+DashboardComponent,
+
+
+AdminPlannersComponent,
 
 
 AdminUploadComponent,
 
-AdminPlannersComponent,
 
-DashboardComponent,
-  AdminUsersComponent,
-  AdminOrdersComponent
+AdminUsersComponent,
+
+
+AdminOrdersComponent,
+
+
+AdminPaymentsComponent,
+    NotificationComponent
+
+
 
 ],
 
 
 
-imports: [
+imports:[
 
 
 BrowserModule,
@@ -194,32 +257,38 @@ BrowserModule,
 CommonModule,
 
 
+FormsModule,
+
+
+
+
 AppRoutingModule,
+
+
+RouterModule,
 
 
 BrowserAnimationsModule,
 
 
-FormsModule,
 
+// Material
 
 MatSliderModule,
 
-
 MatCardModule,
-
 
 MatButtonModule,
 
-
 MatInputModule
+
 
 
 ],
 
 
 
-providers: [
+providers:[
 
 
 ServizioPortaService,
@@ -228,11 +297,12 @@ ServizioPortaService,
 PlannerService
 
 
+
 ],
 
 
 
-bootstrap: [
+bootstrap:[
 
 
 AppComponent
@@ -244,4 +314,4 @@ AppComponent
 })
 
 
-export class AppModule { }
+export class AppModule {}

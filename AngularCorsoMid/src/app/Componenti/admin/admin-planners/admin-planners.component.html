@@ -1,38 +1,203 @@
 <div class="admin-planners">
 
 
+
+
+
+
+<header class="page-header">
+
+
+<div>
+
+
 <h1>
 📅 Gestione Planner
 </h1>
 
 
-<p class="counter">
-
-Totale Planner:
-<strong>{{products.length}}</strong>
-
+<p>
+Amministrazione catalogo digitale DreamCalendar
 </p>
 
 
+</div>
 
-<p class="message">
+
+
+<div class="status">
+
+🟢 Catalogo attivo
+
+</div>
+
+
+
+</header>
+
+
+
+
+
+
+
+
+
+<!-- STATISTICHE -->
+
+<section class="stats">
+
+
+
+
+
+<div class="stat-card">
+
+<span>
+📚 Planner
+</span>
+
+<strong>
+{{totalProducts}}
+</strong>
+
+<p>
+Prodotti pubblicati
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="stat-card">
+
+<span>
+⭐ Premium
+</span>
+
+<strong>
+{{premiumCount}}
+</strong>
+
+<p>
+Planner evidenziati
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="stat-card">
+
+<span>
+💰 Prezzo medio
+</span>
+
+<strong>
+{{averagePrice | currency:'EUR'}}
+</strong>
+
+<p>
+Valore catalogo
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="stat-card">
+
+<span>
+🏷 Categorie
+</span>
+
+<strong>
+{{categoryCount}}
+</strong>
+
+<p>
+Categorie disponibili
+</p>
+
+
+</div>
+
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<p
+
+class="message"
+
+*ngIf="message">
+
 
 {{message}}
 
+
 </p>
 
-<div class="filters">
+
+
+
+
+
+
+
+
+<!-- FILTRI -->
+
+
+<section class="filters">
+
 
 
 <input
 
+
 type="text"
+
 
 placeholder="🔎 Cerca planner..."
 
+
 [(ngModel)]="searchText"
 
-(input)="filterProducts()">
+
+(input)="filterProducts()"
+
+
+>
+
+
 
 
 
@@ -40,10 +205,14 @@ placeholder="🔎 Cerca planner..."
 
 <select
 
+
 [(ngModel)]="selectedCategory"
 
-(change)="filterProducts()">
 
+(change)="filterProducts()"
+
+
+>
 
 
 <option
@@ -52,30 +221,40 @@ placeholder="🔎 Cerca planner..."
 
 [value]="c">
 
+
 {{c}}
 
-</option>
 
+</option>
 
 
 </select>
 
 
-</div>
 
 
 
-<!-- ==========================
-     FORM INSERIMENTO / MODIFICA
-========================== -->
+
+</section>
 
 
-<section class="add-box">
+
+
+
+
+
+
+
+<!-- FORM -->
+
+
+<section class="form-box">
+
 
 
 <h2>
 
-{{editing ? '✏️ Modifica Planner' : '➕ Nuovo Planner'}}
+{{editing ? '✏️ Modifica Planner':'➕ Nuovo Planner'}}
 
 </h2>
 
@@ -83,17 +262,30 @@ placeholder="🔎 Cerca planner..."
 
 
 
+
+
 <label>
+
 Nome Planner
+
 </label>
+
+
 
 <input
 
+
 type="text"
 
-placeholder="Nome planner"
 
-[(ngModel)]="newPlanner.name">
+placeholder="Dream Life Planner"
+
+
+[(ngModel)]="newPlanner.name"
+
+
+>
+
 
 
 
@@ -102,32 +294,50 @@ placeholder="Nome planner"
 
 
 <label>
+
 Immagine copertina
+
 </label>
+
+
 
 <input
 
+
 type="text"
+
 
 placeholder="assets/images/calendar/planner.jpg"
 
-[(ngModel)]="newPlanner.image">
+
+[(ngModel)]="newPlanner.image"
+
+
+>
 
 
 
 
 
 
-<div 
+
+<div
+
 class="preview"
+
 *ngIf="newPlanner.image">
 
 
 <img
 
+
 [src]="newPlanner.image"
 
-[alt]="newPlanner.name">
+
+[alt]="newPlanner.name"
+
+
+>
 
 
 </div>
@@ -138,18 +348,30 @@ class="preview"
 
 
 
+
+
 <label>
-Prezzo €
+
+Prezzo
+
 </label>
 
 
+
 <input
+
 
 type="number"
 
+
 placeholder="14.99"
 
-[(ngModel)]="newPlanner.price">
+
+[(ngModel)]="newPlanner.price"
+
+
+>
+
 
 
 
@@ -158,17 +380,28 @@ placeholder="14.99"
 
 
 <label>
+
 Categoria
+
 </label>
+
 
 
 <input
 
+
 type="text"
 
-placeholder="Elegant"
 
-[(ngModel)]="newPlanner.category">
+placeholder="Lifestyle"
+
+
+[(ngModel)]="newPlanner.category"
+
+
+>
+
+
 
 
 
@@ -177,17 +410,27 @@ placeholder="Elegant"
 
 
 <label>
+
 Badge
+
 </label>
+
 
 
 <input
 
+
 type="text"
+
 
 placeholder="PREMIUM"
 
-[(ngModel)]="newPlanner.badge">
+
+[(ngModel)]="newPlanner.badge"
+
+
+>
+
 
 
 
@@ -196,17 +439,27 @@ placeholder="PREMIUM"
 
 
 <label>
-PDF Download
+
+File download PDF
+
 </label>
+
 
 
 <input
 
+
 type="text"
+
 
 placeholder="assets/downloads/planner.pdf"
 
-[(ngModel)]="newPlanner.downloadUrl">
+
+[(ngModel)]="newPlanner.downloadUrl"
+
+
+>
+
 
 
 
@@ -215,17 +468,24 @@ placeholder="assets/downloads/planner.pdf"
 
 
 <label>
+
 Descrizione
+
 </label>
+
 
 
 <textarea
 
+
 placeholder="Descrizione planner"
+
 
 [(ngModel)]="newPlanner.description">
 
+
 </textarea>
+
 
 
 
@@ -243,7 +503,7 @@ placeholder="Descrizione planner"
 
 💾
 
-{{editing ? 'Salva modifiche' : 'Pubblica Planner'}}
+{{editing ? 'Salva modifiche':'Pubblica Planner'}}
 
 
 </button>
@@ -255,21 +515,24 @@ placeholder="Descrizione planner"
 
 <button
 
-*ngIf="editing"
 
 class="cancel"
+
 
 (click)="resetForm()">
 
 
+❌
 
-❌ Annulla
+{{editing ? 'Annulla':'Pulisci'}}
 
 
 </button>
 
 
+
 </div>
+
 
 
 
@@ -285,20 +548,20 @@ class="cancel"
 
 
 
-<!-- ==========================
-     LISTA PLANNER
-========================== -->
+<!-- LISTA -->
 
 
+<section class="catalog">
 
-<section class="list">
 
 
 <h2>
 
-📚 Planner disponibili
+📚 Catalogo Planner
 
 </h2>
+
+
 
 
 
@@ -312,9 +575,10 @@ class="cancel"
 
 
 
+
 <div
 
-class="card"
+class="planner-card"
 
 *ngFor="let p of filteredProducts">
 
@@ -327,21 +591,28 @@ class="card"
 <div class="image-box">
 
 
+
 <img
+
 
 *ngIf="p.image"
 
+
 [src]="p.image"
 
-[alt]="p.name">
+
+[alt]="p.name"
+
+
+>
 
 
 
 <div
 
-*ngIf="!p.image"
+class="empty-image"
 
-class="no-image">
+*ngIf="!p.image">
 
 
 📅
@@ -358,6 +629,8 @@ class="no-image">
 
 
 
+<div class="content">
+
 
 <h3>
 
@@ -369,14 +642,11 @@ class="no-image">
 
 
 
-
-
-<p class="price">
+<div class="price">
 
 {{p.price | currency:'EUR'}}
 
-</p>
-
+</div>
 
 
 
@@ -394,11 +664,28 @@ class="no-image">
 
 
 
-<p>
+<span class="badge">
 
 {{p.badge}}
 
+</span>
+
+
+
+
+
+
+
+<p class="description">
+
+{{p.description}}
+
 </p>
+
+
+
+</div>
+
 
 
 
@@ -412,9 +699,10 @@ class="no-image">
 
 <button
 
-(click)="editPlanner(p)"
+class="edit"
 
-class="edit">
+
+(click)="editPlanner(p)">
 
 
 ✏️ Modifica
@@ -426,11 +714,33 @@ class="edit">
 
 
 
+
+
 <button
 
-(click)="deletePlanner(p.id)"
+class="copy"
 
-class="delete">
+
+(click)="duplicatePlanner(p)">
+
+
+📋 Copia
+
+
+</button>
+
+
+
+
+
+
+
+<button
+
+class="delete"
+
+
+(click)="deletePlanner(p.id)">
 
 
 🗑 Elimina
@@ -440,10 +750,6 @@ class="delete">
 
 
 
-</div>
-
-
-
 
 
 
@@ -454,13 +760,45 @@ class="delete">
 
 
 
+
 </div>
+
+
+
+
+
+
+</div>
+
+
 
 
 
 
 
 </section>
+
+
+
+
+
+
+
+
+
+<div
+
+class="empty"
+
+*ngIf="filteredProducts.length===0">
+
+
+📭 Nessun planner trovato
+
+
+</div>
+
+
 
 
 

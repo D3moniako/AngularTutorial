@@ -3,24 +3,26 @@
 
 <header>
 
-
 <div class="logo">
-
 🌸 DreamCalendar
-
 </div>
 
 
+<nav>
+
 <a routerLink="/">
-
 🏠 Home
-
 </a>
 
 
+<a routerLink="/shop">
+🛒 Shop
+</a>
+
+</nav>
+
+
 </header>
-
-
 
 
 
@@ -31,17 +33,13 @@
 
 
 <h1>
-
-📚 I miei Planner
-
+📚 I miei Planner Digitali
 </h1>
 
 
 <p>
-
-Tutti i tuoi Digital Calendar acquistati,
-sempre disponibili.
-
+I tuoi acquisti sempre disponibili.
+Scarica, aggiorna e utilizza i tuoi planner ovunque.
 </p>
 
 
@@ -52,18 +50,18 @@ sempre disponibili.
 
 
 
-<div>
+<div class="stat-card">
+
+<span>
+📚
+</span>
 
 <h2>
-
 {{planners.length}}
-
 </h2>
 
 <p>
-
 Planner acquistati
-
 </p>
 
 </div>
@@ -72,18 +70,18 @@ Planner acquistati
 
 
 
-<div>
+<div class="stat-card">
+
+<span>
+⬇️
+</span>
 
 <h2>
-
 {{totalDownloads}}
-
 </h2>
 
 <p>
-
 Download effettuati
-
 </p>
 
 </div>
@@ -92,16 +90,18 @@ Download effettuati
 
 
 
-<div>
+<div class="stat-card">
+
+<span>
+📅
+</span>
 
 <h2>
 {{currentYear}}
 </h2>
 
 <p>
-
-Anno corrente
-
+Anno licenza
 </p>
 
 </div>
@@ -110,7 +110,6 @@ Anno corrente
 
 
 </div>
-
 
 
 </section>
@@ -130,7 +129,7 @@ Anno corrente
 
 type="text"
 
-placeholder="🔍 Cerca planner..."
+placeholder="🔍 Cerca nei tuoi planner..."
 
 [(ngModel)]="searchText">
 
@@ -153,9 +152,7 @@ placeholder="🔍 Cerca planner..."
 </button>
 
 
-
 </div>
-
 
 
 </section>
@@ -169,17 +166,15 @@ placeholder="🔍 Cerca planner..."
 
 
 
-<p
+<div
 
 class="message"
 
 *ngIf="downloadMessage">
 
-
 {{downloadMessage}}
 
-
-</p>
+</div>
 
 
 
@@ -193,12 +188,13 @@ class="message"
 
 
 
+
+
 <div
 
 class="planner-card"
 
 *ngFor="let p of filteredPlanners">
-
 
 
 
@@ -210,9 +206,7 @@ class="favorite"
 
 (click)="toggleFavorite(p)">
 
-
 {{p.favorite ? '❤️':'🤍'}}
-
 
 </button>
 
@@ -249,12 +243,28 @@ loading="lazy">
 
 
 
+<div class="card-header">
+
 
 <h2>
 
 {{p.name}}
 
 </h2>
+
+
+<span class="owned">
+
+✔ Acquistato
+
+</span>
+
+
+</div>
+
+
+
+
 
 
 
@@ -273,14 +283,21 @@ loading="lazy">
 
 
 
+
+<div class="info-box">
+
+
 <p>
 
-📅 Acquistato:
+📅 Data acquisto:
+
+<strong>
 
 {{p.purchaseDate}}
 
-</p>
+</strong>
 
+</p>
 
 
 
@@ -288,11 +305,13 @@ loading="lazy">
 
 ✨ Versione:
 
+<strong>
+
 {{p.version}}
 
+</strong>
+
 </p>
-
-
 
 
 
@@ -300,31 +319,13 @@ loading="lazy">
 
 💾 Dimensione:
 
-{{p.size}}
-
-</p>
-
-
-
-
-
-
-
-
-
-
-<div class="download-info">
-
-
-⬇ Scaricamenti:
-
 <strong>
 
-{{p.downloads}}
+{{p.size}}
 
 </strong>
 
-volte
+</p>
 
 
 </div>
@@ -333,6 +334,32 @@ volte
 
 
 
+
+
+
+
+<div class="download-box">
+
+
+<h3>
+
+⬇ Download
+
+</h3>
+
+
+
+<p>
+
+Hai scaricato questo planner:
+
+<strong>
+{{p.downloads}}
+</strong>
+
+volte
+
+</p>
 
 
 
@@ -344,12 +371,44 @@ volte
 
 class="progress-bar"
 
-[style.width.%]="p.downloads * 10">
+[style.width.%]="p.downloads > 10 ? 100 : p.downloads * 10">
 
 </div>
 
 
 </div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<div class="file-status">
+
+
+<span *ngIf="p.file">
+
+🟢 File PDF disponibile
+
+</span>
+
+
+<span *ngIf="!p.file">
+
+🔴 File non disponibile
+
+</span>
+
+
+</div>
+
 
 
 
@@ -361,13 +420,16 @@ class="progress-bar"
 <div class="buttons">
 
 
-
 <button
 
-(click)="download(p)">
+class="download"
+
+(click)="download(p)"
+
+[disabled]="!p.file">
 
 
-⬇ Download PDF
+⬇ Scarica PDF
 
 
 </button>
@@ -376,12 +438,11 @@ class="progress-bar"
 
 
 
-
 <button
 
-(click)="preview(p)"
+class="preview"
 
-class="preview">
+(click)="preview(p)">
 
 
 👁 Anteprima
@@ -390,9 +451,27 @@ class="preview">
 </button>
 
 
-
 </div>
 
+
+
+
+
+
+
+
+
+<button
+
+class="open-product"
+
+[routerLink]="['/products',p.id]">
+
+
+⭐ Vai alla pagina planner
+
+
+</button>
 
 
 
@@ -422,6 +501,8 @@ class="update"
 
 
 
+
+
 </section>
 
 
@@ -436,6 +517,13 @@ class="update"
 
 
 
+
+
+<!-- ============================= -->
+<!-- MODALE ANTEPRIMA PDF -->
+<!-- ============================= -->
+
+
 <section
 
 class="preview-modal"
@@ -444,11 +532,7 @@ class="preview-modal"
 
 
 
-
-
 <div class="modal">
-
-
 
 
 
@@ -458,9 +542,7 @@ class="close"
 
 (click)="closePreview()">
 
-
 ✕
-
 
 </button>
 
@@ -469,13 +551,11 @@ class="close"
 
 
 
-
 <img
 
-[src]="plannerSelected?.image"
+[src]="plannerSelected.image"
 
-loading="lazy">
-
+class="preview-image">
 
 
 
@@ -484,17 +564,16 @@ loading="lazy">
 
 <h2>
 
-{{plannerSelected?.name}}
+{{plannerSelected.name}}
 
 </h2>
 
 
 
 
-
 <p>
 
-Anteprima digitale del tuo planner.
+Anteprima del tuo planner digitale premium.
 
 </p>
 
@@ -503,7 +582,7 @@ Anteprima digitale del tuo planner.
 
 
 
-
+<div class="preview-actions">
 
 
 <button
@@ -520,9 +599,75 @@ Anteprima digitale del tuo planner.
 
 
 
+<a
+
+[target]="'_blank'"
+
+[href]="plannerSelected.pdfPreview">
+
+
+📄 Apri PDF
+
+
+</a>
+
+
 </div>
 
 
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section class="security">
+
+
+<h2>
+
+🔐 Licenza digitale
+
+</h2>
+
+
+
+<p>
+
+Questo planner è associato al tuo account.
+
+Puoi scaricarlo ogni volta che vuoi.
+
+</p>
+
+
+
+<div>
+
+
+✔ Acquisto verificato
+
+<br>
+
+✔ Download illimitati
+
+<br>
+
+✔ Aggiornamenti futuri inclusi
+
+
+</div>
 
 
 
@@ -549,7 +694,9 @@ Hai bisogno di aiuto?
 
 <p>
 
-Il nostro supporto è disponibile per problemi con download e acquisti.
+Problemi con download, file o acquisti?
+
+Il nostro supporto è disponibile.
 
 </p>
 
@@ -558,9 +705,7 @@ Il nostro supporto è disponibile per problemi con download e acquisti.
 
 <a routerLink="/contact">
 
-
 💌 Contattaci
-
 
 </a>
 
@@ -578,9 +723,7 @@ Il nostro supporto è disponibile per problemi con download e acquisti.
 
 <footer>
 
-
 🌸 DreamCalendar
-
 
 </footer>
 

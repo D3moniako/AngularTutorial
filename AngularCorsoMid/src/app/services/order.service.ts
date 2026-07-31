@@ -20,20 +20,28 @@ export class OrderService {
 
 
 private orders:Order[] =
+
 this.loadOrders();
 
 
 
 
-// comunica modifiche ordini a tutta l'app
 
 private ordersSubject =
-new BehaviorSubject<Order[]>(this.orders);
+
+new BehaviorSubject<Order[]>(
+
+[...this.orders]
+
+);
 
 
 
 orders$ =
+
 this.ordersSubject.asObservable();
+
+
 
 
 
@@ -61,13 +69,19 @@ constructor(){}
 addOrder(order:Order){
 
 
+const exists =
+this.orders.some(
+o=>o.id===order.id
+);
+
+
+if(!exists){
 
 this.orders.push(order);
 
-
-
 this.saveOrders();
 
+}
 
 
 }
@@ -94,7 +108,9 @@ getUserOrders(userId:number):Order[]{
 return this.orders.filter(
 
 
-order=>order.userId===userId
+order =>
+
+order.userId===userId
 
 
 );
@@ -114,6 +130,7 @@ order=>order.userId===userId
 /*
 ================================================
  PLANNER DIGITALI ACQUISTATI
+ SOLO PAGATI
 ================================================
 */
 
@@ -123,7 +140,9 @@ getUserPlanners(userId:number):Product[]{
 
 
 const orders =
+
 this.getUserOrders(userId);
+
 
 
 
@@ -132,11 +151,28 @@ const products:Product[]=[];
 
 
 
+
 orders.forEach(order=>{
 
 
 
-if(order.downloadAvailable){
+
+
+if(
+
+
+order.status==='PAGATO'
+
+
+&&
+
+
+order.downloadAvailable
+
+
+){
+
+
 
 
 
@@ -144,12 +180,18 @@ order.products.forEach(product=>{
 
 
 
+
+
+
 const exists =
+
 products.some(
 
 p=>p.id===product.id
 
 );
+
+
 
 
 
@@ -167,7 +209,11 @@ products.push(product);
 
 
 
+
+
 });
+
+
 
 
 
@@ -175,7 +221,14 @@ products.push(product);
 
 
 
+
+
+
+
 });
+
+
+
 
 
 
@@ -240,27 +293,49 @@ productId:number
 
 
 
+
+
 return this.getUserOrders(userId).some(
 
 
-order=>
+
+order =>
 
 
-order.downloadAvailable &&
+
+order.status==='PAGATO'
+
+
+
+&&
+
+
+
+order.downloadAvailable
+
+
+
+&&
+
 
 
 order.products.some(
 
 
-product=>
+
+product =>
 
 product.id===productId
+
 
 
 )
 
 
+
 );
+
+
 
 
 
@@ -290,7 +365,10 @@ status:Order['status']
 ){
 
 
-const index=this.orders.findIndex(
+
+const order =
+
+this.orders.find(
 
 o=>o.id===id
 
@@ -298,17 +376,13 @@ o=>o.id===id
 
 
 
-if(index!==-1){
+
+
+if(order){
 
 
 
-this.orders[index]={
-
-...this.orders[index],
-
-status:status
-
-};
+order.status=status;
 
 
 
@@ -329,6 +403,7 @@ this.saveOrders();
 
 
 
+
 /*
 ================================================
  ELIMINA ORDINE ADMIN
@@ -340,7 +415,9 @@ deleteOrder(id:number){
 
 
 
-this.orders=this.orders.filter(
+this.orders =
+
+this.orders.filter(
 
 
 o=>o.id!==id
@@ -349,14 +426,6 @@ o=>o.id!==id
 );
 
 
-
-// forza aggiornamento immediato
-
-this.ordersSubject.next(
-
-[...this.orders]
-
-);
 
 
 
@@ -377,7 +446,6 @@ this.saveOrders();
 /*
 ================================================
  CERCA ORDINE
- FUTURO ADMIN
 ================================================
 */
 
@@ -390,7 +458,45 @@ return this.orders.find(
 
 order=>order.id===id
 
-) || null;
+)
+
+||
+
+null;
+
+
+
+}
+
+
+
+
+
+
+
+
+
+/*
+================================================
+ ORDINI PAGATI
+ FUTURO ADMIN / DASHBOARD
+================================================
+*/
+
+
+getPaidOrders():Order[]{
+
+
+
+return this.orders.filter(
+
+order =>
+
+order.status==='PAGATO'
+
+
+);
+
 
 
 }
@@ -424,7 +530,6 @@ JSON.stringify(this.orders)
 
 
 
-// aggiorna tutte le pagine collegate
 
 this.ordersSubject.next(
 
@@ -459,13 +564,19 @@ localStorage.getItem('orders');
 
 
 
+
 return data ?
+
 
 JSON.parse(data)
 
+
 :
 
+
 [];
+
+
 
 
 
@@ -484,5 +595,45 @@ return [];
 }
 
 
+/*
+===========================================
+ULTIMO ORDINE UTENTE
+===========================================
+*/
 
+getLastOrder(userId:number):Order|null{
+
+const orders=this.getUserOrders(userId);
+
+if(orders.length===0){
+
+return null;
+
+}
+
+return orders.sort((a,b)=>
+
+new Date(b.purchaseDate).getTime()
+
+-
+
+new Date(a.purchaseDate).getTime()
+
+)[0];
+
+}
+
+
+
+/*
+===========================================
+NUMERO ORDINI
+===========================================
+*/
+
+countUserOrders(userId:number):number{
+
+return this.getUserOrders(userId).length;
+
+}
 }

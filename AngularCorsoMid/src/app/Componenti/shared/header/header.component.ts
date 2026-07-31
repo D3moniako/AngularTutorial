@@ -66,6 +66,13 @@ icon:'📅'
 
 
 {
+label:'I miei ordini',
+link:'/my-orders',
+icon:'📦'
+},
+
+
+{
 label:'Preferiti',
 link:'/favorites',
 icon:'❤️'

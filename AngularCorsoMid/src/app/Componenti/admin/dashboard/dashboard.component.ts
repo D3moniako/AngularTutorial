@@ -1,10 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
+import { Subscription } from 'rxjs';
+
 import { PlannerService } from '../../../services/planner.service';
 import { UserService } from '../../../services/user.service';
 import { OrderService } from '../../../services/order.service';
+import { PaymentService } from '../../../services/payment.service';
 
-import { Subscription } from 'rxjs';
+import { Order } from '../../../models/order';
+import { Payment } from '../../../models/payment';
+
 
 
 @Component({
@@ -22,6 +27,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 
 
+/*
+================================================
+ STATISTICHE GENERALI
+================================================
+*/
+
+
 totalProducts:number=0;
 
 totalUsers:number=0;
@@ -30,10 +42,63 @@ totalAdmins:number=0;
 
 activeUsers:number=0;
 
+
 totalOrders:number=0;
 
 
+totalRevenue:number=0;
+
+
+
+/*
+================================================
+ PAGAMENTI
+================================================
+*/
+
+
+totalPayments:number=0;
+
+completedPayments:number=0;
+
+failedPayments:number=0;
+
+
+
+/*
+================================================
+ VENDITE
+================================================
+*/
+
+
+productsSold:number=0;
+
+
+lastOrder:Order|null=null;
+
+
+lastCustomer:string='';
+
+
+lastPayment:Payment|null=null;
+
+
+
+
+/*
+================================================
+ SISTEMA
+================================================
+*/
+
+
 currentDate:string='';
+
+currentTime:string='';
+
+
+systemStatus:string='Online';
 
 
 
@@ -42,15 +107,28 @@ private subscriptions:Subscription[]=[];
 
 
 
+
+
 constructor(
+
 
 private plannerService:PlannerService,
 
+
 private userService:UserService,
 
-private orderService:OrderService
+
+private orderService:OrderService,
+
+
+private paymentService:PaymentService
+
 
 ){}
+
+
+
+
 
 
 
@@ -63,44 +141,52 @@ this.loadStats();
 
 
 
-/*
-================================
-AGGIORNAMENTO AUTOMATICO UTENTI
-================================
-*/
 
 
 this.subscriptions.push(
+
+
 
 this.userService.users$
+
 .subscribe(()=>{
+
 
 this.loadStats();
 
+
 })
+
 
 );
 
 
 
 
-/*
-================================
-AGGIORNAMENTO AUTOMATICO ORDINI
-================================
-*/
+
 
 
 this.subscriptions.push(
 
+
+
 this.orderService.orders$
+
 .subscribe(()=>{
+
 
 this.loadStats();
 
+
 })
 
+
 );
+
+
+
+
+
 
 
 
@@ -110,41 +196,60 @@ this.loadStats();
 
 
 
+
+
+
+
 loadStats(){
 
 
 
-// ===============================
+
+
+
+
+// =====================================
 // PLANNER
-// ===============================
+// =====================================
 
 
 this.totalProducts =
 
-this.plannerService.getProducts().length;
+
+this.plannerService
+
+.getProducts()
+
+.length;
 
 
 
 
 
-// ===============================
+
+
+
+// =====================================
 // UTENTI
-// ===============================
+// =====================================
 
 
-const users=
+const users =
+
 
 this.userService.getUsers();
 
 
 
-this.totalUsers=
+
+this.totalUsers =
 
 users.length;
 
 
 
-this.totalAdmins=
+
+this.totalAdmins =
 
 users.filter(
 
@@ -154,7 +259,8 @@ u=>u.role==='ADMIN'
 
 
 
-this.activeUsers=
+
+this.activeUsers =
 
 users.filter(
 
@@ -167,27 +273,243 @@ u=>u.enabled
 
 
 
-// ===============================
+
+
+
+// =====================================
 // ORDINI
-// ===============================
+// =====================================
 
 
-this.totalOrders=
-
-this.orderService.getAllOrders().length;
+const orders:Order[] =
 
 
+this.orderService.getAllOrders();
 
 
 
-// ===============================
-// DATA
-// ===============================
 
 
-this.currentDate=
+this.totalOrders =
 
-new Date().toLocaleDateString(
+
+orders.length;
+
+
+
+
+
+this.totalRevenue =
+
+
+orders
+
+.filter(
+
+o=>o.status==='PAGATO'
+
+)
+
+.reduce(
+
+(total,order)=>
+
+total + order.total,
+
+0
+
+);
+
+
+
+
+
+
+
+
+
+// =====================================
+// PRODOTTI VENDUTI
+// =====================================
+
+
+this.productsSold =
+
+
+orders
+
+.filter(
+
+o=>o.status==='PAGATO'
+
+)
+
+.reduce(
+
+(total,order)=>
+
+total + order.products.length,
+
+0
+
+);
+
+
+
+
+
+
+
+
+
+// =====================================
+// ULTIMO ORDINE
+// =====================================
+
+
+if(orders.length>0){
+
+
+
+this.lastOrder =
+
+
+[...orders].sort(
+
+
+(a,b)=>
+
+
+new Date(b.purchaseDate).getTime()
+
+-
+
+new Date(a.purchaseDate).getTime()
+
+
+)[0];
+
+
+
+
+
+this.lastCustomer =
+
+
+this.lastOrder.customerName || '';
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// PAGAMENTI
+// =====================================
+
+
+const payments:Payment[] =
+
+
+this.paymentService.getPayments();
+
+
+
+
+
+this.totalPayments =
+
+
+payments.length;
+
+
+
+
+
+this.completedPayments =
+
+
+payments.filter(
+
+p=>p.status==='COMPLETED'
+
+).length;
+
+
+
+
+
+this.failedPayments =
+
+
+payments.filter(
+
+p=>p.status==='FAILED'
+
+).length;
+
+
+
+
+
+
+
+
+if(payments.length>0){
+
+
+
+this.lastPayment =
+
+
+[...payments].sort(
+
+
+(a,b)=>
+
+
+new Date(b.paymentDate).getTime()
+
+-
+
+new Date(a.paymentDate).getTime()
+
+
+)[0];
+
+
+
+}
+
+
+
+
+
+
+
+
+
+// =====================================
+// DATA SISTEMA
+// =====================================
+
+
+const now = new Date();
+
+
+
+
+this.currentDate =
+
+
+now.toLocaleDateString(
 
 'it-IT',
 
@@ -205,7 +527,27 @@ year:'numeric'
 
 
 
+
+
+this.currentTime =
+
+
+now.toLocaleTimeString(
+
+'it-IT'
+
+);
+
+
+
+
+
+
 }
+
+
+
+
 
 
 
@@ -214,15 +556,18 @@ year:'numeric'
 ngOnDestroy(){
 
 
+
 this.subscriptions.forEach(
 
-s=>s.unsubscribe()
+sub=>
+
+sub.unsubscribe()
 
 );
 
 
-}
 
+}
 
 
 

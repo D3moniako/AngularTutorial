@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { OrderService } from '../../services/order.service';
 import { UserService } from '../../services/user.service';
+import { PaymentService } from '../../services/payment.service';
 
 import { CartItem } from '../../models/cart-item';
-import { Order } from '../../models/order';
 import { User } from '../../models/user';
 
 
@@ -33,9 +33,7 @@ cart:CartItem[]=[];
 total:number=0;
 
 
-
 user:User|null=null;
-
 
 
 
@@ -49,6 +47,7 @@ email:'',
 address:''
 
 };
+
 
 
 
@@ -75,6 +74,8 @@ successMessage:string='';
 
 
 
+
+
 constructor(
 
 
@@ -82,6 +83,9 @@ private cartService:CartService,
 
 
 private orderService:OrderService,
+
+
+private paymentService:PaymentService,
 
 
 private userService:UserService,
@@ -99,10 +103,7 @@ private router:Router
 
 
 
-
-
 ngOnInit(){
-
 
 
 this.user=this.userService.getCurrentUser();
@@ -113,16 +114,13 @@ this.user=this.userService.getCurrentUser();
 if(this.user){
 
 
-
 this.customer.name=this.user.name;
 
 
 this.customer.email=this.user.email;
 
 
-
 }
-
 
 
 
@@ -145,13 +143,10 @@ this.loadCart();
 loadCart(){
 
 
-
 this.cart=this.cartService.getCart();
 
 
-
 this.total=this.cartService.getTotal();
-
 
 
 }
@@ -167,9 +162,7 @@ this.total=this.cartService.getTotal();
 get totalItems():number{
 
 
-
 return this.cart.reduce(
-
 
 
 (total,item)=>
@@ -184,7 +177,6 @@ total + item.quantity,
 );
 
 
-
 }
 
 
@@ -195,24 +187,24 @@ total + item.quantity,
 
 
 
-completeOrder(){
+
+
+
+
+async completeOrder(){
 
 
 
 this.errorMessage='';
-
 
 this.successMessage='';
 
 
 
 
-
 if(this.loading){
 
-
 return;
-
 
 }
 
@@ -222,28 +214,20 @@ return;
 
 
 
-
-
-// ================================================
-// CONTROLLO LOGIN
-// ================================================
-
+// LOGIN
 
 
 if(!this.user){
 
 
-
-this.errorMessage =
+this.errorMessage=
 
 'Devi effettuare il login prima di acquistare';
-
 
 
 this.router.navigate(['/login']);
 
 
-
 return;
 
 
@@ -256,39 +240,26 @@ return;
 
 
 
-
-// ================================================
-// CONTROLLO DATI CLIENTE
-// ================================================
-
+// DATI CLIENTE
 
 
 if(
 
-
-
 !this.customer.name.trim() ||
-
 
 !this.customer.email.trim() ||
 
-
 !this.customer.address.trim()
-
-
 
 ){
 
 
-
-this.errorMessage =
+this.errorMessage=
 
 'Inserisci tutti i dati richiesti';
 
 
-
 return;
-
 
 
 }
@@ -301,29 +272,21 @@ return;
 
 
 
-// ================================================
-// CONTROLLO CARRELLO
-// ================================================
-
+// CARRELLO
 
 
 if(this.cart.length===0){
 
 
-
-this.errorMessage =
+this.errorMessage=
 
 'Il carrello è vuoto';
-
 
 
 return;
 
 
-
 }
-
-
 
 
 
@@ -340,88 +303,100 @@ this.loading=true;
 
 
 
+try{
 
-// ================================================
-// CREAZIONE ORDINE
-// ================================================
 
 
+// =====================================
+// SALVATAGGIO DATI TEMPORANEI
+// PRIMA DI STRIPE
+// =====================================
 
-const orderId = Date.now();
 
 
+localStorage.setItem(
 
+'checkoutCustomer',
 
+JSON.stringify(this.customer)
 
+);
 
-const order:Order={
 
 
 
-id:orderId,
 
+localStorage.setItem(
 
+'checkoutCart',
 
-userId:this.user.id,
+JSON.stringify(this.cart)
 
+);
 
 
-products:
 
 
 
-this.cart.map(item=>item.product),
+localStorage.setItem(
 
+'checkoutTotal',
 
+this.total.toString()
 
-total:this.total,
+);
 
 
 
-purchaseDate:
 
 
+localStorage.setItem(
 
-new Date().toISOString(),
+'checkoutUserId',
 
+this.user.id.toString()
 
+);
 
-status:'COMPLETED',
 
 
 
-downloadAvailable:true,
 
 
 
 
 
-customerName:
+// =====================================
+// CREA SESSIONE STRIPE MOCK
+// =====================================
 
 
 
-this.customer.name,
+const session =
 
+await this.paymentService.createCheckoutSession(
 
+this.cart
 
-customerEmail:
+);
 
 
 
-this.customer.email,
 
 
 
-customerAddress:
 
+if(!session || !session.sessionId){
 
 
-this.customer.address
+throw new Error(
 
+'Sessione pagamento non creata'
 
+);
 
-};
 
+}
 
 
 
@@ -430,58 +405,43 @@ this.customer.address
 
 
 
-// ================================================
-// SALVATAGGIO ORDINE
-// ================================================
 
+// =====================================
+// TEST LOCALE
+// SIMULA RITORNO STRIPE
+// =====================================
 
 
-this.orderService.addOrder(order);
 
+this.router.navigate([
 
+'/payment-success'
 
+]);
 
 
 
 
 
-this.lastOrderId=orderId;
+}
 
+catch(error){
 
 
-this.successMessage=
 
-'Ordine completato correttamente';
+console.error(
 
+'Errore pagamento',
 
+error
 
+);
 
 
-this.orderCompleted=true;
 
+this.errorMessage=
 
-
-
-
-
-
-
-
-// ================================================
-// PULIZIA CARRELLO
-// ================================================
-
-
-
-this.cartService.clear();
-
-
-
-this.cart=[];
-
-
-this.total=0;
-
+'Errore durante il pagamento';
 
 
 this.loading=false;
@@ -494,23 +454,32 @@ this.loading=false;
 
 
 
-
-
-
-
-goToPlanners(){
-
-
-
-this.router.navigate(['/my-planners']);
-
-
-
 }
 
 
 
 
+
+
+
+
+
+
+
+// NAVIGAZIONE
+
+
+goToPlanners(){
+
+
+this.router.navigate([
+
+'/my-planners'
+
+]);
+
+
+}
 
 
 
@@ -520,12 +489,42 @@ this.router.navigate(['/my-planners']);
 continueShopping(){
 
 
+this.router.navigate([
 
-this.router.navigate(['/shop']);
+'/shop'
 
+]);
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+// TEST MANUALE
+
+
+simulateStripePayment(){
+
+
+this.successMessage=
+
+'Pagamento Stripe completato (TEST)';
+
+
+this.orderCompleted=true;
+
+
+}
+
+
 
 
 

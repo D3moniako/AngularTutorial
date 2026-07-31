@@ -983,3 +983,270 @@ padding:30px 20px;
 
 
 }
+/* ================================= */
+/* STATO ACQUISTATO */
+/* ================================= */
+
+
+.purchase-badge{
+
+display:inline-block;
+
+margin:15px 0;
+
+padding:12px 22px;
+
+border-radius:30px;
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#d7f9df,
+
+#b8f3c8
+
+);
+
+color:#23733a;
+
+font-weight:bold;
+
+font-size:15px;
+
+box-shadow:
+
+0 8px 20px rgba(80,180,100,.18);
+
+}
+
+
+
+
+
+/* ================================= */
+/* INFO EXTRA PRODOTTO */
+/* ================================= */
+
+
+.product-info-extra{
+
+margin-top:25px;
+
+display:grid;
+
+grid-template-columns:
+
+repeat(auto-fit,minmax(180px,1fr));
+
+gap:15px;
+
+}
+
+
+
+
+
+.product-info-extra div{
+
+
+background:
+
+linear-gradient(
+
+135deg,
+
+#fff5fa,
+
+#f5efff
+
+);
+
+
+padding:18px;
+
+
+border-radius:22px;
+
+
+color:#674d5c;
+
+
+font-size:15px;
+
+
+border:
+
+1px solid rgba(200,130,170,.12);
+
+
+}
+
+
+
+.product-info-extra strong{
+
+
+display:block;
+
+
+margin-top:8px;
+
+
+color:#d27da1;
+
+
+font-size:16px;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ================================= */
+/* PRODOTTO GIA POSSEDUTO */
+/* ================================= */
+
+
+.already-owned{
+
+
+margin-top:20px;
+
+
+padding:20px;
+
+
+border-radius:25px;
+
+
+background:
+
+
+linear-gradient(
+
+135deg,
+
+#fff3c4,
+
+#ffe6f2
+
+);
+
+
+
+color:#795548;
+
+
+font-weight:bold;
+
+
+text-align:center;
+
+
+line-height:1.6;
+
+
+box-shadow:
+
+
+0 15px 30px rgba(220,170,80,.18);
+
+
+
+}
+
+
+
+
+
+
+
+
+/* ================================= */
+/* MIGLIORA CARRELLO */
+/* ================================= */
+
+
+.cart-button{
+
+
+transition:.3s;
+
+
+}
+
+
+
+
+.cart-button:hover{
+
+
+transform:translateY(-4px);
+
+
+box-shadow:
+
+0 15px 30px rgba(210,130,160,.25);
+
+
+}
+
+
+
+
+
+
+
+
+
+/* ================================= */
+/* MOBILE EXTRA */
+/* ================================= */
+
+
+@media(max-width:700px){
+
+
+.purchase-badge{
+
+
+font-size:14px;
+
+
+padding:10px 18px;
+
+
+}
+
+
+
+.product-info-extra{
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+
+.already-owned{
+
+
+font-size:14px;
+
+
+}
+
+
+
+}

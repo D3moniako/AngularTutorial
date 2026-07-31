@@ -1,11 +1,12 @@
 <div class="dashboard">
 
 
-<!-- =========================
- HEADER
-========================= -->
 
-<div class="hero">
+<!-- ==============================
+HEADER
+============================== -->
+
+<header class="hero">
 
 
 <div>
@@ -16,7 +17,9 @@
 
 
 <p class="subtitle">
-Centro controllo piattaforma e-commerce planner
+
+Centro controllo piattaforma e-commerce planner digitali
+
 </p>
 
 
@@ -24,27 +27,35 @@ Centro controllo piattaforma e-commerce planner
 
 
 
+
 <div class="status">
+
 
 <span class="status-dot"></span>
 
-Sistema Online
+
+Sistema {{systemStatus}}
+
 
 </div>
 
 
-</div>
+</header>
 
 
 
 
 
-<!-- =========================
- STATISTICHE
-========================= -->
 
 
-<div class="cards">
+
+
+<!-- ==============================
+CARDS PRINCIPALI
+============================== -->
+
+
+<section class="cards">
 
 
 
@@ -57,7 +68,7 @@ Sistema Online
 
 <div>
 
-<span class="card-title">
+<span>
 Planner
 </span>
 
@@ -73,7 +84,6 @@ Prodotti pubblicati
 
 
 </div>
-
 
 </div>
 
@@ -92,7 +102,7 @@ Prodotti pubblicati
 
 <div>
 
-<span class="card-title">
+<span>
 Utenti
 </span>
 
@@ -108,7 +118,6 @@ Account registrati
 
 
 </div>
-
 
 </div>
 
@@ -127,7 +136,7 @@ Account registrati
 
 <div>
 
-<span class="card-title">
+<span>
 Admin
 </span>
 
@@ -143,7 +152,6 @@ Amministratori
 
 
 </div>
-
 
 </div>
 
@@ -162,8 +170,8 @@ Amministratori
 
 <div>
 
-<span class="card-title">
-Attivi
+<span>
+Utenti attivi
 </span>
 
 
@@ -173,14 +181,14 @@ Attivi
 
 
 <p>
-Utenti abilitati
+Account abilitati
 </p>
 
 
 </div>
 
-
 </div>
+
 
 
 
@@ -197,7 +205,7 @@ Utenti abilitati
 
 <div>
 
-<span class="card-title">
+<span>
 Ordini
 </span>
 
@@ -214,6 +222,162 @@ Acquisti effettuati
 
 </div>
 
+</div>
+
+
+
+
+
+
+
+<div class="card money">
+
+<div class="card-icon">
+💰
+</div>
+
+
+<div>
+
+<span>
+Incasso
+</span>
+
+
+<h2>
+{{totalRevenue | currency:'EUR'}}
+</h2>
+
+
+<p>
+Vendite completate
+</p>
+
+
+</div>
+
+</div>
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ==============================
+PAGAMENTI
+============================== -->
+
+
+<section class="panel">
+
+
+<h2>
+💳 Stato pagamenti
+</h2>
+
+
+
+
+
+<div class="info-grid">
+
+
+
+<div class="info-box">
+
+
+<span>
+
+Pagamenti totali
+
+</span>
+
+
+<strong>
+
+{{totalPayments}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+<div class="info-box success">
+
+
+<span>
+
+Completati
+
+</span>
+
+
+<strong>
+
+{{completedPayments}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+<div class="info-box danger">
+
+
+<span>
+
+Falliti
+
+</span>
+
+
+<strong>
+
+{{failedPayments}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+<div class="info-box">
+
+
+<span>
+
+Prodotti venduti
+
+</span>
+
+
+<strong>
+
+{{productsSold}}
+
+</strong>
+
 
 </div>
 
@@ -223,17 +387,148 @@ Acquisti effettuati
 
 
 
+</section>
 
 
 
 
 
-<!-- =========================
- AZIONI RAPIDE
-========================= -->
 
 
-<div class="panel">
+
+
+<!-- ==============================
+ULTIMA VENDITA
+============================== -->
+
+
+<section class="panel">
+
+
+<h2>
+📈 Ultima attività
+</h2>
+
+
+
+
+<div class="info-grid">
+
+
+
+
+
+<div class="info-box">
+
+
+<span>
+Ultimo cliente
+</span>
+
+
+<strong>
+
+{{lastCustomer || 'Nessuno'}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="info-box">
+
+
+<span>
+Ultimo ordine
+</span>
+
+
+<strong>
+
+#{{lastOrder?.id || '-'}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+
+<div class="info-box">
+
+
+<span>
+Ultimo pagamento
+</span>
+
+
+<strong>
+
+#{{lastPayment?.id || '-'}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+
+<div class="info-box">
+
+
+<span>
+Metodo pagamento
+</span>
+
+
+<strong>
+
+{{lastPayment?.method || '-'}}
+
+</strong>
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ==============================
+AZIONI RAPIDE
+============================== -->
+
+
+<section class="panel">
 
 
 <h2>
@@ -242,12 +537,17 @@ Acquisti effettuati
 
 
 
+
 <div class="buttons">
 
 
 
+
+
 <a
+
 routerLink="/admin/upload"
+
 class="action primary">
 
 ➕ Nuovo Planner
@@ -258,8 +558,12 @@ class="action primary">
 
 
 
+
+
 <a
+
 routerLink="/admin/planners"
+
 class="action">
 
 📅 Gestisci Planner
@@ -270,8 +574,12 @@ class="action">
 
 
 
+
+
 <a
+
 routerLink="/admin/users"
+
 class="action">
 
 👥 Gestisci Utenti
@@ -282,8 +590,12 @@ class="action">
 
 
 
+
+
 <a
+
 routerLink="/admin/orders"
+
 class="action">
 
 📦 Gestisci Ordini
@@ -292,10 +604,20 @@ class="action">
 
 
 
+<a
+routerLink="/admin/payments"
+class="action">
+
+💳 Gestisci Pagamenti
+
+</a>
+
 
 
 <a
+
 routerLink="/shop"
+
 class="action">
 
 🛍 Visualizza Shop
@@ -306,8 +628,12 @@ class="action">
 
 
 
+
+
 <a
+
 routerLink="/"
+
 class="action">
 
 🌍 Vai al sito
@@ -316,30 +642,34 @@ class="action">
 
 
 
-</div>
 
 
 </div>
 
 
 
+</section>
 
 
 
 
 
 
-<!-- =========================
- STATO PIATTAFORMA
-========================= -->
 
 
-<div class="panel">
+
+<!-- ==============================
+SISTEMA
+============================== -->
+
+
+<section class="panel">
 
 
 <h2>
-📈 Stato piattaforma
+⚙️ Stato piattaforma
 </h2>
+
 
 
 
@@ -370,6 +700,7 @@ DreamCalendar v1.0
 
 
 
+
 <div class="info-box">
 
 <span>
@@ -390,15 +721,22 @@ Local Storage
 
 
 
+
 <div class="info-box">
 
 <span>
-Ultimo accesso
+Ultimo aggiornamento
 </span>
 
 
 <strong>
+
 {{currentDate}}
+
+<br>
+
+{{currentTime}}
+
 </strong>
 
 
@@ -410,7 +748,9 @@ Ultimo accesso
 
 
 
+
 <div class="info-box">
+
 
 <span>
 Sicurezza
@@ -418,7 +758,9 @@ Sicurezza
 
 
 <strong>
-Protetta
+
+🟢 Protetta
+
 </strong>
 
 
@@ -428,10 +770,15 @@ Protetta
 
 
 
+
 </div>
 
 
-</div>
+
+
+</section>
+
+
 
 
 

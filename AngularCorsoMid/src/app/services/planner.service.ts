@@ -204,7 +204,6 @@ const adminProducts =
 this.getOnlyAdminProducts();
 
 
-
 localStorage.setItem(
 
 this.ADMIN_KEY,
@@ -213,15 +212,7 @@ JSON.stringify(adminProducts)
 
 );
 
-
-console.log(
-'ADMIN PRODUCTS SALVATI:',
-adminProducts
-);
-
-
 }
-
 
 
 
@@ -348,20 +339,23 @@ id:Date.now(),
 favorite:false,
 
 
-rating:0,
+rating:product.rating || 5,
 
 
-reviews:[],
+reviews:product.reviews || [],
 
 
 badge:product.badge || 'NUOVO',
 
 
-category:
-product.category || 'Altro'
+category:product.category || 'Altro',
+
+
+downloadUrl:product.downloadUrl || ''
 
 
 };
+
 
 
 
@@ -370,6 +364,7 @@ this.products.push(newProduct);
 
 
 this.saveProducts();
+
 
 
 }
