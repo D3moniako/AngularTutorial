@@ -155,7 +155,7 @@ import { AdminPaymentsComponent }
 from './Componenti/admin/admin-payments/admin-payments.component';
 import { NotificationComponent } from './Componenti/notification/notification.component';
 
-
+import { Pag404Component } from './Componenti/pag404/pag404.component';
 
 
 
@@ -240,7 +240,8 @@ AdminOrdersComponent,
 
 
 AdminPaymentsComponent,
-    NotificationComponent
+    NotificationComponent,
+    Pag404Component
 
 
 

@@ -31,6 +31,7 @@ import { ContactComponent }
 from './Componenti/contact/contact.component';
 
 
+import { Pag404Component } from './Componenti/pag404/pag404.component';
 
 
 // =============================
@@ -436,7 +437,7 @@ const routes: Routes = [
 
 {
  path:'**',
- redirectTo:''
+ component:Pag404Component
 }
 
 
