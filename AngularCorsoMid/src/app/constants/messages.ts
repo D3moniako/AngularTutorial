@@ -43,7 +43,17 @@ REMOVED:
 'Prodotto rimosso dal carrello',
 
 EMPTY:
-'Il carrello è vuoto'
+'Il carrello è vuoto',
+
+      
+
+
+},
+SHOP: {
+
+   LOGIN_REQUIRED:
+ '🔒 Accedi al tuo account per aggiungere prodotti al carrello'
+
 
 },
 
@@ -126,6 +136,50 @@ DELETE_SUCCESS:
 LOADING:
 'Caricamento in corso...'
 
-}
+},
 
+
+PROFILE: {
+
+UPDATED:
+'Profilo aggiornato correttamente',
+
+
+PASSWORD_CHANGED:
+'Password modificata correttamente',
+
+
+PASSWORD_WRONG:
+'Vecchia password errata',
+
+
+PASSWORD_EMPTY:
+'Compila tutti i campi',
+
+
+PASSWORD_SHORT:
+'La password deve avere almeno 8 caratteri',
+
+
+PASSWORD_MATCH:
+'Le password non coincidono',
+
+
+AVATAR_UPDATED:
+'Foto profilo aggiornata'
+
+
+},
+FAVORITES: {
+
+ LOGIN_REQUIRED:
+'🔒 Accedi al tuo account per salvare i preferiti',
+
+ADDED:
+'Prodotto aggiunto ai preferiti',
+
+REMOVED:
+'Prodotto rimosso dai preferiti'
+
+},
 };

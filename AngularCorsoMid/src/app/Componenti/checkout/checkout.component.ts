@@ -70,9 +70,11 @@ successMessage:string='';
 
 
 
+nameError:string='';
 
+emailError:string='';
 
-
+addressError:string='';
 
 
 
@@ -199,7 +201,11 @@ this.errorMessage='';
 
 this.successMessage='';
 
+this.nameError='';
 
+this.emailError='';
+
+this.addressError='';
 
 
 if(this.loading){
@@ -235,28 +241,14 @@ return;
 
 
 
-
-
-
-
-
 // DATI CLIENTE
 
 
-if(
-
-!this.customer.name.trim() ||
-
-!this.customer.email.trim() ||
-
-!this.customer.address.trim()
-
-){
+if(!this.customer.name.trim()){
 
 
-this.errorMessage=
-
-'Inserisci tutti i dati richiesti';
+this.nameError =
+'Inserisci il nome completo';
 
 
 return;
@@ -266,7 +258,36 @@ return;
 
 
 
+if(!this.customer.email.trim()){
 
+
+this.emailError =
+'Inserisci la email';
+
+
+return;
+
+
+}
+
+
+
+const emailRegex =
+/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+
+
+if(!emailRegex.test(this.customer.email)){
+
+
+this.emailError =
+'Inserisci una email valida';
+
+
+return;
+
+
+}
 
 
 

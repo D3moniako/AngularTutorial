@@ -385,6 +385,16 @@ return {...this.currentUser};
 isLogged():boolean{
 
 
+if(this.currentUser){
+
+return true;
+
+}
+
+
+this.currentUser=this.loadCurrentUser();
+
+
 return this.currentUser!==null;
 
 

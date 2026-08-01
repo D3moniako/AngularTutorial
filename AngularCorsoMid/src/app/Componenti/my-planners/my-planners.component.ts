@@ -8,7 +8,7 @@ import { User } from '../../models/user';
 import { Product } from '../../models/product';
 
 import { Subscription } from 'rxjs';
-
+import { Router } from '@angular/router';
 
 
 interface PlannerView {
@@ -119,7 +119,9 @@ private userService:UserService,
 
 private orderService:OrderService,
 
-private plannerService:PlannerService
+private plannerService:PlannerService,
+
+private router:Router,
 
 ){}
 
@@ -527,25 +529,31 @@ this.selectedCategory = category;
 // PREFERITI
 //
 
-toggleFavorite(planner:PlannerView){
 
 
-this.plannerService.toggleFavorite(
 
-planner.product
+toggleFavorite(product:Product){
 
+product.favorite = !product.favorite;
+
+this.plannerService.toggleFavorite(product);
+
+
+// aggiorna lo stato anche nel planner contenitore
+
+const planner = this.planners.find(
+p => p.product.id === product.id
 );
 
 
+if(planner){
 
-planner.favorite =
+planner.favorite = product.favorite;
 
-this.plannerService.isFavorite(
+}
 
-planner.id
 
-);
-
+this.planners = [...this.planners];
 
 }
 
@@ -693,7 +701,14 @@ planner.pdfPreview,
 }
 
 }
+openProduct(product:Product){
 
+this.router.navigate([
+'/products',
+product.id
+]);
+
+}
 
 
 

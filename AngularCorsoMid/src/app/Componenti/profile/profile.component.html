@@ -549,16 +549,13 @@ type="text"
 
 
 
-
 <p
 
 class="profile-message"
 
 *ngIf="message">
 
-
 {{message}}
-
 
 </p>
 
@@ -579,9 +576,6 @@ class="profile-message"
 
 
 
-<!-- GESTIONE ACCOUNT -->
-
-
 <div class="profile-section actions">
 
 
@@ -594,16 +588,94 @@ class="profile-message"
 
 
 
-
 <button
 
-(click)="changePassword()">
+(click)="showPasswordBox = !showPasswordBox">
 
 🔑 Cambia password
 
 </button>
 
 
+
+
+
+<div 
+class="password-box"
+
+*ngIf="showPasswordBox">
+
+
+<h3>
+
+🔐 Modifica password
+
+</h3>
+
+
+
+<label>
+
+Vecchia password
+
+</label>
+
+
+<input
+
+type="password"
+
+[(ngModel)]="oldPassword">
+
+
+
+
+
+<label>
+
+Nuova password
+
+</label>
+
+
+<input
+
+type="password"
+
+[(ngModel)]="newPassword">
+
+
+
+
+
+<label>
+
+Conferma nuova password
+
+</label>
+
+
+<input
+
+type="password"
+
+[(ngModel)]="confirmPassword">
+
+
+
+
+
+<button
+
+(click)="savePassword()">
+
+💾 Salva password
+
+</button>
+
+
+
+</div>
 
 
 

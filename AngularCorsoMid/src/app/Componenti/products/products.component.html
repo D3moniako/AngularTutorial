@@ -721,151 +721,42 @@ class="related"
 *ngIf="relatedProducts.length">
 
 
-
-
-
-
 <h2>
 
-Potrebbero piacerti anche
+Potrebbero piacerti anche 🌸
 
 </h2>
-
-
-
-
-
-
 
 
 
 <div class="related-grid">
 
 
+<app-product-card
 
+*ngFor="let p of relatedProducts"
 
+[product]="p"
 
+mode="shop"
 
+[showFavorite]="true"
 
-<div
+[showCart]="true"
 
-class="small-card"
+[showDescription]="false"
 
-*ngFor="let p of relatedProducts">
 
+(addCart)="addRelatedToCart($event)"
 
 
+>
 
-
-
-
-
-<img
-
-[src]="p.image"
-
-[alt]="p.name">
-
-
-
-
-
-
-
-<h3>
-
-{{p.name}}
-
-</h3>
-
-
-
-
-
-
-
-<p class="related-price">
-
-{{p.price | currency:'EUR'}}
-
-</p>
-
-
-
-
-
-
-
-
-<div class="related-actions">
-
-
-
-
-
-<a
-
-class="details"
-
-[routerLink]="['/products',p.id]">
-
-
-
-👁 Vedi prodotto
-
-
-
-</a>
-
-
-
-
-
-
-
-
-<button
-
-class="related-cart"
-
-(click)="addRelatedToCart(p)">
-
-
-
-🛒
-
-
-
-</button>
-
-
+</app-product-card>
 
 
 
 </div>
-
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
 
 
 </section>

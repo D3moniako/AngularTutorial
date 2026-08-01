@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { OrderService } from '../../services/order.service';
 
 import { Order } from '../../models/order';
@@ -9,7 +8,9 @@ import { Product } from '../../models/product';
 import { Router } from '@angular/router';
 
 
-
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user';
+import { Subscription } from 'rxjs';
 
 @Component({
 
@@ -23,8 +24,7 @@ styleUrls:['./my-orders.component.css']
 
 
 
-export class MyOrdersComponent implements OnInit {
-
+export class MyOrdersComponent implements OnInit, OnDestroy {
 
 
 /*
@@ -106,7 +106,9 @@ availableDownloads:number=0;
 selectedOrder:Order|null=null;
 
 
+user:User|null=null;
 
+private userSubscription?:Subscription;
 
 
 
@@ -115,6 +117,7 @@ constructor(
 
 private orderService:OrderService,
 
+private userService:UserService,
 
 private router:Router
 
@@ -132,7 +135,32 @@ private router:Router
 ngOnInit(){
 
 
+this.userSubscription =
+
+this.userService.user$
+
+.subscribe(user=>{
+
+
+this.user=user;
+
+
+if(user){
+
 this.loadOrders();
+
+}else{
+
+
+this.orders=[];
+
+this.filteredOrders=[];
+
+
+}
+
+
+});
 
 
 }
@@ -155,45 +183,27 @@ this.loadOrders();
 loadOrders(){
 
 
+if(!this.user){
 
-/*
-per ora prendiamo
-utente demo
+return;
 
-quando collegheremo login
-arriverà dal token
-*/
-
-
-const userId =
-this.orderService
-.getUserOrders(1)
-.length > 0
-?
-1
-:
-Number(localStorage.getItem('userId'));
-
+}
 
 
 this.orders =
 
 this.orderService.getUserOrders(
 
-userId || 1
+this.user.id
 
 );
-
-
 
 
 
 this.calculateStats();
 
 
-
 this.applyFilters();
-
 
 
 }
@@ -540,7 +550,11 @@ this.router.navigate([
 
 
 
+ngOnDestroy(){
 
+this.userSubscription?.unsubscribe();
+
+}
 
 
 }

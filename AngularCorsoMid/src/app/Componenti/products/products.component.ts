@@ -12,8 +12,8 @@ import { UserService } from '../../services/user.service';
 import { User } from '../../models/user';
 
 import { Subscription } from 'rxjs';
-
-
+import { switchMap } from 'rxjs/operators';
+import { ViewportScroller } from '@angular/common';
 
 @Component({
 
@@ -90,7 +90,11 @@ private cartService:CartService,
 
 private userService:UserService,
 
-private orderService:OrderService
+private orderService:OrderService,
+
+  
+private viewportScroller: ViewportScroller
+
 
 ){}
 
@@ -106,45 +110,31 @@ ngOnInit(){
 
 
 
-const id = Number(
+this.route.paramMap.subscribe(params => {
 
-this.route.snapshot.paramMap.get('id')
+  const id = Number(params.get('id'));
 
-);
+  this.product = this.plannerService.getProduct(id);
 
-
-
-
-
-const result =
-
-this.plannerService.getProduct(id);
-
-
-
-
-
-
-if(result){
-
-
-
-this.product=result;
-
+ if(this.product){
 
 this.quantity=1;
 
-
 this.loadRelatedProducts();
-
-
-// controllo acquisto dopo caricamento prodotto
 
 this.checkReviewPermission();
 
 
+setTimeout(() => {
+
+  this.viewportScroller.scrollToPosition([0,0]);
+
+}, 100);
+
+
 }
 
+});
 
 
 

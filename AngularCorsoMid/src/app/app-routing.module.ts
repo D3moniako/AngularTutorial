@@ -217,7 +217,9 @@ const routes: Routes = [
 
 {
  path:'cart',
- component:CartComponent
+ component:CartComponent,
+canActivate:[AuthGuard]
+
 },
 
 

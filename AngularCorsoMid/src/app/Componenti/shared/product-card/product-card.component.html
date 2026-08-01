@@ -1,0 +1,229 @@
+<div 
+class="product"
+(click)="openDetails()">
+
+
+<!-- CUORE -->
+<button
+*ngIf="showFavorite"
+class="favorite"
+(click)="toggleFavorite(); $event.stopPropagation()">
+
+{{product.favorite ? '❤️':'🤍'}}
+
+</button>
+
+
+
+<!-- IMMAGINE -->
+<div class="product-image">
+
+<img
+[src]="product.image"
+[alt]="product.name">
+
+
+<span 
+class="badge"
+*ngIf="!purchased">
+
+{{product.badge}}
+
+</span>
+
+
+<span 
+class="owned"
+*ngIf="purchased">
+
+✅ Già acquistato
+
+</span>
+
+
+</div>
+
+
+
+
+
+<!-- TITOLO -->
+
+<h3>
+{{product.name}}
+</h3>
+
+
+
+
+
+<!-- DESCRIZIONE SHOP -->
+
+<p *ngIf="mode==='shop' && showDescription">
+
+{{product.description}}
+
+</p>
+
+
+
+
+
+<!-- ====================== -->
+<!-- CARD SHOP -->
+<!-- ====================== -->
+
+
+<div *ngIf="mode==='shop'">
+
+
+
+<div class="rating">
+
+★★★★★
+
+</div>
+
+
+
+<div class="product-footer"
+(click)="$event.stopPropagation()">
+
+
+
+<strong>
+
+{{product.price | currency:'EUR'}}
+
+</strong>
+
+
+
+<button
+*ngIf="showCart"
+(click)="addToCart()">
+
+🛒
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ====================== -->
+<!-- CARD ACQUISTATO -->
+<!-- ====================== -->
+
+
+<div *ngIf="mode==='owned'" 
+class="owned-box">
+
+
+
+<span class="owned"
+
+*ngIf="purchased">
+
+✅ Già acquistato
+
+</span>
+
+
+
+
+<div class="info-box">
+
+
+<p>
+
+📅 Acquisto:
+
+<strong>
+{{purchaseDate}}
+</strong>
+
+</p>
+
+
+
+<p>
+
+✨ Versione:
+
+<strong>
+{{version}}
+</strong>
+
+</p>
+
+
+
+<p>
+
+💾 Dimensione:
+
+<strong>
+{{size}}
+</strong>
+
+</p>
+
+
+
+<p>
+
+⬇ Download:
+
+<strong>
+{{downloads}}
+</strong>
+
+</p>
+
+
+</div>
+
+
+
+
+
+
+<div class="buttons">
+
+
+
+<button
+(click)="downloadFile(); $event.stopPropagation()">
+
+⬇ Scarica
+
+</button>
+
+
+
+<button
+(click)="openPreview(); $event.stopPropagation()">
+
+👁 Anteprima
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+</div>

@@ -299,6 +299,33 @@ font-size:38px;
 
 }
 
+.error-input{
 
+border:2px solid #e57399 !important;
+
+background:#fff0f5 !important;
+
+}
+
+}
+
+.input-error{
+
+border:2px solid #e57399 !important;
+
+background:#fff0f5 !important;
+
+}
+
+
+.field-error{
+
+color:#d9537e;
+
+font-size:14px;
+
+margin:5px 0 15px;
+
+padding-left:10px;
 
 }

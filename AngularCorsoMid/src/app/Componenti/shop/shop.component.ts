@@ -2,11 +2,16 @@ import { Component, OnInit } from '@angular/core';
 
 import { PlannerService } from '../../services/planner.service';
 import { CartService } from '../../services/cart.service';
+import { NotificationService } from '../../services/notification.service';
 
 import { Product } from '../../models/product';
 
+import { MESSAGES } from '../../constants/messages';
 
+import { UserService } from '../../services/user.service';
+import { OrderService } from '../../services/order.service';
 
+import { Router } from '@angular/router';
 @Component({
 
 selector:'app-shop',
@@ -37,6 +42,7 @@ selectedCategory:string='Tutti';
 
 sort:string='default';
 
+currentUserId:number|null = null;
 
 
 
@@ -64,7 +70,14 @@ constructor(
 
 private plannerService:PlannerService,
 
-private cartService:CartService
+private cartService:CartService,
+
+private notificationService:NotificationService,
+
+private userService: UserService,
+private orderService:OrderService,
+
+private router: Router
 
 ){}
 
@@ -76,18 +89,48 @@ private cartService:CartService
 ngOnInit(){
 
 
-this.products = this.plannerService
-.getProducts()
-.map(product=>({...product}));
+this.userService.user$
+.subscribe(user=>{
 
 
-this.applyFilters();
+if(user){
+
+this.currentUserId=user.id;
+
+}else{
+
+this.currentUserId=null;
+
+}
+
+
+this.loadProducts();
+
+
+});
 
 
 }
 
 
 
+private loadProducts(){
+
+this.products = this.plannerService
+.getProducts()
+.map(product=>({
+
+...product,
+
+purchased:this.isPurchased(product.id)
+
+}));
+
+
+this.applyFilters();
+
+
+}
 
 
 
@@ -105,6 +148,7 @@ const text=this.search
 
 
 
+
 this.filteredProducts=this.products.filter(product=>{
 
 
@@ -115,6 +159,7 @@ this.selectedCategory==='Tutti'
 ||
 
 product.category===this.selectedCategory;
+
 
 
 
@@ -141,6 +186,7 @@ product.category.toLowerCase()
 
 
 
+
 return categoryOk && searchOk;
 
 
@@ -163,7 +209,6 @@ this.applySort();
 
 
 
-
 filterCategory(category:string){
 
 
@@ -174,7 +219,6 @@ this.applyFilters();
 
 
 }
-
 
 
 
@@ -278,23 +322,53 @@ this.applySort();
 
 
 
+addCart(product: Product){
 
-addCart(product:Product){
+  if(!this.userService.isLogged()){
+
+    this.notificationService.warning(
+    MESSAGES.SHOP.LOGIN_REQUIRED
+);
+
+    this.router.navigate(['/login']);
+
+    return;
+
+  }
+
+  this.cartService.add(product);
+
+  this.notificationService.success(
+    MESSAGES.CART.ADDED
+  );
+
+}
 
 
 
-this.cartService.add(product);
+
+isPurchased(productId:number):boolean{
+
+
+if(!this.currentUserId){
+
+return false;
+
+}
+
+
+const purchased = this.orderService
+.getUserPlanners(this.currentUserId);
 
 
 
-alert(
+return purchased.some(
 
-'🛒 '+product.name+' aggiunto al carrello'
+p=>p.id===productId
 
 );
 
 
-
 }
 
 
@@ -302,27 +376,37 @@ alert(
 
 
 
+toggleFavorite(product: Product){
 
+  if(!this.userService.isLogged()){
 
+    this.notificationService.warning(
+      MESSAGES.FAVORITES.LOGIN_REQUIRED
+    );
 
-toggleFavorite(product:Product){
+    this.router.navigate(['/login']);
 
+    return;
 
+  }
 
-product.favorite=!product.favorite;
+  this.plannerService.toggleFavorite(product);
 
+  product.favorite = this.plannerService.isFavorite(product.id);
 
+  this.notificationService.success(
 
-this.plannerService.toggleFavorite(product);
+    product.favorite
 
+      ? MESSAGES.FAVORITES.ADDED
 
+      : MESSAGES.FAVORITES.REMOVED
 
-this.filteredProducts=[...this.filteredProducts];
+  );
 
+  this.filteredProducts = [...this.filteredProducts];
 
 }
-
-
 
 
 

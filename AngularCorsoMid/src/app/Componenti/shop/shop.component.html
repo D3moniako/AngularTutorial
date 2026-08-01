@@ -3,20 +3,15 @@
 
 <section class="shop-hero">
 
-
 <h1>
 🌸 Digital Planner Shop
 </h1>
-
 
 <p>
 Trova il planner perfetto per organizzare la tua vita con stile.
 </p>
 
-
 </section>
-
-
 
 
 
@@ -38,7 +33,6 @@ placeholder="🔍 Cerca planner..."
 
 
 
-
 <div class="categories">
 
 
@@ -52,9 +46,7 @@ type="button"
 
 [class.active]="selectedCategory===c">
 
-
 {{c}}
-
 
 </button>
 
@@ -73,36 +65,30 @@ type="button"
 
 
 <option value="default">
-
 Ordina
-
 </option>
+
+
 <option value="rating">
 ⭐ Più votati
 </option>
 
 
 <option value="price-low">
-
 Prezzo crescente
-
 </option>
 
 
 <option value="price-high">
-
 Prezzo decrescente
-
 </option>
 
 
 </select>
 
 
+
 </section>
-
-
-
 
 
 
@@ -116,22 +102,16 @@ class="empty"
 
 
 <h2>
-
 Nessun planner trovato 🌸
-
 </h2>
 
 
 <p>
-
 Prova a cambiare ricerca o categoria.
-
 </p>
 
 
 </section>
-
-
 
 
 
@@ -143,149 +123,29 @@ Prova a cambiare ricerca o categoria.
 
 
 
-<div
+<app-product-card
 
-class="product-card"
+*ngFor="let p of filteredProducts"
 
-*ngFor="let p of filteredProducts">
+[product]="p"
 
+mode="shop"
 
+[showFavorite]="true"
 
+[showCart]="!isPurchased(p.id)"
+[showDescription]="true"
 
+[purchased]="isPurchased(p.id)"
 
-<button
 
-type="button"
+(favorite)="toggleFavorite($event)"
 
-class="heart"
-
-(click)="toggleFavorite(p)">
-
-
-{{p.favorite ? '❤️':'🤍'}}
-
-
-</button>
-
-
-
-
-
-
-<img
-
-[src]="p.image"
-
-[alt]="p.name"
-
-loading="lazy"
-
->
-
-
-
-
-
-
-
-<span class="badge">
-
-{{p.badge}}
-
-</span>
-
-
-
-
-
-
-
-<h2>
-
-{{p.name}}
-
-</h2>
-
-
-
-
-
-
-
-<p>
-
-{{p.description}}
-
-</p>
-
-
-
-
-
-
-
-<div class="price">
-
-{{p.price | currency:'EUR'}}
-
-</div>
-
-
-
-
-
-
-
-
-<div class="buttons">
-
-
-
-<a
-
-class="details"
-
-[routerLink]="['/products',p.id]">
-
-
-👁 Dettagli
-
-
-</a>
-
-
-
-
-
-
-<button
-
-type="button"
-
-(click)="addCart(p)">
-
-
-🛒 Aggiungi
-
-
-</button>
-
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
+(addCart)="addCart($event)">
+</app-product-card>
 
 
 </section>
-
 
 
 
@@ -304,7 +164,6 @@ type="button"
 
 
 </div>
-
 
 
 

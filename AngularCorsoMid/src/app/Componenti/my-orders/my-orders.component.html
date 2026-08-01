@@ -182,6 +182,10 @@ Download disponibili
 <!-- FILTRI -->
 <!-- ============================= -->
 
+<!-- ============================= -->
+<!-- FILTRI -->
+<!-- ============================= -->
+
 <section class="filters">
 
 
@@ -197,6 +201,7 @@ placeholder="Cerca ordine..."
 [(ngModel)]="searchText"
 
 (input)="applyFilters()"
+
 >
 
 
@@ -213,7 +218,7 @@ placeholder="Cerca ordine..."
 
 [class.active]="filter==='ALL'"
 
-(click)="filter='ALL'"
+(click)="filter='ALL';applyFilters()"
 
 >
 
@@ -227,7 +232,7 @@ Tutti
 
 [class.active]="filter==='PAGATO'"
 
-(click)="filter='PAGATO'"
+(click)="filter='PAGATO';applyFilters()"
 
 >
 
@@ -241,7 +246,7 @@ Pagati
 
 [class.active]="filter==='IN_ATTESA'"
 
-(click)="filter='IN_ATTESA'"
+(click)="filter='IN_ATTESA';applyFilters()"
 
 >
 
@@ -275,7 +280,6 @@ Annullati
 
 
 
-
 <!-- ============================= -->
 <!-- NESSUN ORDINE -->
 <!-- ============================= -->
@@ -298,12 +302,16 @@ class="empty"
 
 
 <h2>
+
 Nessun ordine trovato
+
 </h2>
 
 
 <p>
+
 Quando acquisterai un planner comparirà qui.
+
 </p>
 
 
@@ -315,7 +323,6 @@ Scopri i planner
 
 
 </section>
-
 
 
 
@@ -348,20 +355,9 @@ class="order-line"
 
 >
 
-<div
-
-class="order-line"
-
-*ngFor="let order of filteredOrders; let i=index"
-
-[style.animationDelay]="i*120+'ms'"
-
->
-
 
 
 <div class="timeline-point">
-
 
 <span>
 
@@ -369,10 +365,7 @@ class="order-line"
 
 </span>
 
-
 </div>
-
-
 
 
 
@@ -381,26 +374,16 @@ class="order-line"
 <div class="order-card">
 
 
-
-
-
-
-
-<!-- HEADER ORDINE -->
-
 <header>
 
 
-
 <div>
-
 
 <h2>
 
 Ordine #{{order.id}}
 
 </h2>
-
 
 
 <p>
@@ -411,8 +394,6 @@ Ordine #{{order.id}}
 
 
 </div>
-
-
 
 
 
@@ -430,44 +411,28 @@ class="status"
 >
 
 
-<span
-
-*ngIf="order.status==='PAGATO'"
-
->
+<span *ngIf="order.status==='PAGATO'">
 
 ✔ Pagato
 
 </span>
 
 
-
-<span
-
-*ngIf="order.status==='IN_ATTESA'"
-
->
+<span *ngIf="order.status==='IN_ATTESA'">
 
 ⏳ In attesa
 
 </span>
 
 
-
-<span
-
-*ngIf="order.status==='ANNULLATO'"
-
->
+<span *ngIf="order.status==='ANNULLATO'">
 
 ✖ Annullato
 
 </span>
 
 
-
 </div>
-
 
 
 </header>
@@ -477,31 +442,16 @@ class="status"
 
 
 
-
-<!-- PROGRESS TIMELINE INTERNA -->
-
-
 <div class="payment-progress">
 
 
-<div
+<div class="step active">
 
-class="step active"
+<div>🛒</div>
 
->
-
-<div>
-🛒
-</div>
-
-<span>
-Creato
-</span>
-
+<span>Creato</span>
 
 </div>
-
-
 
 
 
@@ -512,7 +462,6 @@ class="line"
 [class.active]="order.status==='PAGATO'"
 
 ></div>
-
 
 
 
@@ -525,18 +474,11 @@ class="step"
 
 >
 
-<div>
-💳
-</div>
+<div>💳</div>
 
-
-<span>
-Pagamento
-</span>
-
+<span>Pagamento</span>
 
 </div>
-
 
 
 
@@ -548,7 +490,6 @@ class="line"
 [class.active]="order.status==='PAGATO'"
 
 ></div>
-
 
 
 
@@ -561,18 +502,11 @@ class="step"
 
 >
 
-<div>
-📥
-</div>
+<div>📥</div>
 
-
-<span>
-Download
-</span>
-
+<span>Download</span>
 
 </div>
-
 
 
 </div>
@@ -582,10 +516,6 @@ Download
 
 
 
-
-
-
-<!-- DATI ORDINE -->
 
 
 <div class="order-info">
@@ -593,11 +523,11 @@ Download
 
 <div>
 
-
 <label>
-Cliente
-</label>
 
+Cliente
+
+</label>
 
 <strong>
 
@@ -605,20 +535,18 @@ Cliente
 
 </strong>
 
-
 </div>
-
 
 
 
 
 <div>
 
-
 <label>
-Email
-</label>
 
+Email
+
+</label>
 
 <strong>
 
@@ -626,22 +554,18 @@ Email
 
 </strong>
 
-
 </div>
-
-
 
 
 
 
 <div>
 
-
 <label>
+
 Totale
 
 </label>
-
 
 <strong class="price">
 
@@ -649,22 +573,16 @@ Totale
 
 </strong>
 
+</div>
+
 
 </div>
 
 
 
-</div>
 
 
 
-
-
-
-
-
-
-<!-- PRODOTTI -->
 
 
 
@@ -679,7 +597,6 @@ Planner acquistati
 
 
 
-
 <div
 
 class="product-item"
@@ -687,7 +604,6 @@ class="product-item"
 *ngFor="let product of order.products"
 
 >
-
 
 
 <img
@@ -700,9 +616,7 @@ class="product-item"
 
 
 
-
 <div>
-
 
 <h4>
 
@@ -717,13 +631,9 @@ class="product-item"
 
 </p>
 
-
 </div>
 
 
-
-
-<div>
 
 
 <a
@@ -737,14 +647,10 @@ Dettagli
 </a>
 
 
-</div>
-
-
 
 </div>
 
 
-
 </div>
 
 
@@ -752,11 +658,6 @@ Dettagli
 
 
 
-
-
-
-
-<!-- AZIONI -->
 
 
 <footer>
@@ -772,11 +673,9 @@ class="download"
 
 >
 
-
 ⬇ Scarica planner
 
 </button>
-
 
 
 
@@ -789,34 +688,23 @@ class="details"
 
 >
 
-
 👁 Dettagli
 
 </button>
-
 
 
 </footer>
 
 
 
+</div>
 
 
 
 </div>
 
 
-
-
-
-
-</div>
-
-
-
-<section>
-
-
+</section>
 
 
 
@@ -869,9 +757,10 @@ Dettaglio ordine #{{selectedOrder.id}}
 
 <div class="modal-row">
 
-
 <span>
+
 Data
+
 </span>
 
 
@@ -881,7 +770,6 @@ Data
 
 </strong>
 
-
 </div>
 
 
@@ -890,8 +778,8 @@ Data
 
 <div class="modal-row">
 
-
 <span>
+
 Pagamento
 
 </span>
@@ -903,9 +791,7 @@ Pagamento
 
 </strong>
 
-
 </div>
-
 
 
 
@@ -913,8 +799,8 @@ Pagamento
 
 <div class="modal-row">
 
-
 <span>
+
 Importo
 
 </span>
@@ -926,18 +812,17 @@ Importo
 
 </strong>
 
-
 </div>
 
 
 
 
 
-
 <h3>
-Prodotti
-</h3>
 
+Prodotti
+
+</h3>
 
 
 
@@ -962,10 +847,7 @@ Prodotti
 </div>
 
 
-
 </div>
 
 
-
-
-
+</div>

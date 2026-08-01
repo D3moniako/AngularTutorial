@@ -8,7 +8,7 @@ import { UserService } from '../../services/user.service';
 
 import { User } from '../../models/user';
 
-
+import { MESSAGES } from '../../constants/messages';
 
 @Component({
 
@@ -37,7 +37,11 @@ editName:string='';
 
 editPhone:string='';
 
+oldPassword:string='';
 
+newPassword:string='';
+
+confirmPassword:string='';
 
 message:string='';
 
@@ -501,11 +505,103 @@ this.showCropper=false;
 // =============================
 
 
-changePassword(){
+showPasswordBox:boolean=false;
 
 
 
-alert('🔐 Modulo cambio password in sviluppo');
+
+
+
+
+
+savePassword(){
+
+
+if(!this.oldPassword || !this.newPassword || !this.confirmPassword){
+
+
+this.message='❌ Compila tutti i campi';
+
+return;
+
+
+}
+
+
+
+if(this.newPassword.length < 8){
+
+
+this.message='❌ La password deve avere almeno 8 caratteri';
+
+
+return;
+
+
+}
+
+
+
+if(this.newPassword !== this.confirmPassword){
+
+
+this.message='❌ Le password non coincidono';
+
+
+return;
+
+
+}
+
+
+
+
+const result = this.userService.changePassword(
+
+this.oldPassword,
+
+this.newPassword
+
+);
+
+
+
+if(!result){
+
+
+this.message='❌ Vecchia password errata';
+
+
+return;
+
+
+}
+
+
+
+this.message='✅ Password modificata correttamente';
+
+
+this.showPasswordBox=false;
+
+
+
+this.oldPassword='';
+
+this.newPassword='';
+
+this.confirmPassword='';
+
+
+
+setTimeout(()=>{
+
+
+this.message='';
+
+
+},3000);
+
 
 
 }

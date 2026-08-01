@@ -42,56 +42,54 @@ private userSubscription!:Subscription;
 
 menuItems=[
 
-
-
 {
 label:'Home',
 link:'/',
-icon:'🏠'
+icon:'🏠',
+private:false
 },
-
 
 {
 label:'Shop',
 link:'/shop',
-icon:'🛍️'
+icon:'🛍️',
+private:false
 },
-
 
 {
 label:'I miei Planner',
 link:'/my-planners',
-icon:'📅'
+icon:'📅',
+private:true
 },
-
 
 {
 label:'I miei ordini',
 link:'/my-orders',
-icon:'📦'
+icon:'📦',
+private:true
 },
-
 
 {
 label:'Preferiti',
 link:'/favorites',
-icon:'❤️'
+icon:'❤️',
+private:true
 },
-
 
 {
 label:'Chi siamo',
 link:'/about',
-icon:'🌸'
+icon:'🌸',
+private:false
 },
-
 
 {
 label:'Contatti',
 link:'/contact',
-icon:'✉️'
-},
-
+icon:'✉️',
+private:false
+}
 
 ];
 
@@ -157,7 +155,15 @@ this.menuOpen=!this.menuOpen;
 }
 
 
+get visibleMenuItems(){
 
+return this.menuItems.filter(item =>
+
+!item.private || this.user
+
+);
+
+}
 
 
 

@@ -35,8 +35,9 @@ Acquista i tuoi planner digitali e inizia subito a organizzarti 🌸
 
 
 
+
 <!-- ============================= -->
-<!-- MESSAGGI ERRORE -->
+<!-- MESSAGGIO ERRORE GENERALE -->
 <!-- ============================= -->
 
 
@@ -47,7 +48,7 @@ class="error"
 *ngIf="errorMessage">
 
 
-{{errorMessage}}
+❌ {{errorMessage}}
 
 
 </p>
@@ -151,6 +152,7 @@ Numero ordine:
 
 
 
+
 <a routerLink="/shop">
 
 
@@ -169,6 +171,9 @@ Numero ordine:
 
 
 </section>
+
+
+
 
 
 
@@ -254,6 +259,8 @@ Vai allo Shop 🌸
 
 
 
+
+
 <!-- ============================= -->
 <!-- CONTENUTO ORDINE -->
 <!-- ============================= -->
@@ -282,6 +289,7 @@ class="products"
 
 
 
+
 <div class="order-info">
 
 
@@ -299,6 +307,7 @@ Prodotti:
 
 
 </p>
+
 
 
 
@@ -384,6 +393,7 @@ Quantità:
 {{item.quantity}}
 
 </p>
+
 
 
 
@@ -484,6 +494,7 @@ Totale ordine
 
 
 
+
 <!-- ============================= -->
 <!-- DATI CLIENTE -->
 <!-- ============================= -->
@@ -494,6 +505,7 @@ Totale ordine
 class="form"
 
 *ngIf="cart.length>0">
+
 
 
 
@@ -513,6 +525,7 @@ class="form"
 
 
 
+
 <label>
 
 Nome completo
@@ -523,16 +536,30 @@ Nome completo
 
 <input
 
-
 type="text"
-
 
 placeholder="Inserisci nome"
 
-
 [(ngModel)]="customer.name"
 
+(input)="nameError=''"
+
+[class.input-error]="nameError"
+
 >
+
+
+
+
+<div
+
+class="field-error"
+
+*ngIf="nameError">
+
+⚠ {{nameError}}
+
+</div>
 
 
 
@@ -552,16 +579,30 @@ Email
 
 <input
 
-
 type="email"
-
 
 placeholder="Inserisci email"
 
-
 [(ngModel)]="customer.email"
 
+(input)="emailError=''"
+
+[class.input-error]="emailError"
+
 >
+
+
+
+
+<div
+
+class="field-error"
+
+*ngIf="emailError">
+
+⚠ {{emailError}}
+
+</div>
 
 
 
@@ -581,16 +622,33 @@ Indirizzo fatturazione
 
 <input
 
-
 type="text"
-
 
 placeholder="Inserisci indirizzo"
 
-
 [(ngModel)]="customer.address"
 
+(input)="addressError=''"
+
+[class.input-error]="addressError"
+
 >
+
+
+
+
+<div
+
+class="field-error"
+
+*ngIf="addressError">
+
+⚠ {{addressError}}
+
+</div>
+
+
+
 
 
 
@@ -610,9 +668,13 @@ type="button"
 
 
 
+
+
 <span *ngIf="!loading">
 
+
 💳 Conferma acquisto
+
 
 </span>
 
@@ -620,9 +682,14 @@ type="button"
 
 
 
+
+
+
 <span *ngIf="loading">
 
+
 ⏳ Connessione pagamento...
+
 
 </span>
 

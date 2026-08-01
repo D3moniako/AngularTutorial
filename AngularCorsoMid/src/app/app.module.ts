@@ -156,6 +156,7 @@ from './Componenti/admin/admin-payments/admin-payments.component';
 import { NotificationComponent } from './Componenti/notification/notification.component';
 
 import { Pag404Component } from './Componenti/pag404/pag404.component';
+import { ProductCardComponent } from './Componenti/shared/product-card/product-card.component';
 
 
 
@@ -241,7 +242,8 @@ AdminOrdersComponent,
 
 AdminPaymentsComponent,
     NotificationComponent,
-    Pag404Component
+    Pag404Component,
+    ProductCardComponent
 
 
 

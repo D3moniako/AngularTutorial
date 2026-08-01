@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { NotificationService } 
 from '../../services/notification.service';
-
-
+import { UserService } from 'src/app/services/user.service';
+import { Router } from '@angular/router';
+import { MESSAGES } from '../../constants/messages';
 interface Product {
 
 id:number;
@@ -55,7 +56,9 @@ export class HomeComponent {
 
 constructor(
 
-private notificationService: NotificationService
+private notificationService: NotificationService,
+private userService : UserService,
+private router: Router
 
 ){}
 
@@ -606,7 +609,14 @@ product => product.category===this.selectedCategory
 
 
 
+openProduct(product:Product){
 
+this.router.navigate([
+'/products',
+product.id
+]);
+
+}
 
 
 
@@ -615,37 +625,41 @@ product => product.category===this.selectedCategory
 
 
 
-toggleFavorite(product:Product){
+toggleFavorite(product: Product){
 
+  if(!this.userService.isLogged()){
 
+    this.notificationService.warning(
+      MESSAGES.FAVORITES.LOGIN_REQUIRED
+    );
 
-product.favorite=!product.favorite;
+    this.router.navigate(['/login']);
 
+    return;
 
+  }
 
-if(product.favorite){
+  product.favorite = !product.favorite;
 
+  if(product.favorite){
 
-this.favorites.push(product);
+    this.favorites.push(product);
 
+    this.notificationService.success(
+      MESSAGES.FAVORITES.ADDED
+    );
 
-}
+  }else{
 
-else{
+    this.favorites = this.favorites.filter(
+      p => p.id !== product.id
+    );
 
+    this.notificationService.success(
+      MESSAGES.FAVORITES.REMOVED
+    );
 
-this.favorites=
-
-this.favorites.filter(
-
-p=>p.id!==product.id
-
-);
-
-
-}
-
-
+  }
 
 }
 
@@ -666,24 +680,35 @@ p=>p.id!==product.id
 addCart(product:Product){
 
 
+if(!this.userService.isLogged()){
 
-const item=this.cartProducts.find(
 
-x=>x.product.id===product.id
-
+this.notificationService.warning(
+'🔒 Accedi al tuo account per aggiungere prodotti al carrello'
 );
 
 
+this.router.navigate(['/login']);
 
-if(item){
-
-
-item.quantity++;
+return;
 
 
 }
 
-else{
+
+// continua codice esistente
+
+
+const item=this.cartProducts.find(
+x=>x.product.id===product.id
+);
+
+
+if(item){
+
+item.quantity++;
+
+}else{
 
 
 this.cartProducts.push({
@@ -699,15 +724,12 @@ quantity:1
 
 
 
-alert(
-
+this.notificationService.success(
 '🛒 '+product.name+' aggiunto al carrello'
-
 );
 
 
 }
-
 
 
 

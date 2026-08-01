@@ -14,7 +14,6 @@
 🏠 Home
 </a>
 
-
 <a routerLink="/shop">
 🛒 Shop
 </a>
@@ -23,7 +22,6 @@
 
 
 </header>
-
 
 
 
@@ -44,17 +42,12 @@ Scarica, aggiorna e utilizza i tuoi planner ovunque.
 
 
 
-
-
 <div class="stats">
-
 
 
 <div class="stat-card">
 
-<span>
-📚
-</span>
+<span>📚</span>
 
 <h2>
 {{planners.length}}
@@ -68,13 +61,9 @@ Planner acquistati
 
 
 
-
-
 <div class="stat-card">
 
-<span>
-⬇️
-</span>
+<span>⬇️</span>
 
 <h2>
 {{totalDownloads}}
@@ -88,13 +77,9 @@ Download effettuati
 
 
 
-
-
 <div class="stat-card">
 
-<span>
-📅
-</span>
+<span>📅</span>
 
 <h2>
 {{currentYear}}
@@ -107,15 +92,10 @@ Anno licenza
 </div>
 
 
-
-
 </div>
 
 
 </section>
-
-
-
 
 
 
@@ -164,18 +144,17 @@ placeholder="🔍 Cerca nei tuoi planner..."
 
 
 
-
-
 <div
 
 class="message"
 
 *ngIf="downloadMessage">
 
+
 {{downloadMessage}}
 
-</div>
 
+</div>
 
 
 
@@ -188,318 +167,55 @@ class="message"
 
 
 
+<app-product-card
 
 
-<div
+*ngFor="let p of filteredPlanners"
 
-class="planner-card"
 
-*ngFor="let p of filteredPlanners">
+[product]="p.product"
 
 
+mode="owned"
 
 
+[showFavorite]="true"
 
-<button
 
-class="favorite"
+[showCart]="false"
 
-(click)="toggleFavorite(p)">
 
-{{p.favorite ? '❤️':'🤍'}}
+[showDescription]="false"
 
-</button>
 
+[purchaseDate]="p.purchaseDate"
 
 
+[version]="p.version"
 
 
+[size]="p.size"
 
 
+[downloads]="p.downloads"
 
 
-<div
 
-class="image-box"
+(favorite)="toggleFavorite($event)"
 
-[style.background]="p.color">
+(download)="download(p)"
 
 
-<img
+(preview)="preview(p)"
 
-[src]="p.image"
 
-[alt]="p.name"
+(openProduct)="openProduct($event)"
 
-loading="lazy">
 
+>
 
-</div>
 
-
-
-
-
-
-
-
-<div class="card-header">
-
-
-<h2>
-
-{{p.name}}
-
-</h2>
-
-
-<span class="owned">
-
-✔ Acquistato
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<span class="badge">
-
-{{p.category}}
-
-</span>
-
-
-
-
-
-
-
-
-
-<div class="info-box">
-
-
-<p>
-
-📅 Data acquisto:
-
-<strong>
-
-{{p.purchaseDate}}
-
-</strong>
-
-</p>
-
-
-
-<p>
-
-✨ Versione:
-
-<strong>
-
-{{p.version}}
-
-</strong>
-
-</p>
-
-
-
-<p>
-
-💾 Dimensione:
-
-<strong>
-
-{{p.size}}
-
-</strong>
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="download-box">
-
-
-<h3>
-
-⬇ Download
-
-</h3>
-
-
-
-<p>
-
-Hai scaricato questo planner:
-
-<strong>
-{{p.downloads}}
-</strong>
-
-volte
-
-</p>
-
-
-
-
-<div class="progress">
-
-
-<div
-
-class="progress-bar"
-
-[style.width.%]="p.downloads > 10 ? 100 : p.downloads * 10">
-
-</div>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="file-status">
-
-
-<span *ngIf="p.file">
-
-🟢 File PDF disponibile
-
-</span>
-
-
-<span *ngIf="!p.file">
-
-🔴 File non disponibile
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="buttons">
-
-
-<button
-
-class="download"
-
-(click)="download(p)"
-
-[disabled]="!p.file">
-
-
-⬇ Scarica PDF
-
-
-</button>
-
-
-
-
-
-<button
-
-class="preview"
-
-(click)="preview(p)">
-
-
-👁 Anteprima
-
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<button
-
-class="open-product"
-
-[routerLink]="['/products',p.id]">
-
-
-⭐ Vai alla pagina planner
-
-
-</button>
-
-
-
-
-
-
-
-
-<div
-
-class="update"
-
-*ngIf="p.updated">
-
-
-✨ Nuova versione disponibile
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
+</app-product-card>
 
 
 
@@ -513,18 +229,12 @@ class="update"
 
 
 
+<!-- ========================= -->
+<!-- ANTEPRIMA PDF -->
+<!-- ========================= -->
 
 
-
-
-
-
-<!-- ============================= -->
-<!-- MODALE ANTEPRIMA PDF -->
-<!-- ============================= -->
-
-
-<section
+<div
 
 class="preview-modal"
 
@@ -550,10 +260,9 @@ class="close"
 
 
 
-
 <img
 
-[src]="plannerSelected.image"
+[src]="plannerSelected.product.image"
 
 class="preview-image">
 
@@ -561,12 +270,12 @@ class="preview-image">
 
 
 
-
 <h2>
 
-{{plannerSelected.name}}
+{{plannerSelected.product.name}}
 
 </h2>
+
 
 
 
@@ -582,16 +291,16 @@ Anteprima del tuo planner digitale premium.
 
 
 
+
 <div class="preview-actions">
+
 
 
 <button
 
-(click)="plannerSelected && download(plannerSelected)">
-
+(click)="download(plannerSelected)">
 
 ⬇ Scarica PDF
-
 
 </button>
 
@@ -601,7 +310,7 @@ Anteprima del tuo planner digitale premium.
 
 <a
 
-[target]="'_blank'"
+target="_blank"
 
 [href]="plannerSelected.pdfPreview">
 
@@ -616,13 +325,10 @@ Anteprima del tuo planner digitale premium.
 
 
 
-
-
-
 </div>
 
 
-</section>
+</div>
 
 
 
@@ -636,9 +342,7 @@ Anteprima del tuo planner digitale premium.
 
 
 <h2>
-
 🔐 Licenza digitale
-
 </h2>
 
 
@@ -655,7 +359,6 @@ Puoi scaricarlo ogni volta che vuoi.
 
 <div>
 
-
 ✔ Acquisto verificato
 
 <br>
@@ -665,7 +368,6 @@ Puoi scaricarlo ogni volta che vuoi.
 <br>
 
 ✔ Aggiornamenti futuri inclusi
-
 
 </div>
 
@@ -702,7 +404,6 @@ Il nostro supporto è disponibile.
 
 
 
-
 <a routerLink="/contact">
 
 💌 Contattaci
@@ -710,9 +411,7 @@ Il nostro supporto è disponibile.
 </a>
 
 
-
 </section>
-
 
 
 

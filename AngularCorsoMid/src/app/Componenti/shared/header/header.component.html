@@ -55,7 +55,7 @@ class="hamburger"
 
 <a
 
-*ngFor="let item of menuItems"
+*ngFor="let item of visibleMenuItems"
 
 [routerLink]="item.link"
 
@@ -164,13 +164,13 @@ class="logout-button"
 
 <a
 
+*ngIf="user"
+
 routerLink="/cart"
 
 class="cart-link">
 
-
 🛒 Carrello
-
 
 </a>
 

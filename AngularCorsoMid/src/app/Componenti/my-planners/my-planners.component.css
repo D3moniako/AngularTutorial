@@ -16,6 +16,7 @@ box-sizing:border-box;
 
 
 
+
 .page{
 
 min-height:100vh;
@@ -38,8 +39,9 @@ overflow:hidden;
 
 
 
-
-/* HEADER */
+/* ============================
+HEADER
+============================ */
 
 
 header{
@@ -102,9 +104,41 @@ transform:translateY(-4px);
 
 
 
+header nav{
+
+display:flex;
+
+gap:20px;
+
+}
 
 
-/* HERO */
+
+header nav a{
+
+text-decoration:none;
+
+color:#9c5278;
+
+font-weight:bold;
+
+}
+
+
+
+header nav a:hover{
+
+color:#d86b9b;
+
+}
+
+
+
+
+
+/* ============================
+HERO
+============================ */
 
 
 .hero{
@@ -135,6 +169,7 @@ fadeDown .8s ease;
 
 
 
+
 .hero h1{
 
 font-size:42px;
@@ -152,8 +187,6 @@ font-size:18px;
 line-height:1.6;
 
 }
-
-
 
 
 
@@ -185,7 +218,9 @@ transform:none;
 
 
 
-/* STATISTICHE */
+/* ============================
+STATISTICHE
+============================ */
 
 
 .stats{
@@ -240,7 +275,6 @@ scale(1.03);
 
 
 
-
 .stats h2{
 
 color:#d86b9b;
@@ -253,7 +287,11 @@ font-size:30px;
 
 
 
-/* TOOL */
+
+
+/* ============================
+RICERCA E CATEGORIE
+============================ */
 
 
 .tools{
@@ -297,12 +335,6 @@ box-shadow:
 
 
 
-
-
-
-/* CATEGORIE */
-
-
 .categories{
 
 display:flex;
@@ -314,6 +346,7 @@ overflow:auto;
 padding:10px 0;
 
 }
+
 
 
 
@@ -339,6 +372,7 @@ transition:.3s;
 
 .categories button:hover{
 
+
 transform:
 
 translateY(-5px);
@@ -363,11 +397,9 @@ color:white;
 
 
 
-
-
-
-
-/* MESSAGGIO DOWNLOAD */
+/* ============================
+MESSAGGIO DOWNLOAD
+============================ */
 
 
 .message{
@@ -387,6 +419,7 @@ linear-gradient(
 #ffffff
 );
 
+
 color:#39926a;
 
 text-align:center;
@@ -399,6 +432,7 @@ downloadMessage .5s ease;
 
 
 }
+
 
 
 @keyframes downloadMessage{
@@ -428,11 +462,9 @@ opacity:1;
 
 
 
-
-
-
-
-/* GRID */
+/* ============================
+GRID PRODUCT CARD
+============================ */
 
 
 .planner-grid{
@@ -450,33 +482,27 @@ gap:30px;
 
 
 
-
-/* CARD */
-
-
-.planner-card{
+.planner-grid app-product-card{
 
 
-background:white;
-
-padding:25px;
-
-border-radius:40px;
-
-position:relative;
-
-
-box-shadow:
-
-0 20px 50px rgba(210,160,190,.25);
-
-
-transition:.45s;
-
+display:block;
 
 animation:
 
 cardShow .7s ease;
+
+transition:.4s;
+
+}
+
+
+
+.planner-grid app-product-card:hover{
+
+
+transform:
+
+translateY(-10px);
 
 
 }
@@ -509,77 +535,42 @@ transform:none;
 
 
 
-.planner-card:hover{
+
+/* ============================
+PRODUCT CARD PERSONALIZZATA
+============================ */
 
 
-transform:
+.planner-grid app-product-card .product{
 
-translateY(-15px);
 
+height:100%;
+
+background:white;
+
+padding:25px;
+
+border-radius:40px;
 
 box-shadow:
 
-0 35px 70px rgba(210,130,180,.35);
+0 20px 50px rgba(210,160,190,.25);
 
-
-}
-
-
-
-
-
-
-
-
-/* PREFERITO */
-
-
-.favorite{
-
-position:absolute;
-
-right:25px;
-
-top:20px;
-
-font-size:32px;
-
-cursor:pointer;
-
-transition:.3s;
-
-}
-
-
-
-.favorite:hover{
-
-
-transform:
-
-scale(1.3)
-rotate(10deg);
-
+transition:.45s;
 
 }
 
 
 
 
-
-
-
-
-/* IMMAGINE */
-
-
-.image-box{
+.planner-grid app-product-card .product-image{
 
 
 height:250px;
 
 border-radius:35px;
 
+overflow:hidden;
 
 display:flex;
 
@@ -587,30 +578,25 @@ align-items:center;
 
 justify-content:center;
 
-
-overflow:hidden;
-
-
 }
 
 
 
-.image-box img{
+
+.planner-grid app-product-card img{
 
 
 max-width:90%;
 
 max-height:95%;
 
-
 transition:.5s;
-
 
 }
 
 
 
-.planner-card:hover img{
+.planner-grid app-product-card:hover img{
 
 
 transform:
@@ -622,12 +608,15 @@ scale(1.08);
 
 
 
+.planner-grid app-product-card h3{
 
 
+font-size:26px;
 
+color:#60465c;
 
+}
 
-/* BADGE */
 
 
 .badge{
@@ -647,6 +636,270 @@ color:#c25c8b;
 
 font-size:14px;
 
+}
+/* ============================
+CARD DATI ACQUISTO
+============================ */
+
+
+.card-header{
+
+display:flex;
+
+flex-direction:column;
+
+gap:10px;
+
+margin-top:20px;
+
+}
+
+
+
+.card-header h2{
+
+
+font-size:26px;
+
+color:#60465c;
+
+margin:0;
+
+}
+
+
+
+
+
+.owned{
+
+
+display:inline-block;
+
+width:max-content;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#dfffea,
+#ffffff
+);
+
+
+color:#3c9b69;
+
+font-size:13px;
+
+font-weight:bold;
+
+
+box-shadow:
+
+0 8px 20px rgba(100,200,140,.15);
+
+
+}
+
+
+
+
+
+
+/* ============================
+INFO PLANNER
+============================ */
+
+
+.info-box{
+
+
+margin-top:20px;
+
+padding:20px;
+
+border-radius:30px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#fff7fb,
+#ffffff
+);
+
+
+box-shadow:
+
+inset 0 0 20px rgba(220,160,190,.12);
+
+
+}
+
+
+
+
+.info-box p{
+
+
+margin:10px 0;
+
+font-size:15px;
+
+color:#806579;
+
+
+}
+
+
+
+.info-box strong{
+
+
+color:#c85f91;
+
+
+}
+
+
+
+
+
+/* ============================
+DOWNLOAD BOX
+============================ */
+
+
+.download-box{
+
+
+margin-top:25px;
+
+padding:25px;
+
+border-radius:35px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#fff0f8,
+#f7efff
+);
+
+
+}
+
+
+
+
+.download-box h3{
+
+
+margin:0 0 10px;
+
+color:#c45d90;
+
+
+}
+
+
+
+
+.download-box p{
+
+
+color:#806579;
+
+
+}
+
+
+
+
+
+/* ============================
+PROGRESS BAR
+============================ */
+
+
+.progress{
+
+
+height:14px;
+
+background:#f0ddea;
+
+border-radius:30px;
+
+overflow:hidden;
+
+margin-top:15px;
+
+
+}
+
+
+
+
+.progress-bar{
+
+
+height:100%;
+
+
+background:
+
+linear-gradient(
+90deg,
+#df79aa,
+#a991ff
+);
+
+
+border-radius:30px;
+
+
+transition:1s;
+
+
+}
+
+
+
+
+
+
+/* ============================
+STATO FILE
+============================ */
+
+
+.file-status{
+
+
+margin-top:20px;
+
+padding:12px;
+
+border-radius:25px;
+
+background:#faf5f8;
+
+text-align:center;
+
+font-weight:bold;
+
+
+color:#76546b;
+
 
 }
 
@@ -656,7 +909,9 @@ font-size:14px;
 
 
 
-/* DOWNLOAD */
+/* ============================
+BUTTONS
+============================ */
 
 
 .buttons{
@@ -670,6 +925,7 @@ margin-top:25px;
 
 
 }
+
 
 
 
@@ -740,6 +996,7 @@ box-shadow:
 
 
 
+
 .buttons button:hover{
 
 
@@ -752,7 +1009,6 @@ translateY(-5px);
 
 
 
-
 .buttons button:active{
 
 
@@ -762,8 +1018,6 @@ scale(.92);
 
 
 }
-
-
 
 
 
@@ -782,6 +1036,24 @@ linear-gradient(
 
 animation:none;
 
+
+}
+
+
+
+
+.buttons button:disabled{
+
+
+opacity:.45;
+
+cursor:not-allowed;
+
+animation:none;
+
+transform:none;
+
+
 }
 
 
@@ -791,8 +1063,9 @@ animation:none;
 
 
 
-
-/* AGGIORNAMENTO */
+/* ============================
+AGGIORNAMENTO VERSIONE
+============================ */
 
 
 .update{
@@ -828,6 +1101,7 @@ updateBlink 2s infinite;
 
 
 
+
 @keyframes updateBlink{
 
 
@@ -846,495 +1120,9 @@ transform:scale(1.03);
 
 
 
-
-
-/* MODALE */
-
-
-.preview-modal{
-
-
-position:fixed;
-
-inset:0;
-
-background:
-
-rgba(50,20,50,.75);
-
-
-display:flex;
-
-align-items:center;
-
-justify-content:center;
-
-
-z-index:200;
-
-
-backdrop-filter:blur(8px);
-
-
-}
-
-
-
-
-.modal{
-
-
-background:white;
-
-width:90%;
-
-max-width:450px;
-
-
-padding:35px;
-
-
-border-radius:45px;
-
-
-text-align:center;
-
-
-animation:
-
-modalOpen .4s ease;
-
-
-}
-
-
-
-@keyframes modalOpen{
-
-
-from{
-
-transform:scale(.5);
-
-opacity:0;
-
-}
-
-
-to{
-
-transform:scale(1);
-
-opacity:1;
-
-}
-
-
-}
-
-
-
-.modal img{
-
-width:80%;
-
-border-radius:20px;
-
-}
-
-
-
-
-
-.close{
-
-
-float:right;
-
-border:none;
-
-background:none;
-
-font-size:30px;
-
-cursor:pointer;
-
-}
-
-
-
-
-
-
-
-
-
-/* HELP */
-
-
-.help{
-
-
-margin:30px;
-
-padding:40px;
-
-border-radius:45px;
-
-background:#ffe5f1;
-
-text-align:center;
-
-
-}
-
-
-
-.help a{
-
-
-color:#c95d8c;
-
-font-weight:bold;
-
-
-}
-
-
-
-
-
-
-
-footer{
-
-
-padding:40px;
-
-text-align:center;
-
-background:#ffddeb;
-
-
-}
-
-
-
-
-
-
-
-
-/* TABLET / DESKTOP */
-
-
-@media(min-width:768px){
-
-
-
-.planner-grid{
-
-
-grid-template-columns:
-
-repeat(3,1fr);
-
-
-}
-
-
-
-.hero h1{
-
-font-size:60px;
-
-}
-
-
-}
-
-/* =====================================================
-NUOVE SEZIONI AREA CLIENTE PREMIUM
-===================================================== */
-
-
-/* HEADER CARD */
-
-.card-header{
-
-display:flex;
-
-flex-direction:column;
-
-gap:10px;
-
-margin-top:20px;
-
-}
-
-
-
-.card-header h2{
-
-font-size:26px;
-
-color:#60465c;
-
-margin:0;
-
-}
-
-
-
-
-
-/* BADGE ACQUISTATO */
-
-
-.owned{
-
-display:inline-block;
-
-width:max-content;
-
-padding:8px 18px;
-
-border-radius:30px;
-
-background:
-
-linear-gradient(
-135deg,
-#dfffea,
-#ffffff
-);
-
-
-color:#3c9b69;
-
-font-size:13px;
-
-font-weight:bold;
-
-
-box-shadow:
-
-0 8px 20px rgba(100,200,140,.15);
-
-
-}
-
-
-
-
-
-
-
-
-/* INFO PLANNER */
-
-
-.info-box{
-
-
-margin-top:20px;
-
-padding:20px;
-
-border-radius:30px;
-
-
-background:
-
-linear-gradient(
-135deg,
-#fff7fb,
-#ffffff
-);
-
-
-box-shadow:
-
-inset 0 0 20px rgba(220,160,190,.12);
-
-
-}
-
-
-
-.info-box p{
-
-
-margin:10px 0;
-
-font-size:15px;
-
-color:#806579;
-
-
-}
-
-
-.info-box strong{
-
-
-color:#c85f91;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* BOX DOWNLOAD */
-
-
-.download-box{
-
-
-margin-top:25px;
-
-padding:25px;
-
-border-radius:35px;
-
-
-background:
-
-linear-gradient(
-135deg,
-#fff0f8,
-#f7efff
-);
-
-
-}
-
-
-
-.download-box h3{
-
-
-margin:0 0 10px;
-
-color:#c45d90;
-
-
-}
-
-
-
-
-.download-box p{
-
-
-color:#806579;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* PROGRESS BAR MIGLIORATA */
-
-
-.progress{
-
-
-height:14px;
-
-background:#f0ddea;
-
-border-radius:30px;
-
-overflow:hidden;
-
-margin-top:15px;
-
-
-}
-
-
-
-.progress-bar{
-
-
-height:100%;
-
-
-background:
-
-linear-gradient(
-90deg,
-#df79aa,
-#a991ff
-);
-
-
-border-radius:30px;
-
-
-transition:1s;
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-/* STATO FILE */
-
-
-.file-status{
-
-
-margin-top:20px;
-
-padding:12px;
-
-border-radius:25px;
-
-background:#faf5f8;
-
-text-align:center;
-
-font-weight:bold;
-
-
-color:#76546b;
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-/* LINK PAGINA PRODOTTO */
+/* ============================
+PAGINA PRODOTTO
+============================ */
 
 
 .open-product{
@@ -1380,6 +1168,8 @@ transition:.3s;
 
 
 
+
+
 .open-product:hover{
 
 
@@ -1398,10 +1188,152 @@ box-shadow:
 
 
 
+/* ============================
+MODALE ANTEPRIMA PDF
+============================ */
+
+
+.preview-modal{
+
+
+position:fixed;
+
+inset:0;
+
+background:
+
+rgba(50,20,50,.75);
+
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+
+z-index:200;
+
+
+backdrop-filter:blur(8px);
+
+
+}
 
 
 
-/* BOTTONI ANTEPRIMA */
+
+
+.modal{
+
+
+background:white;
+
+width:90%;
+
+max-width:450px;
+
+
+padding:35px;
+
+
+border-radius:45px;
+
+
+text-align:center;
+
+
+animation:
+
+modalOpen .4s ease;
+
+
+max-height:90vh;
+
+overflow:auto;
+
+
+}
+
+
+
+
+
+@keyframes modalOpen{
+
+
+from{
+
+transform:scale(.5);
+
+opacity:0;
+
+}
+
+
+to{
+
+transform:scale(1);
+
+opacity:1;
+
+}
+
+
+}
+
+
+
+
+
+.modal img{
+
+
+width:80%;
+
+border-radius:20px;
+
+
+}
+
+
+
+
+
+.preview-image{
+
+
+max-height:300px;
+
+object-fit:contain;
+
+
+}
+
+
+
+
+
+.close{
+
+
+float:right;
+
+border:none;
+
+background:none;
+
+font-size:30px;
+
+cursor:pointer;
+
+
+}
+
+
+
+
+
 
 
 .preview-actions{
@@ -1415,6 +1347,7 @@ margin-top:25px;
 
 
 }
+
 
 
 
@@ -1460,6 +1393,7 @@ color:white;
 
 
 
+
 .preview-actions a{
 
 
@@ -1480,47 +1414,9 @@ linear-gradient(
 
 
 
-
-
-
-
-/* MODALE PDF GRANDE */
-
-
-.modal{
-
-
-max-height:90vh;
-
-overflow:auto;
-
-
-}
-
-
-
-
-.preview-image{
-
-
-max-height:300px;
-
-object-fit:contain;
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-/* SICUREZZA LICENZA */
+/* ============================
+LICENZA
+============================ */
 
 
 .security{
@@ -1560,6 +1456,7 @@ box-shadow:
 
 
 
+
 .security h2{
 
 
@@ -1573,6 +1470,8 @@ font-size:32px;
 
 
 
+
+
 .security p{
 
 
@@ -1582,6 +1481,8 @@ line-height:1.7;
 
 
 }
+
+
 
 
 
@@ -1615,55 +1516,34 @@ line-height:2;
 
 
 
+/* ============================
+HELP FOOTER
+============================ */
 
 
-/* DOWNLOAD DISABILITATO */
+.help{
 
 
-.buttons button:disabled{
+margin:30px;
 
+padding:40px;
 
-opacity:.45;
+border-radius:45px;
 
-cursor:not-allowed;
+background:#ffe5f1;
 
-animation:none;
-
-
-transform:none;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* NAV HEADER */
-
-
-header nav{
-
-
-display:flex;
-
-gap:20px;
+text-align:center;
 
 
 }
 
 
 
-header nav a{
+
+.help a{
 
 
-text-decoration:none;
-
-color:#9c5278;
+color:#c95d8c;
 
 font-weight:bold;
 
@@ -1672,10 +1552,15 @@ font-weight:bold;
 
 
 
-header nav a:hover{
+
+footer{
 
 
-color:#d86b9b;
+padding:40px;
+
+text-align:center;
+
+background:#ffddeb;
 
 
 }
@@ -1686,9 +1571,39 @@ color:#d86b9b;
 
 
 
+/* ============================
+RESPONSIVE
+============================ */
 
 
-/* RESPONSIVE MOBILE */
+@media(min-width:768px){
+
+
+
+.planner-grid{
+
+
+grid-template-columns:
+
+repeat(3,1fr);
+
+
+}
+
+
+
+.hero h1{
+
+
+font-size:60px;
+
+
+}
+
+
+}
+
+
 
 
 @media(max-width:700px){
@@ -1711,7 +1626,6 @@ padding:20px;
 
 .buttons,
 
-
 .preview-actions{
 
 
@@ -1719,6 +1633,7 @@ flex-direction:column;
 
 
 }
+
 
 
 
@@ -1734,6 +1649,7 @@ padding:30px;
 
 
 
+
 .card-header h2{
 
 
@@ -1741,6 +1657,7 @@ font-size:22px;
 
 
 }
+
 
 
 
@@ -1755,5 +1672,344 @@ padding:25px;
 }
 
 
+
+}
+/* ============================
+   CARD MY PLANNERS
+============================ */
+
+
+.product{
+
+background:white;
+
+border-radius:40px;
+
+padding:25px;
+
+position:relative;
+
+box-shadow:
+
+0 20px 50px rgba(210,160,190,.25);
+
+transition:.4s;
+
+overflow:hidden;
+
+}
+
+
+
+.product:hover{
+
+transform:translateY(-10px);
+
+box-shadow:
+
+0 30px 60px rgba(210,130,180,.35);
+
+}
+
+
+
+
+
+.favorite{
+
+position:absolute;
+
+right:25px;
+
+top:20px;
+
+border:none;
+
+background:none;
+
+font-size:30px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+
+.favorite:hover{
+
+transform:scale(1.3) rotate(10deg);
+
+}
+
+
+
+
+
+.product-image{
+
+height:250px;
+
+display:flex;
+
+align-items:center;
+
+justify-content:center;
+
+position:relative;
+
+overflow:hidden;
+
+border-radius:35px;
+
+background:#fff7fb;
+
+}
+
+
+
+.product-image img{
+
+max-width:90%;
+
+max-height:230px;
+
+object-fit:contain;
+
+transition:.5s;
+
+}
+
+
+
+.product:hover .product-image img{
+
+transform:scale(1.08);
+
+}
+
+
+
+
+.badge{
+
+position:absolute;
+
+bottom:15px;
+
+left:15px;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+background:#ffe0ef;
+
+color:#c25c8b;
+
+font-size:13px;
+
+font-weight:bold;
+
+}
+
+
+
+
+
+.product h3{
+
+font-size:24px;
+
+color:#60465c;
+
+margin-top:20px;
+
+}
+
+
+
+
+
+.rating{
+
+color:#ffb400;
+
+font-size:20px;
+
+margin:15px 0;
+
+}
+
+
+
+
+
+.product-footer{
+
+display:flex;
+
+align-items:center;
+
+justify-content:space-between;
+
+margin-top:20px;
+
+}
+
+
+
+.product-footer strong{
+
+font-size:20px;
+
+color:#d86b9b;
+
+}
+
+
+
+
+
+/* BOTTONI DOWNLOAD / PREVIEW */
+
+.product-footer button{
+
+border:none;
+
+border-radius:35px;
+
+padding:14px 22px;
+
+cursor:pointer;
+
+background:
+
+linear-gradient(
+135deg,
+#df79aa,
+#c86ca8
+);
+
+color:white;
+
+font-weight:bold;
+
+font-size:18px;
+
+transition:.3s;
+
+}
+
+
+.product-footer button:hover{
+
+transform:translateY(-5px);
+
+}
+
+
+
+
+
+/* AREA MY PLANNER */
+
+.planner-actions{
+
+display:flex;
+
+gap:15px;
+
+margin-top:25px;
+
+}
+
+
+
+
+
+.planner-actions button,
+
+.planner-actions a{
+
+
+flex:1;
+
+padding:15px;
+
+border-radius:35px;
+
+border:none;
+
+cursor:pointer;
+
+text-decoration:none;
+
+text-align:center;
+
+font-weight:bold;
+
+color:white;
+
+
+background:
+
+linear-gradient(
+135deg,
+#df79aa,
+#a991ff
+);
+
+
+}
+
+
+
+
+.planner-actions a{
+
+background:
+
+linear-gradient(
+135deg,
+#cdbbff,
+#9d87ff
+);
+
+
+}
+
+
+
+
+
+.planner-actions button:hover,
+
+.planner-actions a:hover{
+
+
+transform:translateY(-5px);
+
+}
+
+
+
+
+
+.owned{
+
+display:inline-block;
+
+margin-top:10px;
+
+padding:8px 18px;
+
+border-radius:30px;
+
+background:#dffff0;
+
+color:#39926a;
+
+font-weight:bold;
 
 }

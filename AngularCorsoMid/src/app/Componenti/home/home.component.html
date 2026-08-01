@@ -305,159 +305,26 @@ creare e sognare.
 
 
 
-<div
+<app-product-card
 
-class="product"
+*ngFor="let p of filteredProducts"
 
-*ngFor="let p of filteredProducts">
+[product]="p"
 
+[showFavorite]="true"
 
+[showCart]="true"
 
+[showDescription]="true"
 
+(addCart)="addCart($event)"
 
-<button
+(favorite)="toggleFavorite($event)"
 
-class="favorite"
+(openProduct)="openProduct($event)"
 
-(click)="toggleFavorite(p)">
-
-
-{{p.favorite ? '❤️':'🤍'}}
-
-
-</button>
-
-
-
-
-
-
-
-
-<div class="product-image">
-
-
-<img
-
-[src]="p.image"
-
-[alt]="p.name">
-
-
-
-
-
-<span class="badge">
-
-{{p.badge}}
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-<h3>
-
-{{p.name}}
-
-</h3>
-
-
-
-
-
-<p>
-
-{{p.description}}
-
-</p>
-
-
-
-
-
-
-
-<div class="rating">
-
-
-★★★★★
-
-
-</div>
-
-
-
-
-
-
-
-<div class="product-footer">
-
-
-
-<strong>
-
-{{p.price | currency:'EUR'}}
-
-</strong>
-
-
-
-
-
-
-<div>
-
-
-<a
-
-class="details"
-
-[routerLink]="['/products',p.id]">
-
-
-Vista
-
-
-</a>
-
-
-
-
-
-<button
-
-(click)="addCart(p)">
-
-
-🛒
-
-
-</button>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-</div>
-
+>
+</app-product-card>
 
 
 
