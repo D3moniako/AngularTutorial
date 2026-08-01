@@ -93,21 +93,26 @@ routerLinkActive="active"
 <div class="account">
 
 
+<!-- UTENTE NON LOGGATO -->
 
 <div *ngIf="!user">
 
 
-<a routerLink="/login">
+<a 
+routerLink="/login"
+class="login-button">
 
-👤 Login
+🔑 Accedi
 
 </a>
 
 
 
-<a routerLink="/register">
+<a 
+routerLink="/register"
+class="register-button">
 
-📝 Registrati
+✨ Registrati
 
 </a>
 
@@ -119,13 +124,14 @@ routerLinkActive="active"
 
 
 
-
-
+<!-- UTENTE LOGGATO -->
 
 <div *ngIf="user">
 
 
-<a routerLink="/profile">
+<a 
+routerLink="/profile"
+class="profile-button">
 
 🌸 {{user.name}}
 
@@ -134,6 +140,8 @@ routerLinkActive="active"
 
 
 <button
+
+class="logout-button"
 
 (click)="logout()">
 
@@ -147,9 +155,7 @@ routerLinkActive="active"
 </div>
 
 
-
 </div>
-
 
 
 
@@ -170,9 +176,10 @@ class="cart-link">
 
 <a 
 *ngIf="user?.role?.toLowerCase() === 'admin'"
-routerLink="/admin/dashboard">
+routerLink="/admin/dashboard"
+class="admin-link">
 
-👑 DASHBOARD
+DASHBOARD
 
 </a>
 

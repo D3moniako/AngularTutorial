@@ -54,7 +54,7 @@ icon:'🏠'
 {
 label:'Shop',
 link:'/shop',
-icon:'🛒'
+icon:'🛍️'
 },
 
 
@@ -91,14 +91,6 @@ label:'Contatti',
 link:'/contact',
 icon:'✉️'
 },
-
-
-{
-label:'Carrello',
-link:'/cart',
-icon:'🛍️'
-}
-
 
 
 ];

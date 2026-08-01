@@ -32,48 +32,37 @@ Accedi al tuo spazio DreamCalendar
 
 
 <input
-
-
 type="email"
-
-
 placeholder="Email"
-
-
 [(ngModel)]="email"
-
-
+(input)="emailError=''"
+(blur)="checkEmail()"
+[class.input-error]="emailError"
 >
 
 
-
-
-
-
-
+<div 
+class="field-error"
+*ngIf="emailError">
+⚠ {{emailError}}
+</div>
 
 
 <input
-
-
 type="password"
-
-
 placeholder="Password"
-
-
 [(ngModel)]="password"
-
-
+(input)="passwordError=''"
+(blur)="checkPassword()"
+[class.input-error]="passwordError"
 >
 
 
-
-
-
-
-
-
+<div 
+class="field-error"
+*ngIf="passwordError">
+⚠ {{passwordError}}
+</div>
 
 <button
 
@@ -124,30 +113,14 @@ Accedi
 
 
 
-<p
-
-
+<div
 class="error"
-
-
 *ngIf="errorMessage"
-
-
-
 >
 
+❌ {{errorMessage}}
 
-
-{{errorMessage}}
-
-
-</p>
-
-
-
-
-
-
+</div>
 
 
 

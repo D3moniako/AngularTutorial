@@ -397,50 +397,124 @@ SMARTPHONE
 
 
 @media(max-width:768px){
-
-
-
 header{
-
 
 height:80px;
 
-padding:15px;
+padding:10px;
 
+gap:5px;
+
+width:100%;
+
+overflow:hidden;
 
 }
 
+
+/* logo */
+
+.logo{
+
+flex:1;
+
+min-width:0;
+
+}
 
 
 .brand{
 
+font-size:20px;
 
-font-size:22px;
+overflow:hidden;
 
+text-overflow:ellipsis;
 
-}
-
-
-.logo small{
-
-
-display:none;
-
+white-space:nowrap;
 
 }
 
 
 
-/* mostra hamburger */
+/* account */
 
+.account{
+
+display:flex;
+
+flex-shrink:1;
+
+}
+
+
+.account a{
+
+font-size:0;
+
+padding:8px;
+
+}
+
+
+.account .login-button::before{
+
+content:"🔑";
+
+font-size:20px;
+
+}
+
+
+.account .register-button::before{
+
+content:"✨";
+
+font-size:20px;
+
+}
+
+
+.account .profile-button::before{
+
+content:"🌸";
+
+font-size:20px;
+
+}
+
+
+
+/* bottone logout */
+
+.account button{
+
+padding:8px;
+
+}
+
+
+/* carrello */
+
+.cart-link{
+
+padding:8px;
+
+flex-shrink:0;
+
+}
+
+
+
+/* hamburger */
 
 .hamburger{
 
-
 display:block;
 
-order:2;
+flex-shrink:0;
 
+font-size:28px;
 
 }
 
@@ -515,15 +589,30 @@ font-size:16px;
 
 
 
-
-/* account */
-
+/* ==========================
+ACCOUNT MOBILE
+========================== */
 
 .account{
 
+display:flex;
 
-display:none;
+position:static;
 
+order:2;
+
+flex-shrink:1;
+
+}
+
+
+.account div{
+
+display:flex;
+
+align-items:center;
+
+gap:5px;
 
 }
 
@@ -531,14 +620,40 @@ display:none;
 
 
 
-.cart-link{
+.account button{
 
+padding:8px;
 
 font-size:0;
 
+}
 
-padding:12px;
 
+
+.account button::after{
+
+content:"🚪";
+
+font-size:20px;
+
+}
+
+
+
+/* ==========================
+CARRELLO MOBILE
+========================== */
+
+
+.cart-link{
+
+order:3;
+
+font-size:0;
+
+padding:8px;
+
+background:#ffe2ee;
 
 }
 
@@ -546,13 +661,42 @@ padding:12px;
 
 .cart-link::after{
 
-
 content:"🛒";
 
 font-size:22px;
 
+}
+
+
+
+/* ==========================
+HAMBURGER
+========================== */
+
+
+.hamburger{
+
+order:4;
+
+font-size:28px;
 
 }
+
+
+
+.logo{
+
+order:1;
+
+}
+
+
+
+
+
+
+
+
 
 
 
@@ -583,14 +727,70 @@ font-size:19px;
 
 .hamburger{
 
-font-size:28px;
+display:block;
+
+order:3;
+
+}
+/* ==========================
+   FIX HEADER MOBILE
+========================== */
+
+header .logo{
+
+flex:1;
+
+min-width:0;
 
 }
 
 
+header .brand{
+
+font-size:20px;
+
+overflow:hidden;
+
+text-overflow:ellipsis;
+
+white-space:nowrap;
 
 }
 
+
+header .logo small{
+
+display:none;
+
+}
+
+
+header .account a{
+
+font-size:0;
+
+padding:8px;
+
+}
+
+
+header .account a::before{
+
+content:"👤";
+
+font-size:20px;
+
+}
+
+
+}
+.account{
+order:2;
+}
+
+.cart-link{
+order:4;
+}
 /* =================================
    PULSANTE DASHBOARD ADMIN HEADER
 ================================= */

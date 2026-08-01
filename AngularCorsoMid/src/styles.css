@@ -1,4 +1,55 @@
-/* You can add global styles to this file, and also import other style files */
+/* ==========================================
+   GLOBAL RESET DREAMCALENDAR
+========================================== */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body{
+
+height:100%;
+
+width:100%;
+
+margin:0;
+
+padding:0;
+
+overflow-x:hidden;
+
+}
+
+
+*{
+
+box-sizing:border-box;
+
+}
+
+
+
+body{
+
+font-family:Roboto, "Helvetica Neue", sans-serif;
+
+background:#fffaf7;
+
+}
+
+
+/* elimina spazi strani immagini */
+
+img{
+
+max-width:100%;
+
+display:block;
+
+}
+
+
+/* link globali */
+
+a{
+
+cursor:pointer;
+
+}

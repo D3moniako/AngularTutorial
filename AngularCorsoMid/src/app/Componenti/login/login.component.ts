@@ -3,7 +3,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UserService } from '../../services/user.service';
-
+// costanti errori//
+import { ERRORS } from '../../constants/errors';
 
 @Component({
 
@@ -30,6 +31,9 @@ errorMessage:string='';
 
 loading:boolean=false;
 
+emailError:string='';
+
+passwordError:string='';
 
 
 
@@ -57,42 +61,36 @@ login(){
 
 
 
+this.email=this.email.trim();
+
+this.emailError='';
+this.passwordError='';
 this.errorMessage='';
 
 
 
-this.email=this.email.trim();
+if(!this.email){
+
+
+this.emailError = ERRORS.LOGIN.EMAIL_REQUIRED;
+
+}
 
 
 
+if(!this.password){
+
+
+this.passwordError = ERRORS.LOGIN.PASSWORD_REQUIRED;
+
+}
 
 
 
-
-
-if(
-
-
-
-!this.email ||
-
-
-!this.password
-
-
-
-){
-
-
-
-this.errorMessage=
-
-'Inserisci email e password';
-
+if(this.emailError || this.passwordError){
 
 
 return;
-
 
 
 }
@@ -144,10 +142,12 @@ if(result){
 
 
 
-
-
 this.errorMessage='';
 
+
+// salvo email prima della pulizia
+
+const loginEmail = this.email;
 
 
 
@@ -157,9 +157,7 @@ this.errorMessage='';
 this.email='';
 
 
-
 this.password='';
-
 
 
 
@@ -201,10 +199,9 @@ if(usersJson){
 
 const users = JSON.parse(usersJson);
 
-
 user = users.find(
 (u:any)=>
-u.email.toLowerCase() === this.email.toLowerCase()
+u.email.toLowerCase() === loginEmail.toLowerCase()
 );
 
 }
@@ -254,29 +251,48 @@ this.loading=false;
 
 
 
-this.errorMessage=
-
-'Email o password errati';
-
+this.errorMessage = ERRORS.LOGIN.INVALID_CREDENTIALS;
+}
 
 
 
+}
+
+checkEmail(){
+
+this.email=this.email.trim();
 
 
+if(!this.email){
 
+this.emailError='Inserisci la tua email';
+
+}
+else{
+
+this.emailError='';
+
+}
 
 }
 
 
 
 
+checkPassword(){
 
 
+if(!this.password){
 
+this.passwordError='Inserisci la password';
 
+}
+else{
+
+this.passwordError='';
 
 }
 
-
+}
 
 }

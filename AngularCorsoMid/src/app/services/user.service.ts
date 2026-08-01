@@ -231,24 +231,22 @@ password:string
 ):boolean{
 
 
+// ricarica sempre gli utenti dal localStorage
 
-const user=this.users.find(
+const users = this.loadUsers();
 
 
+const user = users.find(
 
-u=>
+u =>
 
-u.email.toLowerCase()===email.toLowerCase()
+u.email.toLowerCase() === email.toLowerCase()
 
 &&
 
-u.password===password
-
-
+u.password === password
 
 );
-
-
 
 
 
@@ -257,7 +255,6 @@ if(!user){
 return false;
 
 }
-
 
 
 

@@ -96,7 +96,36 @@ ERROR:
 LOADING:
 'Caricamento in corso...'
 
-}
+},
 
+
+
+
+LOGIN:{
+    
+LOGIN_REQUIRED:
+'Inserisci email e password',
+
+
+LOGIN_ERROR:
+'Email o password errati',
+
+
+LOGIN_SUCCESS:
+'Accesso effettuato con successo',
+
+
+SAVE_SUCCESS:
+'Salvataggio completato',
+
+
+DELETE_SUCCESS:
+'Elemento eliminato',
+
+
+LOADING:
+'Caricamento in corso...'
+
+}
 
 };
