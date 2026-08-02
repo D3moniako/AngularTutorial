@@ -1,0 +1,125 @@
+<div class="chat-box">
+
+
+    <div class="chat-header">
+
+        🌸 DreamCalendar Support
+
+    </div>
+
+
+
+    <div class="messages">
+
+
+        <div
+
+        *ngFor="let m of messages"
+
+        class="message"
+
+        [class.user]="m.sender==='USER'"
+
+        [class.admin]="m.sender==='ADMIN'"
+
+        [class.bot]="m.sender==='BOT'"
+
+        >
+
+
+
+            <strong>
+
+
+                <span *ngIf="m.sender==='USER'">
+
+                    👤 {{m.userName}}
+
+                </span>
+
+
+
+                <span *ngIf="m.sender==='ADMIN'">
+
+                    🛠 {{m.userName}}
+
+                </span>
+
+
+
+                <span *ngIf="m.sender==='BOT'">
+
+                    🤖 {{m.userName}}
+
+                </span>
+
+
+            </strong>
+
+
+
+
+            <p>
+
+                {{m.text}}
+
+            </p>
+
+
+
+            <small>
+
+                {{m.date | date:'HH:mm'}}
+
+            </small>
+
+
+
+        </div>
+
+
+    </div>
+
+
+
+
+
+    <div class="chat-input">
+
+
+        <input
+
+
+        type="text"
+
+        [(ngModel)]="message"
+
+        placeholder="Scrivi un messaggio..."
+
+        (keyup.enter)="send()"
+
+
+        >
+
+
+
+
+        <button
+
+        (click)="send()"
+
+        >
+
+
+            Invia 💌
+
+
+        </button>
+
+
+
+    </div>
+
+
+
+</div>

@@ -158,6 +158,9 @@ import { NotificationComponent } from './Componenti/notification/notification.co
 import { Pag404Component } from './Componenti/pag404/pag404.component';
 import { ProductCardComponent } from './Componenti/shared/product-card/product-card.component';
 import { NotificationDropdownComponent } from './Componenti/notification-dropdown/notification-dropdown.component';
+import { ChatBoxComponent } from './chat/components/chat-box/chat-box.component';
+import { ChatComponent } from './Componenti/chat/chat.component';
+import { AdminChatComponent } from './Componenti/admin/admin-chat/admin-chat.component';
 
 
 
@@ -251,7 +254,10 @@ Pag404Component,
 ProductCardComponent,
 
 
-NotificationDropdownComponent
+NotificationDropdownComponent,
+    ChatBoxComponent,
+    ChatComponent,
+    AdminChatComponent
 
 
 

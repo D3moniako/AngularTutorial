@@ -112,7 +112,8 @@ import { AdminUploadComponent }
 from './Componenti/admin-upload-planner/admin-upload-planner.component';
 
 
-
+import {AdminChatComponent}
+from'./Componenti/admin/admin-chat/admin-chat.component'
 
 
 
@@ -425,7 +426,10 @@ canActivate:[AuthGuard]
  ]
 
 },
-
+{
+ path:'chat',
+ component:AdminChatComponent
+},
 
 
 

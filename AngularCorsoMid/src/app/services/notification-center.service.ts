@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Notification } from '../models/notification';
 
 
-
+/// NOTIFICHE TOAST////
 @Injectable({
 providedIn:'root'
 })
@@ -14,47 +14,7 @@ export class NotificationCenterService {
 
 
 
-private notifications:Notification[]=[
-
-
-{
-id:1,
-
-title:'Ordine completato',
-
-message:'Il tuo ordine è stato confermato.',
-
-icon:'📦',
-
-type:'ORDER',
-
-date:new Date(),
-
-read:false
-
-},
-
-
-{
-id:2,
-
-title:'Nuovo planner disponibile',
-
-message:'È disponibile una nuova collezione.',
-
-icon:'🌸',
-
-type:'SYSTEM',
-
-date:new Date(),
-
-read:false
-
-}
-
-
-
-];
+private notifications:Notification[]=[];
 
 
 
@@ -170,11 +130,5 @@ n=>!n.read
 
 
 }
-
-
-
-
-
-
 
 }

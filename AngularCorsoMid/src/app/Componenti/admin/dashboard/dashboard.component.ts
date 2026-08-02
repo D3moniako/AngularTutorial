@@ -11,6 +11,9 @@ import { Order } from '../../../models/order';
 import { Payment } from '../../../models/payment';
 
 
+import { AdminChatComponent } 
+from '../admin-chat/admin-chat.component';
+
 
 @Component({
 

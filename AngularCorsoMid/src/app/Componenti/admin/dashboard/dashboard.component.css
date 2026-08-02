@@ -686,6 +686,32 @@ font-size:18px;
 
 }
 
+/**CHAT ADMIN*/
 
+}
+.dashboard-chat{
+
+margin-top:40px;
+
+background:white;
+
+padding:30px;
+
+border-radius:35px;
+
+box-shadow:
+
+0 20px 50px rgba(200,120,160,.15);
+
+}
+
+
+.dashboard-chat h2{
+
+color:#6b4b5c;
+
+font-family:'Playfair Display',serif;
+
+margin-bottom:25px;
 
 }

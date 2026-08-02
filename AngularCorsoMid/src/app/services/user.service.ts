@@ -75,13 +75,15 @@ constructor(){}
 // =================================================
 
 
-private loadUsers():User[]{
+// =================================================
+// LOAD USERS
+// =================================================
 
+private loadUsers():User[]{
 
 try{
 
-
-const data=localStorage.getItem('users');
+const data = localStorage.getItem('users');
 
 
 return data ? JSON.parse(data) : [];
@@ -90,14 +92,11 @@ return data ? JSON.parse(data) : [];
 }
 catch{
 
-
 return [];
 
 }
 
-
 }
-
 
 
 

@@ -1,0 +1,365 @@
+.admin-chat {
+
+width:100%;
+
+background:white;
+
+border-radius:20px;
+
+padding:15px;
+
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+
+color:#333;
+
+}
+
+
+
+.admin-chat h2 {
+
+margin:0 0 15px;
+
+font-size:20px;
+
+color:#7b4b8a;
+
+}
+
+
+
+/* LAYOUT */
+
+.chat-layout {
+
+display:flex;
+
+gap:15px;
+
+height:420px;
+
+}
+
+
+
+/* LISTA CLIENTI */
+
+.customers {
+
+width:220px;
+
+border-right:1px solid #eee;
+
+overflow-y:auto;
+
+padding-right:10px;
+
+}
+
+
+
+.customers h3 {
+
+font-size:15px;
+
+color:#555;
+
+margin-bottom:12px;
+
+}
+
+
+
+.customer {
+
+padding:12px;
+
+background:#faf5ff;
+
+border-radius:12px;
+
+margin-bottom:8px;
+
+cursor:pointer;
+
+font-size:14px;
+
+font-weight:600;
+
+color:#5c4568;
+
+}
+
+
+
+.customer:hover {
+
+background:#eadcff;
+
+}
+
+
+
+
+
+/* AREA CONVERSAZIONE */
+
+.conversation {
+
+flex:1;
+
+background:#fff8fc;
+
+border-radius:15px;
+
+padding:15px;
+
+overflow-y:auto;
+
+display:flex;
+
+flex-direction:column;
+
+}
+
+
+
+
+
+/* MESSAGGI */
+
+.message {
+
+max-width:75%;
+
+padding:12px 15px;
+
+border-radius:18px;
+
+margin-bottom:10px;
+
+font-size:14px;
+
+color:#333;
+
+}
+
+
+
+.message strong {
+
+display:block;
+
+margin-bottom:5px;
+
+font-size:13px;
+
+color:#4a3654;
+
+}
+
+
+
+.message p {
+
+margin:5px 0;
+
+color:#333 !important;
+
+font-size:14px;
+
+line-height:1.4;
+
+}
+
+
+
+.message small {
+
+display:block;
+
+color:#777;
+
+font-size:11px;
+
+margin-top:5px;
+
+}
+
+
+
+
+
+/* MESSAGGIO CLIENTE */
+
+.message.USER {
+
+background:#eadcff;
+
+align-self:flex-start;
+
+border-bottom-left-radius:5px;
+
+}
+
+
+
+
+
+/* MESSAGGIO ADMIN */
+
+.message.ADMIN {
+
+background:#d8ffd8;
+
+align-self:flex-end;
+
+border-bottom-right-radius:5px;
+
+}
+
+
+
+.message.ADMIN strong {
+
+color:#28702b;
+
+}
+
+
+
+
+
+/* BOT */
+
+.message.BOT {
+
+background:#ddecff;
+
+align-self:flex-start;
+
+}
+
+
+
+.message.BOT strong {
+
+color:#286090;
+
+}
+
+
+
+
+
+/* INPUT RISPOSTA */
+
+.reply {
+
+display:flex;
+
+gap:10px;
+
+margin-top:12px;
+
+}
+
+
+
+.reply input {
+
+flex:1;
+
+padding:12px 15px;
+
+border-radius:20px;
+
+border:1px solid #ddd;
+
+font-size:14px;
+
+color:#333;
+
+background:white;
+
+}
+
+
+
+.reply input::placeholder {
+
+color:#999;
+
+}
+
+
+
+.reply button {
+
+padding:12px 25px;
+
+border:none;
+
+border-radius:20px;
+
+background:linear-gradient(
+135deg,
+#c77dff,
+#a855f7
+);
+
+color:white;
+
+font-weight:bold;
+
+cursor:pointer;
+
+}
+
+
+
+.reply button:hover {
+
+opacity:.85;
+
+}
+
+
+
+
+
+/* MOBILE */
+
+@media(max-width:700px){
+
+
+.chat-layout{
+
+flex-direction:column;
+
+height:auto;
+
+}
+
+
+
+.customers{
+
+width:100%;
+
+height:120px;
+
+border:none;
+
+}
+
+
+
+.conversation{
+
+height:350px;
+
+}
+
+
+}

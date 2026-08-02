@@ -1,0 +1,197 @@
+<div class="admin-chat">
+
+
+
+<h2>
+
+💬 Assistenza clienti
+
+</h2>
+
+
+
+
+
+<div class="chat-layout">
+
+
+
+
+
+<!-- LISTA CLIENTI -->
+
+<div class="customers">
+
+
+
+<h3>
+
+Clienti
+
+</h3>
+
+
+
+
+<div
+
+class="customer"
+
+*ngFor="let c of customers"
+
+(click)="selectCustomer(c.userId)"
+
+>
+
+
+
+👤 {{c.userName}}
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+
+
+
+<!-- CHAT CLIENTE -->
+
+<div class="conversation">
+
+
+
+<div *ngIf="selectedUserId===null">
+
+
+Seleziona un cliente per vedere la conversazione 💬
+
+
+</div>
+
+
+
+
+
+<div
+
+*ngFor="let m of getConversation()"
+class="message"
+
+
+
+[ngClass]="m.sender"
+
+>
+
+
+
+<strong>
+
+
+<span *ngIf="m.sender==='USER'">
+
+👤 {{m.userName}}
+
+</span>
+
+
+<span *ngIf="m.sender==='ADMIN'">
+
+🛠 {{m.userName}}
+
+</span>
+
+
+<span *ngIf="m.sender==='BOT'">
+
+🤖 {{m.userName}}
+
+</span>
+
+
+
+</strong>
+
+
+
+<p>
+
+{{m.text}}
+
+</p>
+
+
+
+<small>
+
+{{m.date | date:'HH:mm'}}
+
+</small>
+
+
+
+</div>
+
+
+
+
+
+
+
+<div
+
+class="reply"
+
+*ngIf="selectedUserId!==null"
+
+>
+
+
+
+<input
+
+[(ngModel)]="reply"
+
+placeholder="Rispondi al cliente..."
+
+(keyup.enter)="sendReply()"
+
+>
+
+
+
+<button
+
+(click)="sendReply()"
+
+>
+
+Invia
+
+</button>
+
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+</div>
+
+
+</div>
