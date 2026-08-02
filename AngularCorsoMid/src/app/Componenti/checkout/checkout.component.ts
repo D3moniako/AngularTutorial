@@ -10,7 +10,8 @@ import { PaymentService } from '../../services/payment.service';
 import { CartItem } from '../../models/cart-item';
 import { User } from '../../models/user';
 
-
+import { NotificationCenterService } 
+from '../../services/notification-center.service';
 
 @Component({
 
@@ -93,8 +94,9 @@ private paymentService:PaymentService,
 private userService:UserService,
 
 
-private router:Router
+private router:Router,
 
+private notificationService:NotificationCenterService,
 
 ){}
 
@@ -420,7 +422,29 @@ throw new Error(
 }
 
 
+const order = {
 
+id: Date.now(),
+
+userId:this.user.id,
+
+customerName:this.customer.name,
+
+customerEmail:this.customer.email,
+
+products:this.cart.map(item=>item.product),
+
+total:this.total,
+
+status:'PAGATO' as const,
+
+downloadAvailable:true,
+
+purchaseDate:new Date().toISOString()
+};
+
+
+this.orderService.addOrder(order);
 
 
 
@@ -432,15 +456,47 @@ throw new Error(
 // SIMULA RITORNO STRIPE
 // =====================================
 
+this.notificationService.add({
+
+id:Date.now(),
+
+title:'Ordine completato',
+
+message:
+'Il tuo pagamento è stato ricevuto. I tuoi planner sono disponibili.',
+
+icon:'📦',
+
+type:'ORDER',
+
+date:new Date(),
+
+read:false
+
+});
+
+
+
+// =====================================
+// SVUOTA CARRELLO DOPO PAGAMENTO
+// =====================================
+
+// =====================================
+// SVUOTA CARRELLO DOPO PAGAMENTO
+// =====================================
+
+this.cartService.clear();
+
+this.cart=[];
+
+this.total=0;
+
+this.loading=false;
 
 
 this.router.navigate([
-
 '/payment-success'
-
 ]);
-
-
 
 
 

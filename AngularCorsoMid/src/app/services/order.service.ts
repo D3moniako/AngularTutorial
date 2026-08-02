@@ -5,7 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 import { Order } from '../models/order';
 
 import { Product } from '../models/product';
-
+import { NotificationCenterService } from './notification-center.service';
 
 
 @Injectable({
@@ -49,7 +49,7 @@ this.ordersSubject.asObservable();
 
 
 
-constructor(){}
+constructor(private notificationCenterService : NotificationCenterService){}
 
 
 
@@ -78,6 +78,8 @@ o=>o.id===order.id
 if(!exists){
 
 this.orders.push(order);
+
+
 
 this.saveOrders();
 
@@ -381,13 +383,77 @@ o=>o.id===id
 if(order){
 
 
+const oldStatus = order.status;
+
 
 order.status=status;
 
 
 
-this.saveOrders();
+// NOTIFICA PAGAMENTO COMPLETATO
 
+if(
+oldStatus!=='PAGATO'
+&&
+status==='PAGATO'
+){
+
+
+this.notificationCenterService.add({
+
+id:Date.now(),
+
+title:'Pagamento completato',
+
+message:
+'Il tuo ordine #'+order.id+' è stato confermato. I tuoi planner sono disponibili.',
+
+icon:'📦',
+
+type:'ORDER',
+
+date:new Date(),
+
+read:false
+
+});
+
+
+
+
+// NOTIFICA DOWNLOAD
+
+if(order.downloadAvailable){
+
+
+this.notificationCenterService.add({
+
+id:Date.now(),
+
+title:'Download disponibile',
+
+message:
+'I tuoi planner digitali dell’ordine #'+order.id+' sono pronti.',
+
+icon:'📥',
+
+type:'DOWNLOAD',
+
+date:new Date(),
+
+read:false
+
+});
+
+
+}
+
+
+}
+
+
+
+this.saveOrders();
 
 
 }

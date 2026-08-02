@@ -15,6 +15,10 @@ import { Subscription } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { ViewportScroller } from '@angular/common';
 
+import { Router } from '@angular/router';
+import { NotificationService } from '../../services/notification.service';
+import { MESSAGES } from '../../constants/messages';
+
 @Component({
 
 selector:'app-products',
@@ -93,7 +97,10 @@ private userService:UserService,
 private orderService:OrderService,
 
   
-private viewportScroller: ViewportScroller
+private viewportScroller: ViewportScroller,
+
+private notificationService:NotificationService,
+private router:Router,
 
 
 ){}
@@ -334,50 +341,33 @@ this.quantity--;
 
 addCart(){
 
+  if(!this.userService.isLogged()){
 
+    this.notificationService.warning(
+      MESSAGES.SHOP.LOGIN_REQUIRED
+    );
 
-if(!this.product){
+    this.router.navigate(['/login']);
 
+    return;
 
-return;
+  }
 
+  if(!this.product){
+    return;
+  }
 
-}
+  for(let i=0;i<this.quantity;i++){
 
+    this.cartService.add(this.product);
 
+  }
 
-
-
-
-for(let i=0;i<this.quantity;i++){
-
-
-
-this.cartService.add(
-
-this.product
-
-);
-
-
-
-}
-
-
-
-
-
-
-alert(
-
-'🛒 '+this.product.name+' aggiunto al carrello'
-
-);
-
-
+  this.notificationService.success(
+    MESSAGES.CART.ADDED
+  );
 
 }
-
 
 
 
@@ -393,41 +383,25 @@ alert(
 
 toggleFavorite(){
 
+  if(!this.userService.isLogged()){
 
+    this.notificationService.warning(
+      MESSAGES.FAVORITES.LOGIN_REQUIRED
+    );
 
-if(!this.product){
+    this.router.navigate(['/login']);
 
+    return;
 
-return;
+  }
 
+  if(!this.product){
+    return;
+  }
 
-}
+  this.plannerService.toggleFavorite(this.product);
 
-
-
-
-
-
-this.plannerService.toggleFavorite(
-
-this.product
-
-);
-
-
-
-
-
-
-this.product =
-
-this.plannerService.getProduct(
-
-this.product.id
-
-);
-
-
+  this.product = this.plannerService.getProduct(this.product.id);
 
 }
 
@@ -617,27 +591,46 @@ comment:''
 
 addRelatedToCart(product:Product){
 
+  if(!this.userService.isLogged()){
 
+    this.notificationService.warning(
+      MESSAGES.SHOP.LOGIN_REQUIRED
+    );
 
-this.cartService.add(product);
+    this.router.navigate(['/login']);
 
+    return;
 
+  }
 
+  this.cartService.add(product);
 
-
-
-alert(
-
-'🛒 '+product.name+' aggiunto al carrello'
-
-);
-
-
+  this.notificationService.success(
+    MESSAGES.CART.ADDED
+  );
 
 }
 
 
+toggleFavoriteRelated(product:Product){
 
+  if(!this.userService.isLogged()){
+
+    this.notificationService.warning(
+      MESSAGES.FAVORITES.LOGIN_REQUIRED
+    );
+
+    this.router.navigate(['/login']);
+
+    return;
+
+  }
+
+  this.plannerService.toggleFavorite(product);
+
+  product.favorite = this.plannerService.isFavorite(product.id);
+
+}
 
 
 

@@ -407,10 +407,9 @@ gap:5px;
 
 width:100%;
 
-overflow:hidden;
+overflow:visible;
 
 }
-
 
 /* logo */
 
@@ -525,35 +524,29 @@ font-size:28px;
 
 nav{
 
-
 position:absolute;
-
 
 top:80px;
 
 left:0;
 
-
 width:100%;
-
 
 display:none;
 
-
 flex-direction:column;
-
 
 align-items:stretch;
 
-
-border-radius:0;
-
-
 padding:20px;
-
 
 background:white;
 
+border-radius:0;
+
+z-index:1001;
+
+box-shadow:0 15px 30px rgba(0,0,0,.15);
 
 }
 
@@ -844,5 +837,13 @@ transform:translateY(-2px);
 content:"👑";
 
 font-size:18px;
+
+}
+
+.hamburger{
+
+position:relative;
+
+z-index:1002;
 
 }

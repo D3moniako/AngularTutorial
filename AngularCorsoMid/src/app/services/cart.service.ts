@@ -243,18 +243,19 @@ this.remove(item.id);
 
 clear(){
 
-
-
 this.items=[];
 
 
+// elimina completamente il carrello salvato
 
-this.update();
+localStorage.removeItem('cart');
 
 
+// aggiorna tutti i componenti collegati
+
+this.cartSubject.next([]);
 
 }
-
 
 
 
