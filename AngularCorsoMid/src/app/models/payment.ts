@@ -1,89 +1,39 @@
 export interface Payment {
-
-
   // ID pagamento locale
-  id:number;
-
-
+  id: number;
 
   // utente
-  userId:number;
-
-
+  userId: number;
 
   // ordine collegato
-  orderId:number;
-
-
+  orderId: number;
 
   // importo
-  amount:number;
-
-
+  amount: number;
 
   // stato pagamento
 
-  status:
-
-  'PENDING'
-  |
-  'COMPLETED'
-  |
-  'FAILED'
-  |
-  'REFUNDED';
-
-
-
-
+  status: 'PENDING' | 'COMPLETED' | 'FAILED' | 'REFUNDED';
 
   // data pagamento
 
-  paymentDate:string;
-
-
-
-
+  paymentDate: string;
 
   // ==========================
   // STRIPE
   // ==========================
 
+  sessionId?: string;
 
-  sessionId?:string;
-
-
-  paymentIntentId?:string;
-
-
-
-
-
+  paymentIntentId?: string;
 
   // metodo pagamento
 
-  method?:
-
-  'CARD'
-  |
-  'PAYPAL'
-  |
-  'STRIPE'
-  |
-  'OTHER';
-
-
-
-
-
+  method?: 'CARD' | 'PAYPAL' | 'STRIPE' | 'OTHER';
 
   // cliente
 
-  customerEmail?:string;
+  customerEmail?: string;
 
-
-  customerName?:string;
-
-
-
+  customerName?: string;
 }

@@ -10,656 +10,234 @@ import { User } from '../../models/user';
 
 import { Subscription } from 'rxjs';
 
-
-
 @Component({
+  selector: 'app-favorites',
 
-selector:'app-favorites',
+  templateUrl: './favorites.component.html',
 
-templateUrl:'./favorites.component.html',
-
-styleUrls:['./favorites.component.css']
-
+  styleUrls: ['./favorites.component.css'],
 })
-
-
 export class FavoritesComponent implements OnInit, OnDestroy {
+  favorites: Product[] = [];
 
+  // ===============================
+  // DIVISIONE PRODOTTI
+  // ===============================
 
+  purchasedFavorites: Product[] = [];
 
-favorites:Product[]=[];
+  availableFavorites: Product[] = [];
 
+  searchText: string = '';
 
+  selectedCategory: string = 'Tutti';
 
-// ===============================
-// DIVISIONE PRODOTTI
-// ===============================
+  categories: string[] = [
+    'Tutti',
 
+    'Elegant',
 
-purchasedFavorites:Product[]=[];
+    'Lifestyle',
 
+    'Wellness',
 
-availableFavorites:Product[]=[];
+    'Business',
+  ];
 
+  message: string = '';
 
+  user: User | null = null;
 
+  private userSubscription?: Subscription;
 
+  constructor(
+    private plannerService: PlannerService,
 
-searchText:string='';
+    private cartService: CartService,
 
+    private orderService: OrderService,
 
+    private userService: UserService,
+  ) {}
 
-selectedCategory:string='Tutti';
+  ngOnInit() {
+    this.userSubscription = this.userService.user$.subscribe((user) => {
+      this.user = user;
 
+      this.loadFavorites();
+    });
+  }
 
+  // =================================
+  // CARICA PREFERITI
+  // =================================
 
-categories:string[]=[
+  loadFavorites() {
+    this.favorites = this.plannerService.getFavorites();
 
-'Tutti',
+    this.separateProducts();
+  }
 
-'Elegant',
+  // =================================
+  // DIVISIONE ACQUISTATI/NON
+  // =================================
 
-'Lifestyle',
+  private separateProducts() {
+    this.purchasedFavorites = [];
 
-'Wellness',
+    this.availableFavorites = [];
 
-'Business'
+    this.favorites.forEach((product) => {
+      if (this.isPurchased(product)) {
+        this.purchasedFavorites.push(product);
+      } else {
+        this.availableFavorites.push(product);
+      }
+    });
+  }
 
-];
+  // =================================
+  // CONTROLLO ACQUISTO
+  // =================================
 
+  isPurchased(product: Product): boolean {
+    if (!this.user) {
+      return false;
+    }
 
+    return this.orderService.hasPurchased(
+      this.user.id,
 
+      product.id,
+    );
+  }
 
-message:string='';
+  // =================================
+  // FILTRO GENERALE DISPONIBILI
+  // =================================
 
+  get filteredAvailable() {
+    return this.filterProducts(this.availableFavorites);
+  }
 
+  // =================================
+  // FILTRO ACQUISTATI
+  // =================================
 
-user:User|null=null;
+  get filteredPurchased() {
+    return this.filterProducts(this.purchasedFavorites);
+  }
 
+  // =================================
+  // FUNZIONE FILTRO
+  // =================================
 
+  private filterProducts(products: Product[]) {
+    const text = this.searchText
 
-private userSubscription?:Subscription;
+      .trim()
 
+      .toLowerCase();
 
+    return products.filter((product) => {
+      const search =
+        !text ||
+        product.name
 
+          .toLowerCase()
 
+          .includes(text) ||
+        product.category
 
-constructor(
+          .toLowerCase()
 
+          .includes(text);
 
-private plannerService:PlannerService,
+      const category =
+        this.selectedCategory === 'Tutti' ||
+        product.category === this.selectedCategory;
 
+      return search && category;
+    });
+  }
 
-private cartService:CartService,
+  // =================================
+  // CAMBIO CATEGORIA
+  // =================================
 
+  selectCategory(category: string) {
+    this.selectedCategory = category;
+  }
 
-private orderService:OrderService,
+  // =================================
+  // RIMUOVI PREFERITO
+  // =================================
 
+  remove(product: Product) {
+    this.plannerService.toggleFavorite(product);
 
-private userService:UserService
+    this.loadFavorites();
 
+    this.message = '💔 Rimosso dai preferiti';
 
-){}
+    this.clearMessage();
+  }
 
+  // =================================
+  // AGGIUNGI CARRELLO
+  // =================================
 
+  addCart(product: Product) {
+    if (this.isPurchased(product)) {
+      this.message = '✅ Possiedi già questo planner';
 
+      this.clearMessage();
 
+      return;
+    }
 
+    this.cartService.add(product);
 
+    this.message = '🛒 Aggiunto al carrello';
 
-ngOnInit(){
+    this.clearMessage();
+  }
 
+  // =================================
+  // CONTA PREFERITI
+  // =================================
 
+  get purchasedCount() {
+    return this.purchasedFavorites.length;
+  }
 
-this.userSubscription =
+  get availableCount() {
+    return this.availableFavorites.length;
+  }
 
+  // =================================
+  // MESSAGGIO TEMPORANEO
+  // =================================
 
-this.userService.user$
+  private clearMessage() {
+    setTimeout(() => {
+      this.message = '';
+    }, 2500);
+  }
 
-.subscribe(user=>{
+  // =================================
+  // TRACK
+  // =================================
 
+  trackByProduct(
+    index: number,
 
-this.user=user;
+    product: Product,
+  ) {
+    return product.id;
+  }
 
-
-this.loadFavorites();
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-// =================================
-// CARICA PREFERITI
-// =================================
-
-
-loadFavorites(){
-
-
-
-this.favorites =
-
-
-this.plannerService.getFavorites();
-
-
-
-this.separateProducts();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =================================
-// DIVISIONE ACQUISTATI/NON
-// =================================
-
-
-private separateProducts(){
-
-
-
-this.purchasedFavorites=[];
-
-
-this.availableFavorites=[];
-
-
-
-
-
-this.favorites.forEach(product=>{
-
-
-
-if(this.isPurchased(product)){
-
-
-
-this.purchasedFavorites.push(product);
-
-
-
-}
-
-else{
-
-
-this.availableFavorites.push(product);
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// =================================
-// CONTROLLO ACQUISTO
-// =================================
-
-
-isPurchased(product:Product):boolean{
-
-
-
-if(!this.user){
-
-
-return false;
-
-
-}
-
-
-
-return this.orderService.hasPurchased(
-
-
-this.user.id,
-
-
-product.id
-
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// FILTRO GENERALE DISPONIBILI
-// =================================
-
-
-get filteredAvailable(){
-
-
-
-return this.filterProducts(
-
-this.availableFavorites
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =================================
-// FILTRO ACQUISTATI
-// =================================
-
-
-get filteredPurchased(){
-
-
-
-return this.filterProducts(
-
-this.purchasedFavorites
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// FUNZIONE FILTRO
-// =================================
-
-
-private filterProducts(products:Product[]){
-
-
-
-const text =
-
-
-this.searchText
-
-.trim()
-
-.toLowerCase();
-
-
-
-
-
-return products.filter(product=>{
-
-
-
-const search =
-
-
-
-!text ||
-
-
-
-product.name
-
-.toLowerCase()
-
-.includes(text)
-
-
-
-||
-
-
-
-product.category
-
-.toLowerCase()
-
-.includes(text);
-
-
-
-
-
-
-const category =
-
-
-
-this.selectedCategory==='Tutti'
-
-
-
-||
-
-
-
-product.category===this.selectedCategory;
-
-
-
-
-
-
-
-return search && category;
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =================================
-// CAMBIO CATEGORIA
-// =================================
-
-
-selectCategory(category:string){
-
-
-
-this.selectedCategory=category;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// RIMUOVI PREFERITO
-// =================================
-
-
-remove(product:Product){
-
-
-
-this.plannerService.toggleFavorite(product);
-
-
-
-this.loadFavorites();
-
-
-
-
-this.message=
-
-
-'💔 Rimosso dai preferiti';
-
-
-
-
-this.clearMessage();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// AGGIUNGI CARRELLO
-// =================================
-
-
-addCart(product:Product){
-
-
-
-if(this.isPurchased(product)){
-
-
-
-this.message=
-
-
-'✅ Possiedi già questo planner';
-
-
-
-this.clearMessage();
-
-
-
-return;
-
-
-
-}
-
-
-
-
-
-
-this.cartService.add(product);
-
-
-
-
-
-this.message=
-
-
-'🛒 Aggiunto al carrello';
-
-
-
-
-this.clearMessage();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// CONTA PREFERITI
-// =================================
-
-
-get purchasedCount(){
-
-
-
-return this.purchasedFavorites.length;
-
-
-}
-
-
-
-
-
-get availableCount(){
-
-
-
-return this.availableFavorites.length;
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// MESSAGGIO TEMPORANEO
-// =================================
-
-
-private clearMessage(){
-
-
-
-setTimeout(()=>{
-
-
-this.message='';
-
-
-},2500);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// =================================
-// TRACK
-// =================================
-
-
-trackByProduct(
-
-
-index:number,
-
-
-product:Product
-
-
-){
-
-
-return product.id;
-
-
-}
-
-
-
-
-
-
-
-
-ngOnDestroy(){
-
-
-
-this.userSubscription?.unsubscribe();
-
-
-
-}
-
-
-
+  ngOnDestroy() {
+    this.userSubscription?.unsubscribe();
+  }
 }

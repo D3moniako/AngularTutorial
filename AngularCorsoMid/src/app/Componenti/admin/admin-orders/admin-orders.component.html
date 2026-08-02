@@ -1,619 +1,220 @@
 <div class="admin-orders">
+  <header class="page-header">
+    <h1>📦 Gestione Ordini</h1>
+
+    <p>Pannello amministrazione vendite e pagamenti</p>
+  </header>
+
+  <!-- MESSAGGIO -->
 
+  <div class="message" *ngIf="message">
+    {{ message }}
+  </div>
 
-<header class="page-header">
+  <!-- STATISTICHE -->
+
+  <section class="stats">
+    <div class="stat-card">
+      <span> Ordini totali </span>
+
+      <strong>
+        {{ totalOrders }}
+      </strong>
+    </div>
 
-<h1>
-📦 Gestione Ordini
-</h1>
+    <div class="stat-card green">
+      <span> Incasso pagato </span>
 
-<p>
-Pannello amministrazione vendite e pagamenti
-</p>
+      <strong>
+        {{ totalRevenue | currency: "EUR" }}
+      </strong>
+    </div>
 
-</header>
+    <div class="stat-card blue">
+      <span> Prodotti venduti </span>
 
+      <strong>
+        {{ totalProducts }}
+      </strong>
+    </div>
 
+    <div class="stat-card yellow">
+      <span> In attesa </span>
 
+      <strong>
+        {{ pendingOrders }}
+      </strong>
+    </div>
 
+    <div class="stat-card red">
+      <span> Annullati </span>
 
-<!-- MESSAGGIO -->
+      <strong>
+        {{ cancelledOrders }}
+      </strong>
+    </div>
+  </section>
 
-<div 
-class="message"
-*ngIf="message">
+  <!-- FILTRI -->
 
-{{message}}
+  <section class="filters">
+    <input
+      type="text"
+      placeholder="🔎 Cerca cliente, email o ID ordine"
+      [(ngModel)]="searchText"
+      (input)="filterOrders()"
+    />
 
-</div>
+    <select [(ngModel)]="selectedStatus" (change)="filterOrders()">
+      <option value="Tutti">Tutti gli stati</option>
 
+      <option value="PAGATO">🟢 Pagato</option>
 
+      <option value="IN_ATTESA">🟡 In attesa</option>
 
+      <option value="ANNULLATO">🔴 Annullato</option>
+    </select>
+  </section>
 
+  <!-- ORDINI -->
 
+  <section class="orders">
+    <div
+      class="order-card"
+      *ngFor="let order of filteredOrders; trackBy: trackByOrder"
+    >
+      <div class="order-top">
+        <div>
+          <h2>📦 Ordine #{{ order.id }}</h2>
 
+          <p>
+            📅
 
+            {{ order.purchaseDate | date: "dd/MM/yyyy HH:mm" }}
+          </p>
+        </div>
 
-<!-- STATISTICHE -->
+        <span
+          class="status"
+          [class.pagato]="order.status === 'PAGATO'"
+          [class.attesa]="order.status === 'IN_ATTESA'"
+          [class.annullato]="order.status === 'ANNULLATO'"
+        >
+          {{ order.status }}
+        </span>
+      </div>
 
-<section class="stats">
+      <!-- CLIENTE -->
 
+      <div class="customer-box">
+        <h3>👤 Cliente</h3>
 
+        <p>
+          <strong>
+            {{ order.customerName || "Cliente non registrato" }}
+          </strong>
+        </p>
 
-<div class="stat-card">
+        <p>
+          📧
 
-<span>
-Ordini totali
-</span>
+          {{ order.customerEmail || "N/D" }}
+        </p>
 
-<strong>
-{{totalOrders}}
-</strong>
+        <p>
+          🏠
 
-</div>
+          {{ order.customerAddress || "N/D" }}
+        </p>
 
+        <p>
+          🆔 User ID:
 
+          {{ order.userId }}
+        </p>
+      </div>
 
+      <!-- PRODOTTI -->
 
+      <div class="products-box">
+        <h3>🛒 Prodotti acquistati</h3>
 
-<div class="stat-card green">
+        <div class="product" *ngFor="let product of order.products">
+          <img
+            *ngIf="product.image"
+            [src]="product.image"
+            [alt]="product.name"
+          />
 
-<span>
-Incasso pagato
-</span>
+          <div>
+            <h4>
+              {{ product.name }}
+            </h4>
 
-<strong>
-{{totalRevenue | currency:'EUR'}}
-</strong>
+            <p>
+              {{ product.price | currency: "EUR" }}
+            </p>
 
-</div>
+            <span> ⬇ Download digitale </span>
+          </div>
+        </div>
+      </div>
 
+      <!-- PAGAMENTO -->
 
+      <div class="payment-box">
+        <h3>💳 Pagamento</h3>
 
+        <p>
+          Metodo:
 
+          <strong>
+            {{ getPaymentMethod(order) }}
+          </strong>
+        </p>
 
-<div class="stat-card blue">
+        <p *ngIf="order.paymentId">
+          Payment ID:
 
-<span>
-Prodotti venduti
-</span>
+          {{ order.paymentId }}
+        </p>
 
-<strong>
-{{totalProducts}}
-</strong>
+        <p *ngIf="order.stripeSessionId">
+          Stripe Session:
 
-</div>
+          {{ order.stripeSessionId }}
+        </p>
 
+        <p *ngIf="order.stripePaymentIntentId">
+          Intent:
 
+          {{ order.stripePaymentIntentId }}
+        </p>
+      </div>
 
+      <!-- FOOTER -->
 
+      <div class="order-footer">
+        <div class="total">
+          Totale:
 
-<div class="stat-card yellow">
+          <strong>
+            {{ order.total | currency: "EUR" }}
+          </strong>
+        </div>
 
-<span>
-In attesa
-</span>
+        <div class="actions">
+          <button (click)="changeStatus(order)">🔄 Cambia stato</button>
 
-<strong>
-{{pendingOrders}}
-</strong>
+          <button class="delete" (click)="deleteOrder(order.id)">
+            🗑 Elimina
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</div>
-
-
-
-
-
-<div class="stat-card red">
-
-<span>
-Annullati
-</span>
-
-<strong>
-{{cancelledOrders}}
-</strong>
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- FILTRI -->
-
-<section class="filters">
-
-
-<input
-
-
-type="text"
-
-
-placeholder="🔎 Cerca cliente, email o ID ordine"
-
-
-[(ngModel)]="searchText"
-
-
-(input)="filterOrders()"
-
-
->
-
-
-
-
-
-
-
-<select
-
-
-[(ngModel)]="selectedStatus"
-
-
-(change)="filterOrders()">
-
-
-<option value="Tutti">
-
-Tutti gli stati
-
-</option>
-
-
-<option value="PAGATO">
-
-🟢 Pagato
-
-</option>
-
-
-<option value="IN_ATTESA">
-
-🟡 In attesa
-
-</option>
-
-
-<option value="ANNULLATO">
-
-🔴 Annullato
-
-</option>
-
-
-</select>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ORDINI -->
-
-
-<section class="orders">
-
-
-
-
-
-<div
-
-class="order-card"
-
-*ngFor="let order of filteredOrders; trackBy:trackByOrder">
-
-
-
-
-
-<div class="order-top">
-
-
-<div>
-
-
-<h2>
-
-📦 Ordine #{{order.id}}
-
-</h2>
-
-
-<p>
-
-📅
-
-{{order.purchaseDate | date:'dd/MM/yyyy HH:mm'}}
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-
-<span
-
-class="status"
-
-[class.pagato]="order.status==='PAGATO'"
-
-[class.attesa]="order.status==='IN_ATTESA'"
-
-[class.annullato]="order.status==='ANNULLATO'"
-
->
-
-
-{{order.status}}
-
-
-</span>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- CLIENTE -->
-
-
-<div class="customer-box">
-
-
-<h3>
-👤 Cliente
-</h3>
-
-
-
-<p>
-
-<strong>
-
-{{order.customerName || 'Cliente non registrato'}}
-
-</strong>
-
-</p>
-
-
-
-<p>
-
-📧
-
-{{order.customerEmail || 'N/D'}}
-
-</p>
-
-
-
-<p>
-
-🏠
-
-{{order.customerAddress || 'N/D'}}
-
-</p>
-
-
-
-<p>
-
-🆔 User ID:
-
-{{order.userId}}
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- PRODOTTI -->
-
-
-<div class="products-box">
-
-
-<h3>
-🛒 Prodotti acquistati
-</h3>
-
-
-
-
-
-<div
-
-class="product"
-
-*ngFor="let product of order.products">
-
-
-
-
-
-<img
-
-*ngIf="product.image"
-
-[src]="product.image"
-
-[alt]="product.name"
-
->
-
-
-
-
-<div>
-
-
-<h4>
-
-{{product.name}}
-
-</h4>
-
-
-<p>
-
-{{product.price | currency:'EUR'}}
-
-</p>
-
-
-<span>
-
-⬇ Download digitale
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- PAGAMENTO -->
-
-
-<div class="payment-box">
-
-
-<h3>
-💳 Pagamento
-</h3>
-
-
-
-<p>
-
-Metodo:
-
-<strong>
-
-{{getPaymentMethod(order)}}
-
-</strong>
-
-
-</p>
-
-
-
-<p *ngIf="order.paymentId">
-
-
-Payment ID:
-
-{{order.paymentId}}
-
-
-</p>
-
-
-
-
-<p *ngIf="order.stripeSessionId">
-
-
-Stripe Session:
-
-{{order.stripeSessionId}}
-
-</p>
-
-
-
-
-<p *ngIf="order.stripePaymentIntentId">
-
-
-Intent:
-
-{{order.stripePaymentIntentId}}
-
-</p>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- FOOTER -->
-
-
-<div class="order-footer">
-
-
-
-<div class="total">
-
-
-Totale:
-
-<strong>
-
-{{order.total | currency:'EUR'}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="actions">
-
-
-<button
-
-(click)="changeStatus(order)">
-
-
-🔄 Cambia stato
-
-
-</button>
-
-
-
-
-
-
-
-<button
-
-class="delete"
-
-(click)="deleteOrder(order.id)">
-
-
-
-🗑 Elimina
-
-
-</button>
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<div
-
-class="empty"
-
-*ngIf="filteredOrders.length===0">
-
-
-📭 Nessun ordine trovato
-
-
-
-</div>
-
-
-
-
-
-
-
-
+  <div class="empty" *ngIf="filteredOrders.length === 0">
+    📭 Nessun ordine trovato
+  </div>
 </div>

@@ -1,22 +1,15 @@
 export interface Notification {
+  id: number;
 
-  id:number;
+  title: string;
 
-  title:string;
+  message: string;
 
-  message:string;
+  icon: string;
 
-  icon:string;
+  type: 'ORDER' | 'DOWNLOAD' | 'FAVORITE' | 'SYSTEM' | 'COUPON';
 
-  type:
-  | 'ORDER'
-  | 'DOWNLOAD'
-  | 'FAVORITE'
-  | 'SYSTEM'
-  | 'COUPON';
+  date: Date;
 
-  date:Date;
-
-  read:boolean;
-
+  read: boolean;
 }

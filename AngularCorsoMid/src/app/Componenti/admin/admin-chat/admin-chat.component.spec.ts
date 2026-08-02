@@ -8,9 +8,8 @@ describe('AdminChatComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminChatComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminChatComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

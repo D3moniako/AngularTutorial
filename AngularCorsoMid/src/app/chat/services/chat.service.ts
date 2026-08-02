@@ -5,32 +5,27 @@ import { map } from 'rxjs/operators';
 import { ChatMessage } from '../models/chat-message';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ChatService {
-
   private storageKey = 'dreamcalendar-chat';
 
   private messages: ChatMessage[] = this.load();
 
-  private subject = new BehaviorSubject<ChatMessage[]>([
-    ...this.messages
-  ]);
+  private subject = new BehaviorSubject<ChatMessage[]>([...this.messages]);
 
   messages$ = this.subject.asObservable();
 
   // Utente attualmente loggato
- private currentUserId:number | null = null;
+  private currentUserId: number | null = null;
 
-private currentUserName:string = '';
+  private currentUserName: string = '';
 
-  constructor() { }
+  constructor() {}
 
   setCurrentUser(id: number, name: string): void {
-
     this.currentUserId = id;
     this.currentUserName = name;
-
   }
 
   // ==========================
@@ -38,15 +33,9 @@ private currentUserName:string = '';
   // ==========================
 
   getMessages(userId: number) {
-
-    return this.subject.asObservable().pipe(
-
-      map(messages =>
-        messages.filter(m => m.userId === userId)
-      )
-
-    );
-
+    return this.subject
+      .asObservable()
+      .pipe(map((messages) => messages.filter((m) => m.userId === userId)));
   }
 
   // ==========================
@@ -54,9 +43,7 @@ private currentUserName:string = '';
   // ==========================
 
   getAllMessages() {
-
     return this.subject.asObservable();
-
   }
 
   // ==========================
@@ -64,23 +51,17 @@ private currentUserName:string = '';
   // ==========================
 
   send(text: string): void {
-
     if (!text.trim()) {
       return;
     }
 
-    if(this.currentUserId === null){
+    if (this.currentUserId === null) {
+      console.error('ERRORE: nessun utente loggato');
 
-    console.error(
-    'ERRORE: nessun utente loggato'
-    );
-
-    return;
-
+      return;
     }
 
     const message: ChatMessage = {
-
       id: Date.now(),
 
       userId: this.currentUserId,
@@ -93,8 +74,7 @@ private currentUserName:string = '';
 
       date: new Date(),
 
-      read: false
-
+      read: false,
     };
 
     this.messages.push(message);
@@ -104,21 +84,14 @@ private currentUserName:string = '';
     // BOT automatico demo
 
     setTimeout(() => {
+      if (this.currentUserId !== null) {
+        this.botReply(
+          this.currentUserId,
 
-  if(this.currentUserId !== null){
-
-    this.botReply(
-
-      this.currentUserId,
-
-      'Grazie per averci scritto 🌸 Un assistente DreamCalendar ti risponderà presto.'
-
-    );
-
-  }
-
-},1000);
-
+          'Grazie per averci scritto 🌸 Un assistente DreamCalendar ti risponderà presto.',
+        );
+      }
+    }, 1000);
   }
 
   // ==========================
@@ -126,9 +99,7 @@ private currentUserName:string = '';
   // ==========================
 
   botReply(userId: number, text: string): void {
-
     const message: ChatMessage = {
-
       id: Date.now(),
 
       userId,
@@ -141,14 +112,12 @@ private currentUserName:string = '';
 
       date: new Date(),
 
-      read: false
-
+      read: false,
     };
 
     this.messages.push(message);
 
     this.save();
-
   }
 
   // ==========================
@@ -156,9 +125,7 @@ private currentUserName:string = '';
   // ==========================
 
   adminReply(userId: number, text: string): void {
-
     const message: ChatMessage = {
-
       id: Date.now(),
 
       userId,
@@ -171,56 +138,41 @@ private currentUserName:string = '';
 
       date: new Date(),
 
-      read: false
-
+      read: false,
     };
 
     this.messages.push(message);
 
     this.save();
-
   }
 
   // ==========================
 
   clear(): void {
-
     this.messages = [];
 
     this.save();
-
   }
 
   // ==========================
 
   private save(): void {
-
     localStorage.setItem(
-
       this.storageKey,
 
-      JSON.stringify(this.messages)
-
+      JSON.stringify(this.messages),
     );
 
     this.subject.next([...this.messages]);
-
   }
 
   private load(): ChatMessage[] {
-
     try {
-
       const data = localStorage.getItem(this.storageKey);
 
       return data ? JSON.parse(data) : [];
-
     } catch {
-
       return [];
-
     }
-
   }
-
 }

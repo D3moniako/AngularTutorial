@@ -8,9 +8,8 @@ describe('AdminUploadPlannerComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminUploadPlannerComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminUploadPlannerComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

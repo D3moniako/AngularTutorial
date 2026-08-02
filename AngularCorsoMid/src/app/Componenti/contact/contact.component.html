@@ -1,444 +1,145 @@
 <div class="page">
+  <header class="contact-header">
+    <div class="logo">🌸 DreamCalendar</div>
 
+    <a routerLink="/" class="home-link"> 🏠 Home </a>
+  </header>
+
+  <section class="hero-contact">
+    <h1>Contattaci 💌</h1>
 
+    <p>
+      Hai bisogno di aiuto? Vuoi creare il tuo planner personalizzato? Siamo qui
+      per te.
+    </p>
+  </section>
+
+  <section class="contact-cards">
+    <div class="card" *ngFor="let c of contactCards">
+      <div class="icon">
+        {{ c.icon }}
+      </div>
+
+      <h3>
+        {{ c.title }}
+      </h3>
+
+      <a [href]="c.link">
+        {{ c.text }}
+      </a>
+    </div>
+  </section>
 
-<header class="contact-header">
+  <section class="form-section">
+    <div class="form-box">
+      <h2>Scrivici un messaggio ✨</h2>
 
+      <form (ngSubmit)="sendMessage()">
+        <label> Nome </label>
 
-<div class="logo">
+        <input
+          type="text"
+          [(ngModel)]="name"
+          name="name"
+          placeholder="Inserisci il tuo nome"
+        />
 
-🌸 DreamCalendar
+        <label> Email </label>
 
-</div>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          placeholder="La tua email"
+        />
 
+        <label> Messaggio </label>
 
-<a routerLink="/" class="home-link">
+        <textarea
+          [(ngModel)]="message"
+          name="message"
+          rows="6"
+          placeholder="Scrivi il tuo messaggio..."
+        ></textarea>
 
-🏠 Home
+        <button type="submit">Invia messaggio 💕</button>
+      </form>
 
-</a>
+      <div class="success" *ngIf="sent">
+        ✨ Grazie {{ name }}! Il tuo messaggio è stato inviato.
+      </div>
+    </div>
 
+    <div class="contact-image">
+      <div class="floating-card">
+        🌸
 
-</header>
+        <br />
 
+        Dream Calendar Support
 
+        <br />
 
+        💖
+      </div>
+    </div>
+  </section>
 
+  <section class="chat-section">
+    <h2>💬 Chat assistenza</h2>
 
+    <p>Parla con il nostro assistente DreamCalendar</p>
 
+    <app-chat></app-chat>
+  </section>
 
+  <section class="faq">
+    <h2>Domande frequenti</h2>
 
+    <div class="faq-box" *ngFor="let item of faq">
+      <h3>
+        {{ item.question }}
+      </h3>
 
-<section class="hero-contact">
+      <p>
+        {{ item.answer }}
+      </p>
+    </div>
+  </section>
 
+  <section class="social">
+    <h2>Seguici sui social</h2>
 
-<h1>
+    <div class="social-grid">
+      <a *ngFor="let s of social" [href]="s.url">
+        <span>
+          {{ s.icon }}
+        </span>
 
-Contattaci 💌
+        {{ s.name }}
+      </a>
+    </div>
+  </section>
 
-</h1>
+  <section class="newsletter">
+    <h2>Resta aggiornata 🌷</h2>
 
+    <p>Ricevi nuovi planner, offerte e idee organizzative.</p>
 
-<p>
+    <input placeholder="La tua email" />
 
-Hai bisogno di aiuto?
-Vuoi creare il tuo planner personalizzato?
-Siamo qui per te.
+    <button>Iscriviti</button>
+  </section>
 
-</p>
+  <footer>
+    <h2>DreamCalendar 🌸</h2>
 
+    <div>
+      <a routerLink="/about"> About </a>
 
-</section>
+      <a routerLink="/shop"> Shop </a>
 
-
-
-
-
-
-
-
-
-<section class="contact-cards">
-
-
-<div
-class="card"
-*ngFor="let c of contactCards">
-
-
-<div class="icon">
-
-{{c.icon}}
-
-</div>
-
-
-<h3>
-
-{{c.title}}
-
-</h3>
-
-
-<a [href]="c.link">
-
-{{c.text}}
-
-</a>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="form-section">
-
-
-
-<div class="form-box">
-
-
-<h2>
-
-Scrivici un messaggio ✨
-
-</h2>
-
-
-
-<form
-(ngSubmit)="sendMessage()">
-
-
-
-<label>
-
-Nome
-
-</label>
-
-
-<input
-
-type="text"
-
-[(ngModel)]="name"
-
-name="name"
-
-placeholder="Inserisci il tuo nome"
-
->
-
-
-
-
-<label>
-
-Email
-
-</label>
-
-
-<input
-
-type="email"
-
-[(ngModel)]="email"
-
-name="email"
-
-placeholder="La tua email"
-
->
-
-
-
-
-<label>
-
-Messaggio
-
-</label>
-
-
-<textarea
-
-[(ngModel)]="message"
-
-name="message"
-
-rows="6"
-
-placeholder="Scrivi il tuo messaggio..."
-
-></textarea>
-
-
-
-
-
-<button type="submit">
-
-Invia messaggio 💕
-
-</button>
-
-
-
-</form>
-
-
-
-<div
-class="success"
-*ngIf="sent">
-
-
-✨ Grazie {{name}}!
-Il tuo messaggio è stato inviato.
-
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="contact-image">
-
-
-<div class="floating-card">
-
-
-🌸
-
-<br>
-
-Dream Calendar Support
-
-
-<br>
-
-💖
-
-
-</div>
-
-
-</div>
-
-
-
-</section>
-
-
-
-<section class="chat-section">
-
-<h2>
-💬 Chat assistenza
-</h2>
-
-
-<p>
-Parla con il nostro assistente DreamCalendar
-</p>
-
-
-<app-chat></app-chat>
-
-
-</section>
-
-
-
-
-
-<section class="faq">
-
-
-<h2>
-
-Domande frequenti
-
-</h2>
-
-
-
-<div
-
-class="faq-box"
-
-*ngFor="let item of faq">
-
-
-<h3>
-
-{{item.question}}
-
-</h3>
-
-
-<p>
-
-{{item.answer}}
-
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="social">
-
-
-<h2>
-
-Seguici sui social
-
-</h2>
-
-
-
-<div class="social-grid">
-
-
-<a
-
-*ngFor="let s of social"
-
-[href]="s.url"
-
->
-
-
-<span>
-
-{{s.icon}}
-
-</span>
-
-
-{{s.name}}
-
-
-</a>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="newsletter">
-
-
-<h2>
-
-Resta aggiornata 🌷
-
-</h2>
-
-
-<p>
-
-Ricevi nuovi planner, offerte e idee organizzative.
-
-</p>
-
-
-<input
-
-placeholder="La tua email">
-
-
-<button>
-
-Iscriviti
-
-</button>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<footer>
-
-
-<h2>
-
-DreamCalendar 🌸
-
-</h2>
-
-
-<div>
-
-
-<a routerLink="/about">
-
-About
-
-</a>
-
-
-<a routerLink="/shop">
-
-Shop
-
-</a>
-
-
-<a routerLink="/">
-
-Home
-
-</a>
-
-
-</div>
-
-
-</footer>
-
-
-
+      <a routerLink="/"> Home </a>
+    </div>
+  </footer>
 </div>

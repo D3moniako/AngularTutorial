@@ -1,63 +1,23 @@
 <div class="success-page">
+  <div class="box">
+    <h1>🎉 Pagamento completato</h1>
 
+    <p>Grazie per il tuo acquisto.</p>
 
-<div class="box">
+    <p>
+      Il tuo ordine:
 
+      <strong> #{{ orderId }} </strong>
+    </p>
 
-<h1>
-🎉 Pagamento completato
-</h1>
+    <div class="message">
+      <span *ngIf="loading"> ⏳ Conferma pagamento in corso... </span>
 
+      <span *ngIf="!loading">
+        {{ message }}
+      </span>
+    </div>
 
-
-<p>
-
-Grazie per il tuo acquisto.
-
-</p>
-
-
-
-<p>
-
-Il tuo ordine:
-
-<strong>
-#{{orderId}}
-</strong>
-
-</p>
-
-
-
-<div class="message">
-
-<span *ngIf="loading">
-⏳ Conferma pagamento in corso...
-</span>
-
-
-<span *ngIf="!loading">
-{{message}}
-</span>
-
-
-</div>
-
-
-
-
-<button
-
-(click)="goPlanner()">
-
-📚 Vai ai miei Planner
-
-</button>
-
-
-
-</div>
-
-
+    <button (click)="goPlanner()">📚 Vai ai miei Planner</button>
+  </div>
 </div>

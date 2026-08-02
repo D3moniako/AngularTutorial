@@ -10,791 +10,366 @@ import { Product } from '../../models/product';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 
-
 interface PlannerView {
+  id: number;
 
-id:number;
+  name: string;
 
-name:string;
+  image: string;
 
-image:string;
+  file: string;
 
-file:string;
+  pdfPreview: string;
 
-pdfPreview:string;
+  category: string;
 
-category:string;
+  purchaseDate: string;
 
-purchaseDate:string;
+  version: string;
 
-version:string;
+  downloads: number;
 
-downloads:number;
+  size: string;
 
-size:string;
+  favorite: boolean;
 
-favorite:boolean;
+  color: string;
 
-color:string;
+  updated: boolean;
 
-updated:boolean;
-
-product:Product;
-
+  product: Product;
 }
-
-
 
 @Component({
+  selector: 'app-my-planners',
 
-selector:'app-my-planners',
+  templateUrl: './my-planners.component.html',
 
-templateUrl:'./my-planners.component.html',
-
-styleUrls:['./my-planners.component.css']
-
+  styleUrls: ['./my-planners.component.css'],
 })
-
-
 export class MyPlannersComponent implements OnInit, OnDestroy {
+  private userSubscription?: Subscription;
 
+  private ordersSubscription?: Subscription;
 
+  user: User | null = null;
 
-private userSubscription?:Subscription;
+  currentYear: number = new Date().getFullYear();
 
-private ordersSubscription?:Subscription;
+  searchText: string = '';
 
+  selectedCategory: string = 'Tutti';
 
+  downloadMessage: string = '';
 
-user:User|null=null;
+  plannerSelected: PlannerView | null = null;
 
+  planners: PlannerView[] = [];
 
+  categories: string[] = [
+    'Tutti',
 
-currentYear:number =
-new Date().getFullYear();
+    'Elegant',
 
+    'Lifestyle',
 
+    'Wellness',
 
-searchText:string='';
+    'Business',
+  ];
 
+  constructor(
+    private userService: UserService,
 
+    private orderService: OrderService,
 
-selectedCategory:string='Tutti';
+    private plannerService: PlannerService,
 
+    private router: Router,
+  ) {}
 
+  ngOnInit() {
+    this.userSubscription = this.userService.user$.subscribe((user) => {
+      this.user = user;
 
-downloadMessage:string='';
+      if (user) {
+        this.loadUserPlanners(user.id);
 
-
-
-plannerSelected:PlannerView|null=null;
-
-
-
-planners:PlannerView[]=[];
-
-
-
-categories:string[]=[
-
-'Tutti',
-
-'Elegant',
-
-'Lifestyle',
-
-'Wellness',
-
-'Business'
-
-];
-
-
-
-
-
-constructor(
-
-private userService:UserService,
-
-private orderService:OrderService,
-
-private plannerService:PlannerService,
-
-private router:Router,
-
-){}
-
-
-
-
-
-ngOnInit(){
-
-
-this.userSubscription =
-
-this.userService.user$
-
-.subscribe(user=>{
-
-
-this.user=user;
-
-
-
-if(user){
-
-
-this.loadUserPlanners(user.id);
-
-
-
-if(!this.ordersSubscription){
-
-this.listenOrders(user.id);
-
-}
-
-
-}
-
-
-});
-
-}
-
-
-
-//
-// CARICA PLANNER ACQUISTATI
-//
-
-private loadUserPlanners(userId:number){
-
-
-
-const products:Product[] =
-
-this.orderService.getUserPlanners(userId);
-
-
-
-
-
-this.planners = products.map(product=>({
-
-
-
-id:product.id,
-
-
-name:product.name,
-
-
-image:product.image,
-
-
-
-file:product.downloadUrl || '',
-
-
-
-pdfPreview:
-
-product.downloadUrl || '',
-
-
-
-category:product.category,
-
-
-
-purchaseDate:
-
-this.getPurchaseDate(
-
-product.id,
-
-userId
-
-),
-
-
-
-version:
-
-'2026 Premium',
-
-
-
-downloads:
-
-this.getDownloads(product.id),
-
-
-
-size:
-
-'20 MB',
-
-
-
-favorite:
-
-this.plannerService.isFavorite(
-
-product.id
-
-),
-
-
-
-color:
-
-this.getPlannerColor(
-
-product.category
-
-),
-
-
-
-updated:false,
-
-
-
-product:product
-
-
-
-}));
-
-
-
-}
-
-
-
-
-
-
-//
-// DATA ACQUISTO
-//
-
-private getPurchaseDate(
-
-productId:number,
-
-userId:number
-
-):string{
-
-
-
-const orders =
-
-this.orderService.getUserOrders(userId);
-
-
-
-for(const order of orders){
-
-
-
-const product =
-
-order.products.find(
-
-p=>p.id===productId
-
-);
-
-
-
-if(product){
-
-
-
-return new Date(
-
-order.purchaseDate
-
-)
-
-.toLocaleDateString('it-IT');
-
-}
-
-
-}
-
-
-
-return '';
-
-}
-
-
-
-
-
-
-//
-// DOWNLOAD SALVATI
-//
-
-private getDownloads(productId:number):number{
-
-
-const value =
-
-localStorage.getItem(
-
-'downloads_'+productId
-
-);
-
-
-
-return value ?
-
-Number(value)
-
-:
-
-0;
-
-
-}
-
-
-
-
-
-
-private saveDownloads(
-
-productId:number,
-
-value:number
-
-){
-
-
-localStorage.setItem(
-
-'downloads_'+productId,
-
-String(value)
-
-);
-
-
-}
-
-
-
-
-
-
-
-//
-// COLORI CARD
-//
-
-private getPlannerColor(category:string):string{
-
-
-switch(category){
-
-
-case 'Elegant':
-
-return '#f8c4dd';
-
-
-
-case 'Wellness':
-
-return '#dbc8ff';
-
-
-
-case 'Business':
-
-return '#ffdcb8';
-
-
-
-case 'Lifestyle':
-
-return '#c8f0df';
-
-
-
-default:
-
-return '#eeeeee';
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-//
-// FILTRO
-//
-
-get filteredPlanners(){
-
-
-const text =
-
-this.searchText
-
-.trim()
-
-.toLowerCase();
-
-
-
-return this.planners.filter(p=>{
-
-
-const search =
-
-!text ||
-
-p.name.toLowerCase()
-
-.includes(text)
-
-||
-
-p.category.toLowerCase()
-
-.includes(text);
-
-
-
-const category =
-
-this.selectedCategory==='Tutti'
-
-||
-
-p.category===this.selectedCategory;
-
-
-
-return search && category;
-
-
-
-});
-
-
-}
-
-
-
-
-
-
-
-selectCategory(category:string){
-
-
-this.selectedCategory = category;
-
-
-}
-
-
-
-
-
-
-
-//
-// PREFERITI
-//
-
-
-
-
-toggleFavorite(product:Product){
-
-product.favorite = !product.favorite;
-
-this.plannerService.toggleFavorite(product);
-
-
-// aggiorna lo stato anche nel planner contenitore
-
-const planner = this.planners.find(
-p => p.product.id === product.id
-);
-
-
-if(planner){
-
-planner.favorite = product.favorite;
-
-}
-
-
-this.planners = [...this.planners];
-
-}
-
-
-
-
-
-
-
-
- // =======================================
-// DOWNLOAD PDF
-// =======================================
-
-download(planner: PlannerView) {
-
-  console.log('ENTRATO NEL DOWNLOAD');
-  console.log('PLANNER:', planner);
-  console.log('FILE:', planner.file);
-
-
-  if (!this.user) {
-
-    this.downloadMessage = '🔒 Devi effettuare il login';
-    this.clearDownloadMessage();
-    return;
-
+        if (!this.ordersSubscription) {
+          this.listenOrders(user.id);
+        }
+      }
+    });
   }
 
+  //
+  // CARICA PLANNER ACQUISTATI
+  //
 
-  if (!planner.file) {
+  private loadUserPlanners(userId: number) {
+    const products: Product[] = this.orderService.getUserPlanners(userId);
 
-    this.downloadMessage = '❌ PDF non disponibile';
-    this.clearDownloadMessage();
-    return;
+    this.planners = products.map((product) => ({
+      id: product.id,
 
+      name: product.name,
+
+      image: product.image,
+
+      file: product.downloadUrl || '',
+
+      pdfPreview: product.downloadUrl || '',
+
+      category: product.category,
+
+      purchaseDate: this.getPurchaseDate(
+        product.id,
+
+        userId,
+      ),
+
+      version: '2026 Premium',
+
+      downloads: this.getDownloads(product.id),
+
+      size: '20 MB',
+
+      favorite: this.plannerService.isFavorite(product.id),
+
+      color: this.getPlannerColor(product.category),
+
+      updated: false,
+
+      product: product,
+    }));
   }
 
+  //
+  // DATA ACQUISTO
+  //
 
-  try {
+  private getPurchaseDate(
+    productId: number,
 
-    const link = document.createElement('a');
+    userId: number,
+  ): string {
+    const orders = this.orderService.getUserOrders(userId);
 
-    link.href = planner.file;
+    for (const order of orders) {
+      const product = order.products.find((p) => p.id === productId);
 
-    link.target = '_blank';
+      if (product) {
+        return new Date(order.purchaseDate).toLocaleDateString('it-IT');
+      }
+    }
 
-    link.download = planner.name + '.pdf';
+    return '';
+  }
 
+  //
+  // DOWNLOAD SALVATI
+  //
 
-    document.body.appendChild(link);
+  private getDownloads(productId: number): number {
+    const value = localStorage.getItem('downloads_' + productId);
 
-    link.click();
+    return value ? Number(value) : 0;
+  }
 
-    document.body.removeChild(link);
+  private saveDownloads(
+    productId: number,
 
+    value: number,
+  ) {
+    localStorage.setItem(
+      'downloads_' + productId,
 
-    planner.downloads++;
-
-    this.saveDownloads(
-      planner.id,
-      planner.downloads
+      String(value),
     );
-
-
-    this.downloadMessage =
-      '✅ Download completato: ' + planner.name;
-
-    this.clearDownloadMessage();
-
-
-  } catch(e) {
-
-    console.error('Errore download PDF:', e);
-
-    this.downloadMessage =
-      '❌ Errore durante il download';
-
-    this.clearDownloadMessage();
-
   }
 
-}
+  //
+  // COLORI CARD
+  //
 
+  private getPlannerColor(category: string): string {
+    switch (category) {
+      case 'Elegant':
+        return '#f8c4dd';
 
+      case 'Wellness':
+        return '#dbc8ff';
 
+      case 'Business':
+        return '#ffdcb8';
 
+      case 'Lifestyle':
+        return '#c8f0df';
 
+      default:
+        return '#eeeeee';
+    }
+  }
 
+  //
+  // FILTRO
+  //
 
-private clearDownloadMessage(){
+  get filteredPlanners() {
+    const text = this.searchText
 
+      .trim()
 
-setTimeout(()=>{
+      .toLowerCase();
 
+    return this.planners.filter((p) => {
+      const search =
+        !text ||
+        p.name
+          .toLowerCase()
 
-this.downloadMessage='';
+          .includes(text) ||
+        p.category
+          .toLowerCase()
 
+          .includes(text);
 
-},3000);
+      const category =
+        this.selectedCategory === 'Tutti' ||
+        p.category === this.selectedCategory;
 
+      return search && category;
+    });
+  }
 
-}
+  selectCategory(category: string) {
+    this.selectedCategory = category;
+  }
 
+  //
+  // PREFERITI
+  //
 
+  toggleFavorite(product: Product) {
+    product.favorite = !product.favorite;
 
+    this.plannerService.toggleFavorite(product);
 
+    // aggiorna lo stato anche nel planner contenitore
 
+    const planner = this.planners.find((p) => p.product.id === product.id);
 
+    if (planner) {
+      planner.favorite = product.favorite;
+    }
 
+    this.planners = [...this.planners];
+  }
 
-//
-// ANTEPRIMA
-//
+  // =======================================
+  // DOWNLOAD PDF
+  // =======================================
 
-preview(planner:PlannerView){
+  download(planner: PlannerView) {
+    console.log('ENTRATO NEL DOWNLOAD');
+    console.log('PLANNER:', planner);
+    console.log('FILE:', planner.file);
 
+    if (!this.user) {
+      this.downloadMessage = '🔒 Devi effettuare il login';
+      this.clearDownloadMessage();
+      return;
+    }
 
+    if (!planner.file) {
+      this.downloadMessage = '❌ PDF non disponibile';
+      this.clearDownloadMessage();
+      return;
+    }
 
-this.plannerSelected = planner;
+    try {
+      const link = document.createElement('a');
 
+      link.href = planner.file;
 
-}
+      link.target = '_blank';
 
+      link.download = planner.name + '.pdf';
 
+      document.body.appendChild(link);
 
+      link.click();
 
+      document.body.removeChild(link);
 
+      planner.downloads++;
 
-openPdf(planner:PlannerView){
+      this.saveDownloads(planner.id, planner.downloads);
 
+      this.downloadMessage = '✅ Download completato: ' + planner.name;
 
-if(planner.pdfPreview){
+      this.clearDownloadMessage();
+    } catch (e) {
+      console.error('Errore download PDF:', e);
 
+      this.downloadMessage = '❌ Errore durante il download';
 
-window.open(
+      this.clearDownloadMessage();
+    }
+  }
 
-planner.pdfPreview,
+  private clearDownloadMessage() {
+    setTimeout(() => {
+      this.downloadMessage = '';
+    }, 3000);
+  }
 
-'_blank'
+  //
+  // ANTEPRIMA
+  //
 
-);
+  preview(planner: PlannerView) {
+    this.plannerSelected = planner;
+  }
 
+  openPdf(planner: PlannerView) {
+    if (planner.pdfPreview) {
+      window.open(
+        planner.pdfPreview,
 
-}
+        '_blank',
+      );
+    }
+  }
+  openProduct(product: Product) {
+    this.router.navigate(['/products', product.id]);
+  }
 
-}
-openProduct(product:Product){
+  closePreview() {
+    this.plannerSelected = null;
+  }
 
-this.router.navigate([
-'/products',
-product.id
-]);
+  get totalDownloads() {
+    return this.planners.reduce(
+      (total, p) => total + p.downloads,
 
-}
+      0,
+    );
+  }
 
+  //
+  // AGGIORNA ORDINI
+  //
 
+  private listenOrders(userId: number) {
+    this.ordersSubscription = this.orderService.orders$.subscribe(() => {
+      this.loadUserPlanners(userId);
+    });
+  }
 
+  ngOnDestroy() {
+    this.userSubscription?.unsubscribe();
 
-
-
-closePreview(){
-
-
-this.plannerSelected=null;
-
-
-}
-
-
-
-
-
-
-
-
-get totalDownloads(){
-
-
-
-return this.planners.reduce(
-
-(total,p)=>
-
-total+p.downloads,
-
-0
-
-);
-
-
-}
-
-
-
-
-
-
-
-
-//
-// AGGIORNA ORDINI
-//
-
-private listenOrders(userId:number){
-
-
-
-this.ordersSubscription =
-
-this.orderService.orders$
-
-.subscribe(()=>{
-
-
-this.loadUserPlanners(userId);
-
-
-
-});
-
-
-}
-
-
-
-
-
-
-
-ngOnDestroy(){
-
-
-this.userSubscription?.unsubscribe();
-
-
-this.ordersSubscription?.unsubscribe();
-
-
-}
-
-
-
+    this.ordersSubscription?.unsubscribe();
+  }
 }

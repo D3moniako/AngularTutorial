@@ -1,762 +1,501 @@
-.product{
+.product {
+  background: white;
 
-background:white;
+  border-radius: 40px;
 
-border-radius:40px;
+  padding: 20px;
 
-padding:20px;
+  box-shadow: 0 25px 60px rgba(180, 120, 150, 0.15);
 
-box-shadow:
-0 25px 60px rgba(180,120,150,.15);
+  transition: 0.4s;
 
-transition:.4s;
-
-position:relative;
-
-
+  position: relative;
 }
 
-
-.product:hover{
-
-transform:translateY(-12px);
-
+.product:hover {
+  transform: translateY(-12px);
 }
 
+.favorite {
+  position: absolute;
 
+  right: 20px;
 
-.favorite{
+  top: 20px;
 
-position:absolute;
+  border: none;
 
-right:20px;
+  background: white;
 
-top:20px;
+  font-size: 25px;
 
-border:none;
+  border-radius: 50%;
 
-background:white;
+  cursor: pointer;
 
-font-size:25px;
-
-border-radius:50%;
-
-cursor:pointer;
-
-z-index:2;
-
+  z-index: 2;
 }
 
-
-
-.product-image{
-    position:relative;
-    overflow:visible;
+.product-image {
+  position: relative;
+  overflow: visible;
 }
 
+.product-image img {
+  width: 100%;
 
+  height: 280px;
 
-.product-image img{
+  object-fit: cover;
 
-width:100%;
-
-height:280px;
-
-object-fit:cover;
-
-border-radius:30px;
-
+  border-radius: 30px;
 }
 
+.badge {
+  position: absolute;
 
+  bottom: 15px;
 
-.badge{
+  left: 15px;
 
-position:absolute;
+  background: white;
 
-bottom:15px;
+  padding: 8px 15px;
 
-left:15px;
+  border-radius: 30px;
 
-background:white;
+  font-size: 12px;
 
-padding:8px 15px;
-
-border-radius:30px;
-
-font-size:12px;
-
-color:#c27699;
-
+  color: #c27699;
 }
 
+.rating {
+  color: #e3aa54;
 
-
-.rating{
-
-color:#e3aa54;
-
-margin:10px 0;
-
+  margin: 10px 0;
 }
 
+.product-footer {
+  display: flex;
 
+  justify-content: space-between;
 
-.product-footer{
-
-display:flex;
-
-justify-content:space-between;
-
-align-items:center;
-
+  align-items: center;
 }
 
+.product-footer strong {
+  font-size: 22px;
 
-
-.product-footer strong{
-
-font-size:22px;
-
-color:#ca7198;
-
+  color: #ca7198;
 }
 
+.product-footer button {
+  border: none;
 
+  background: #d58aac;
 
-.product-footer button{
+  color: white;
 
-border:none;
+  padding: 12px 20px;
 
-background:#d58aac;
+  border-radius: 30px;
 
-color:white;
-
-padding:12px 20px;
-
-border-radius:30px;
-
-cursor:pointer;
-
+  cursor: pointer;
 }
 
-.product{
-
-cursor:pointer;
-
+.product {
+  cursor: pointer;
 }
-.badge{
+.badge {
+  display: inline-block;
 
+  margin-top: 10px;
 
-display:inline-block;
+  padding: 8px 18px;
 
-margin-top:10px;
+  border-radius: 30px;
 
-padding:8px 18px;
+  background: #ffe0ef;
 
-border-radius:30px;
+  color: #c25c8b;
 
-background:#ffe0ef;
-
-color:#c25c8b;
-
-font-size:14px;
-
-
+  font-size: 14px;
 }
 /* ============================
    MY PLANNERS CARD
 ============================ */
 
-
-.owned-box{
-
-margin-top:20px;
-
+.owned-box {
+  margin-top: 20px;
 }
 
+.owned {
+  display: inline-block;
 
+  padding: 8px 18px;
 
-.owned{
+  border-radius: 30px;
 
-display:inline-block;
+  background: linear-gradient(135deg, #dffff0, #ffffff);
 
-padding:8px 18px;
+  color: #39926a;
 
-border-radius:30px;
+  font-size: 13px;
 
-background:
+  font-weight: bold;
 
-linear-gradient(
-135deg,
-#dffff0,
-#ffffff
-);
-
-color:#39926a;
-
-font-size:13px;
-
-font-weight:bold;
-
-box-shadow:
-
-0 8px 20px rgba(100,200,140,.15);
-
+  box-shadow: 0 8px 20px rgba(100, 200, 140, 0.15);
 }
 
+.info-box {
+  margin-top: 20px;
 
+  padding: 20px;
 
+  border-radius: 30px;
 
+  background: linear-gradient(135deg, #fff7fb, #ffffff);
 
-.info-box{
-
-margin-top:20px;
-
-padding:20px;
-
-border-radius:30px;
-
-
-background:
-
-linear-gradient(
-135deg,
-#fff7fb,
-#ffffff
-);
-
-
-box-shadow:
-
-inset 0 0 20px rgba(220,160,190,.12);
-
-
+  box-shadow: inset 0 0 20px rgba(220, 160, 190, 0.12);
 }
 
+.info-box p {
+  margin: 10px 0;
 
+  font-size: 15px;
 
-.info-box p{
-
-margin:10px 0;
-
-font-size:15px;
-
-color:#806579;
-
+  color: #806579;
 }
 
-
-
-.info-box strong{
-
-color:#c85f91;
-
+.info-box strong {
+  color: #c85f91;
 }
-
-
-
 
 /* BOTTONI SCARICA / ANTEPRIMA */
 
+.buttons {
+  display: flex;
 
-.buttons{
+  gap: 12px;
 
-display:flex;
-
-gap:12px;
-
-margin-top:25px;
-
+  margin-top: 25px;
 }
 
+.buttons button {
+  flex: 1;
 
+  border: none;
 
+  padding: 16px;
 
-.buttons button{
+  border-radius: 35px;
 
-flex:1;
+  cursor: pointer;
 
-border:none;
+  background: linear-gradient(135deg, #df79aa, #c86ca8);
 
-padding:16px;
+  color: white;
 
-border-radius:35px;
+  font-weight: bold;
 
-cursor:pointer;
+  font-size: 15px;
 
-
-background:
-
-linear-gradient(
-135deg,
-#df79aa,
-#c86ca8
-);
-
-
-color:white;
-
-font-weight:bold;
-
-font-size:15px;
-
-
-transition:.3s;
-
-
+  transition: 0.3s;
 }
 
-
-
-
-.buttons button:first-child{
-
-animation:
-
-downloadPulse 2s infinite;
-
+.buttons button:first-child {
+  animation: downloadPulse 2s infinite;
 }
 
+.buttons button:last-child {
+  background: linear-gradient(135deg, #cdbbff, #a991ff);
 
-
-
-.buttons button:last-child{
-
-
-background:
-
-linear-gradient(
-135deg,
-#cdbbff,
-#a991ff
-);
-
-
-animation:none;
-
+  animation: none;
 }
 
-
-
-
-
-.buttons button:hover{
-
-transform:translateY(-5px);
-
+.buttons button:hover {
+  transform: translateY(-5px);
 }
 
-
-
-
-
-.buttons button:active{
-
-transform:scale(.92);
-
+.buttons button:active {
+  transform: scale(0.92);
 }
 
-
-
-
-
-@keyframes downloadPulse{
-
-
-50%{
-
-
-box-shadow:
-
-0 0 0 10px rgba(223,121,170,.15);
-
-
+@keyframes downloadPulse {
+  50% {
+    box-shadow: 0 0 0 10px rgba(223, 121, 170, 0.15);
+  }
 }
-
-
-}
-
-
-
 
 /* MOBILE */
 
-@media(max-width:700px){
-
-
-.buttons{
-
-flex-direction:column;
-
-}
-
-
+@media (max-width: 700px) {
+  .buttons {
+    flex-direction: column;
+  }
 }
 /* =========================
 CARD MY PLANNER
 ========================= */
 
+.owned-card {
+  background: white;
 
-.owned-card{
+  padding: 25px;
 
-background:white;
+  border-radius: 40px;
 
-padding:25px;
+  box-shadow: 0 20px 50px rgba(210, 160, 190, 0.25);
 
-border-radius:40px;
+  position: relative;
 
-box-shadow:
-
-0 20px 50px rgba(210,160,190,.25);
-
-position:relative;
-
-transition:.4s;
-
+  transition: 0.4s;
 }
 
+.owned-card:hover {
+  transform: translateY(-10px);
 
-
-.owned-card:hover{
-
-transform:translateY(-10px);
-
-box-shadow:
-
-0 30px 60px rgba(210,130,180,.35);
-
+  box-shadow: 0 30px 60px rgba(210, 130, 180, 0.35);
 }
 
-
-
-
-
-.owned-box{
-
-margin-top:20px;
-
+.owned-box {
+  margin-top: 20px;
 }
 
+.owned {
+  display: inline-block;
 
+  padding: 8px 18px;
 
+  border-radius: 30px;
 
-.owned{
+  background: linear-gradient(135deg, #dffff0, #ffffff);
 
-display:inline-block;
+  color: #39926a;
 
-padding:8px 18px;
-
-border-radius:30px;
-
-background:
-
-linear-gradient(
-135deg,
-#dffff0,
-#ffffff
-);
-
-
-color:#39926a;
-
-font-weight:bold;
-
+  font-weight: bold;
 }
 
+.info-box {
+  margin-top: 20px;
 
+  padding: 20px;
 
+  border-radius: 30px;
 
-
-.info-box{
-
-margin-top:20px;
-
-padding:20px;
-
-border-radius:30px;
-
-background:
-
-linear-gradient(
-135deg,
-#fff7fb,
-#ffffff
-);
-
+  background: linear-gradient(135deg, #fff7fb, #ffffff);
 }
 
+.info-box p {
+  margin: 10px 0;
 
-
-.info-box p{
-
-margin:10px 0;
-
-color:#806579;
-
+  color: #806579;
 }
 
-
-
-.info-box strong{
-
-color:#c85f91;
-
+.info-box strong {
+  color: #c85f91;
 }
 
+.buttons {
+  display: flex;
 
+  gap: 15px;
 
-
-
-.buttons{
-
-display:flex;
-
-gap:15px;
-
-margin-top:25px;
-
+  margin-top: 25px;
 }
 
+.buttons button {
+  flex: 1;
 
+  border: none;
 
-.buttons button{
+  padding: 15px;
 
-flex:1;
+  border-radius: 35px;
 
-border:none;
+  cursor: pointer;
 
-padding:15px;
+  font-weight: bold;
 
-border-radius:35px;
+  color: white;
 
-cursor:pointer;
+  background: linear-gradient(135deg, #df79aa, #c86ca8);
 
-font-weight:bold;
-
-color:white;
-
-background:
-
-linear-gradient(
-135deg,
-#df79aa,
-#c86ca8
-);
-
-transition:.3s;
-
+  transition: 0.3s;
 }
 
-
-
-.buttons button:last-child{
-
-background:
-
-linear-gradient(
-135deg,
-#cdbbff,
-#a991ff
-);
-
+.buttons button:last-child {
+  background: linear-gradient(135deg, #cdbbff, #a991ff);
 }
 
-
-
-.buttons button:hover{
-
-transform:translateY(-5px);
-
+.buttons button:hover {
+  transform: translateY(-5px);
 }
-.product{
+.product {
+  position: relative;
 
-position:relative;
-
-overflow:visible;
-
+  overflow: visible;
 }
 
-.product-image{
+.product-image {
+  position: relative;
 
-position:relative;
-
-overflow:visible;
-
+  overflow: visible;
 }
 
+.product-image img {
+  display: block;
 
-.product-image img{
+  width: 100%;
 
-display:block;
+  height: 280px;
 
-width:100%;
+  object-fit: cover;
 
-height:280px;
-
-object-fit:cover;
-
-border-radius:30px;
-
+  border-radius: 30px;
 }
-.favorite{
+.favorite {
+  position: absolute;
 
-position:absolute;
+  top: 15px;
 
-top:15px;
+  right: 15px;
 
-right:15px;
+  width: 55px;
 
-width:55px;
+  height: 55px;
 
-height:55px;
+  border: none;
 
-border:none;
+  border-radius: 50%;
 
-border-radius:50%;
+  background: white;
 
-background:white;
+  font-size: 28px;
 
-font-size:28px;
+  cursor: pointer;
 
-cursor:pointer;
+  z-index: 9999;
 
-z-index:9999;
+  display: flex;
 
-display:flex;
+  align-items: center;
 
-align-items:center;
+  justify-content: center;
 
-justify-content:center;
-
-box-shadow:
-0 8px 25px rgba(180,120,150,.35);
-
+  box-shadow: 0 8px 25px rgba(180, 120, 150, 0.35);
 }
 
-.favorite:hover{
-
-transform:scale(1.15);
-
+.favorite:hover {
+  transform: scale(1.15);
 }
 
-.badge{
-    z-index:5;
-    pointer-events:none;
+.badge {
+  z-index: 5;
+  pointer-events: none;
 }
-.product-image img{
+.product-image img {
+  position: relative;
 
-position:relative;
-
-z-index:1;
-
+  z-index: 1;
 }
-.favorite{
+.favorite {
+  position: absolute !important;
 
-position:absolute !important;
+  top: 15px !important;
 
-top:15px !important;
+  right: 15px !important;
 
-right:15px !important;
+  width: 55px;
 
-width:55px;
+  height: 55px;
 
-height:55px;
+  border: none;
 
-border:none;
+  border-radius: 50%;
 
-border-radius:50%;
+  background: white;
 
-background:white;
+  font-size: 28px;
 
-font-size:28px;
+  cursor: pointer;
 
-cursor:pointer;
+  z-index: 99999 !important;
 
-z-index:99999 !important;
+  display: flex;
 
-display:flex;
+  align-items: center;
 
-align-items:center;
+  justify-content: center;
 
-justify-content:center;
-
-box-shadow:
-0 8px 25px rgba(180,120,150,.35);
-
+  box-shadow: 0 8px 25px rgba(180, 120, 150, 0.35);
 }
-.product{
-    overflow:visible !important;
+.product {
+  overflow: visible !important;
 }
 
-.product .favorite{
+.product .favorite {
+  position: absolute !important;
 
-position:absolute !important;
+  top: 15px !important;
 
-top:15px !important;
+  right: 15px !important;
 
-right:15px !important;
+  z-index: 999999 !important;
 
-z-index:999999 !important;
+  width: 55px;
 
-width:55px;
+  height: 55px;
 
-height:55px;
+  display: flex;
 
-display:flex;
+  align-items: center;
 
-align-items:center;
+  justify-content: center;
 
-justify-content:center;
+  background: white;
 
-background:white;
-
-border-radius:50%;
-
+  border-radius: 50%;
 }
 
-.product{
-    position:relative;
-    isolation:isolate;
+.product {
+  position: relative;
+  isolation: isolate;
 }
 
-
-.product-image{
-    position:relative;
-    z-index:1;
+.product-image {
+  position: relative;
+  z-index: 1;
 }
 
-
-.product-image img{
-    position:relative;
-    z-index:1;
+.product-image img {
+  position: relative;
+  z-index: 1;
 }
 
+.favorite {
+  position: absolute !important;
 
-.favorite{
-    position:absolute !important;
+  top: 15px !important;
+  right: 15px !important;
 
-    top:15px !important;
-    right:15px !important;
+  width: 55px;
+  height: 55px;
 
-    width:55px;
-    height:55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-    display:flex;
-    align-items:center;
-    justify-content:center;
+  border: none;
+  border-radius: 50%;
 
-    border:none;
-    border-radius:50%;
+  background: white;
 
-    background:white;
+  font-size: 28px;
 
-    font-size:28px;
+  cursor: pointer;
 
-    cursor:pointer;
+  z-index: 999999 !important;
 
-    z-index:999999 !important;
-
-    box-shadow:
-    0 8px 25px rgba(180,120,150,.35);
+  box-shadow: 0 8px 25px rgba(180, 120, 150, 0.35);
 }

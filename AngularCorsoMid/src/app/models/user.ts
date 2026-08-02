@@ -1,50 +1,37 @@
 export interface User {
+  id: number;
 
+  // nome utente
 
-id:number;
+  name: string;
 
+  // accesso
 
-// nome utente
+  email: string;
 
-name:string;
+  password: string;
 
+  // telefono per recupero account / OTP
 
-// accesso
+  phone?: string;
 
-email:string;
+  // ruolo
 
-password:string;
+  role: 'USER' | 'ADMIN';
 
+  // stato account
 
-// telefono per recupero account / OTP
+  enabled: boolean;
 
-phone?:string;
+  // sicurezza futura
 
+  twoFactorEnabled: boolean;
 
-// ruolo
+  // data creazione
 
-role:'USER' | 'ADMIN';
+  createdAt: string;
 
+  // immagine profilo
 
-// stato account
-
-enabled:boolean;
-
-
-// sicurezza futura
-
-twoFactorEnabled:boolean;
-
-
-// data creazione
-
-createdAt:string;
-
-
-// immagine profilo
-
-avatar?:string;
-
-
-
+  avatar?: string;
 }

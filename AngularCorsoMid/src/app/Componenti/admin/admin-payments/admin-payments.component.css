@@ -1,848 +1,487 @@
 .admin-payments {
+  min-height: 100vh;
 
-min-height:100vh;
+  padding: 40px;
 
-padding:40px;
+  background: linear-gradient(135deg, #0f172a, #111827, #1e293b);
 
-background:
-linear-gradient(
-135deg,
-#0f172a,
-#111827,
-#1e293b
-);
+  color: white;
 
-color:white;
+  font-family: "Segoe UI", sans-serif;
 
-font-family:'Segoe UI',sans-serif;
-
-animation:fade .4s ease;
-
+  animation: fade 0.4s ease;
 }
-
-
 
 /* ==========================
 HEADER
 ========================== */
 
-
 .page-header {
+  display: flex;
 
-display:flex;
+  justify-content: space-between;
 
-justify-content:space-between;
+  align-items: center;
 
-align-items:center;
+  flex-wrap: wrap;
 
-flex-wrap:wrap;
+  gap: 25px;
 
-gap:25px;
-
-margin-bottom:35px;
-
+  margin-bottom: 35px;
 }
-
-
 
 .page-header h1 {
+  font-size: 40px;
 
-font-size:40px;
+  margin: 0;
 
-margin:0;
+  background: linear-gradient(90deg, #60a5fa, #c084fc, #f472b6);
 
-background:
+  -webkit-background-clip: text;
 
-linear-gradient(
-90deg,
-#60a5fa,
-#c084fc,
-#f472b6
-);
-
--webkit-background-clip:text;
-
-color:transparent;
-
+  color: transparent;
 }
-
-
 
 .page-header p {
+  color: #94a3b8;
 
-color:#94a3b8;
-
-font-size:16px;
-
+  font-size: 16px;
 }
-
-
 
 .secure {
+  background: #166534;
 
-background:#166534;
+  color: #dcfce7;
 
-color:#dcfce7;
+  padding: 15px 25px;
 
-padding:15px 25px;
+  border-radius: 40px;
 
-border-radius:40px;
+  font-weight: 700;
 
-font-weight:700;
-
-box-shadow:
-
-0 10px 25px rgba(0,0,0,.25);
-
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
-
-
-
 
 /* ==========================
 MESSAGGIO
 ========================== */
 
-
 .message {
+  background: #14532d;
 
-background:#14532d;
+  color: #bbf7d0;
 
-color:#bbf7d0;
+  padding: 15px 20px;
 
-padding:15px 20px;
+  border-radius: 18px;
 
-border-radius:18px;
+  font-weight: 700;
 
-font-weight:700;
-
-margin-bottom:25px;
-
+  margin-bottom: 25px;
 }
-
-
 
 /* ==========================
 STATISTICHE
 ========================== */
 
-
 .stats {
+  display: grid;
 
-display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 
-grid-template-columns:
+  gap: 25px;
 
-repeat(
-auto-fit,
-minmax(220px,1fr)
-);
-
-gap:25px;
-
-margin-bottom:40px;
-
+  margin-bottom: 40px;
 }
-
-
-
 
 .stat-card {
+  background: linear-gradient(145deg, #1e293b, #111827);
 
+  padding: 28px;
 
-background:
+  border-radius: 25px;
 
-linear-gradient(
-145deg,
-#1e293b,
-#111827
-);
+  display: flex;
 
+  align-items: center;
 
-padding:28px;
+  gap: 20px;
 
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
-border-radius:25px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
 
-
-display:flex;
-
-
-align-items:center;
-
-
-gap:20px;
-
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-
-box-shadow:
-
-0 20px 40px rgba(0,0,0,.25);
-
-
-transition:.3s;
-
-
+  transition: 0.3s;
 }
-
-
 
 .stat-card:hover {
-
-transform:translateY(-7px);
-
+  transform: translateY(-7px);
 }
-
-
 
 .icon {
-
-font-size:45px;
-
+  font-size: 45px;
 }
-
-
 
 .stat-card span {
+  display: block;
 
-display:block;
+  font-size: 13px;
 
-font-size:13px;
+  text-transform: uppercase;
 
-text-transform:uppercase;
-
-color:#94a3b8;
-
+  color: #94a3b8;
 }
-
-
 
 .stat-card strong {
+  font-size: 32px;
 
-font-size:32px;
-
-color:#60a5fa;
-
+  color: #60a5fa;
 }
-
-
 
 .success strong {
-
-color:#22c55e;
-
+  color: #22c55e;
 }
-
-
 
 .danger strong {
-
-color:#ef4444;
-
+  color: #ef4444;
 }
-
-
 
 .refund strong {
-
-color:#facc15;
-
+  color: #facc15;
 }
-
-
 
 /* ==========================
 FILTRI
 ========================== */
 
-
 .filters {
+  display: flex;
 
+  gap: 20px;
 
-display:flex;
+  flex-wrap: wrap;
 
-gap:20px;
-
-flex-wrap:wrap;
-
-margin-bottom:35px;
-
+  margin-bottom: 35px;
 }
-
-
 
 .filters input,
-
 .filters select {
+  padding: 16px;
 
+  border-radius: 15px;
 
-padding:16px;
+  border: none;
 
-border-radius:15px;
+  font-size: 15px;
 
-border:none;
+  min-width: 260px;
 
-font-size:15px;
+  background: white;
 
-min-width:260px;
+  color: #111827;
 
-background:white;
-
-color:#111827;
-
-box-shadow:
-
-0 8px 20px rgba(0,0,0,.15);
-
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
-
-
-
 
 /* ==========================
 CARD PAGAMENTO
 ========================== */
 
-
 .payment-card {
+  background: linear-gradient(145deg, #1e293b, #172033);
 
+  padding: 30px;
 
-background:
+  border-radius: 28px;
 
-linear-gradient(
-145deg,
-#1e293b,
-#172033
-);
+  margin-bottom: 30px;
 
+  border: 1px solid rgba(255, 255, 255, 0.08);
 
-padding:30px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
 
-
-border-radius:28px;
-
-
-margin-bottom:30px;
-
-
-border:
-
-1px solid rgba(255,255,255,.08);
-
-
-box-shadow:
-
-0 20px 45px rgba(0,0,0,.35);
-
-
-transition:.3s;
-
-
+  transition: 0.3s;
 }
-
-
 
 .payment-card:hover {
+  transform: translateY(-6px);
 
-
-transform:translateY(-6px);
-
-
-box-shadow:
-
-0 25px 60px rgba(0,0,0,.45);
-
-
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
 }
-
-
-
-
 
 .payment-header {
+  display: flex;
 
+  justify-content: space-between;
 
-display:flex;
+  align-items: center;
 
-justify-content:space-between;
+  flex-wrap: wrap;
 
-align-items:center;
-
-flex-wrap:wrap;
-
-gap:20px;
-
+  gap: 20px;
 }
-
-
-
 
 .payment-header h2 {
+  font-size: 25px;
 
-font-size:25px;
-
-margin:0;
-
+  margin: 0;
 }
-
-
 
 /* ==========================
 STATI PAGAMENTO
 ========================== */
 
-
 .status {
+  padding: 9px 18px;
 
-padding:9px 18px;
+  border-radius: 30px;
 
-border-radius:30px;
+  font-weight: 800;
 
-font-weight:800;
-
-font-size:13px;
-
+  font-size: 13px;
 }
-
-
 
 .completed {
+  background: #166534;
 
-background:#166534;
-
-color:#bbf7d0;
-
+  color: #bbf7d0;
 }
-
-
 
 .pending {
+  background: #854d0e;
 
-background:#854d0e;
-
-color:#fef3c7;
-
+  color: #fef3c7;
 }
-
-
 
 .failed {
+  background: #991b1b;
 
-background:#991b1b;
-
-color:#fecaca;
-
+  color: #fecaca;
 }
-
-
 
 .refunded {
+  background: #713f12;
 
-background:#713f12;
-
-color:#fde68a;
-
+  color: #fde68a;
 }
-
-
 
 /* ==========================
 CLIENTE
 ========================== */
 
-
 .customer {
+  margin: 25px 0;
 
-margin:25px 0;
+  padding: 20px;
 
-padding:20px;
+  background: #0f172a;
 
-background:#0f172a;
+  border-radius: 18px;
 
-border-radius:18px;
+  color: #cbd5e1;
 
-color:#cbd5e1;
-
-line-height:1.7;
-
+  line-height: 1.7;
 }
-
-
-
 
 /* ==========================
 DATI PAGAMENTO
 ========================== */
 
-
 .payment-info {
+  display: grid;
 
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 
-display:grid;
+  gap: 20px;
 
+  background: #020617;
 
-grid-template-columns:
+  padding: 25px;
 
-repeat(
-auto-fit,
-minmax(180px,1fr)
-);
+  border-radius: 20px;
 
-
-gap:20px;
-
-
-background:#020617;
-
-
-padding:25px;
-
-
-border-radius:20px;
-
-
-margin-bottom:25px;
-
-
+  margin-bottom: 25px;
 }
-
-
-
 
 .payment-info span {
+  display: block;
 
-display:block;
+  color: #94a3b8;
 
-color:#94a3b8;
-
-font-size:13px;
-
+  font-size: 13px;
 }
-
-
 
 .payment-info strong {
+  font-size: 21px;
 
-font-size:21px;
-
-color:#60a5fa;
-
+  color: #60a5fa;
 }
-
-
-
 
 /* ==========================
 ORDINE
 ========================== */
 
-
 .order-box {
+  background: #172554;
 
+  padding: 25px;
 
-background:#172554;
+  border-radius: 20px;
 
+  border-left: 5px solid #3b82f6;
 
-padding:25px;
-
-
-border-radius:20px;
-
-
-border-left:
-
-5px solid #3b82f6;
-
-
-margin-bottom:25px;
-
-
+  margin-bottom: 25px;
 }
-
-
-
 
 .order-box h3 {
-
-margin-top:0;
-
+  margin-top: 0;
 }
-
-
-
 
 /* ==========================
 STRIPE
 ========================== */
 
-
 .stripe-box {
+  background: #020617;
 
+  padding: 25px;
 
-background:#020617;
+  border-radius: 20px;
 
+  margin-bottom: 25px;
 
-padding:25px;
-
-
-border-radius:20px;
-
-
-margin-bottom:25px;
-
-
-border:
-
-1px solid rgba(192,132,252,.3);
-
-
+  border: 1px solid rgba(192, 132, 252, 0.3);
 }
-
-
 
 .stripe-box h3 {
-
-
-color:#c084fc;
-
-
+  color: #c084fc;
 }
-
-
 
 .stripe-box code {
+  display: block;
 
+  margin-top: 10px;
 
-display:block;
+  background: #111827;
 
+  padding: 15px;
 
-margin-top:10px;
+  border-radius: 12px;
 
+  color: #67e8f9;
 
-background:#111827;
-
-
-padding:15px;
-
-
-border-radius:12px;
-
-
-color:#67e8f9;
-
-
-overflow-wrap:anywhere;
-
-
+  overflow-wrap: anywhere;
 }
-
-
-
 
 /* ==========================
 AZIONI
 ========================== */
 
-
 .actions {
+  display: flex;
 
+  gap: 15px;
 
-display:flex;
-
-
-gap:15px;
-
-
-flex-wrap:wrap;
-
-
+  flex-wrap: wrap;
 }
-
-
 
 .actions button {
+  padding: 14px 24px;
 
+  border: none;
 
-padding:14px 24px;
+  border-radius: 15px;
 
+  background: #2563eb;
 
-border:none;
+  color: white;
 
+  font-weight: 700;
 
-border-radius:15px;
+  cursor: pointer;
 
-
-background:#2563eb;
-
-
-color:white;
-
-
-font-weight:700;
-
-
-cursor:pointer;
-
-
-transition:.3s;
-
-
+  transition: 0.3s;
 }
-
-
 
 .actions button:hover {
-
-
-transform:translateY(-3px);
-
+  transform: translateY(-3px);
 }
-
-
 
 .actions button:disabled {
+  background: #475569;
 
-
-background:#475569;
-
-cursor:not-allowed;
-
+  cursor: not-allowed;
 }
-
-
 
 /* ==========================
 VUOTO
 ========================== */
 
-
 .empty {
+  background: #1e293b;
 
+  padding: 40px;
 
-background:#1e293b;
+  border-radius: 25px;
 
+  text-align: center;
 
-padding:40px;
+  font-size: 22px;
 
-
-border-radius:25px;
-
-
-text-align:center;
-
-
-font-size:22px;
-
-
-color:#94a3b8;
-
-
+  color: #94a3b8;
 }
-
-
-
 
 /* ==========================
 ANIMAZIONE
 ========================== */
 
-
 @keyframes fade {
+  from {
+    opacity: 0;
 
+    transform: translateY(15px);
+  }
 
-from {
+  to {
+    opacity: 1;
 
-opacity:0;
-
-transform:translateY(15px);
-
+    transform: translateY(0);
+  }
 }
-
-
-to {
-
-opacity:1;
-
-transform:translateY(0);
-
-}
-
-
-}
-
-
-
 
 /* ==========================
 MOBILE
 ========================== */
 
+@media (max-width: 700px) {
+  .admin-payments {
+    padding: 20px;
+  }
 
-@media(max-width:700px){
+  .page-header h1 {
+    font-size: 30px;
+  }
 
+  .filters input,
+  .filters select {
+    width: 100%;
 
-.admin-payments {
+    min-width: 0;
+  }
 
-padding:20px;
+  .payment-card {
+    padding: 20px;
+  }
 
-}
+  .stat-card {
+    padding: 20px;
+  }
 
+  .payment-info {
+    grid-template-columns: 1fr;
+  }
 
-
-.page-header h1 {
-
-font-size:30px;
-
-}
-
-
-
-.filters input,
-
-.filters select {
-
-width:100%;
-
-min-width:0;
-
-}
-
-
-
-.payment-card {
-
-padding:20px;
-
-}
-
-
-
-.stat-card {
-
-padding:20px;
-
-}
-
-
-
-.payment-info {
-
-grid-template-columns:1fr;
-
-}
-
-
-
-.actions button {
-
-width:100%;
-
-}
-
-
-
+  .actions button {
+    width: 100%;
+  }
 }

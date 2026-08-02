@@ -11,656 +11,290 @@ import { User } from '../../models/user';
 import { MESSAGES } from '../../constants/messages';
 
 @Component({
+  selector: 'app-profile',
 
-selector:'app-profile',
+  templateUrl: './profile.component.html',
 
-templateUrl:'./profile.component.html',
-
-styleUrls:['./profile.component.css']
-
+  styleUrls: ['./profile.component.css'],
 })
-
-
 export class ProfileComponent implements OnInit, OnDestroy {
+  user: User | null = null;
 
+  private userSubscription!: Subscription;
 
+  editName: string = '';
 
-user:User|null=null;
+  editPhone: string = '';
 
+  oldPassword: string = '';
 
+  newPassword: string = '';
 
-private userSubscription!:Subscription;
+  confirmPassword: string = '';
 
+  message: string = '';
 
+  // =============================
+  // EDITOR FOTO
+  // =============================
 
-editName:string='';
+  imagePreview: string = '';
 
-editPhone:string='';
+  showCropper: boolean = false;
 
-oldPassword:string='';
+  zoom: number = 1;
 
-newPassword:string='';
+  positionX: number = 0;
 
-confirmPassword:string='';
+  positionY: number = 0;
 
-message:string='';
+  selectedFile: any;
 
+  constructor(
+    private userService: UserService,
 
+    private router: Router,
+  ) {}
 
+  ngOnInit() {
+    this.userSubscription = this.userService.user$.subscribe((user) => {
+      this.user = user;
 
-// =============================
-// EDITOR FOTO
-// =============================
+      if (user) {
+        this.editName = user.name;
 
+        this.editPhone = user.phone || '';
+      }
+    });
 
-imagePreview:string='';
+    if (!this.userService.isLogged()) {
+      this.router.navigate(['/login']);
+    }
+  }
 
-showCropper:boolean=false;
+  // =============================
+  // SALVA PROFILO
+  // =============================
 
+  saveProfile() {
+    if (!this.user) {
+      return;
+    }
 
-zoom:number=1;
+    this.user.name = this.editName;
 
+    this.user.phone = this.editPhone;
 
-positionX:number=0;
+    this.userService.updateProfile(this.user);
 
+    this.message = '✅ Profilo aggiornato';
 
-positionY:number=0;
+    setTimeout(() => {
+      this.message = '';
+    }, 3000);
+  }
 
+  // =============================
+  // CAMBIO AVATAR
+  // =============================
 
-selectedFile:any;
+  changeAvatar(event: any) {
+    const file = event.target.files[0];
 
+    if (!file) {
+      return;
+    }
 
+    if (!file.type.startsWith('image/')) {
+      this.message = '❌ Seleziona una immagine valida';
 
+      return;
+    }
 
+    this.selectedFile = file;
 
-constructor(
+    const reader = new FileReader();
 
-private userService:UserService,
+    reader.onload = () => {
+      this.imagePreview = reader.result as string;
 
-private router:Router
+      this.showCropper = true;
 
-){}
+      this.zoom = 1;
 
+      this.positionX = 0;
 
+      this.positionY = 0;
+    };
 
+    reader.readAsDataURL(file);
+  }
 
+  // =============================
+  // ZOOM FOTO
+  // =============================
 
+  increaseZoom() {
+    this.zoom += 0.1;
+  }
 
+  decreaseZoom() {
+    if (this.zoom > 0.5) {
+      this.zoom -= 0.1;
+    }
+  }
 
+  // =============================
+  // SPOSTAMENTO FOTO
+  // =============================
 
+  moveImage(x: number, y: number) {
+    this.positionX += x;
 
-ngOnInit(){
+    this.positionY += y;
+  }
 
+  // =============================
+  // SALVA FOTO TAGLIATA
+  // =============================
 
+  saveAvatar() {
+    const canvas = document.createElement('canvas');
 
-this.userSubscription=this.userService.user$
+    canvas.width = 300;
 
-.subscribe(user=>{
+    canvas.height = 300;
 
+    const ctx = canvas.getContext('2d');
 
-this.user=user;
+    if (!ctx) {
+      return;
+    }
 
+    const img = new Image();
 
+    img.onload = () => {
+      ctx.clearRect(0, 0, 300, 300);
 
-if(user){
+      // maschera rotonda
 
+      ctx.beginPath();
 
-this.editName=user.name;
+      ctx.arc(
+        150,
 
+        150,
 
-this.editPhone=user.phone || '';
+        150,
 
+        0,
 
+        Math.PI * 2,
+      );
 
-}
+      ctx.closePath();
 
+      ctx.clip();
 
+      ctx.drawImage(
+        img,
 
-});
+        this.positionX,
 
+        this.positionY,
 
+        img.width * this.zoom,
 
+        img.height * this.zoom,
+      );
 
+      const avatar = canvas.toDataURL('image/png');
 
+      if (this.user) {
+        this.user.avatar = avatar;
 
+        this.userService.updateProfile(this.user);
 
-if(!this.userService.isLogged()){
+        this.message = '📷 Foto aggiornata';
+      }
 
+      this.showCropper = false;
+    };
 
-this.router.navigate(['/login']);
+    img.src = this.imagePreview;
+  }
 
+  cancelAvatar() {
+    this.showCropper = false;
+  }
 
-}
+  // =============================
+  // CAMBIO PASSWORD
+  // =============================
 
+  showPasswordBox: boolean = false;
 
+  savePassword() {
+    if (!this.oldPassword || !this.newPassword || !this.confirmPassword) {
+      this.message = '❌ Compila tutti i campi';
 
-}
+      return;
+    }
 
+    if (this.newPassword.length < 8) {
+      this.message = '❌ La password deve avere almeno 8 caratteri';
 
+      return;
+    }
 
+    if (this.newPassword !== this.confirmPassword) {
+      this.message = '❌ Le password non coincidono';
 
+      return;
+    }
 
+    const result = this.userService.changePassword(
+      this.oldPassword,
 
+      this.newPassword,
+    );
 
+    if (!result) {
+      this.message = '❌ Vecchia password errata';
 
+      return;
+    }
 
-// =============================
-// SALVA PROFILO
-// =============================
+    this.message = '✅ Password modificata correttamente';
 
+    this.showPasswordBox = false;
 
-saveProfile(){
+    this.oldPassword = '';
 
+    this.newPassword = '';
 
+    this.confirmPassword = '';
 
-if(!this.user){
+    setTimeout(() => {
+      this.message = '';
+    }, 3000);
+  }
 
-return;
+  // =============================
+  // LOGOUT
+  // =============================
 
-}
+  logout() {
+    this.userService.logout();
 
+    this.user = null;
 
+    this.router.navigate(['/']);
+  }
 
-
-this.user.name=this.editName;
-
-
-this.user.phone=this.editPhone;
-
-
-
-this.userService.updateProfile(this.user);
-
-
-
-this.message='✅ Profilo aggiornato';
-
-
-
-setTimeout(()=>{
-
-
-this.message='';
-
-
-},3000);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =============================
-// CAMBIO AVATAR
-// =============================
-
-
-changeAvatar(event:any){
-
-
-
-const file=event.target.files[0];
-
-
-
-if(!file){
-
-return;
-
-}
-
-
-
-
-if(!file.type.startsWith('image/')){
-
-
-this.message='❌ Seleziona una immagine valida';
-
-
-return;
-
-
-}
-
-
-
-
-
-this.selectedFile=file;
-
-
-
-const reader=new FileReader();
-
-
-
-reader.onload=()=>{
-
-
-this.imagePreview=reader.result as string;
-
-
-this.showCropper=true;
-
-
-this.zoom=1;
-
-
-this.positionX=0;
-
-
-this.positionY=0;
-
-
-
-};
-
-
-
-reader.readAsDataURL(file);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =============================
-// ZOOM FOTO
-// =============================
-
-
-increaseZoom(){
-
-
-this.zoom+=0.1;
-
-
-}
-
-
-
-decreaseZoom(){
-
-
-
-if(this.zoom>0.5){
-
-
-this.zoom-=0.1;
-
-
-}
-
-
-}
-
-
-
-
-
-
-
-
-// =============================
-// SPOSTAMENTO FOTO
-// =============================
-
-
-moveImage(x:number,y:number){
-
-
-this.positionX+=x;
-
-
-this.positionY+=y;
-
-
-}
-
-
-
-
-
-
-
-
-
-// =============================
-// SALVA FOTO TAGLIATA
-// =============================
-
-
-saveAvatar(){
-
-
-
-const canvas=document.createElement('canvas');
-
-
-canvas.width=300;
-
-
-canvas.height=300;
-
-
-
-const ctx=canvas.getContext('2d');
-
-
-
-if(!ctx){
-
-return;
-
-}
-
-
-
-
-const img=new Image();
-
-
-
-
-img.onload=()=>{
-
-
-
-ctx.clearRect(0,0,300,300);
-
-
-
-// maschera rotonda
-
-ctx.beginPath();
-
-ctx.arc(
-
-150,
-
-150,
-
-150,
-
-0,
-
-Math.PI*2
-
-);
-
-
-ctx.closePath();
-
-ctx.clip();
-
-
-
-
-
-ctx.drawImage(
-
-img,
-
-this.positionX,
-
-this.positionY,
-
-img.width*this.zoom,
-
-img.height*this.zoom
-
-);
-
-
-
-
-
-
-const avatar=canvas.toDataURL('image/png');
-
-
-
-
-
-if(this.user){
-
-
-
-this.user.avatar=avatar;
-
-
-
-this.userService.updateProfile(this.user);
-
-
-
-this.message='📷 Foto aggiornata';
-
-
-
-}
-
-
-
-
-
-this.showCropper=false;
-
-
-
-};
-
-
-
-img.src=this.imagePreview;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-cancelAvatar(){
-
-
-
-this.showCropper=false;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =============================
-// CAMBIO PASSWORD
-// =============================
-
-
-showPasswordBox:boolean=false;
-
-
-
-
-
-
-
-
-savePassword(){
-
-
-if(!this.oldPassword || !this.newPassword || !this.confirmPassword){
-
-
-this.message='❌ Compila tutti i campi';
-
-return;
-
-
-}
-
-
-
-if(this.newPassword.length < 8){
-
-
-this.message='❌ La password deve avere almeno 8 caratteri';
-
-
-return;
-
-
-}
-
-
-
-if(this.newPassword !== this.confirmPassword){
-
-
-this.message='❌ Le password non coincidono';
-
-
-return;
-
-
-}
-
-
-
-
-const result = this.userService.changePassword(
-
-this.oldPassword,
-
-this.newPassword
-
-);
-
-
-
-if(!result){
-
-
-this.message='❌ Vecchia password errata';
-
-
-return;
-
-
-}
-
-
-
-this.message='✅ Password modificata correttamente';
-
-
-this.showPasswordBox=false;
-
-
-
-this.oldPassword='';
-
-this.newPassword='';
-
-this.confirmPassword='';
-
-
-
-setTimeout(()=>{
-
-
-this.message='';
-
-
-},3000);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =============================
-// LOGOUT
-// =============================
-
-
-logout(){
-
-
-
-this.userService.logout();
-
-
-this.user=null;
-
-
-
-this.router.navigate(['/']);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-ngOnDestroy(){
-
-
-
-if(this.userSubscription){
-
-
-this.userSubscription.unsubscribe();
-
-
-}
-
-
-
-}
-
-
-
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
 }

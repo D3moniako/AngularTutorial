@@ -1,56 +1,37 @@
 export interface Review {
+  id: number;
 
-id:number;
+  user: string;
 
-user:string;
+  rating: number;
 
-rating:number;
+  comment: string;
 
-comment:string;
+  date: string;
 
-date:string;
-
-verified:boolean;
-
+  verified: boolean;
 }
 
-
-
 export interface Product {
+  id: number;
 
+  name: string;
 
-id:number;
+  image: string;
 
+  price: number;
 
-name:string;
+  category: string;
 
+  description: string;
 
-image:string;
+  badge: string;
 
+  rating: number;
 
-price:number;
+  favorite: boolean;
 
+  downloadUrl?: string;
 
-category:string;
-
-
-description:string;
-
-
-badge:string;
-
-
-rating:number;
-
-
-favorite:boolean;
-
-
-downloadUrl?:string;
-
-
-
-reviews?:Review[];
-
-
+  reviews?: Review[];
 }

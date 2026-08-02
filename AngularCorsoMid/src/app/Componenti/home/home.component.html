@@ -1,21 +1,10 @@
 <div class="page">
+  <!-- HERO -->
 
-
-
-<!-- HERO -->
-
-<section class="hero">
-
-
-<div class="hero-content">
-
-
-<span class="tag">
-
-✨ Planner digitali premium
-
-</span>
-<!--
+  <section class="hero">
+    <div class="hero-content">
+      <span class="tag"> ✨ Planner digitali premium </span>
+      <!--
 </span>
 <button
 class="btn-notification"
@@ -25,714 +14,204 @@ class="btn-notification"
 
 </button>-->
 
+      <h1>
+        Il tuo tempo.
+        <br />
+
+        La tua ispirazione.
+        <br />
+
+        Il tuo planner.
+      </h1>
+
+      <p>
+        Organizza giornate, obiettivi e sogni con planner eleganti creati per
+        iPad, GoodNotes e PDF.
+      </p>
+
+      <div class="hero-buttons">
+        <a routerLink="/shop" class="btn"> 🛒 Scopri i Planner </a>
+
+        <a routerLink="/about" class="btn-light"> 🌸 Il nostro mondo </a>
+      </div>
+
+      <div class="trust">
+        <span> ✓ Download immediato </span>
+
+        <span> ✓ Compatibile iPad </span>
+
+        <span> ✓ Design esclusivo </span>
+      </div>
+    </div>
+
+    <div class="ipad-preview">
+      <div class="ipad">
+        <div class="screen">
+          <h2>2026</h2>
+
+          <h3>Dream Life Planner</h3>
 
+          <div class="calendar-mini">
+            <span *ngFor="let d of days">
+              {{ d }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<h1>
+  <!-- STATISTICHE -->
 
-Il tuo tempo.
-<br>
+  <section class="stats">
+    <div class="stat" *ngFor="let s of stats">
+      <h2>
+        {{ s.number }}
+      </h2>
 
-La tua ispirazione.
-<br>
+      <p>
+        {{ s.label }}
+      </p>
+    </div>
+  </section>
 
-Il tuo planner.
+  <!-- CATEGORIE -->
 
-</h1>
+  <section class="categories">
+    <h2>Scegli il tuo stile</h2>
 
+    <div class="category-list">
+      <button
+        *ngFor="let c of categories"
+        (click)="selectCategory(c.name)"
+        [class.selected]="selectedCategory === c.name"
+      >
+        {{ c.icon }}
 
+        {{ c.name }}
+      </button>
+    </div>
+  </section>
 
+  <!-- PRODOTTI -->
 
-<p>
+  <section class="products">
+    <div class="section-title">
+      <h2>✨ Digital Planner Collection</h2>
 
-Organizza giornate, obiettivi
-e sogni con planner eleganti
-creati per iPad, GoodNotes e PDF.
+      <p>Planner creati per organizzare, creare e sognare.</p>
+    </div>
 
-</p>
+    <div class="product-grid">
+      <app-product-card
+        *ngFor="let p of filteredProducts"
+        [product]="p"
+        [showFavorite]="true"
+        [showCart]="true"
+        [showDescription]="true"
+        (addCart)="addCart($event)"
+        (favorite)="toggleFavorite($event)"
+        (openProduct)="openProduct($event)"
+      >
+      </app-product-card>
+    </div>
+  </section>
 
+  <!-- COME FUNZIONA -->
 
+  <section class="steps">
+    <h2>Come funziona</h2>
 
+    <div class="step-grid">
+      <div>
+        <span> 1 </span>
 
+        <h3>Acquista</h3>
 
-<div class="hero-buttons">
+        <p>Scegli il planner perfetto.</p>
+      </div>
 
+      <div>
+        <span> 2 </span>
 
+        <h3>Scarica</h3>
 
-<a
-routerLink="/shop"
-class="btn">
+        <p>Ricevi subito il file digitale.</p>
+      </div>
 
-🛒 Scopri i Planner
+      <div>
+        <span> 3 </span>
 
-</a>
+        <h3>Organizza</h3>
 
+        <p>Inizia una nuova routine.</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- RECENSIONI -->
 
+  <section class="reviews">
+    <h2>💖 Le nostre clienti</h2>
 
-<a
-routerLink="/about"
-class="btn-light">
+    <div class="review-grid">
+      <div class="review" *ngFor="let r of reviews">
+        <h3>
+          {{ r.avatar }}
 
-🌸 Il nostro mondo
+          {{ r.name }}
+        </h3>
 
-</a>
+        <div>★★★★★</div>
 
+        <p>"{{ r.text }}"</p>
+      </div>
+    </div>
+  </section>
 
+  <!-- FAQ -->
 
-</div>
+  <section class="faq">
+    <h2>Domande frequenti</h2>
 
+    <div class="faq-box" *ngFor="let f of faq">
+      <h3>
+        {{ f.q }}
+      </h3>
 
+      <p>
+        {{ f.a }}
+      </p>
+    </div>
+  </section>
 
+  <!-- NEWSLETTER -->
 
+  <section class="newsletter">
+    <h2>🎁 Ricevi un planner gratuito</h2>
 
+    <p>Nuove collezioni, offerte e idee creative.</p>
 
+    <div>
+      <input [(ngModel)]="email" type="email" placeholder="La tua email" />
 
-<div class="trust">
+      <button (click)="subscribe()">Iscrivimi ✨</button>
+    </div>
+  </section>
 
+  <!-- FOOTER -->
 
-<span>
-✓ Download immediato
-</span>
+  <footer>
+    <h2>✿ DreamCalendar</h2>
 
+    <p>Digital planner per una vita organizzata.</p>
 
-<span>
-✓ Compatibile iPad
-</span>
+    <div>
+      <a routerLink="/about"> Chi siamo </a>
 
+      <a routerLink="/contact"> Contatti </a>
 
-<span>
-✓ Design esclusivo
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="ipad-preview">
-
-
-<div class="ipad">
-
-
-<div class="screen">
-
-
-<h2>
-2026
-</h2>
-
-
-<h3>
-Dream Life Planner
-</h3>
-
-
-
-
-<div class="calendar-mini">
-
-
-<span *ngFor="let d of days">
-
-{{d}}
-
-</span>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- STATISTICHE -->
-
-
-<section class="stats">
-
-
-<div
-class="stat"
-*ngFor="let s of stats">
-
-
-<h2>
-
-{{s.number}}
-
-</h2>
-
-
-<p>
-
-{{s.label}}
-
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- CATEGORIE -->
-
-
-<section class="categories">
-
-
-<h2>
-
-Scegli il tuo stile
-
-</h2>
-
-
-
-
-<div class="category-list">
-
-
-
-<button
-
-*ngFor="let c of categories"
-
-(click)="selectCategory(c.name)"
-
-[class.selected]="selectedCategory===c.name">
-
-
-{{c.icon}}
-
-{{c.name}}
-
-
-
-</button>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- PRODOTTI -->
-
-
-<section class="products">
-
-
-
-<div class="section-title">
-
-
-<h2>
-
-✨ Digital Planner Collection
-
-</h2>
-
-
-
-<p>
-
-Planner creati per organizzare,
-creare e sognare.
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-<div class="product-grid">
-
-
-
-
-
-<app-product-card
-
-*ngFor="let p of filteredProducts"
-
-[product]="p"
-
-[showFavorite]="true"
-
-[showCart]="true"
-
-[showDescription]="true"
-
-(addCart)="addCart($event)"
-
-(favorite)="toggleFavorite($event)"
-
-(openProduct)="openProduct($event)"
-
->
-</app-product-card>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- COME FUNZIONA -->
-
-
-<section class="steps">
-
-
-<h2>
-
-Come funziona
-
-</h2>
-
-
-
-
-
-<div class="step-grid">
-
-
-
-<div>
-
-
-<span>
-1
-</span>
-
-
-<h3>
-
-Acquista
-
-</h3>
-
-
-<p>
-
-Scegli il planner perfetto.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div>
-
-
-<span>
-2
-</span>
-
-
-<h3>
-
-Scarica
-
-</h3>
-
-
-<p>
-
-Ricevi subito il file digitale.
-
-</p>
-
-
-</div>
-
-
-
-
-
-
-<div>
-
-
-<span>
-3
-</span>
-
-
-<h3>
-
-Organizza
-
-</h3>
-
-
-<p>
-
-Inizia una nuova routine.
-
-</p>
-
-
-</div>
-
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- RECENSIONI -->
-
-
-<section class="reviews">
-
-
-<h2>
-
-💖 Le nostre clienti
-
-</h2>
-
-
-
-
-
-
-<div class="review-grid">
-
-
-
-<div
-
-class="review"
-
-*ngFor="let r of reviews">
-
-
-
-<h3>
-
-{{r.avatar}}
-
-{{r.name}}
-
-</h3>
-
-
-
-
-
-<div>
-
-★★★★★
-
-</div>
-
-
-
-
-
-<p>
-
-"{{r.text}}"
-
-</p>
-
-
-
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- FAQ -->
-
-
-<section class="faq">
-
-
-<h2>
-
-Domande frequenti
-
-</h2>
-
-
-
-
-
-
-<div
-
-class="faq-box"
-
-*ngFor="let f of faq">
-
-
-
-<h3>
-
-{{f.q}}
-
-</h3>
-
-
-
-<p>
-
-{{f.a}}
-
-</p>
-
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- NEWSLETTER -->
-
-
-<section class="newsletter">
-
-
-<h2>
-
-🎁 Ricevi un planner gratuito
-
-</h2>
-
-
-
-
-<p>
-
-Nuove collezioni,
-offerte e idee creative.
-
-</p>
-
-
-
-
-
-
-
-<div>
-
-
-<input
-
-[(ngModel)]="email"
-
-type="email"
-
-placeholder="La tua email">
-
-
-
-
-
-<button
-
-(click)="subscribe()">
-
-
-Iscrivimi ✨
-
-
-</button>
-
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- FOOTER -->
-
-
-<footer>
-
-
-
-<h2>
-
-✿ DreamCalendar
-
-</h2>
-
-
-
-
-
-<p>
-
-Digital planner per una vita organizzata.
-
-</p>
-
-
-
-
-
-
-<div>
-
-
-<a routerLink="/about">
-
-Chi siamo
-
-</a>
-
-
-
-
-
-<a routerLink="/contact">
-
-Contatti
-
-</a>
-
-
-
-
-
-<a routerLink="/my-planners">
-
-I miei Planner
-
-</a>
-
-
-
-</div>
-
-
-
-
-</footer>
-
-
-
-
-
+      <a routerLink="/my-planners"> I miei Planner </a>
+    </div>
+  </footer>
 </div>

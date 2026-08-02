@@ -8,204 +8,102 @@ import { UserService } from '../../../services/user.service';
 
 import { User } from '../../../models/user';
 
-
-
 @Component({
+  selector: 'app-header',
 
-selector:'app-header',
+  templateUrl: './header.component.html',
 
-templateUrl:'./header.component.html',
-
-styleUrls:['./header.component.css']
-
+  styleUrls: ['./header.component.css'],
 })
-
-
 export class HeaderComponent implements OnInit, OnDestroy {
-
-
-
-menuOpen:boolean=false;
-
-
-user:User|null=null;
-
-
-
-private userSubscription!:Subscription;
-
-
-
-
-
-
-
-menuItems=[
-
-{
-label:'Home',
-link:'/',
-icon:'🏠',
-private:false
-},
-
-{
-label:'Shop',
-link:'/shop',
-icon:'🛍️',
-private:false
-},
-
-{
-label:'I miei Planner',
-link:'/my-planners',
-icon:'📅',
-private:true
-},
-
-{
-label:'I miei ordini',
-link:'/my-orders',
-icon:'📦',
-private:true
-},
-
-{
-label:'Preferiti',
-link:'/favorites',
-icon:'❤️',
-private:true
-},
-
-{
-label:'Chi siamo',
-link:'/about',
-icon:'🌸',
-private:false
-},
-
-{
-label:'Contatti',
-link:'/contact',
-icon:'✉️',
-private:false
-}
-
-];
-
-
-
-
-
-
-
-
-
-constructor(
-
-private userService:UserService,
-
-private router:Router
-
-){}
-
-
-
-
-
-
-
-
-
-ngOnInit(){
-
-
-
-this.userSubscription =
-
-this.userService.user$
-
-.subscribe(user=>{
-
-
-this.user=user;
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-toggleMenu(){
-
-
-this.menuOpen=!this.menuOpen;
-
-
-}
-
-
-get visibleMenuItems(){
-
-return this.menuItems.filter(item =>
-
-!item.private || this.user
-
-);
-
-}
-
-
-
-
-
-
-logout(){
-
-
-this.userService.logout();
-
-
-this.menuOpen=false;
-
-
-this.router.navigate(['/login']);
-
-
-}
-
-
-
-
-
-
-
-
-
-ngOnDestroy(){
-
-
-if(this.userSubscription){
-
-
-this.userSubscription.unsubscribe();
-
-
-}
-
-
-}
-
-
-
+  menuOpen: boolean = false;
+
+  user: User | null = null;
+
+  private userSubscription!: Subscription;
+
+  menuItems = [
+    {
+      label: 'Home',
+      link: '/',
+      icon: '🏠',
+      private: false,
+    },
+
+    {
+      label: 'Shop',
+      link: '/shop',
+      icon: '🛍️',
+      private: false,
+    },
+
+    {
+      label: 'I miei Planner',
+      link: '/my-planners',
+      icon: '📅',
+      private: true,
+    },
+
+    {
+      label: 'I miei ordini',
+      link: '/my-orders',
+      icon: '📦',
+      private: true,
+    },
+
+    {
+      label: 'Preferiti',
+      link: '/favorites',
+      icon: '❤️',
+      private: true,
+    },
+
+    {
+      label: 'Chi siamo',
+      link: '/about',
+      icon: '🌸',
+      private: false,
+    },
+
+    {
+      label: 'Contatti',
+      link: '/contact',
+      icon: '✉️',
+      private: false,
+    },
+  ];
+
+  constructor(
+    private userService: UserService,
+
+    private router: Router,
+  ) {}
+
+  ngOnInit() {
+    this.userSubscription = this.userService.user$.subscribe((user) => {
+      this.user = user;
+    });
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  get visibleMenuItems() {
+    return this.menuItems.filter((item) => !item.private || this.user);
+  }
+
+  logout() {
+    this.userService.logout();
+
+    this.menuOpen = false;
+
+    this.router.navigate(['/login']);
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
 }

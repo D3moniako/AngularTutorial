@@ -1,191 +1,55 @@
 <header>
-
-
-
-<div class="logo">
-
-
-<div class="brand">
-
-🌸 DreamCalendar
-
-</div>
-
-
-<small>
-
-Digital Planner Boutique
-
-</small>
-
-
-</div>
-
-
-
-
-
-
-
-<button
-
-class="hamburger"
-
-(click)="toggleMenu()">
-
-
-☰
-
-
-</button>
-
-
-
-
-
-
-
-
-
-<nav
-
-[class.active]="menuOpen">
-
-
-
-<a
-
-*ngFor="let item of visibleMenuItems"
-
-[routerLink]="item.link"
-
-routerLinkActive="active"
-
-[routerLinkActiveOptions]="{exact:true}"
-
-(click)="menuOpen=false">
-
-
-<span>
-
-{{item.icon}}
-
-</span>
-
-
-{{item.label}}
-
-
-</a>
-
-
-
-</nav>
-
-
-
-
-
-
-
-
-
-<div class="account">
-
-
-<!-- UTENTE NON LOGGATO -->
-
-<div *ngIf="!user">
-
-
-<a 
-routerLink="/login"
-class="login-button">
-
-🔑 Accedi
-
-</a>
-
-
-
-<a 
-routerLink="/register"
-class="register-button">
-
-✨ Registrati
-
-</a>
-
-
-
-</div>
-
-
-
-
-
-<!-- UTENTE LOGGATO -->
-
-<div *ngIf="user">
-
-
-<a 
-routerLink="/profile"
-class="profile-button">
-
-🌸 {{user.name}}
-
-</a>
-
-
-
-<button
-
-class="logout-button"
-
-(click)="logout()">
-
-
-🚪
-
-</button>
-
-
-
-</div>
-
-
-</div>
-
-
-
-<app-notification-dropdown
-*ngIf="user">
-
-</app-notification-dropdown>
-
-
-<a
-
-*ngIf="user"
-
-routerLink="/cart"
-
-class="cart-link">
-
-🛒 Carrello
-
-</a>
-
-<a 
-*ngIf="user?.role?.toLowerCase() === 'admin'"
-routerLink="/admin/dashboard"
-class="admin-link">
-
-DASHBOARD
-
-</a>
-
-
-
+  <div class="logo">
+    <div class="brand">🌸 DreamCalendar</div>
+
+    <small> Digital Planner Boutique </small>
+  </div>
+
+  <button class="hamburger" (click)="toggleMenu()">☰</button>
+
+  <nav [class.active]="menuOpen">
+    <a
+      *ngFor="let item of visibleMenuItems"
+      [routerLink]="item.link"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      (click)="menuOpen = false"
+    >
+      <span>
+        {{ item.icon }}
+      </span>
+
+      {{ item.label }}
+    </a>
+  </nav>
+
+  <div class="account">
+    <!-- UTENTE NON LOGGATO -->
+
+    <div *ngIf="!user">
+      <a routerLink="/login" class="login-button"> 🔑 Accedi </a>
+
+      <a routerLink="/register" class="register-button"> ✨ Registrati </a>
+    </div>
+
+    <!-- UTENTE LOGGATO -->
+
+    <div *ngIf="user">
+      <a routerLink="/profile" class="profile-button"> 🌸 {{ user.name }} </a>
+
+      <button class="logout-button" (click)="logout()">🚪</button>
+    </div>
+  </div>
+
+  <app-notification-dropdown *ngIf="user"> </app-notification-dropdown>
+
+  <a *ngIf="user" routerLink="/cart" class="cart-link"> 🛒 Carrello </a>
+
+  <a
+    *ngIf="user?.role?.toLowerCase() === 'admin'"
+    routerLink="/admin/dashboard"
+    class="admin-link"
+  >
+    DASHBOARD
+  </a>
 </header>

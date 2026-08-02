@@ -2,14 +2,17 @@
 <p>funziona??</p>
 
 <mat-card class="example-card">
-  <mat-card-title>{{cani[0].nome.toUpperCase()}}</mat-card-title>
+  <mat-card-title>{{ cani[0].nome.toUpperCase() }}</mat-card-title>
   <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-  <img mat-card-xl-image [src]="immagine" >
+  <img mat-card-xl-image [src]="immagine" />
 
   <mat-card-content>
     <p>This card indeterminates progress bar.</p>
-    <p>{{testo}}</p>
-    <p> Ciao {{ numero>0 ?primoNome: secondoNome}}, string interpolation con un operatore ternario numero>0 ?primoNome: secondoNome</p>
+    <p>{{ testo }}</p>
+    <p>
+      Ciao {{ numero > 0 ? primoNome : secondoNome }}, string interpolation con
+      un operatore ternario numero>0 ?primoNome: secondoNome
+    </p>
   </mat-card-content>
 
   <mat-card-actions>
@@ -19,16 +22,19 @@
 </mat-card>
 <h3>Raised Buttons</h3>
 <div class="example-button-row">
-  <button mat-raised-button color="primary" [disabled]="eDisabilitato">Primary</button><!-- con binding proprietes posso fare in modo che invece
+  <button mat-raised-button color="primary" [disabled]="eDisabilitato">
+    Primary</button
+  ><!-- con binding proprietes posso fare in modo che invece
                                                                              di scrivere hardcode il suo stato che sarà statico true false,gli passo degli stati
                                                                              da variabili typescript che contengono lo stato
   -->
 </div>
 
-
-<div  *ngFor="let persona of data ;">
-  <p  [ngStyle]="{color:persona.color}">{{persona.nome}} {{persona.cognome}}</p>
-<!-- ngstyle dentro[] perchè è un propriety binding, apro oggetto {} e metto chiave : valore,
+<div *ngFor="let persona of data">
+  <p [ngStyle]="{ color: persona.color }">
+    {{ persona.nome }} {{ persona.cognome }}
+  </p>
+  <!-- ngstyle dentro[] perchè è un propriety binding, apro oggetto {} e metto chiave : valore,
    se valore preso da ts allora senza '' essendo una variabile,
   la chaive è la proprietà css in questo caso color -->
 </div>
@@ -36,4 +42,3 @@
 <!--Passaggio dati da componente figlio a padre-->
 
 <button (click)="mandaDati()">Manda dati al parente</button>
-

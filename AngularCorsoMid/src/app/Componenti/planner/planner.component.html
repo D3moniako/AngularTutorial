@@ -1,431 +1,94 @@
 <div class="planner-page">
-
-
-
-<section class="planner-hero">
-
-
-<h1>
-
-🌸 Trova il Planner perfetto
-
-</h1>
-
-
-<p>
-
-Organizza tempo, obiettivi e sogni con i nostri planner digitali.
-
-</p>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="tools">
-
-
-<input
-
-type="search"
-
-placeholder="🔍 Cerca planner..."
-
-[(ngModel)]="searchText"
-
-(input)="applyFilter()"
-
->
-
-
-
-
-
-
-<div class="categories">
-
-
-<button
-
-*ngFor="let c of categories"
-
-(click)="filterCategory(c)"
-
-[class.active]="selectedCategory===c">
-
-
-{{c}}
-
-
-</button>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-<section class="empty"
-
-*ngIf="filteredProducts.length===0">
-
-
-<h2>
-
-Nessun planner trovato 🌸
-
-</h2>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-<section class="products-grid">
-
-
-
-<div
-
-class="product-card"
-
-*ngFor="let p of filteredProducts">
-
-
-
-
-
-
-
-<button
-
-class="heart"
-
-(click)="toggleFavorite(p)">
-
-
-
-{{p.favorite ? '❤️':'🤍'}}
-
-
-
-</button>
-
-
-
-
-
-
-
-
-
-<img
-
-[src]="p.image"
-
-[alt]="p.name"
-
-loading="lazy"
-
->
-
-
-
-
-
-
-
-<span class="badge">
-
-{{p.badge}}
-
-</span>
-
-
-
-
-
-
-
-
-
-<h2>
-
-{{p.name}}
-
-</h2>
-
-
-
-
-
-
-
-
-
-<p>
-
-{{p.description}}
-
-</p>
-
-
-
-
-
-
-
-
-
-<!-- ============================= -->
-<!-- RECENSIONI -->
-<!-- ============================= -->
-
-
-<div
-
-class="reviews"
-
-*ngIf="p.reviews && p.reviews.length">
-
-
-
-<h4>
-
-⭐ Recensioni clienti
-
-</h4>
-
-
-
-
-
-
-
-<div
-
-class="review"
-
-*ngFor="let review of p.reviews">
-
-
-
-
-
-<strong>
-
-{{review.user}}
-
-</strong>
-
-
-
-
-
-
-
-<div class="stars">
-
-
-<span
-
-*ngFor="let star of [].constructor(review.rating)">
-
-
-⭐
-
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-<p>
-
-{{review.comment}}
-
-</p>
-
-
-
-
-
-
-
-<small>
-
-{{review.date}}
-
-</small>
-
-
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="rating">
-
-
-⭐ {{p.rating}}/5
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="price">
-
-
-{{p.price | currency:'EUR'}}
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="buttons">
-
-
-
-
-
-
-<a
-
-[routerLink]="['/products',p.id]">
-
-
-👁 Dettagli
-
-
-</a>
-
-
-
-
-
-
-
-
-
-<button
-
-(click)="addCart(p)">
-
-
-
-🛒 Aggiungi
-
-
-
-</button>
-
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="go-cart">
-
-
-<a routerLink="/cart">
-
-
-🛒 Vai al carrello
-
-
-</a>
-
-
-
-</section>
-
-
-
-
-
+  <section class="planner-hero">
+    <h1>🌸 Trova il Planner perfetto</h1>
+
+    <p>Organizza tempo, obiettivi e sogni con i nostri planner digitali.</p>
+  </section>
+
+  <section class="tools">
+    <input
+      type="search"
+      placeholder="🔍 Cerca planner..."
+      [(ngModel)]="searchText"
+      (input)="applyFilter()"
+    />
+
+    <div class="categories">
+      <button
+        *ngFor="let c of categories"
+        (click)="filterCategory(c)"
+        [class.active]="selectedCategory === c"
+      >
+        {{ c }}
+      </button>
+    </div>
+  </section>
+
+  <section class="empty" *ngIf="filteredProducts.length === 0">
+    <h2>Nessun planner trovato 🌸</h2>
+  </section>
+
+  <section class="products-grid">
+    <div class="product-card" *ngFor="let p of filteredProducts">
+      <button class="heart" (click)="toggleFavorite(p)">
+        {{ p.favorite ? "❤️" : "🤍" }}
+      </button>
+
+      <img [src]="p.image" [alt]="p.name" loading="lazy" />
+
+      <span class="badge">
+        {{ p.badge }}
+      </span>
+
+      <h2>
+        {{ p.name }}
+      </h2>
+
+      <p>
+        {{ p.description }}
+      </p>
+
+      <!-- ============================= -->
+      <!-- RECENSIONI -->
+      <!-- ============================= -->
+
+      <div class="reviews" *ngIf="p.reviews && p.reviews.length">
+        <h4>⭐ Recensioni clienti</h4>
+
+        <div class="review" *ngFor="let review of p.reviews">
+          <strong>
+            {{ review.user }}
+          </strong>
+
+          <div class="stars">
+            <span *ngFor="let star of [].constructor(review.rating)"> ⭐ </span>
+          </div>
+
+          <p>
+            {{ review.comment }}
+          </p>
+
+          <small>
+            {{ review.date }}
+          </small>
+        </div>
+      </div>
+
+      <div class="rating">⭐ {{ p.rating }}/5</div>
+
+      <div class="price">
+        {{ p.price | currency: "EUR" }}
+      </div>
+
+      <div class="buttons">
+        <a [routerLink]="['/products', p.id]"> 👁 Dettagli </a>
+
+        <button (click)="addCart(p)">🛒 Aggiungi</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="go-cart">
+    <a routerLink="/cart"> 🛒 Vai al carrello </a>
+  </section>
 </div>

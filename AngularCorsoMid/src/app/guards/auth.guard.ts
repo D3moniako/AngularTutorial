@@ -1,68 +1,30 @@
 import { Injectable } from '@angular/core';
 
-import {
-CanActivate,
-Router
-}
-from '@angular/router';
-
+import { CanActivate, Router } from '@angular/router';
 
 import { UserService } from '../services/user.service';
 
-
-
 @Injectable({
-providedIn:'root'
+  providedIn: 'root',
 })
-
-
 export class AuthGuard implements CanActivate {
+  constructor(
+    private userService: UserService,
 
+    private router: Router,
+  ) {}
 
+  canActivate(): boolean {
+    // controlla se esiste un utente loggato
 
-constructor(
+    if (this.userService.isLogged()) {
+      return true;
+    }
 
-private userService:UserService,
+    // blocca accesso pagina privata
 
-private router:Router
+    this.router.navigate(['/login']);
 
-){}
-
-
-
-
-
-
-canActivate():boolean{
-
-
-
-// controlla se esiste un utente loggato
-
-if(this.userService.isLogged()){
-
-
-
-return true;
-
-
-
-}
-
-
-
-// blocca accesso pagina privata
-
-this.router.navigate(['/login']);
-
-
-
-return false;
-
-
-
-}
-
-
-
+    return false;
+  }
 }

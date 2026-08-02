@@ -1,82 +1,25 @@
 <div class="admin-layout">
+  <!-- HEADER ADMIN -->
 
+  <header class="admin-header">
+    <div class="logo">🌸 DreamCalendar Admin</div>
 
-<!-- HEADER ADMIN -->
+    <nav>
+      <a routerLink="dashboard" routerLinkActive="active"> 📊 Dashboard </a>
 
-<header class="admin-header">
+      <a routerLink="planners" routerLinkActive="active"> 📅 Planner </a>
 
+      <a routerLink="upload" routerLinkActive="active"> ➕ Nuovo Planner </a>
 
-<div class="logo">
+      <a routerLink="users" routerLinkActive="active"> 👥 Utenti </a>
 
-🌸 DreamCalendar Admin
+      <a routerLink="/"> 🏠 Torna al sito </a>
+    </nav>
+  </header>
 
-</div>
+  <!-- CONTENUTO PAGINE FIGLIE -->
 
-
-
-<nav>
-
-
-<a routerLink="dashboard"
-routerLinkActive="active">
-
-📊 Dashboard
-
-</a>
-
-
-
-<a routerLink="planners"
-routerLinkActive="active">
-
-📅 Planner
-
-</a>
-
-
-
-<a routerLink="upload"
-routerLinkActive="active">
-
-➕ Nuovo Planner
-
-</a>
-
-
-<a routerLink="users"
-routerLinkActive="active">
-
-👥 Utenti
-
-</a>
-
-<a routerLink="/">
-
-🏠 Torna al sito
-
-</a>
-
-
-
-</nav>
-
-
-</header>
-
-
-
-
-
-<!-- CONTENUTO PAGINE FIGLIE -->
-
-<section class="admin-content">
-
-
-<router-outlet></router-outlet>
-
-
-</section>
-
-
-
+  <section class="admin-content">
+    <router-outlet></router-outlet>
+  </section>
 </div>

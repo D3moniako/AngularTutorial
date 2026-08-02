@@ -1,128 +1,41 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy
-} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
-
-import {
-  Subscription
-} from 'rxjs';
-
+import { Subscription } from 'rxjs';
 
 import {
   NotificationService,
-  Notification
+  Notification,
 } from '../../services/notification.service';
 
-
-
-
-
 @Component({
+  selector: 'app-notification',
 
-  selector:'app-notification',
+  templateUrl: './notification.component.html',
 
-  templateUrl:'./notification.component.html',
-
-  styleUrls:['./notification.component.css']
-
+  styleUrls: ['./notification.component.css'],
 })
-
-
 export class NotificationComponent implements OnInit, OnDestroy {
-
-
-
   notifications: Notification[] = [];
-
-
 
   private subscription?: Subscription;
 
-
-
-
-
-  constructor(
-
-    private notificationService: NotificationService
-
-  ) {}
-
-
-
-
-
-
-
+  constructor(private notificationService: NotificationService) {}
 
   ngOnInit(): void {
-
-
-
-    this.subscription =
-
-    this.notificationService.notifications$
-
-    .subscribe((data: Notification[]) => {
-
-
-
-      this.notifications = data;
-
-
-
-    });
-
-
-
+    this.subscription = this.notificationService.notifications$.subscribe(
+      (data: Notification[]) => {
+        this.notifications = data;
+      },
+    );
   }
 
-
-
-
-
-
-
-
-
-  close(id:number): void {
-
-
-
+  close(id: number): void {
     this.notificationService.remove(id);
-
-
-
   }
-
-
-
-
-
-
-
-
 
   ngOnDestroy(): void {
-
-
-
-    if(this.subscription){
-
-
+    if (this.subscription) {
       this.subscription.unsubscribe();
-
-
     }
-
-
-
   }
-
-
-
-
-
 }

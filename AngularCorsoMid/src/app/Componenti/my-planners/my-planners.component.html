@@ -1,431 +1,151 @@
 <div class="page">
+  <header>
+    <div class="logo">🌸 DreamCalendar</div>
+
+    <nav>
+      <a routerLink="/"> 🏠 Home </a>
+
+      <a routerLink="/shop"> 🛒 Shop </a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>📚 I miei Planner Digitali</h1>
+
+    <p>
+      I tuoi acquisti sempre disponibili. Scarica, aggiorna e utilizza i tuoi
+      planner ovunque.
+    </p>
+
+    <div class="stats">
+      <div class="stat-card">
+        <span>📚</span>
+
+        <h2>
+          {{ planners.length }}
+        </h2>
+
+        <p>Planner acquistati</p>
+      </div>
+
+      <div class="stat-card">
+        <span>⬇️</span>
+
+        <h2>
+          {{ totalDownloads }}
+        </h2>
+
+        <p>Download effettuati</p>
+      </div>
+
+      <div class="stat-card">
+        <span>📅</span>
+
+        <h2>
+          {{ currentYear }}
+        </h2>
+
+        <p>Anno licenza</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="tools">
+    <input
+      type="text"
+      placeholder="🔍 Cerca nei tuoi planner..."
+      [(ngModel)]="searchText"
+    />
+
+    <div class="categories">
+      <button
+        *ngFor="let c of categories"
+        (click)="selectCategory(c)"
+        [class.active]="selectedCategory === c"
+      >
+        {{ c }}
+      </button>
+    </div>
+  </section>
+
+  <div class="message" *ngIf="downloadMessage">
+    {{ downloadMessage }}
+  </div>
+
+  <section class="planner-grid">
+    <app-product-card
+      *ngFor="let p of filteredPlanners"
+      [product]="p.product"
+      mode="owned"
+      [showFavorite]="true"
+      [showCart]="false"
+      [showDescription]="false"
+      [purchaseDate]="p.purchaseDate"
+      [version]="p.version"
+      [size]="p.size"
+      [downloads]="p.downloads"
+      (favorite)="toggleFavorite($event)"
+      (download)="download(p)"
+      (preview)="preview(p)"
+      (openProduct)="openProduct($event)"
+    >
+    </app-product-card>
+  </section>
+
+  <!-- ========================= -->
+  <!-- ANTEPRIMA PDF -->
+  <!-- ========================= -->
+
+  <div class="preview-modal" *ngIf="plannerSelected">
+    <div class="modal">
+      <button class="close" (click)="closePreview()">✕</button>
+
+      <img [src]="plannerSelected.product.image" class="preview-image" />
 
+      <h2>
+        {{ plannerSelected.product.name }}
+      </h2>
 
-<header>
+      <p>Anteprima del tuo planner digitale premium.</p>
 
-<div class="logo">
-🌸 DreamCalendar
-</div>
+      <div class="preview-actions">
+        <button (click)="download(plannerSelected)">⬇ Scarica PDF</button>
 
+        <a target="_blank" [href]="plannerSelected.pdfPreview"> 📄 Apri PDF </a>
+      </div>
+    </div>
+  </div>
 
-<nav>
+  <section class="security">
+    <h2>🔐 Licenza digitale</h2>
 
-<a routerLink="/">
-🏠 Home
-</a>
+    <p>
+      Questo planner è associato al tuo account. Puoi scaricarlo ogni volta che
+      vuoi.
+    </p>
 
-<a routerLink="/shop">
-🛒 Shop
-</a>
+    <div>
+      ✔ Acquisto verificato
 
-</nav>
+      <br />
 
+      ✔ Download illimitati
 
-</header>
+      <br />
 
+      ✔ Aggiornamenti futuri inclusi
+    </div>
+  </section>
 
+  <section class="help">
+    <h2>Hai bisogno di aiuto?</h2>
 
+    <p>
+      Problemi con download, file o acquisti? Il nostro supporto è disponibile.
+    </p>
 
+    <a routerLink="/contact"> 💌 Contattaci </a>
+  </section>
 
-<section class="hero">
-
-
-<h1>
-📚 I miei Planner Digitali
-</h1>
-
-
-<p>
-I tuoi acquisti sempre disponibili.
-Scarica, aggiorna e utilizza i tuoi planner ovunque.
-</p>
-
-
-
-<div class="stats">
-
-
-<div class="stat-card">
-
-<span>📚</span>
-
-<h2>
-{{planners.length}}
-</h2>
-
-<p>
-Planner acquistati
-</p>
-
-</div>
-
-
-
-<div class="stat-card">
-
-<span>⬇️</span>
-
-<h2>
-{{totalDownloads}}
-</h2>
-
-<p>
-Download effettuati
-</p>
-
-</div>
-
-
-
-<div class="stat-card">
-
-<span>📅</span>
-
-<h2>
-{{currentYear}}
-</h2>
-
-<p>
-Anno licenza
-</p>
-
-</div>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<section class="tools">
-
-
-<input
-
-type="text"
-
-placeholder="🔍 Cerca nei tuoi planner..."
-
-[(ngModel)]="searchText">
-
-
-<div class="categories">
-
-
-<button
-
-*ngFor="let c of categories"
-
-(click)="selectCategory(c)"
-
-[class.active]="selectedCategory===c">
-
-
-{{c}}
-
-
-</button>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-<div
-
-class="message"
-
-*ngIf="downloadMessage">
-
-
-{{downloadMessage}}
-
-
-</div>
-
-
-
-
-
-
-
-
-<section class="planner-grid">
-
-
-
-<app-product-card
-
-
-*ngFor="let p of filteredPlanners"
-
-
-[product]="p.product"
-
-
-mode="owned"
-
-
-[showFavorite]="true"
-
-
-[showCart]="false"
-
-
-[showDescription]="false"
-
-
-[purchaseDate]="p.purchaseDate"
-
-
-[version]="p.version"
-
-
-[size]="p.size"
-
-
-[downloads]="p.downloads"
-
-
-
-(favorite)="toggleFavorite($event)"
-
-(download)="download(p)"
-
-
-(preview)="preview(p)"
-
-
-(openProduct)="openProduct($event)"
-
-
->
-
-
-</app-product-card>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ========================= -->
-<!-- ANTEPRIMA PDF -->
-<!-- ========================= -->
-
-
-<div
-
-class="preview-modal"
-
-*ngIf="plannerSelected">
-
-
-
-<div class="modal">
-
-
-
-<button
-
-class="close"
-
-(click)="closePreview()">
-
-✕
-
-</button>
-
-
-
-
-
-<img
-
-[src]="plannerSelected.product.image"
-
-class="preview-image">
-
-
-
-
-
-<h2>
-
-{{plannerSelected.product.name}}
-
-</h2>
-
-
-
-
-
-<p>
-
-Anteprima del tuo planner digitale premium.
-
-</p>
-
-
-
-
-
-
-
-<div class="preview-actions">
-
-
-
-<button
-
-(click)="download(plannerSelected)">
-
-⬇ Scarica PDF
-
-</button>
-
-
-
-
-
-<a
-
-target="_blank"
-
-[href]="plannerSelected.pdfPreview">
-
-
-📄 Apri PDF
-
-
-</a>
-
-
-</div>
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<section class="security">
-
-
-<h2>
-🔐 Licenza digitale
-</h2>
-
-
-
-<p>
-
-Questo planner è associato al tuo account.
-
-Puoi scaricarlo ogni volta che vuoi.
-
-</p>
-
-
-
-<div>
-
-✔ Acquisto verificato
-
-<br>
-
-✔ Download illimitati
-
-<br>
-
-✔ Aggiornamenti futuri inclusi
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<section class="help">
-
-
-<h2>
-
-Hai bisogno di aiuto?
-
-</h2>
-
-
-
-<p>
-
-Problemi con download, file o acquisti?
-
-Il nostro supporto è disponibile.
-
-</p>
-
-
-
-<a routerLink="/contact">
-
-💌 Contattaci
-
-</a>
-
-
-</section>
-
-
-
-
-
-
-
-
-<footer>
-
-🌸 DreamCalendar
-
-</footer>
-
-
-
+  <footer>🌸 DreamCalendar</footer>
 </div>

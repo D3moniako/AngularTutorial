@@ -1,12 +1,5 @@
 export const environment = {
+  production: true,
 
-
-production:true,
-
-
-stripePublishableKey:
-
-'INSERISCI_PK_LIVE_STRIPE'
-
-
+  stripePublishableKey: 'INSERISCI_PK_LIVE_STRIPE',
 };

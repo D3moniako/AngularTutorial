@@ -1,95 +1,45 @@
 import { Product } from './product';
 
-
-
 export interface Order {
+  id: number;
 
+  userId: number;
 
-id:number;
+  // prodotti acquistati
 
+  products: Product[];
 
+  // totale pagato
 
-userId:number;
+  total: number;
 
+  // data acquisto
 
+  purchaseDate: string;
 
-// prodotti acquistati
+  // stato ordine
 
-products:Product[];
+  status: 'PAGATO' | 'IN_ATTESA' | 'ANNULLATO';
 
+  // download disponibili
 
+  downloadAvailable: boolean;
 
-// totale pagato
+  // informazioni cliente
 
-total:number;
+  customerName?: string;
 
+  customerEmail?: string;
 
+  customerAddress?: string;
 
-// data acquisto
+  // collegamento pagamento
 
-purchaseDate:string;
+  paymentId?: number;
 
+  // futura integrazione Stripe
 
+  stripeSessionId?: string;
 
-// stato ordine
-
-status:
-
-'PAGATO'
-
-|
-
-'IN_ATTESA'
-
-|
-
-'ANNULLATO';
-
-
-
-
-
-// download disponibili
-
-downloadAvailable:boolean;
-
-
-
-
-
-
-
-// informazioni cliente
-
-customerName?:string;
-
-
-customerEmail?:string;
-
-
-customerAddress?:string;
-
-
-
-
-
-
-
-
-// collegamento pagamento
-
-paymentId?:number;
-
-
-
-// futura integrazione Stripe
-
-stripeSessionId?:string;
-
-
-
-stripePaymentIntentId?:string;
-
-
-
+  stripePaymentIntentId?: string;
 }

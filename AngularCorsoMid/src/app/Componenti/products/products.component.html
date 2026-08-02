@@ -1,772 +1,197 @@
 <div class="product-page">
+  <!-- ============================= -->
+  <!-- PRODOTTO NON TROVATO -->
+  <!-- ============================= -->
 
+  <section class="not-found" *ngIf="!product">
+    <h2>Prodotto non trovato 🌸</h2>
 
-<!-- ============================= -->
-<!-- PRODOTTO NON TROVATO -->
-<!-- ============================= -->
+    <a routerLink="/shop"> Torna allo shop </a>
+  </section>
 
+  <!-- ============================= -->
+  <!-- DETTAGLIO PRODOTTO -->
+  <!-- ============================= -->
 
-<section
+  <section class="product-main" *ngIf="product">
+    <div class="gallery">
+      <img [src]="product.image" [alt]="product.name" />
+    </div>
 
-class="not-found"
+    <div class="info">
+      <span class="badge">
+        {{ product.badge }}
+      </span>
 
-*ngIf="!product">
+      <h1>
+        {{ product.name }}
+      </h1>
 
+      <div class="stars">
+        <span *ngFor="let star of [].constructor(product.rating)"> ⭐ </span>
+      </div>
 
-<h2>
+      <p class="description">
+        {{ product.description }}
+      </p>
 
-Prodotto non trovato 🌸
+      <ul>
+        <li>✓ Download immediato</li>
 
-</h2>
+        <li>✓ Compatibile iPad e GoodNotes</li>
 
+        <li>✓ Planner digitale premium</li>
 
-<a routerLink="/shop">
+        <li>✓ Utilizzabile anche PDF</li>
+      </ul>
 
-Torna allo shop
+      <div class="price">
+        {{ product.price | currency: "EUR" }}
+      </div>
 
-</a>
+      <div class="actions">
+        <div class="quantity-box">
+          <button (click)="decreaseQuantity()">−</button>
 
+          <span>
+            {{ quantity }}
+          </span>
 
-</section>
+          <button (click)="increaseQuantity()">+</button>
+        </div>
 
+        <button class="cart-button" (click)="addCart()">
+          🛒 Aggiungi al carrello
+        </button>
 
+        <button class="fav" (click)="toggleFavorite()">
+          {{ product.favorite ? "❤️" : "🤍" }}
+        </button>
+      </div>
+    </div>
+  </section>
 
+  <!-- ============================= -->
+  <!-- CARATTERISTICHE -->
+  <!-- ============================= -->
 
+  <section class="details-box" *ngIf="product">
+    <h2>Perché scegliere questo planner</h2>
 
+    <div class="features">
+      <div>📅 Calendario</div>
 
+      <div>🎯 Obiettivi</div>
 
+      <div>✏️ Note creative</div>
 
-<!-- ============================= -->
-<!-- DETTAGLIO PRODOTTO -->
-<!-- ============================= -->
+      <div>💎 Design premium</div>
+    </div>
+  </section>
 
-
-<section
-
-class="product-main"
-
-*ngIf="product">
-
-
-
-
-
-<div class="gallery">
-
-
-<img
-
-[src]="product.image"
-
-[alt]="product.name">
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="info">
-
-
-
-<span class="badge">
-
-{{product.badge}}
-
-</span>
-
-
-
-
-
-<h1>
-
-{{product.name}}
-
-</h1>
-
-
-
-
-
-
-
-<div class="stars">
-
-
-<span
-
-*ngFor="let star of [].constructor(product.rating)">
-
-⭐
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-<p class="description">
-
-{{product.description}}
-
-</p>
-
-
-
-
-
-
-
-
-<ul>
-
-
-<li>
-
-✓ Download immediato
-
-</li>
-
-
-<li>
-
-✓ Compatibile iPad e GoodNotes
-
-</li>
-
-
-<li>
-
-✓ Planner digitale premium
-
-</li>
-
-
-<li>
-
-✓ Utilizzabile anche PDF
-
-</li>
-
-
-</ul>
-
-
-
-
-
-
-
-<div class="price">
-
-{{product.price | currency:'EUR'}}
-
-</div>
-
-
-
-
-
-
-
-
-<div class="actions">
-
-
-
-
-
-<div class="quantity-box">
-
-
-<button
-
-(click)="decreaseQuantity()">
-
-−
-
-</button>
-
-
-
-
-
-<span>
-
-{{quantity}}
-
-</span>
-
-
-
-
-
-<button
-
-(click)="increaseQuantity()">
-
-+
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<button
-
-class="cart-button"
-
-(click)="addCart()">
-
-
-
-🛒 Aggiungi al carrello
-
-
-
-</button>
-
-
-
-
-
-
-
-
-<button
-
-class="fav"
-
-(click)="toggleFavorite()">
-
-
-
-{{product.favorite ? '❤️':'🤍'}}
-
-
-
-</button>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ============================= -->
-<!-- CARATTERISTICHE -->
-<!-- ============================= -->
-
-
-<section
-
-class="details-box"
-
-*ngIf="product">
-
-
-
-<h2>
-
-Perché scegliere questo planner
-
-</h2>
-
-
-
-
-
-<div class="features">
-
-
-
-<div>
-
-📅 Calendario
-
-</div>
-
-
-
-<div>
-
-🎯 Obiettivi
-
-</div>
-
-
-
-<div>
-
-✏️ Note creative
-
-</div>
-
-
-
-<div>
-
-💎 Design premium
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ============================= -->
-<!-- RECENSIONI -->
-<!-- ============================= -->
-
-
-<section
-
-class="reviews"
-
-*ngIf="product">
-
-
-
-
-
-
-<h2>
-
-⭐ Recensioni clienti
-
-</h2>
-
-
-
-
-
-
-
-
-
-
-<div
-
-class="review-card"
-
-*ngFor="let review of product.reviews">
-
-
-
-
-
-
-<div class="review-header">
-
-
-
-<strong>
-
-👤 {{review.user}}
-
-</strong>
-
-
-
-
-
-
-<span
-
-class="verified"
-
-*ngIf="review.verified">
-
-
-✔ Cliente verificato
-
-</span>
-
-
-
-
-
-
-
-<small>
-
-{{review.date}}
-
-</small>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="review-stars">
-
-
-<span
-
-*ngFor="let star of [].constructor(review.rating)">
-
-⭐
-
-</span>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<p>
-
-{{review.comment}}
-
-</p>
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div
-
-class="empty-review"
-
-*ngIf="!product.reviews || product.reviews.length===0">
-
-
-Ancora nessuna recensione 🌸
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- ============================= -->
-<!-- FORM RECENSIONE -->
-<!-- ============================= -->
-
-
-
-<div
-
-class="review-login-message"
-
-*ngIf="!canReview">
-
-
-<p *ngIf="!user">
-
-
-🔒 Devi effettuare il login per lasciare una recensione.
-
-</p>
-
-
-
-<p *ngIf="user">
-
-
-🔒 Puoi lasciare una recensione solo dopo aver acquistato questo planner.
-
-</p>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-<div
-
-class="add-review"
-
-*ngIf="canReview">
-
-
-
-
-
-<h3>
-
-Lascia la tua recensione
-
-</h3>
-
-
-
-
-
-
-
-<p class="logged-user">
-
-
-Recensione di:
-
-
-<strong>
-
-{{user?.name}}
-
-</strong>
-
-
-</p>
-
-
-
-
-
-
-
-
-
-<select
-
-[(ngModel)]="newReview.rating">
-
-
-<option [value]="5">
-
-⭐⭐⭐⭐⭐
-
-</option>
-
-
-<option [value]="4">
-
-⭐⭐⭐⭐
-
-</option>
-
-
-<option [value]="3">
-
-⭐⭐⭐
-
-</option>
-
-
-<option [value]="2">
-
-⭐⭐
-
-</option>
-
-
-<option [value]="1">
-
-⭐
-
-</option>
-
-
-</select>
-
-
-
-
-
-
-
-
-<textarea
-
-placeholder="Scrivi il tuo commento"
-
-[(ngModel)]="newReview.comment">
-
-</textarea>
-
-
-
-
-
-
-
-
-<button
-
-(click)="addReview()">
-
-
-
-Invia recensione 🌸
-
-
-
-</button>
-
-
-
-
-
-
-</div>
-
-
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- ============================= -->
-<!-- PRODOTTI CORRELATI -->
-<!-- ============================= -->
-
-
-<section
-
-class="related"
-
-*ngIf="relatedProducts.length">
-
-
-<h2>
-
-Potrebbero piacerti anche 🌸
-
-</h2>
-
-
-
-<div class="related-grid">
-
-
-<app-product-card
-
-*ngFor="let p of relatedProducts"
-
-[product]="p"
-
-mode="shop"
-
-[showFavorite]="true"
-
-[showCart]="true"
-
-[showDescription]="false"
-
-
-(addCart)="addRelatedToCart($event)"
-(favorite)="toggleFavoriteRelated($event)"
-
->
-
-</app-product-card>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
+  <!-- ============================= -->
+  <!-- RECENSIONI -->
+  <!-- ============================= -->
+
+  <section class="reviews" *ngIf="product">
+    <h2>⭐ Recensioni clienti</h2>
+
+    <div class="review-card" *ngFor="let review of product.reviews">
+      <div class="review-header">
+        <strong> 👤 {{ review.user }} </strong>
+
+        <span class="verified" *ngIf="review.verified">
+          ✔ Cliente verificato
+        </span>
+
+        <small>
+          {{ review.date }}
+        </small>
+      </div>
+
+      <div class="review-stars">
+        <span *ngFor="let star of [].constructor(review.rating)"> ⭐ </span>
+      </div>
+
+      <p>
+        {{ review.comment }}
+      </p>
+    </div>
+
+    <div
+      class="empty-review"
+      *ngIf="!product.reviews || product.reviews.length === 0"
+    >
+      Ancora nessuna recensione 🌸
+    </div>
+
+    <!-- ============================= -->
+    <!-- FORM RECENSIONE -->
+    <!-- ============================= -->
+
+    <div class="review-login-message" *ngIf="!canReview">
+      <p *ngIf="!user">
+        🔒 Devi effettuare il login per lasciare una recensione.
+      </p>
+
+      <p *ngIf="user">
+        🔒 Puoi lasciare una recensione solo dopo aver acquistato questo
+        planner.
+      </p>
+    </div>
+
+    <div class="add-review" *ngIf="canReview">
+      <h3>Lascia la tua recensione</h3>
+
+      <p class="logged-user">
+        Recensione di:
+
+        <strong>
+          {{ user?.name }}
+        </strong>
+      </p>
+
+      <select [(ngModel)]="newReview.rating">
+        <option [value]="5">⭐⭐⭐⭐⭐</option>
+
+        <option [value]="4">⭐⭐⭐⭐</option>
+
+        <option [value]="3">⭐⭐⭐</option>
+
+        <option [value]="2">⭐⭐</option>
+
+        <option [value]="1">⭐</option>
+      </select>
+
+      <textarea
+        placeholder="Scrivi il tuo commento"
+        [(ngModel)]="newReview.comment"
+      >
+      </textarea>
+
+      <button (click)="addReview()">Invia recensione 🌸</button>
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- PRODOTTI CORRELATI -->
+  <!-- ============================= -->
+
+  <section class="related" *ngIf="relatedProducts.length">
+    <h2>Potrebbero piacerti anche 🌸</h2>
+
+    <div class="related-grid">
+      <app-product-card
+        *ngFor="let p of relatedProducts"
+        [product]="p"
+        mode="shop"
+        [showFavorite]="true"
+        [showCart]="true"
+        [showDescription]="false"
+        (addCart)="addRelatedToCart($event)"
+        (favorite)="toggleFavoriteRelated($event)"
+      >
+      </app-product-card>
+    </div>
+  </section>
 </div>

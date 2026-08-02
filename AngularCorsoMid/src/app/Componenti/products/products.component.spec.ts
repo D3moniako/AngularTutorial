@@ -6,78 +6,30 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { FormsModule } from '@angular/forms';
 
-
 describe('ProductsComponent', () => {
+  let component: ProductsComponent;
 
+  let fixture: ComponentFixture<ProductsComponent>;
 
-let component: ProductsComponent;
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ProductsComponent],
 
-let fixture: ComponentFixture<ProductsComponent>;
+      imports: [RouterTestingModule, FormsModule],
+    })
 
+      .compileComponents();
+  });
 
+  beforeEach(() => {
+    fixture = TestBed.createComponent(ProductsComponent);
 
-beforeEach(async () => {
+    component = fixture.componentInstance;
 
+    fixture.detectChanges();
+  });
 
-await TestBed.configureTestingModule({
-
-
-declarations:[
-
-ProductsComponent
-
-],
-
-
-imports:[
-
-RouterTestingModule,
-
-FormsModule
-
-]
-
-
-})
-
-.compileComponents();
-
-
-
-});
-
-
-
-
-
-
-beforeEach(()=>{
-
-
-fixture = TestBed.createComponent(ProductsComponent);
-
-
-component = fixture.componentInstance;
-
-
-fixture.detectChanges();
-
-
-});
-
-
-
-
-
-
-it('should create',()=>{
-
-
-expect(component).toBeTruthy();
-
-
-});
-
-
-
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

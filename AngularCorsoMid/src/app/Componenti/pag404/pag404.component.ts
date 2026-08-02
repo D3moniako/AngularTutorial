@@ -1,2202 +1,895 @@
-import {
-Component,
-OnDestroy
-}
-from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 
-
-import {
-Router
-}
-from '@angular/router';
-
-
+import { Router } from '@angular/router';
 
 interface Player {
+  name: string;
 
-name:string;
+  level: number;
 
-level:number;
+  xp: number;
 
-xp:number;
+  coins: number;
 
-coins:number;
+  score: number;
 
-score:number;
+  streak: number;
 
-streak:number;
-
-badges:string[];
-
+  badges: string[];
 }
-
-
 
 interface CalendarDay {
+  day: number;
 
-day:number;
+  month: string;
 
-month:string;
+  icon: string;
 
-icon:string;
+  event: string;
 
-event:string;
-
-special:boolean;
-
+  special: boolean;
 }
-
-
 
 interface Badge {
+  id: number;
 
-id:number;
+  name: string;
 
-name:string;
+  description: string;
 
-description:string;
+  icon: string;
 
-icon:string;
-
-unlocked:boolean;
-
+  unlocked: boolean;
 }
-
-
-
 
 @Component({
+  selector: 'app-pag404',
 
-selector:'app-pag404',
+  templateUrl: './pag404.component.html',
 
-templateUrl:'./pag404.component.html',
-
-styleUrls:['./pag404.component.css']
-
+  styleUrls: ['./pag404.component.css'],
 })
-
 export class Pag404Component implements OnDestroy {
+  gameStarted: boolean = false;
 
+  gameOver: boolean = false;
 
+  victory: boolean = false;
 
-gameStarted:boolean=false;
+  currentGame: 'lostDay' | 'memory' | 'quiz' | null = null;
 
-gameOver:boolean=false;
+  time: number = 60;
 
-victory:boolean=false;
+  private timer: any;
 
+  player: Player = {
+    name: 'Dreamer',
 
-currentGame:
-'lostDay'
-|
-'memory'
-|
-'quiz'
-|null=null;
+    level: 1,
 
+    xp: 0,
 
+    coins: 0,
 
-time:number=60;
+    score: 0,
 
+    streak: 0,
 
-private timer:any;
+    badges: [],
+  };
 
+  statistics = {
+    gamesPlayed: 0,
 
+    daysFound: 0,
 
-player:Player={
+    memoryWins: 0,
 
-name:'Dreamer',
+    quizCorrect: 0,
 
-level:1,
+    bestScore: 0,
+  };
 
-xp:0,
+  months = [
+    'Gennaio',
+    'Febbraio',
+    'Marzo',
+    'Aprile',
+    'Maggio',
+    'Giugno',
+    'Luglio',
+    'Agosto',
+    'Settembre',
+    'Ottobre',
+    'Novembre',
+    'Dicembre',
+  ];
 
-coins:0,
+  calendarDays: CalendarDay[] = [];
 
-score:0,
+  targetDay: number = 0;
 
-streak:0,
+  message: string = 'La pagina perduta del calendario ti aspetta 🌸';
 
-badges:[]
+  badges: Badge[] = [
+    {
+      id: 1,
+      name: 'Primo Planner',
+      description: 'Hai iniziato la tua avventura',
+      icon: '🌱',
+      unlocked: false,
+    },
 
-};
+    {
+      id: 2,
+      name: 'Organizzatore',
+      description: 'Hai trovato 10 giornate',
+      icon: '📅',
+      unlocked: false,
+    },
 
+    {
+      id: 3,
+      name: 'Dream Master',
+      description: 'Hai superato 500 punti',
+      icon: '⭐',
+      unlocked: false,
+    },
 
+    {
+      id: 4,
+      name: 'Calendar Legend',
+      description: 'Hai completato tutti i giochi',
+      icon: '👑',
+      unlocked: false,
+    },
+  ];
 
+  constructor(private router: Router) {
+    this.loadGame();
 
+    this.generateCalendar();
+  }
 
-statistics={
+  startAdventure() {
+    this.currentGame = 'lostDay';
 
-gamesPlayed:0,
+    this.gameStarted = true;
 
-daysFound:0,
+    this.gameOver = false;
 
-memoryWins:0,
+    this.victory = false;
+    this.currentGame = 'lostDay';
 
-quizCorrect:0,
+    this.statistics.gamesPlayed++;
 
-bestScore:0
+    this.player.score = 0;
 
-};
+    this.generateCalendar();
 
+    this.startTimer();
 
+    this.message = '🌸 Recupera le pagine perdute del planner';
+  }
 
+  startTimer() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
 
+    this.time = 60;
 
-months=[
+    this.timer = setInterval(() => {
+      this.time--;
 
-'Gennaio',
-'Febbraio',
-'Marzo',
-'Aprile',
-'Maggio',
-'Giugno',
-'Luglio',
-'Agosto',
-'Settembre',
-'Ottobre',
-'Novembre',
-'Dicembre'
+      if (this.time <= 0) {
+        this.endGame();
+      }
+    }, 1000);
+  }
 
-];
+  endGame() {
+    clearInterval(this.timer);
 
+    this.gameOver = true;
 
+    this.gameStarted = false;
 
+    this.message = '⏰ Il calendario è scaduto!';
 
-calendarDays:CalendarDay[]=[];
+    this.saveGame();
+  }
 
+  generateCalendar() {
+    this.calendarDays = [];
 
-targetDay:number=0;
+    const icons = ['🌸', '⭐', '☕', '📚', '💼', '🎨', '🌙'];
 
+    const events = [
+      'Momento creativo',
+      'Obiettivo giornaliero',
+      'Pausa relax',
+      'Studio',
+      'Lavoro',
+      'Arte',
+      'Riposo',
+    ];
 
-message:string=
-'La pagina perduta del calendario ti aspetta 🌸';
+    for (let i = 1; i <= 31; i++) {
+      const random = Math.floor(Math.random() * icons.length);
 
+      this.calendarDays.push({
+        day: i,
 
+        month: 'Gennaio',
 
+        icon: icons[random],
 
+        event: events[random],
 
-badges:Badge[]=[
+        special: false,
+      });
+    }
 
+    this.targetDay = Math.floor(Math.random() * 31) + 1;
 
-{
-id:1,
-name:'Primo Planner',
-description:'Hai iniziato la tua avventura',
-icon:'🌱',
-unlocked:false
-},
+    this.calendarDays[this.targetDay - 1].special = true;
+  }
+  // ================================
+  // SISTEMA PUNTI
+  // ================================
 
+  addScore(value: number) {
+    this.player.score += value;
 
-{
-id:2,
-name:'Organizzatore',
-description:'Hai trovato 10 giornate',
-icon:'📅',
-unlocked:false
-},
+    if (this.player.score > this.statistics.bestScore) {
+      this.statistics.bestScore = this.player.score;
 
+      this.updateMissions();
+    }
 
-{
-id:3,
-name:'Dream Master',
-description:'Hai superato 500 punti',
-icon:'⭐',
-unlocked:false
-},
+    this.addXP(value / 2);
 
+    this.updateMissions();
+  }
 
-{
-id:4,
-name:'Calendar Legend',
-description:'Hai completato tutti i giochi',
-icon:'👑',
-unlocked:false
-}
+  addXP(value: number) {
+    this.player.xp += value;
 
-];
+    if (this.player.xp >= 100) {
+      this.player.level++;
 
+      this.player.xp = 0;
 
+      this.message = '🎉 Nuovo livello raggiunto!';
+    }
+  }
 
+  // ================================
+  // LOST DAY GAME
+  // ================================
 
+  combo: number = 0;
 
-constructor(
+  lastFound: number = -1;
 
-private router:Router
+  clickDay(day: number) {
+    if (!this.gameStarted || this.gameOver) {
+      return;
+    }
 
-){
+    if (day === this.targetDay) {
+      this.combo++;
 
-this.loadGame();
+      let points = 100;
 
-this.generateCalendar();
+      if (this.combo >= 3) {
+        points *= 2;
 
-}
+        this.message = '🔥 Combo x2! Ottimo lavoro!';
+      } else {
+        this.message = '🌸 Hai trovato la giornata perduta!';
+      }
 
+      this.addScore(points);
 
+      this.statistics.daysFound++;
 
+      this.lastFound = day;
 
+      this.player.coins += 10;
 
-startAdventure(){
+      this.checkBadges();
 
-this.currentGame='lostDay';
+      setTimeout(() => {
+        this.lastFound = -1;
+      }, 700);
 
-this.gameStarted=true;
+      this.generateNextDay();
+    } else {
+      this.combo = 0;
 
-this.gameOver=false;
+      this.time -= 3;
 
-this.victory=false;
-this.currentGame='lostDay';
+      if (this.time < 0) {
+        this.time = 0;
+      }
 
-this.statistics.gamesPlayed++;
+      this.message = '❌ Giorno sbagliato! -3 secondi';
+    }
+  }
 
-this.player.score=0;
+  generateNextDay() {
+    this.calendarDays.forEach((day) => {
+      day.special = false;
+    });
 
-this.generateCalendar();
+    this.targetDay = Math.floor(Math.random() * 31) + 1;
 
-this.startTimer();
+    this.calendarDays[this.targetDay - 1].special = true;
+  }
 
-this.message=
-'🌸 Recupera le pagine perdute del planner';
+  // ================================
+  // MEMORY GAME
+  // ================================
 
-}
+  memoryCards: any[] = [];
 
+  flippedCards: any[] = [];
 
+  memoryMatches: number = 0;
 
+  memoryLock: boolean = false;
 
+  createMemory() {
+    const values = ['🌸', '⭐', '☕', '📚', '💼', '🎨'];
 
-startTimer(){
+    this.memoryCards = [];
 
+    this.memoryMatches = 0;
 
-if(this.timer){
+    this.flippedCards = [];
 
-clearInterval(this.timer);
+    values.forEach((v) => {
+      this.memoryCards.push({
+        value: v,
 
-}
+        hidden: true,
 
+        matched: false,
+      });
 
-this.time=60;
+      this.memoryCards.push({
+        value: v,
 
+        hidden: true,
 
-this.timer=setInterval(()=>{
+        matched: false,
+      });
+    });
 
+    this.shuffleCards();
+  }
 
-this.time--;
+  shuffleCards() {
+    this.memoryCards.sort(() => Math.random() - 0.5);
+  }
 
+  startMemory() {
+    this.currentGame = 'memory';
 
-if(this.time<=0){
+    this.gameStarted = true;
 
-this.endGame();
+    this.createMemory();
 
-}
+    this.memoryMatches = 0;
 
+    this.flippedCards = [];
 
-},1000);
+    this.message = '🧠 Trova tutte le coppie del planner';
+  }
 
+  flipCard(index: number) {
+    if (this.memoryLock) {
+      return;
+    }
 
-}
+    const card = this.memoryCards[index];
 
+    if (card.matched || !card.hidden) {
+      return;
+    }
 
+    card.hidden = false;
 
+    this.flippedCards.push(card);
 
+    if (this.flippedCards.length === 2) {
+      this.memoryLock = true;
 
-endGame(){
+      setTimeout(() => {
+        this.checkMemory();
+      }, 600);
+    }
+  }
 
+  checkMemory() {
+    const first = this.flippedCards[0];
 
-clearInterval(this.timer);
+    const second = this.flippedCards[1];
 
+    if (first.value === second.value) {
+      first.matched = true;
 
-this.gameOver=true;
+      second.matched = true;
 
-this.gameStarted=false;
+      this.memoryMatches++;
 
+      this.addScore(50);
 
-this.message=
-'⏰ Il calendario è scaduto!';
+      this.message = '✨ Coppia trovata!';
 
+      this.memoryMatches = 0;
 
-this.saveGame();
+      if (this.memoryMatches === 6) {
+        this.statistics.memoryWins++;
 
+        this.player.coins += 50;
 
-}
+        this.message = '🏆 Memory completato!';
 
+        this.checkBadges();
+      }
+    } else {
+      first.hidden = true;
 
+      second.hidden = true;
 
+      this.message = '❌ Coppia sbagliata';
+    }
 
-generateCalendar(){
+    this.flippedCards = [];
 
+    this.memoryLock = false;
+  }
+  // ================================
+  // QUIZ PLANNER
+  // ================================
 
-this.calendarDays=[];
+  quizIndex: number = 0;
 
+  quizScore: number = 0;
 
-const icons=[
+  questions = [
+    {
+      question: 'Quale strumento aiuta ad organizzare meglio la giornata?',
 
-'🌸',
-'⭐',
-'☕',
-'📚',
-'💼',
-'🎨',
-'🌙'
+      answers: ['Un planner', 'Il caos', 'Mai programmare'],
 
-];
+      correct: 0,
+    },
 
+    {
+      question: 'Quando scarichi un planner digitale?',
 
-const events=[
+      answers: ['Dopo settimane', 'Subito dopo acquisto', 'Mai'],
 
-'Momento creativo',
-'Obiettivo giornaliero',
-'Pausa relax',
-'Studio',
-'Lavoro',
-'Arte',
-'Riposo'
+      correct: 1,
+    },
 
-];
+    {
+      question: 'Un obiettivo scritto è più facile da seguire?',
 
+      answers: ['Si', 'No', 'Mai'],
 
+      correct: 0,
+    },
+  ];
 
-for(let i=1;i<=31;i++){
+  startQuiz() {
+    this.currentGame = 'quiz';
 
+    this.gameStarted = true;
 
-const random=Math.floor(
-Math.random()*icons.length
-);
+    this.quizIndex = 0;
 
+    this.quizScore = 0;
 
+    this.message = '❓ Rispondi alle domande DreamCalendar';
+  }
 
-this.calendarDays.push({
+  answerQuiz(index: number) {
+    if (this.quizIndex >= this.questions.length) {
+      return;
+    }
 
-day:i,
+    const question = this.questions[this.quizIndex];
 
-month:'Gennaio',
+    if (index === question.correct) {
+      this.quizScore++;
 
-icon:icons[random],
+      this.addScore(75);
 
-event:events[random],
+      this.statistics.quizCorrect++;
 
-special:false
+      this.message = '✅ Risposta corretta!';
+    } else {
+      this.message = '❌ Risposta sbagliata';
+    }
 
-});
+    this.quizIndex++;
 
+    if (this.quizIndex >= this.questions.length) {
+      this.finishQuiz();
+    }
+  }
 
-}
+  finishQuiz() {
+    if (this.quizScore === this.questions.length) {
+      this.player.coins += 100;
 
+      this.message = '👑 Quiz perfetto!';
+    }
 
+    this.checkBadges();
 
-this.targetDay=
-Math.floor(Math.random()*31)+1;
+    this.updateMissions();
+  }
 
+  // ================================
+  // MISSIONI
+  // ================================
 
-this.calendarDays[
-this.targetDay-1
-].special=true;
+  missions = [
+    {
+      id: 1,
 
+      title: 'Trova 5 giornate perdute',
 
-}
-// ================================
-// SISTEMA PUNTI
-// ================================
+      goal: 5,
 
+      progress: 0,
 
-addScore(value:number){
+      reward: 100,
 
+      completed: false,
+    },
 
-this.player.score+=value;
+    {
+      id: 2,
 
+      title: 'Ottieni 500 punti',
 
+      goal: 500,
 
-if(this.player.score >
-this.statistics.bestScore){
+      progress: 0,
 
+      reward: 200,
 
-this.statistics.bestScore =
-this.player.score;
+      completed: false,
+    },
 
-this.updateMissions();
+    {
+      id: 3,
 
-}
+      title: 'Completa il Memory Planner',
 
+      goal: 1,
 
+      progress: 0,
 
-this.addXP(value/2);
+      reward: 150,
 
+      completed: false,
+    },
 
+    {
+      id: 4,
 
-this.updateMissions();
+      title: 'Completa il Quiz',
 
+      goal: 3,
 
-}
+      progress: 0,
 
+      reward: 250,
 
+      completed: false,
+    },
+  ];
 
+  updateMissions() {
+    this.missions.forEach((mission) => {
+      switch (mission.id) {
+        case 1:
+          mission.progress = this.statistics.daysFound;
 
+          break;
 
+        case 2:
+          mission.progress = this.player.score;
 
-addXP(value:number){
+          break;
 
+        case 3:
+          mission.progress = this.statistics.memoryWins;
 
-this.player.xp+=value;
+          break;
 
+        case 4:
+          mission.progress = this.statistics.quizCorrect;
 
+          break;
+      }
 
-if(this.player.xp>=100){
+      if (mission.progress >= mission.goal && !mission.completed) {
+        mission.completed = true;
 
+        this.player.coins += mission.reward;
 
+        this.addXP(50);
 
-this.player.level++;
+        this.message = '🎁 Missione completata: ' + mission.title;
+      }
+    });
+  }
 
+  // ================================
+  // BADGE SYSTEM
+  // ================================
 
-this.player.xp=0;
+  checkBadges() {
+    this.badges.forEach((badge) => {
+      if (badge.unlocked) {
+        return;
+      }
 
+      switch (badge.id) {
+        case 1:
+          if (this.statistics.gamesPlayed >= 1) {
+            this.unlockBadge(badge);
+          }
 
+          break;
 
-this.message=
-'🎉 Nuovo livello raggiunto!';
+        case 2:
+          if (this.statistics.daysFound >= 10) {
+            this.unlockBadge(badge);
+          }
 
+          break;
 
+        case 3:
+          if (this.player.score >= 500) {
+            this.unlockBadge(badge);
+          }
 
-}
+          break;
 
+        case 4:
+          if (
+            this.statistics.daysFound > 0 &&
+            this.statistics.memoryWins > 0 &&
+            this.statistics.quizCorrect > 0
+          ) {
+            this.unlockBadge(badge);
+          }
 
+          break;
+      }
+    });
+  }
 
-}
+  unlockBadge(badge: Badge) {
+    badge.unlocked = true;
 
+    this.player.badges.push(badge.name);
 
+    this.player.coins += 100;
 
+    this.message = '🏆 Nuovo badge ottenuto: ' + badge.icon + ' ' + badge.name;
+  }
 
+  // ================================
+  // SHOP PREMI
+  // ================================
 
+  rewards = [
+    {
+      name: 'Planner Rosa',
 
+      icon: '🌸',
 
+      cost: 100,
+    },
 
-// ================================
-// LOST DAY GAME
-// ================================
+    {
+      name: 'Tema Luxury',
 
+      icon: '✨',
 
-combo:number=0;
+      cost: 200,
+    },
 
+    {
+      name: 'Calendario Oro',
 
-lastFound:number=-1;
+      icon: '👑',
 
+      cost: 500,
+    },
+  ];
 
+  buyReward(index: number) {
+    const reward = this.rewards[index];
 
-clickDay(day:number){
+    if (this.player.coins < reward.cost) {
+      this.message = '❌ Non hai abbastanza stelle';
 
+      return;
+    }
 
+    this.player.coins -= reward.cost;
 
-if(
-!this.gameStarted ||
-this.gameOver
-){
+    this.message = '🎁 Hai ottenuto ' + reward.name;
+  }
+  // ================================
+  // FINE AVVENTURA
+  // ================================
 
-return;
+  completeAdventure() {
+    this.victory = true;
 
-}
+    this.gameStarted = false;
 
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
 
+    this.addScore(500);
 
+    this.player.coins += 200;
 
+    this.checkBadges();
 
+    this.updateMissions();
 
-if(day===this.targetDay){
+    this.message = '🌸 Avventura completata! Sei un Dream Master!';
 
+    this.saveGame();
+  }
 
+  // ================================
+  // NAVIGAZIONE
+  // ================================
 
-this.combo++;
+  goHome() {
+    this.router.navigate(['/']);
+  }
 
+  restart() {
+    this.startAdventure();
+  }
 
+  // ================================
+  // SALVATAGGIO
+  // ================================
 
-let points=100;
+  saveGame() {
+    const data = {
+      player: this.player,
 
+      statistics: this.statistics,
 
+      badges: this.badges,
 
+      missions: this.missions,
+    };
 
-if(this.combo>=3){
+    localStorage.setItem(
+      'dreamCalendar404Save',
 
+      JSON.stringify(data),
+    );
+  }
 
+  // ================================
+  // CARICAMENTO
+  // ================================
 
-points*=2;
+  loadGame() {
+    const data = localStorage.getItem('dreamCalendar404Save');
 
+    if (!data) {
+      return;
+    }
 
+    try {
+      const save = JSON.parse(data);
 
-this.message=
-'🔥 Combo x2! Ottimo lavoro!';
+      this.player = save.player || this.player;
 
+      this.statistics = save.statistics || this.statistics;
 
+      this.badges = save.badges || this.badges;
 
-}
+      this.missions = save.missions || this.missions;
+    } catch (e) {
+      console.log('Salvataggio non valido');
+    }
+  }
 
-else{
+  // ================================
+  // RESET
+  // ================================
 
+  resetGame() {
+    localStorage.removeItem('dreamCalendar404Save');
 
-this.message=
-'🌸 Hai trovato la giornata perduta!';
+    location.reload();
+  }
 
+  // ================================
+  // EXTRA GAME SYSTEM
+  // ================================
 
+  lives: number = 3;
 
-}
+  hints: number = 3;
 
+  timeBonus: number = 2;
 
+  shield: boolean = false;
 
+  events: any[] = [
+    {
+      icon: '🌸',
 
-this.addScore(points);
+      text: 'Hai trovato un fiore magico',
+    },
 
+    {
+      icon: '⭐',
 
+      text: 'Hai trovato una stella planner',
+    },
 
-this.statistics.daysFound++;
+    {
+      icon: '📚',
 
+      text: 'Hai trovato una pagina perduta',
+    },
+  ];
 
+  bonusDay: number = 0;
 
-this.lastFound=day;
+  correctDay: number = 0;
 
+  // ================================
+  // CICLO VITA
+  // ================================
 
+  ngOnDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer);
+    }
+  }
 
-this.player.coins+=10;
+  // ================================
+  // GETTERS
+  // ================================
 
+  get level() {
+    return this.player.level;
+  }
 
+  get xp() {
+    return this.player.xp;
+  }
 
-this.checkBadges();
+  getDayName(day: number) {
+    const names = ['Lun', 'Mar', 'Mer', 'Gio', 'Ven', 'Sab', 'Dom'];
 
-
-
-setTimeout(()=>{
-
-
-this.lastFound=-1;
-
-
-},700);
-
-
-
-
-this.generateNextDay();
-
-
-
-}
-
-else{
-
-
-
-this.combo=0;
-
-
-
-this.time-=3;
-
-
-
-if(this.time<0){
-
-this.time=0;
-
-}
-
-
-
-this.message=
-'❌ Giorno sbagliato! -3 secondi';
-
-
-
-}
-
-
-
-
-}
-
-
-
-
-
-
-
-
-generateNextDay(){
-
-
-
-this.calendarDays.forEach(day=>{
-
-
-day.special=false;
-
-
-});
-
-
-
-
-this.targetDay=
-Math.floor(
-Math.random()*31
-)+1;
-
-
-
-
-this.calendarDays[
-this.targetDay-1
-].special=true;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ================================
-// MEMORY GAME
-// ================================
-
-
-
-memoryCards:any[]=[];
-
-
-flippedCards:any[]=[];
-
-
-memoryMatches:number=0;
-
-
-
-memoryLock:boolean=false;
-
-
-
-
-
-createMemory(){
-
-
-
-const values=[
-
-
-'🌸',
-
-'⭐',
-
-'☕',
-
-'📚',
-
-'💼',
-
-'🎨'
-
-
-];
-
-
-
-this.memoryCards=[];
-
-
-this.memoryMatches=0;
-
-
-this.flippedCards=[];
-
-
-
-
-values.forEach(v=>{
-
-
-
-this.memoryCards.push({
-
-
-value:v,
-
-
-hidden:true,
-
-
-matched:false
-
-
-});
-
-
-
-
-this.memoryCards.push({
-
-
-value:v,
-
-
-hidden:true,
-
-
-matched:false
-
-
-});
-
-
-
-});
-
-
-
-
-this.shuffleCards();
-
-
-
-}
-
-
-
-
-
-
-
-shuffleCards(){
-
-
-
-this.memoryCards.sort(()=>
-
-
-Math.random()-.5
-
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-startMemory(){
-
-this.currentGame='memory';
-
-this.gameStarted=true;
-
-this.createMemory();
-
-this.memoryMatches=0;
-
-this.flippedCards=[];
-
-this.message=
-'🧠 Trova tutte le coppie del planner';
-
-}
-
-
-
-
-
-
-
-
-flipCard(index:number){
-
-
-
-if(this.memoryLock){
-
-return;
-
-}
-
-
-
-const card=this.memoryCards[index];
-
-
-
-
-if(
-card.matched ||
-!card.hidden
-){
-
-return;
-
-}
-
-
-
-card.hidden=false;
-
-
-
-this.flippedCards.push(card);
-
-
-
-
-
-if(this.flippedCards.length===2){
-
-
-
-this.memoryLock=true;
-
-
-
-setTimeout(()=>{
-
-
-this.checkMemory();
-
-
-
-},600);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-checkMemory(){
-
-
-
-const first=this.flippedCards[0];
-
-
-const second=this.flippedCards[1];
-
-
-
-
-
-if(first.value===second.value){
-
-
-
-first.matched=true;
-
-
-second.matched=true;
-
-
-
-this.memoryMatches++;
-
-
-
-this.addScore(50);
-
-
-
-this.message=
-'✨ Coppia trovata!';
-
-
-this.memoryMatches=0;
-
-if(this.memoryMatches===6){
-
-
-
-this.statistics.memoryWins++;
-
-
-this.player.coins+=50;
-
-
-
-this.message=
-'🏆 Memory completato!';
-
-
-
-this.checkBadges();
-
-
-
-}
-
-
-
-}
-
-else{
-
-
-
-first.hidden=true;
-
-
-second.hidden=true;
-
-
-
-this.message=
-'❌ Coppia sbagliata';
-
-
-
-}
-
-
-
-
-
-this.flippedCards=[];
-
-
-this.memoryLock=false;
-
-
-
-}
-// ================================
-// QUIZ PLANNER
-// ================================
-
-
-quizIndex:number=0;
-
-
-quizScore:number=0;
-
-
-
-questions=[
-
-
-{
-
-question:
-'Quale strumento aiuta ad organizzare meglio la giornata?',
-
-
-answers:[
-
-'Un planner',
-
-'Il caos',
-
-'Mai programmare'
-
-],
-
-
-correct:0
-
-
-},
-
-
-
-{
-
-question:
-'Quando scarichi un planner digitale?',
-
-
-answers:[
-
-'Dopo settimane',
-
-'Subito dopo acquisto',
-
-'Mai'
-
-],
-
-
-correct:1
-
-
-},
-
-
-
-{
-
-question:
-'Un obiettivo scritto è più facile da seguire?',
-
-
-answers:[
-
-'Si',
-
-'No',
-
-'Mai'
-
-],
-
-
-correct:0
-
-
-}
-
-
-];
-
-
-
-
-
-
-
-startQuiz(){
-
-
-
-this.currentGame='quiz';
-
-
-this.gameStarted=true;
-
-
-this.quizIndex=0;
-
-
-this.quizScore=0;
-
-
-
-this.message=
-'❓ Rispondi alle domande DreamCalendar';
-
-
-
-}
-
-
-
-
-
-
-
-
-answerQuiz(index:number){
-
-
-
-if(
-this.quizIndex>=this.questions.length
-){
-
-return;
-
-}
-
-
-
-
-const question =
-this.questions[this.quizIndex];
-
-
-
-
-
-if(index===question.correct){
-
-
-
-this.quizScore++;
-
-
-this.addScore(75);
-
-
-this.statistics.quizCorrect++;
-
-
-
-this.message=
-'✅ Risposta corretta!';
-
-
-
-}
-
-else{
-
-
-
-this.message=
-'❌ Risposta sbagliata';
-
-
-
-}
-
-
-
-
-
-
-this.quizIndex++;
-
-
-
-
-
-if(
-this.quizIndex>=this.questions.length
-){
-
-
-this.finishQuiz();
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-finishQuiz(){
-
-
-
-if(
-this.quizScore===this.questions.length
-){
-
-
-
-this.player.coins+=100;
-
-
-
-this.message=
-'👑 Quiz perfetto!';
-
-
-
-}
-
-
-
-this.checkBadges();
-
-
-this.updateMissions();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// ================================
-// MISSIONI
-// ================================
-
-
-
-missions=[
-
-
-{
-
-id:1,
-
-title:'Trova 5 giornate perdute',
-
-goal:5,
-
-progress:0,
-
-reward:100,
-
-completed:false
-
-},
-
-
-
-{
-
-id:2,
-
-title:'Ottieni 500 punti',
-
-goal:500,
-
-progress:0,
-
-reward:200,
-
-completed:false
-
-},
-
-
-
-{
-
-id:3,
-
-title:'Completa il Memory Planner',
-
-goal:1,
-
-progress:0,
-
-reward:150,
-
-completed:false
-
-},
-
-
-
-{
-
-id:4,
-
-title:'Completa il Quiz',
-
-goal:3,
-
-progress:0,
-
-reward:250,
-
-completed:false
-
-}
-
-
-
-];
-
-
-
-
-
-
-
-
-
-updateMissions(){
-
-
-
-this.missions.forEach(mission=>{
-
-
-
-switch(mission.id){
-
-
-
-case 1:
-
-
-mission.progress =
-this.statistics.daysFound;
-
-
-break;
-
-
-
-case 2:
-
-
-mission.progress =
-this.player.score;
-
-
-break;
-
-
-
-
-case 3:
-
-
-mission.progress =
-this.statistics.memoryWins;
-
-
-break;
-
-
-
-
-case 4:
-
-
-mission.progress =
-this.statistics.quizCorrect;
-
-
-break;
-
-
-
-}
-
-
-
-
-
-
-if(
-
-mission.progress>=mission.goal
-
-&&
-
-!mission.completed
-
-){
-
-
-
-mission.completed=true;
-
-
-
-this.player.coins+=mission.reward;
-
-
-
-this.addXP(50);
-
-
-
-this.message=
-'🎁 Missione completata: '
-+
-mission.title;
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-// ================================
-// BADGE SYSTEM
-// ================================
-
-
-checkBadges(){
-
-
-
-this.badges.forEach(badge=>{
-
-
-
-if(badge.unlocked){
-
-return;
-
-}
-
-
-
-
-switch(badge.id){
-
-
-
-case 1:
-
-
-
-if(
-this.statistics.gamesPlayed>=1
-){
-
-
-this.unlockBadge(badge);
-
-
-}
-
-
-break;
-
-
-
-
-
-
-case 2:
-
-
-
-if(
-this.statistics.daysFound>=10
-){
-
-
-this.unlockBadge(badge);
-
-
-}
-
-
-break;
-
-
-
-
-
-
-case 3:
-
-
-
-if(
-this.player.score>=500
-){
-
-
-this.unlockBadge(badge);
-
-
-}
-
-
-break;
-
-
-
-
-
-
-case 4:
-
-
-
-if(
-
-this.statistics.daysFound>0
-
-&&
-
-this.statistics.memoryWins>0
-
-&&
-
-this.statistics.quizCorrect>0
-
-){
-
-
-this.unlockBadge(badge);
-
-
-}
-
-
-
-break;
-
-
-
-}
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-unlockBadge(badge:Badge){
-
-
-
-badge.unlocked=true;
-
-
-
-this.player.badges.push(
-
-badge.name
-
-);
-
-
-
-this.player.coins+=100;
-
-
-
-this.message=
-
-'🏆 Nuovo badge ottenuto: '
-
-+
-
-badge.icon
-
-+
-
-' '
-
-+
-
-badge.name;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// ================================
-// SHOP PREMI
-// ================================
-
-
-
-rewards=[
-
-
-
-{
-
-name:'Planner Rosa',
-
-icon:'🌸',
-
-cost:100
-
-},
-
-
-
-{
-
-name:'Tema Luxury',
-
-icon:'✨',
-
-cost:200
-
-},
-
-
-
-{
-
-name:'Calendario Oro',
-
-icon:'👑',
-
-cost:500
-
-}
-
-
-
-];
-
-
-
-
-
-
-
-buyReward(index:number){
-
-
-
-const reward=this.rewards[index];
-
-
-
-
-if(
-this.player.coins < reward.cost
-){
-
-
-
-this.message=
-'❌ Non hai abbastanza stelle';
-
-
-
-return;
-
-}
-
-
-
-
-
-this.player.coins-=reward.cost;
-
-
-
-this.message=
-'🎁 Hai ottenuto '
-+
-reward.name;
-
-
-
-}
-// ================================
-// FINE AVVENTURA
-// ================================
-
-
-completeAdventure(){
-
-
-
-this.victory=true;
-
-
-this.gameStarted=false;
-
-
-if(this.timer){
-
-clearInterval(this.timer);
-
-}
-
-
-
-this.addScore(500);
-
-
-this.player.coins+=200;
-
-
-
-this.checkBadges();
-
-
-this.updateMissions();
-
-
-
-this.message=
-'🌸 Avventura completata! Sei un Dream Master!';
-
-
-
-this.saveGame();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ================================
-// NAVIGAZIONE
-// ================================
-
-
-
-goHome(){
-
-
-this.router.navigate(['/']);
-
-
-}
-
-
-
-
-
-
-restart(){
-
-
-
-this.startAdventure();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// ================================
-// SALVATAGGIO
-// ================================
-
-
-
-saveGame(){
-
-
-
-const data={
-
-
-
-player:this.player,
-
-
-
-statistics:this.statistics,
-
-
-
-badges:this.badges,
-
-
-
-missions:this.missions
-
-
-
-};
-
-
-
-
-
-
-localStorage.setItem(
-
-
-'dreamCalendar404Save',
-
-
-JSON.stringify(data)
-
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-// ================================
-// CARICAMENTO
-// ================================
-
-
-
-loadGame(){
-
-
-
-const data =
-
-localStorage.getItem(
-
-'dreamCalendar404Save'
-
-);
-
-
-
-
-
-if(!data){
-
-return;
-
-}
-
-
-
-
-
-try{
-
-
-
-const save=
-
-JSON.parse(data);
-
-
-
-
-
-this.player =
-
-save.player || this.player;
-
-
-
-
-
-this.statistics =
-
-save.statistics || this.statistics;
-
-
-
-
-
-this.badges =
-
-save.badges || this.badges;
-
-
-
-
-
-this.missions =
-
-save.missions || this.missions;
-
-
-
-
-
-}
-
-catch(e){
-
-
-
-console.log(
-
-'Salvataggio non valido'
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// ================================
-// RESET
-// ================================
-
-
-
-resetGame(){
-
-
-
-localStorage.removeItem(
-
-'dreamCalendar404Save'
-
-);
-
-
-
-location.reload();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ================================
-// EXTRA GAME SYSTEM
-// ================================
-
-
-
-lives:number=3;
-
-
-hints:number=3;
-
-
-timeBonus:number=2;
-
-
-shield:boolean=false;
-
-
-
-
-events:any[]=[
-
-
-
-{
-
-icon:'🌸',
-
-text:'Hai trovato un fiore magico'
-
-},
-
-
-
-{
-
-icon:'⭐',
-
-text:'Hai trovato una stella planner'
-
-},
-
-
-
-{
-
-icon:'📚',
-
-text:'Hai trovato una pagina perduta'
-
-}
-
-
-
-];
-
-
-
-
-bonusDay:number=0;
-
-
-correctDay:number=0;
-
-
-
-
-
-
-
-
-
-
-
-
-// ================================
-// CICLO VITA
-// ================================
-
-
-ngOnDestroy(){
-
-
-
-if(this.timer){
-
-
-
-clearInterval(this.timer);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-// ================================
-// GETTERS
-// ================================
-
-
-
-get level(){
-
-
-
-return this.player.level;
-
-
-
-}
-
-
-
-
-
-get xp(){
-
-
-
-return this.player.xp;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-getDayName(day:number){
-
-
-
-const names=[
-
-
-
-'Lun',
-
-'Mar',
-
-'Mer',
-
-'Gio',
-
-'Ven',
-
-'Sab',
-
-'Dom'
-
-
-
-];
-
-
-
-
-
-return names[(day-1)%7];
-
-
-
-}
-
-
-
+    return names[(day - 1) % 7];
+  }
 }

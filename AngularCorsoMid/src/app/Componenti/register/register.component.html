@@ -1,284 +1,43 @@
 <div class="register-page">
+  <section class="register-box">
+    <h1>🌸 Crea il tuo account</h1>
 
+    <p>Inizia a creare e gestire i tuoi planner digitali</p>
 
-<section class="register-box">
+    <input type="text" placeholder="Nome completo" [(ngModel)]="user.name" />
 
+    <input type="email" placeholder="Email" [(ngModel)]="user.email" />
 
+    <input type="tel" placeholder="Telefono" [(ngModel)]="user.phone" />
 
+    <input type="password" placeholder="Password" [(ngModel)]="user.password" />
 
+    <input
+      type="password"
+      placeholder="Conferma password"
+      [(ngModel)]="confirmPassword"
+    />
 
-<h1>
+    <label class="two-factor">
+      <input type="checkbox" [(ngModel)]="user.twoFactorEnabled" />
 
-🌸 Crea il tuo account
+      Attiva autenticazione a due fattori
+    </label>
 
-</h1>
+    <p class="error" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
 
+    <button (click)="register()" [disabled]="loading">
+      <span *ngIf="!loading"> 🌸 Registrati </span>
 
+      <span *ngIf="loading"> ⏳ Creazione account... </span>
+    </button>
 
+    <p>
+      Hai già un account?
 
-
-<p>
-
-Inizia a creare e gestire i tuoi planner digitali
-
-</p>
-
-
-
-
-
-
-
-
-
-<input
-
-
-type="text"
-
-
-placeholder="Nome completo"
-
-
-[(ngModel)]="user.name"
-
-
-
->
-
-
-
-
-
-
-
-
-
-<input
-
-
-type="email"
-
-
-placeholder="Email"
-
-
-[(ngModel)]="user.email"
-
-
-
->
-
-
-
-
-
-
-
-
-
-<input
-
-
-type="tel"
-
-
-placeholder="Telefono"
-
-
-[(ngModel)]="user.phone"
-
-
-
->
-
-
-
-
-
-
-
-
-
-<input
-
-
-type="password"
-
-
-placeholder="Password"
-
-
-[(ngModel)]="user.password"
-
-
-
->
-
-
-
-
-
-
-
-
-
-<input
-
-
-type="password"
-
-
-placeholder="Conferma password"
-
-
-[(ngModel)]="confirmPassword"
-
-
-
->
-
-
-
-
-
-
-
-
-
-<label class="two-factor">
-
-
-
-<input
-
-
-type="checkbox"
-
-
-[(ngModel)]="user.twoFactorEnabled"
-
-
-
->
-
-
-
-Attiva autenticazione a due fattori
-
-
-</label>
-
-
-
-
-
-
-
-
-
-<p
-
-
-class="error"
-
-
-*ngIf="errorMessage"
-
-
-
->
-
-
-{{errorMessage}}
-
-
-</p>
-
-
-
-
-
-
-
-
-
-<button
-
-
-(click)="register()"
-
-
-[disabled]="loading"
-
-
-
->
-
-
-
-<span *ngIf="!loading">
-
-
-🌸 Registrati
-
-
-</span>
-
-
-
-
-
-
-<span *ngIf="loading">
-
-
-⏳ Creazione account...
-
-
-</span>
-
-
-
-
-
-</button>
-
-
-
-
-
-
-
-
-
-<p>
-
-
-Hai già un account?
-
-
-
-
-
-<a routerLink="/login">
-
-
-Accedi
-
-
-</a>
-
-
-
-</p>
-
-
-
-
-
-
-</section>
-
-
+      <a routerLink="/login"> Accedi </a>
+    </p>
+  </section>
 </div>

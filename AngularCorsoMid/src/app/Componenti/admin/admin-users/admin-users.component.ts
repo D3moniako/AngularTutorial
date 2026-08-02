@@ -6,521 +6,151 @@ import { UserService } from '../../../services/user.service';
 
 import { User } from '../../../models/user';
 
-
-
 @Component({
+  selector: 'app-admin-users',
 
-selector:'app-admin-users',
+  templateUrl: './admin-users.component.html',
 
-templateUrl:'./admin-users.component.html',
-
-styleUrls:['./admin-users.component.css']
-
+  styleUrls: ['./admin-users.component.css'],
 })
-
-
 export class AdminUsersComponent implements OnInit, OnDestroy {
+  private subscription?: Subscription;
 
+  users: User[] = [];
 
+  filteredUsers: User[] = [];
 
-private subscription?:Subscription;
+  searchText: string = '';
 
+  message: string = '';
 
+  selectedRole: string = 'Tutti';
 
-users:User[]=[];
+  totalUsers: number = 0;
 
-filteredUsers:User[]=[];
+  adminCount: number = 0;
 
+  activeCount: number = 0;
 
+  blockedCount: number = 0;
 
-searchText:string='';
+  constructor(private userService: UserService) {}
 
+  ngOnInit() {
+    this.loadUsers();
 
-message:string='';
+    this.subscription = this.userService.users$.subscribe((users) => {
+      this.users = [...users];
 
+      this.updateCounters();
 
+      this.filterUsers();
+    });
+  }
 
-selectedRole:string='Tutti';
+  loadUsers() {
+    this.users = this.userService.getUsers();
 
+    this.updateCounters();
 
+    this.filterUsers();
+  }
 
+  updateCounters() {
+    this.totalUsers = this.users.length;
 
+    this.adminCount = this.users.filter((u) => u.role === 'ADMIN').length;
 
-totalUsers:number=0;
+    this.activeCount = this.users.filter((u) => u.enabled).length;
 
-adminCount:number=0;
+    this.blockedCount = this.users.filter((u) => !u.enabled).length;
+  }
 
-activeCount:number=0;
+  filterUsers() {
+    let result = [...this.users];
 
-blockedCount:number=0;
+    if (this.searchText.trim()) {
+      const text = this.searchText.toLowerCase();
 
+      result = result.filter(
+        (user) =>
+          (user.name || '')
 
+            .toLowerCase()
 
+            .includes(text) ||
+          (user.email || '')
 
+            .toLowerCase()
 
+            .includes(text),
+      );
+    }
 
+    if (this.selectedRole !== 'Tutti') {
+      result = result.filter((user) => user.role === this.selectedRole);
+    }
 
-constructor(
+    result.sort((a, b) => a.name.localeCompare(b.name));
 
-private userService:UserService
+    this.filteredUsers = result;
+  }
 
-){}
+  toggleStatus(id: number) {
+    const user = this.users.find((u) => u.id === id);
 
+    if (!user) {
+      return;
+    }
 
+    const updatedUser: User = {
+      ...user,
 
+      enabled: !user.enabled,
+    };
 
+    this.userService.adminUpdateUser(updatedUser);
 
+    this.showMessage('✅ Stato utente aggiornato');
+  }
 
+  changeRole(user: User) {
+    const updatedUser: User = {
+      ...user,
 
+      role: user.role === 'ADMIN' ? 'USER' : 'ADMIN',
+    };
 
+    this.userService.adminUpdateUser(updatedUser);
 
-ngOnInit(){
+    this.showMessage('🔄 Ruolo modificato');
+  }
 
+  deleteUser(id: number) {
+    if (confirm('Vuoi eliminare definitivamente questo account?')) {
+      this.userService.deleteUser(id);
 
+      this.showMessage('🗑 Utente eliminato');
+    }
+  }
 
-this.loadUsers();
+  private showMessage(text: string) {
+    this.message = text;
 
+    setTimeout(() => {
+      this.message = '';
+    }, 3000);
+  }
 
+  trackByUser(
+    index: number,
 
+    user: User,
+  ) {
+    return user.id;
+  }
 
-this.subscription =
-
-this.userService.users$
-
-.subscribe(users=>{
-
-
-this.users=[...users];
-
-
-this.updateCounters();
-
-
-this.filterUsers();
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-loadUsers(){
-
-
-
-this.users=
-
-this.userService.getUsers();
-
-
-
-this.updateCounters();
-
-
-this.filterUsers();
-
-
-
-}
-
-
-
-
-
-
-
-
-
-updateCounters(){
-
-
-
-this.totalUsers=
-
-this.users.length;
-
-
-
-
-this.adminCount=
-
-this.users.filter(
-
-u=>u.role==='ADMIN'
-
-).length;
-
-
-
-
-
-this.activeCount=
-
-this.users.filter(
-
-u=>u.enabled
-
-).length;
-
-
-
-
-
-this.blockedCount=
-
-this.users.filter(
-
-u=>!u.enabled
-
-).length;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-filterUsers(){
-
-
-
-let result=[...this.users];
-
-
-
-
-
-
-if(this.searchText.trim()){
-
-
-
-const text=
-
-this.searchText.toLowerCase();
-
-
-
-
-result=result.filter(user=>
-
-
-
-(user.name || '')
-
-.toLowerCase()
-
-.includes(text)
-
-
-
-||
-
-
-
-(user.email || '')
-
-.toLowerCase()
-
-.includes(text)
-
-
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-if(this.selectedRole!=='Tutti'){
-
-
-
-result=result.filter(user=>
-
-user.role===this.selectedRole
-
-);
-
-
-
-}
-
-
-
-
-
-result.sort((a,b)=>
-
-a.name.localeCompare(b.name)
-
-);
-
-
-
-
-
-this.filteredUsers=result;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-toggleStatus(id:number){
-
-
-
-const user=
-
-this.users.find(
-
-u=>u.id===id
-
-);
-
-
-
-
-if(!user){
-
-return;
-
-}
-
-
-
-
-
-const updatedUser:User={
-
-...user,
-
-enabled:!user.enabled
-
-};
-
-
-
-
-
-this.userService.adminUpdateUser(
-
-updatedUser
-
-);
-
-
-
-
-this.showMessage(
-
-'✅ Stato utente aggiornato'
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-changeRole(user:User){
-
-
-
-const updatedUser:User={
-
-
-
-...user,
-
-
-
-role:
-
-user.role==='ADMIN'
-
-?
-
-'USER'
-
-:
-
-'ADMIN'
-
-
-
-};
-
-
-
-
-
-this.userService.adminUpdateUser(
-
-updatedUser
-
-);
-
-
-
-
-
-this.showMessage(
-
-'🔄 Ruolo modificato'
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-deleteUser(id:number){
-
-
-
-if(confirm(
-
-'Vuoi eliminare definitivamente questo account?'
-
-)){
-
-
-
-this.userService.deleteUser(id);
-
-
-
-this.showMessage(
-
-'🗑 Utente eliminato'
-
-);
-
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-private showMessage(text:string){
-
-
-
-this.message=text;
-
-
-
-setTimeout(()=>{
-
-
-this.message='';
-
-
-},3000);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-trackByUser(
-
-index:number,
-
-user:User
-
-){
-
-
-
-return user.id;
-
-
-
-}
-
-
-
-
-
-
-
-
-
-ngOnDestroy(){
-
-
-
-this.subscription?.unsubscribe();
-
-
-
-}
-
-
-
+  ngOnDestroy() {
+    this.subscription?.unsubscribe();
+  }
 }

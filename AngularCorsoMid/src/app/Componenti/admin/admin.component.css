@@ -1,153 +1,88 @@
-.admin-layout{
+.admin-layout {
+  min-height: 100vh;
 
-min-height:100vh;
+  background: #faf5fb;
 
-background:#faf5fb;
-
-font-family:'Segoe UI',sans-serif;
-
+  font-family: "Segoe UI", sans-serif;
 }
 
+.admin-header {
+  background: white;
 
+  padding: 20px 30px;
 
+  display: flex;
 
-.admin-header{
+  justify-content: space-between;
 
-background:white;
+  align-items: center;
 
-padding:20px 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
 
-display:flex;
+  position: sticky;
 
-justify-content:space-between;
+  top: 0;
 
-align-items:center;
-
-box-shadow:0 4px 15px rgba(0,0,0,.08);
-
-position:sticky;
-
-top:0;
-
-z-index:10;
-
+  z-index: 10;
 }
 
+.logo {
+  font-size: 24px;
 
+  font-weight: bold;
 
-
-.logo{
-
-font-size:24px;
-
-font-weight:bold;
-
-color:#b76e79;
-
+  color: #b76e79;
 }
 
+nav {
+  display: flex;
 
+  gap: 15px;
 
-
-
-nav{
-
-display:flex;
-
-gap:15px;
-
-align-items:center;
-
+  align-items: center;
 }
 
+nav a {
+  text-decoration: none;
 
+  color: #555;
 
+  padding: 10px 16px;
 
+  border-radius: 20px;
 
-nav a{
+  transition: 0.3s;
 
-text-decoration:none;
-
-color:#555;
-
-padding:10px 16px;
-
-border-radius:20px;
-
-transition:.3s;
-
-font-weight:600;
-
+  font-weight: 600;
 }
-
-
-
-
 
 nav a:hover,
+nav a.active {
+  background: #f3d6e8;
 
-nav a.active{
-
-
-background:#f3d6e8;
-
-color:#9b416b;
-
+  color: #9b416b;
 }
 
-
-
-
-
-.admin-content{
-
-
-padding:30px;
-
+.admin-content {
+  padding: 30px;
 }
 
+@media (max-width: 768px) {
+  .admin-header {
+    flex-direction: column;
 
+    gap: 20px;
+  }
 
+  nav {
+    width: 100%;
 
+    justify-content: center;
 
+    flex-wrap: wrap;
+  }
 
-@media(max-width:768px){
-
-
-
-.admin-header{
-
-
-flex-direction:column;
-
-gap:20px;
-
-
-}
-
-
-
-nav{
-
-
-width:100%;
-
-justify-content:center;
-
-flex-wrap:wrap;
-
-
-}
-
-
-
-.admin-content{
-
-
-padding:15px;
-
-
-}
-
-
+  .admin-content {
+    padding: 15px;
+  }
 }

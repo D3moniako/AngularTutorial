@@ -1,204 +1,73 @@
 <div class="about-page">
-
-
-
-<section class="about-hero">
-
-
-<div>
-
-
-<span>
-🌸 DreamCalendar
-</span>
-
-
-<h1>
-
-Organizza la tua vita,
-crea il tuo spazio.
-
-</h1>
-
-
-<p>
-
-Creiamo digital planner eleganti
-per aiutarti a pianificare giornate,
-sogni e obiettivi.
-
-</p>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-<section class="story">
-
-
-<h2>
-
-La nostra filosofia
-
-</h2>
-
-
-
-<p>
-
-Crediamo che organizzare il tempo
-non significhi riempire ogni momento,
-ma creare spazio per ciò che conta davvero.
-
-</p>
-
-
-</section>
-
-
-
-
-
-
-
-<section class="values">
-
-
-<div
-
-*ngFor="let v of values">
-
-
-<div class="icon">
-
-{{v.icon}}
-
-</div>
-
-
-<h3>
-
-{{v.title}}
-
-</h3>
-
-
-<p>
-
-{{v.text}}
-
-</p>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-<section class="mission">
-
-
-<h2>
-
-✨ DreamCalendar
-
-</h2>
-
-
-<p>
-
-Planner digitali creati per donne creative,
-professioniste e sognatrici.
-
-</p>
-
-
-</section>
-
-<section class="team">
-
-
-<h2>
-
-Chi siamo
-
-</h2>
-
-
-
-<div
-
-class="team-card"
-
-*ngFor="let t of team">
-
-
-
-<h3>
-
-{{t.name}}
-
-</h3>
-
-
-<p>
-
-{{t.text}}
-
-</p>
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<section class="stats">
-
-
-<div
-
-*ngFor="let s of stats">
-
-
-
-<h2>
-
-{{s.number}}
-
-</h2>
-
-
-<p>
-
-{{s.label}}
-
-</p>
-
-
-</div>
-
-
-
-</section>
-
+  <section class="about-hero">
+    <div>
+      <span> 🌸 DreamCalendar </span>
+
+      <h1>Organizza la tua vita, crea il tuo spazio.</h1>
+
+      <p>
+        Creiamo digital planner eleganti per aiutarti a pianificare giornate,
+        sogni e obiettivi.
+      </p>
+    </div>
+  </section>
+
+  <section class="story">
+    <h2>La nostra filosofia</h2>
+
+    <p>
+      Crediamo che organizzare il tempo non significhi riempire ogni momento, ma
+      creare spazio per ciò che conta davvero.
+    </p>
+  </section>
+
+  <section class="values">
+    <div *ngFor="let v of values">
+      <div class="icon">
+        {{ v.icon }}
+      </div>
+
+      <h3>
+        {{ v.title }}
+      </h3>
+
+      <p>
+        {{ v.text }}
+      </p>
+    </div>
+  </section>
+
+  <section class="mission">
+    <h2>✨ DreamCalendar</h2>
+
+    <p>
+      Planner digitali creati per donne creative, professioniste e sognatrici.
+    </p>
+  </section>
+
+  <section class="team">
+    <h2>Chi siamo</h2>
+
+    <div class="team-card" *ngFor="let t of team">
+      <h3>
+        {{ t.name }}
+      </h3>
+
+      <p>
+        {{ t.text }}
+      </p>
+    </div>
+  </section>
+
+  <section class="stats">
+    <div *ngFor="let s of stats">
+      <h2>
+        {{ s.number }}
+      </h2>
+
+      <p>
+        {{ s.label }}
+      </p>
+    </div>
+  </section>
 </div>

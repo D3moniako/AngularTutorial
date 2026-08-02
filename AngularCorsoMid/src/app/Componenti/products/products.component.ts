@@ -20,633 +20,263 @@ import { NotificationService } from '../../services/notification.service';
 import { MESSAGES } from '../../constants/messages';
 
 @Component({
+  selector: 'app-products',
 
-selector:'app-products',
+  templateUrl: './products.component.html',
 
-templateUrl:'./products.component.html',
-
-styleUrls:['./products.component.css']
-
+  styleUrls: ['./products.component.css'],
 })
-
-
 export class ProductsComponent implements OnInit, OnDestroy {
+  product: Product | undefined;
 
+  relatedProducts: Product[] = [];
 
+  quantity: number = 1;
 
-product:Product | undefined;
+  // Nuova recensione
 
+  newReview = {
+    rating: 5,
 
+    comment: '',
+  };
 
-relatedProducts:Product[]=[];
+  // Utente loggato
 
+  user: User | null = null;
 
+  // Permesso recensione
 
-quantity:number=1;
+  canReview: boolean = false;
 
+  private userSubscription?: Subscription;
 
+  constructor(
+    private route: ActivatedRoute,
 
+    private plannerService: PlannerService,
 
+    private cartService: CartService,
 
-// Nuova recensione
+    private userService: UserService,
 
-newReview = {
+    private orderService: OrderService,
 
-rating:5,
+    private viewportScroller: ViewportScroller,
 
-comment:''
+    private notificationService: NotificationService,
+    private router: Router,
+  ) {}
 
-};
+  ngOnInit() {
+    this.route.paramMap.subscribe((params) => {
+      const id = Number(params.get('id'));
 
+      this.product = this.plannerService.getProduct(id);
 
+      if (this.product) {
+        this.quantity = 1;
 
+        this.loadRelatedProducts();
 
+        this.checkReviewPermission();
 
+        setTimeout(() => {
+          this.viewportScroller.scrollToPosition([0, 0]);
+        }, 100);
+      }
+    });
 
-// Utente loggato
+    this.userSubscription = this.userService.user$.subscribe((user) => {
+      this.user = user;
 
-user:User|null=null;
+      // controllo quando arriva utente
 
+      this.checkReviewPermission();
+    });
+  }
 
+  // =================================
+  // CONTROLLO RECENSIONE VERIFICATA
+  // =================================
 
-// Permesso recensione
+  checkReviewPermission() {
+    if (!this.user || !this.product) {
+      this.canReview = false;
 
-canReview:boolean=false;
+      return;
+    }
 
+    this.canReview = this.orderService.hasPurchased(
+      this.user.id,
 
+      this.product.id,
+    );
+  }
 
-private userSubscription?:Subscription;
+  // =================================
+  // PRODOTTI CORRELATI
+  // =================================
 
+  loadRelatedProducts() {
+    if (!this.product) {
+      return;
+    }
 
+    const products = this.plannerService.getProducts();
 
+    this.relatedProducts = products
+      .filter((p) => p.id !== this.product!.id)
+      .slice(0, 3);
+  }
 
+  // =================================
+  // QUANTITA'
+  // =================================
 
+  increaseQuantity() {
+    this.quantity++;
+  }
 
+  decreaseQuantity() {
+    if (this.quantity > 1) {
+      this.quantity--;
+    }
+  }
 
+  // =================================
+  // CARRELLO
+  // =================================
 
-constructor(
+  addCart() {
+    if (!this.userService.isLogged()) {
+      this.notificationService.warning(MESSAGES.SHOP.LOGIN_REQUIRED);
 
-private route:ActivatedRoute,
+      this.router.navigate(['/login']);
 
-private plannerService:PlannerService,
+      return;
+    }
 
-private cartService:CartService,
+    if (!this.product) {
+      return;
+    }
 
-private userService:UserService,
+    for (let i = 0; i < this.quantity; i++) {
+      this.cartService.add(this.product);
+    }
 
-private orderService:OrderService,
+    this.notificationService.success(MESSAGES.CART.ADDED);
+  }
 
-  
-private viewportScroller: ViewportScroller,
+  // =================================
+  // PREFERITI
+  // =================================
 
-private notificationService:NotificationService,
-private router:Router,
+  toggleFavorite() {
+    if (!this.userService.isLogged()) {
+      this.notificationService.warning(MESSAGES.FAVORITES.LOGIN_REQUIRED);
 
+      this.router.navigate(['/login']);
 
-){}
+      return;
+    }
 
+    if (!this.product) {
+      return;
+    }
 
+    this.plannerService.toggleFavorite(this.product);
 
+    this.product = this.plannerService.getProduct(this.product.id);
+  }
 
+  // =================================
+  // RECENSIONE CLIENTE VERIFICATO
+  // =================================
 
+  addReview() {
+    if (!this.product) {
+      return;
+    }
 
+    if (!this.canReview) {
+      alert('Devi acquistare questo planner prima di recensirlo');
 
+      return;
+    }
 
+    if (!this.newReview.comment.trim()) {
+      alert('Inserisci un commento');
 
-ngOnInit(){
+      return;
+    }
 
+    const review: Review = {
+      id: Date.now(),
 
+      // nome automatico account
 
-this.route.paramMap.subscribe(params => {
+      user: this.user?.name || 'Utente',
 
-  const id = Number(params.get('id'));
+      rating: Number(this.newReview.rating),
 
-  this.product = this.plannerService.getProduct(id);
+      comment: this.newReview.comment,
 
- if(this.product){
+      date: new Date().toLocaleDateString('it-IT'),
 
-this.quantity=1;
+      // automatico
 
-this.loadRelatedProducts();
+      verified: true,
+    };
 
-this.checkReviewPermission();
+    this.plannerService.addReview(
+      this.product.id,
 
-
-setTimeout(() => {
-
-  this.viewportScroller.scrollToPosition([0,0]);
-
-}, 100);
-
-
-}
-
-});
-
-
-
-
-
-
-
-this.userSubscription =
-
-this.userService.user$
-
-.subscribe(user=>{
-
-
-
-this.user=user;
-
-
-
-// controllo quando arriva utente
-
-this.checkReviewPermission();
-
-
-
-});
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// CONTROLLO RECENSIONE VERIFICATA
-// =================================
-
-
-checkReviewPermission(){
-
-
-
-if(!this.user || !this.product){
-
-
-this.canReview=false;
-
-
-return;
-
-
-}
-
-
-
-
-
-this.canReview =
-
-this.orderService.hasPurchased(
-
-
-this.user.id,
-
-
-this.product.id
-
-
-);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// PRODOTTI CORRELATI
-// =================================
-
-
-loadRelatedProducts(){
-
-
-
-if(!this.product){
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-const products =
-
-this.plannerService.getProducts();
-
-
-
-
-
-
-this.relatedProducts =
-
-products.filter(
-
-
-p => p.id !== this.product!.id
-
-
-).slice(0,3);
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// QUANTITA'
-// =================================
-
-
-increaseQuantity(){
-
-
-this.quantity++;
-
-
-}
-
-
-
-
-
-
-
-
-decreaseQuantity(){
-
-
-
-if(this.quantity>1){
-
-
-this.quantity--;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-// =================================
-// CARRELLO
-// =================================
-
-
-addCart(){
-
-  if(!this.userService.isLogged()){
-
-    this.notificationService.warning(
-      MESSAGES.SHOP.LOGIN_REQUIRED
+      review,
     );
 
-    this.router.navigate(['/login']);
+    this.product = this.plannerService.getProduct(this.product.id);
 
-    return;
+    this.newReview = {
+      rating: 5,
 
+      comment: '',
+    };
   }
 
-  if(!this.product){
-    return;
+  // =================================
+  // CARRELLO PRODOTTI CORRELATI
+  // =================================
+
+  addRelatedToCart(product: Product) {
+    if (!this.userService.isLogged()) {
+      this.notificationService.warning(MESSAGES.SHOP.LOGIN_REQUIRED);
+
+      this.router.navigate(['/login']);
+
+      return;
+    }
+
+    this.cartService.add(product);
+
+    this.notificationService.success(MESSAGES.CART.ADDED);
   }
 
-  for(let i=0;i<this.quantity;i++){
+  toggleFavoriteRelated(product: Product) {
+    if (!this.userService.isLogged()) {
+      this.notificationService.warning(MESSAGES.FAVORITES.LOGIN_REQUIRED);
 
-    this.cartService.add(this.product);
+      this.router.navigate(['/login']);
 
+      return;
+    }
+
+    this.plannerService.toggleFavorite(product);
+
+    product.favorite = this.plannerService.isFavorite(product.id);
   }
 
-  this.notificationService.success(
-    MESSAGES.CART.ADDED
-  );
-
-}
-
-
-
-
-
-
-
-
-// =================================
-// PREFERITI
-// =================================
-
-
-toggleFavorite(){
-
-  if(!this.userService.isLogged()){
-
-    this.notificationService.warning(
-      MESSAGES.FAVORITES.LOGIN_REQUIRED
-    );
-
-    this.router.navigate(['/login']);
-
-    return;
-
+  ngOnDestroy() {
+    this.userSubscription?.unsubscribe();
   }
-
-  if(!this.product){
-    return;
-  }
-
-  this.plannerService.toggleFavorite(this.product);
-
-  this.product = this.plannerService.getProduct(this.product.id);
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// RECENSIONE CLIENTE VERIFICATO
-// =================================
-
-
-addReview(){
-
-
-
-if(!this.product){
-
-
-return;
-
-
-}
-
-
-
-
-
-
-if(!this.canReview){
-
-
-
-alert(
-
-'Devi acquistare questo planner prima di recensirlo'
-
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-if(!this.newReview.comment.trim()){
-
-
-
-alert(
-
-'Inserisci un commento'
-
-);
-
-
-return;
-
-
-}
-
-
-
-
-
-
-
-const review:Review={
-
-
-
-id:Date.now(),
-
-
-
-// nome automatico account
-
-user:this.user?.name || 'Utente',
-
-
-
-rating:Number(
-
-this.newReview.rating
-
-),
-
-
-
-comment:this.newReview.comment,
-
-
-
-date:new Date()
-
-.toLocaleDateString('it-IT'),
-
-
-
-// automatico
-
-verified:true
-
-
-
-};
-
-
-
-
-
-
-
-
-this.plannerService.addReview(
-
-this.product.id,
-
-review
-
-);
-
-
-
-
-
-
-
-
-this.product =
-
-this.plannerService.getProduct(
-
-this.product.id
-
-);
-
-
-
-
-
-
-
-
-this.newReview={
-
-
-rating:5,
-
-
-comment:''
-
-
-
-};
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-// =================================
-// CARRELLO PRODOTTI CORRELATI
-// =================================
-
-
-addRelatedToCart(product:Product){
-
-  if(!this.userService.isLogged()){
-
-    this.notificationService.warning(
-      MESSAGES.SHOP.LOGIN_REQUIRED
-    );
-
-    this.router.navigate(['/login']);
-
-    return;
-
-  }
-
-  this.cartService.add(product);
-
-  this.notificationService.success(
-    MESSAGES.CART.ADDED
-  );
-
-}
-
-
-toggleFavoriteRelated(product:Product){
-
-  if(!this.userService.isLogged()){
-
-    this.notificationService.warning(
-      MESSAGES.FAVORITES.LOGIN_REQUIRED
-    );
-
-    this.router.navigate(['/login']);
-
-    return;
-
-  }
-
-  this.plannerService.toggleFavorite(product);
-
-  product.favorite = this.plannerService.isFavorite(product.id);
-
-}
-
-
-
-
-
-
-ngOnDestroy(){
-
-
-
-this.userSubscription?.unsubscribe();
-
-
-
-}
-
-
-
 }

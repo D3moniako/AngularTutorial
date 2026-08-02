@@ -1,46 +1,25 @@
 export const MESSAGES_IT = {
-
   login: {
+    required: 'Inserisci email e password',
 
-    required:
-      'Inserisci email e password',
+    invalid: 'Email o password errati',
 
-    invalid:
-      'Email o password errati',
-
-    access:
-      'Accesso effettuato'
-
+    access: 'Accesso effettuato',
   },
-
 
   register: {
+    required: 'Compila tutti i campi obbligatori',
 
-    required:
-      'Compila tutti i campi obbligatori',
-
-    exists:
-      'Email già registrata'
-
+    exists: 'Email già registrata',
   },
-
 
   profile: {
-
-    saved:
-      'Profilo aggiornato correttamente'
-
+    saved: 'Profilo aggiornato correttamente',
   },
 
-
   planner: {
+    downloaded: 'Download completato',
 
-    downloaded:
-      'Download completato',
-
-    favorite:
-      'Preferito aggiornato'
-
-  }
-
+    favorite: 'Preferito aggiornato',
+  },
 };

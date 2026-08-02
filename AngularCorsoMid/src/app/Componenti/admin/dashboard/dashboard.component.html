@@ -1,811 +1,271 @@
 <div class="dashboard">
-
-
-
-<!-- ==============================
+  <!-- ==============================
 HEADER
 ============================== -->
 
-<header class="hero">
+  <header class="hero">
+    <div>
+      <h1>🛠 DreamCalendar Admin</h1>
 
+      <p class="subtitle">
+        Centro controllo piattaforma e-commerce planner digitali
+      </p>
+    </div>
 
-<div>
+    <div class="status">
+      <span class="status-dot"></span>
 
-<h1>
-🛠 DreamCalendar Admin
-</h1>
+      Sistema {{ systemStatus }}
+    </div>
+  </header>
 
-
-<p class="subtitle">
-
-Centro controllo piattaforma e-commerce planner digitali
-
-</p>
-
-
-</div>
-
-
-
-
-<div class="status">
-
-
-<span class="status-dot"></span>
-
-
-Sistema {{systemStatus}}
-
-
-</div>
-
-
-</header>
-
-
-
-
-
-
-
-
-
-<!-- ==============================
+  <!-- ==============================
 CARDS PRINCIPALI
 ============================== -->
 
+  <section class="cards">
+    <div class="card">
+      <div class="card-icon">📅</div>
 
-<section class="cards">
+      <div>
+        <span> Planner </span>
 
+        <h2>
+          {{ totalProducts }}
+        </h2>
 
+        <p>Prodotti pubblicati</p>
+      </div>
+    </div>
 
-<div class="card">
+    <div class="card">
+      <div class="card-icon">👥</div>
 
-<div class="card-icon">
-📅
-</div>
+      <div>
+        <span> Utenti </span>
 
+        <h2>
+          {{ totalUsers }}
+        </h2>
 
-<div>
+        <p>Account registrati</p>
+      </div>
+    </div>
 
-<span>
-Planner
-</span>
+    <div class="card">
+      <div class="card-icon">🛡️</div>
 
+      <div>
+        <span> Admin </span>
 
-<h2>
-{{totalProducts}}
-</h2>
+        <h2>
+          {{ totalAdmins }}
+        </h2>
 
+        <p>Amministratori</p>
+      </div>
+    </div>
 
-<p>
-Prodotti pubblicati
-</p>
+    <div class="card">
+      <div class="card-icon">🟢</div>
 
+      <div>
+        <span> Utenti attivi </span>
 
-</div>
+        <h2>
+          {{ activeUsers }}
+        </h2>
 
-</div>
+        <p>Account abilitati</p>
+      </div>
+    </div>
 
+    <div class="card">
+      <div class="card-icon">📦</div>
 
+      <div>
+        <span> Ordini </span>
 
+        <h2>
+          {{ totalOrders }}
+        </h2>
 
+        <p>Acquisti effettuati</p>
+      </div>
+    </div>
 
+    <div class="card money">
+      <div class="card-icon">💰</div>
 
+      <div>
+        <span> Incasso </span>
 
-<div class="card">
+        <h2>
+          {{ totalRevenue | currency: "EUR" }}
+        </h2>
 
-<div class="card-icon">
-👥
-</div>
+        <p>Vendite completate</p>
+      </div>
+    </div>
+  </section>
 
-
-<div>
-
-<span>
-Utenti
-</span>
-
-
-<h2>
-{{totalUsers}}
-</h2>
-
-
-<p>
-Account registrati
-</p>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-<div class="card">
-
-<div class="card-icon">
-🛡️
-</div>
-
-
-<div>
-
-<span>
-Admin
-</span>
-
-
-<h2>
-{{totalAdmins}}
-</h2>
-
-
-<p>
-Amministratori
-</p>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-<div class="card">
-
-<div class="card-icon">
-🟢
-</div>
-
-
-<div>
-
-<span>
-Utenti attivi
-</span>
-
-
-<h2>
-{{activeUsers}}
-</h2>
-
-
-<p>
-Account abilitati
-</p>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-
-<div class="card">
-
-<div class="card-icon">
-📦
-</div>
-
-
-<div>
-
-<span>
-Ordini
-</span>
-
-
-
-<h2>
-{{totalOrders}}
-</h2>
-
-
-<p>
-Acquisti effettuati
-</p>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
-
-<div class="card money">
-
-<div class="card-icon">
-💰
-</div>
-
-
-<div>
-
-<span>
-Incasso
-</span>
-
-
-<h2>
-{{totalRevenue | currency:'EUR'}}
-</h2>
-
-
-<p>
-Vendite completate
-</p>
-
-
-</div>
-
-</div>
-
-
-
-
-
-</section>
-
-
-
-<!-- ==============================
+  <!-- ==============================
 CHAT CLIENTI
 ============================== -->
 
+  <section class="dashboard-chat">
+    <h2>💬 Assistenza clienti</h2>
 
-<section class="dashboard-chat">
+    <app-admin-chat></app-admin-chat>
+  </section>
 
-
-<h2>
-💬 Assistenza clienti
-</h2>
-
-
-<app-admin-chat></app-admin-chat>
-
-
-</section>
-
-
-
-
-
-<!-- ==============================
+  <!-- ==============================
 PAGAMENTI
 ============================== -->
 
-
-
-
-<!-- ==============================
+  <!-- ==============================
 PAGAMENTI
 ============================== -->
 
-
-<section class="panel">
-
-
-<h2>
-💳 Stato pagamenti
-</h2>
-
-
-
-
-
-<div class="info-grid">
-
-
-
-<div class="info-box">
-
-
-<span>
-
-Pagamenti totali
-
-</span>
-
-
-<strong>
-
-{{totalPayments}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-<div class="info-box success">
-
-
-<span>
-
-Completati
-
-</span>
-
-
-<strong>
-
-{{completedPayments}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-<div class="info-box danger">
-
-
-<span>
-
-Falliti
-
-</span>
-
-
-<strong>
-
-{{failedPayments}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-
-Prodotti venduti
-
-</span>
-
-
-<strong>
-
-{{productsSold}}
-
-</strong>
-
-
-</div>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ==============================
+  <section class="panel">
+    <h2>💳 Stato pagamenti</h2>
+
+    <div class="info-grid">
+      <div class="info-box">
+        <span> Pagamenti totali </span>
+
+        <strong>
+          {{ totalPayments }}
+        </strong>
+      </div>
+
+      <div class="info-box success">
+        <span> Completati </span>
+
+        <strong>
+          {{ completedPayments }}
+        </strong>
+      </div>
+
+      <div class="info-box danger">
+        <span> Falliti </span>
+
+        <strong>
+          {{ failedPayments }}
+        </strong>
+      </div>
+
+      <div class="info-box">
+        <span> Prodotti venduti </span>
+
+        <strong>
+          {{ productsSold }}
+        </strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================
 ULTIMA VENDITA
 ============================== -->
 
+  <section class="panel">
+    <h2>📈 Ultima attività</h2>
 
-<section class="panel">
+    <div class="info-grid">
+      <div class="info-box">
+        <span> Ultimo cliente </span>
 
+        <strong>
+          {{ lastCustomer || "Nessuno" }}
+        </strong>
+      </div>
 
-<h2>
-📈 Ultima attività
-</h2>
+      <div class="info-box">
+        <span> Ultimo ordine </span>
 
+        <strong> #{{ lastOrder?.id || "-" }} </strong>
+      </div>
 
+      <div class="info-box">
+        <span> Ultimo pagamento </span>
 
+        <strong> #{{ lastPayment?.id || "-" }} </strong>
+      </div>
 
-<div class="info-grid">
+      <div class="info-box">
+        <span> Metodo pagamento </span>
 
+        <strong>
+          {{ lastPayment?.method || "-" }}
+        </strong>
+      </div>
+    </div>
+  </section>
 
-
-
-
-<div class="info-box">
-
-
-<span>
-Ultimo cliente
-</span>
-
-
-<strong>
-
-{{lastCustomer || 'Nessuno'}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-Ultimo ordine
-</span>
-
-
-<strong>
-
-#{{lastOrder?.id || '-'}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-Ultimo pagamento
-</span>
-
-
-<strong>
-
-#{{lastPayment?.id || '-'}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-Metodo pagamento
-</span>
-
-
-<strong>
-
-{{lastPayment?.method || '-'}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ==============================
+  <!-- ==============================
 AZIONI RAPIDE
 ============================== -->
 
+  <section class="panel">
+    <h2>⚡ Azioni rapide</h2>
 
-<section class="panel">
+    <div class="buttons">
+      <a routerLink="/admin/upload" class="action primary">
+        ➕ Nuovo Planner
+      </a>
 
+      <a routerLink="/admin/planners" class="action"> 📅 Gestisci Planner </a>
 
-<h2>
-⚡ Azioni rapide
-</h2>
+      <a routerLink="/admin/users" class="action"> 👥 Gestisci Utenti </a>
 
+      <a routerLink="/admin/orders" class="action"> 📦 Gestisci Ordini </a>
 
+      <a routerLink="/admin/payments" class="action"> 💳 Gestisci Pagamenti </a>
 
+      <a routerLink="/shop" class="action"> 🛍 Visualizza Shop </a>
 
-<div class="buttons">
+      <a routerLink="/" class="action"> 🌍 Vai al sito </a>
+    </div>
+  </section>
 
-
-
-
-
-<a
-
-routerLink="/admin/upload"
-
-class="action primary">
-
-➕ Nuovo Planner
-
-</a>
-
-
-
-
-
-
-
-<a
-
-routerLink="/admin/planners"
-
-class="action">
-
-📅 Gestisci Planner
-
-</a>
-
-
-
-
-
-
-
-<a
-
-routerLink="/admin/users"
-
-class="action">
-
-👥 Gestisci Utenti
-
-</a>
-
-
-
-
-
-
-
-<a
-
-routerLink="/admin/orders"
-
-class="action">
-
-📦 Gestisci Ordini
-
-</a>
-
-
-
-<a
-routerLink="/admin/payments"
-class="action">
-
-💳 Gestisci Pagamenti
-
-</a>
-
-
-
-<a
-
-routerLink="/shop"
-
-class="action">
-
-🛍 Visualizza Shop
-
-</a>
-
-
-
-
-
-
-
-<a
-
-routerLink="/"
-
-class="action">
-
-🌍 Vai al sito
-
-</a>
-
-
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- ==============================
+  <!-- ==============================
 SISTEMA
 ============================== -->
 
+  <section class="panel">
+    <h2>⚙️ Stato piattaforma</h2>
 
-<section class="panel">
+    <div class="info-grid">
+      <div class="info-box">
+        <span> Versione </span>
 
+        <strong> DreamCalendar v1.0 </strong>
+      </div>
 
-<h2>
-⚙️ Stato piattaforma
-</h2>
+      <div class="info-box">
+        <span> Database </span>
 
+        <strong> Local Storage </strong>
+      </div>
 
+      <div class="info-box">
+        <span> Ultimo aggiornamento </span>
 
+        <strong>
+          {{ currentDate }}
 
+          <br />
 
-<div class="info-grid">
+          {{ currentTime }}
+        </strong>
+      </div>
 
+      <div class="info-box">
+        <span> Sicurezza </span>
 
-
-
-
-<div class="info-box">
-
-<span>
-Versione
-</span>
-
-
-<strong>
-DreamCalendar v1.0
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="info-box">
-
-<span>
-Database
-</span>
-
-
-<strong>
-Local Storage
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="info-box">
-
-<span>
-Ultimo aggiornamento
-</span>
-
-
-<strong>
-
-{{currentDate}}
-
-<br>
-
-{{currentTime}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-Sicurezza
-</span>
-
-
-<strong>
-
-🟢 Protetta
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-</div>
-
-
-
-
-</section>
-
-
-
-
-
-
-
+        <strong> 🟢 Protetta </strong>
+      </div>
+    </div>
+  </section>
 </div>

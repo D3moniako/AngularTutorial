@@ -1,768 +1,196 @@
 <div class="profile-page">
+  <!-- ============================= -->
+  <!-- PROFILO UTENTE -->
+  <!-- ============================= -->
 
+  <section *ngIf="user" class="profile-container">
+    <!-- HEADER PROFILO -->
 
-<!-- ============================= -->
-<!-- PROFILO UTENTE -->
-<!-- ============================= -->
+    <div class="profile-header">
+      <div class="avatar-area">
+        <div class="avatar">
+          <img *ngIf="user?.avatar" [src]="user?.avatar" alt="Avatar" />
 
-<section 
-*ngIf="user"
-class="profile-container">
+          <span *ngIf="!user?.avatar"> 👤 </span>
+        </div>
 
+        <label class="upload-avatar">
+          📷 Cambia foto
 
-<!-- HEADER PROFILO -->
+          <input type="file" accept="image/*" (change)="changeAvatar($event)" />
+        </label>
+      </div>
 
-<div class="profile-header">
+      <div class="profile-title">
+        <h1>🌸 {{ user?.name }}</h1>
 
+        <p>Benvenuto nel tuo spazio personale DreamCalendar</p>
 
-<div class="avatar-area">
+        <span class="role-badge"> 👑 {{ user?.role }} </span>
+      </div>
+    </div>
 
+    <!-- EDITOR FOTO -->
 
-<div class="avatar">
+    <div class="avatar-editor" *ngIf="showCropper">
+      <h3>Regola la foto</h3>
 
+      <div class="crop-preview">
+        <img
+          [src]="imagePreview"
+          [style.transform]="
+            'translate(' +
+            positionX +
+            'px,' +
+            positionY +
+            'px) scale(' +
+            zoom +
+            ')'
+          "
+        />
+      </div>
 
-<img
-*ngIf="user?.avatar"
-[src]="user?.avatar"
-alt="Avatar">
+      <div class="crop-buttons">
+        <button (click)="decreaseZoom()">➖</button>
 
+        <button (click)="increaseZoom()">➕</button>
 
-<span *ngIf="!user?.avatar">
-👤
-</span>
+        <button (click)="moveImage(-10, 0)">⬅️</button>
 
+        <button (click)="moveImage(10, 0)">➡️</button>
 
-</div>
+        <button (click)="moveImage(0, -10)">⬆️</button>
 
+        <button (click)="moveImage(0, 10)">⬇️</button>
+      </div>
 
+      <button class="save-photo" (click)="saveAvatar()">💾 Salva foto</button>
 
-<label class="upload-avatar">
+      <button class="cancel-photo" (click)="cancelAvatar()">❌ Annulla</button>
+    </div>
 
-📷 Cambia foto
+    <!-- DATI PERSONALI -->
 
+    <a
+      *ngIf="user?.role?.toLowerCase() === 'admin'"
+      routerLink="/admin/dashboard"
+      class="admin-button"
+    >
+      👑 Area Amministratore
+    </a>
+    <div class="profile-section">
+      <h2>👤 Informazioni personali</h2>
 
-<input
+      <div class="info-grid">
+        <div class="info-box">
+          <span> 📧 Email </span>
 
-type="file"
+          <strong>
+            {{ user?.email }}
+          </strong>
+        </div>
 
-accept="image/*"
+        <div class="info-box" *ngIf="user?.phone">
+          <span> 📱 Telefono </span>
 
-(change)="changeAvatar($event)">
+          <strong>
+            {{ user?.phone }}
+          </strong>
+        </div>
 
+        <div class="info-box">
+          <span> 📅 Registrazione </span>
 
-</label>
+          <strong>
+            {{ user?.createdAt | date: "dd/MM/yyyy" }}
+          </strong>
+        </div>
 
+        <div class="info-box">
+          <span> 🟢 Stato account </span>
 
-</div>
+          <strong *ngIf="user?.enabled"> Attivo </strong>
 
+          <strong *ngIf="!user?.enabled"> Disattivato </strong>
+        </div>
+      </div>
+    </div>
 
+    <!-- SICUREZZA -->
 
+    <div class="profile-section">
+      <h2>🔐 Sicurezza</h2>
 
+      <div class="security-card">
+        <p>Autenticazione a due fattori</p>
 
-<div class="profile-title">
+        <span
+          [class.active]="user?.twoFactorEnabled"
+          [class.off]="!user?.twoFactorEnabled"
+        >
+          {{ user?.twoFactorEnabled ? "Attiva ✅" : "Non attiva" }}
+        </span>
+      </div>
+    </div>
 
+    <!-- MODIFICA PROFILO -->
 
-<h1>
+    <div class="profile-section">
+      <h2>✏️ Modifica profilo</h2>
 
-🌸 {{user?.name}}
+      <div class="edit-form">
+        <label> Nome </label>
 
-</h1>
+        <input type="text" [(ngModel)]="editName" />
 
+        <label> Telefono </label>
 
+        <input type="text" [(ngModel)]="editPhone" />
 
-<p>
+        <button (click)="saveProfile()">💾 Salva modifiche</button>
 
-Benvenuto nel tuo spazio personale DreamCalendar
+        <p class="profile-message" *ngIf="message">
+          {{ message }}
+        </p>
+      </div>
+    </div>
 
-</p>
+    <div class="profile-section actions">
+      <h2>⚙️ Gestione account</h2>
 
+      <button (click)="showPasswordBox = !showPasswordBox">
+        🔑 Cambia password
+      </button>
 
+      <div class="password-box" *ngIf="showPasswordBox">
+        <h3>🔐 Modifica password</h3>
 
+        <label> Vecchia password </label>
 
-<span class="role-badge">
+        <input type="password" [(ngModel)]="oldPassword" />
 
-👑 {{user?.role}}
+        <label> Nuova password </label>
 
-</span>
+        <input type="password" [(ngModel)]="newPassword" />
 
+        <label> Conferma nuova password </label>
 
+        <input type="password" [(ngModel)]="confirmPassword" />
 
-</div>
+        <button (click)="savePassword()">💾 Salva password</button>
+      </div>
 
+      <button class="logout" (click)="logout()">🚪 Esci dall'account</button>
+    </div>
+  </section>
 
-</div>
+  <!-- UTENTE NON LOGGATO -->
 
+  <section *ngIf="!user" class="empty-profile">
+    <h2>👋 Nessun utente collegato</h2>
 
+    <p>Accedi per visualizzare il tuo profilo.</p>
 
-
-
-
-
-<!-- EDITOR FOTO -->
-
-
-<div
-
-class="avatar-editor"
-
-*ngIf="showCropper">
-
-
-
-<h3>
-
-Regola la foto
-
-</h3>
-
-
-
-
-
-<div class="crop-preview">
-
-
-
-<img
-
-[src]="imagePreview"
-
-[style.transform]="
-'translate('+positionX+'px,'+positionY+'px) scale('+zoom+')'
-">
-
-
-</div>
-
-
-
-
-
-
-<div class="crop-buttons">
-
-
-
-<button
-
-(click)="decreaseZoom()">
-
-➖
-
-</button>
-
-
-
-
-<button
-
-(click)="increaseZoom()">
-
-➕
-
-</button>
-
-
-
-
-
-<button
-
-(click)="moveImage(-10,0)">
-
-⬅️
-
-</button>
-
-
-
-
-<button
-
-(click)="moveImage(10,0)">
-
-➡️
-
-</button>
-
-
-
-
-
-<button
-
-(click)="moveImage(0,-10)">
-
-⬆️
-
-</button>
-
-
-
-
-<button
-
-(click)="moveImage(0,10)">
-
-⬇️
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-<button
-
-class="save-photo"
-
-(click)="saveAvatar()">
-
-💾 Salva foto
-
-</button>
-
-
-
-
-<button
-
-class="cancel-photo"
-
-(click)="cancelAvatar()">
-
-❌ Annulla
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- DATI PERSONALI -->
-
-<a 
-*ngIf="user?.role?.toLowerCase() === 'admin'"
-routerLink="/admin/dashboard"
-class="admin-button">
-
-👑 Area Amministratore
-
-</a>
-<div class="profile-section">
-
-
-<h2>
-
-👤 Informazioni personali
-
-</h2>
-
-
-
-
-<div class="info-grid">
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-
-📧 Email
-
-</span>
-
-
-
-<strong>
-
-{{user?.email}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div
-
-class="info-box"
-
-*ngIf="user?.phone">
-
-
-
-<span>
-
-📱 Telefono
-
-</span>
-
-
-
-<strong>
-
-{{user?.phone}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-
-📅 Registrazione
-
-</span>
-
-
-
-<strong>
-
-{{user?.createdAt | date:'dd/MM/yyyy'}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-<div class="info-box">
-
-
-<span>
-
-🟢 Stato account
-
-</span>
-
-
-
-
-<strong *ngIf="user?.enabled">
-
-Attivo
-
-</strong>
-
-
-
-
-<strong *ngIf="!user?.enabled">
-
-Disattivato
-
-</strong>
-
-
-
-</div>
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- SICUREZZA -->
-
-
-<div class="profile-section">
-
-
-<h2>
-
-🔐 Sicurezza
-
-</h2>
-
-
-
-
-
-<div class="security-card">
-
-
-
-<p>
-
-Autenticazione a due fattori
-
-</p>
-
-
-
-
-
-<span
-
-[class.active]="user?.twoFactorEnabled"
-
-[class.off]="!user?.twoFactorEnabled">
-
-
-
-{{user?.twoFactorEnabled ? 'Attiva ✅' : 'Non attiva'}}
-
-
-
-</span>
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<!-- MODIFICA PROFILO -->
-
-
-<div class="profile-section">
-
-
-<h2>
-
-✏️ Modifica profilo
-
-</h2>
-
-
-
-
-
-<div class="edit-form">
-
-
-
-
-
-<label>
-
-Nome
-
-</label>
-
-
-
-
-<input
-
-type="text"
-
-[(ngModel)]="editName">
-
-
-
-
-
-
-
-<label>
-
-Telefono
-
-</label>
-
-
-
-
-<input
-
-type="text"
-
-[(ngModel)]="editPhone">
-
-
-
-
-
-
-<button
-
-(click)="saveProfile()">
-
-💾 Salva modifiche
-
-</button>
-
-
-
-
-
-
-
-<p
-
-class="profile-message"
-
-*ngIf="message">
-
-{{message}}
-
-</p>
-
-
-
-
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="profile-section actions">
-
-
-<h2>
-
-⚙️ Gestione account
-
-</h2>
-
-
-
-
-<button
-
-(click)="showPasswordBox = !showPasswordBox">
-
-🔑 Cambia password
-
-</button>
-
-
-
-
-
-<div 
-class="password-box"
-
-*ngIf="showPasswordBox">
-
-
-<h3>
-
-🔐 Modifica password
-
-</h3>
-
-
-
-<label>
-
-Vecchia password
-
-</label>
-
-
-<input
-
-type="password"
-
-[(ngModel)]="oldPassword">
-
-
-
-
-
-<label>
-
-Nuova password
-
-</label>
-
-
-<input
-
-type="password"
-
-[(ngModel)]="newPassword">
-
-
-
-
-
-<label>
-
-Conferma nuova password
-
-</label>
-
-
-<input
-
-type="password"
-
-[(ngModel)]="confirmPassword">
-
-
-
-
-
-<button
-
-(click)="savePassword()">
-
-💾 Salva password
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-<button
-
-class="logout"
-
-(click)="logout()">
-
-
-🚪 Esci dall'account
-
-
-</button>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-</section>
-
-
-
-
-
-
-
-
-
-<!-- UTENTE NON LOGGATO -->
-
-
-<section
-
-*ngIf="!user"
-
-class="empty-profile">
-
-
-
-
-
-<h2>
-
-👋 Nessun utente collegato
-
-</h2>
-
-
-
-
-
-
-<p>
-
-Accedi per visualizzare il tuo profilo.
-
-</p>
-
-
-
-
-
-
-<a routerLink="/login">
-
-Accedi
-
-</a>
-
-
-
-
-
-</section>
-
-
-
-
-
+    <a routerLink="/login"> Accedi </a>
+  </section>
 </div>

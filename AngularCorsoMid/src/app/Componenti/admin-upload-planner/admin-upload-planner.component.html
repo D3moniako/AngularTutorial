@@ -1,317 +1,89 @@
 <div class="upload-page">
+  <h1>➕ Carica Nuovo Planner</h1>
 
+  <p class="message" *ngIf="message">
+    {{ message }}
+  </p>
 
-<h1>
-➕ Carica Nuovo Planner
-</h1>
+  <div class="form-box">
+    <div class="info-box">
+      💡 Il planner pubblicato sarà disponibile nello Shop, dopo essere stato
+      salvato nel catalogo.
+    </div>
 
+    <label> Nome Planner </label>
 
+    <input
+      type="text"
+      [(ngModel)]="planner.name"
+      placeholder="Es. Rose Gold Luxury Planner"
+      required
+    />
 
-<p 
-class="message"
-*ngIf="message">
+    <label> Immagine Copertina </label>
 
-{{message}}
+    <input type="file" accept="image/*" (change)="onImageSelected($event)" />
 
-</p>
+    <div class="preview" *ngIf="planner.image">
+      <img [src]="planner.image" alt="Preview Planner" />
+    </div>
 
+    <label> Prezzo € </label>
 
+    <input
+      type="number"
+      [(ngModel)]="planner.price"
+      placeholder="14.99"
+      min="0"
+    />
 
+    <label> Categoria </label>
 
+    <select [(ngModel)]="planner.category">
+      <option value="">Seleziona categoria</option>
 
-<div class="form-box">
+      <option value="Elegant">Elegant</option>
 
+      <option value="Lifestyle">Lifestyle</option>
 
+      <option value="Wellness">Wellness</option>
 
-<div class="info-box">
+      <option value="Business">Business</option>
+    </select>
 
-💡 Il planner pubblicato sarà disponibile nello Shop,
-dopo essere stato salvato nel catalogo.
+    <label> Badge prodotto </label>
 
-</div>
+    <input
+      type="text"
+      [(ngModel)]="planner.badge"
+      placeholder="PREMIUM / BEST SELLER"
+    />
 
+    <label> File PDF Planner </label>
 
+    <input
+      type="file"
+      accept="application/pdf"
+      (change)="onPdfSelected($event)"
+    />
 
+    <div class="pdf-box" *ngIf="pdfName">
+      📄 PDF selezionato:
 
+      <strong>
+        {{ pdfName }}
+      </strong>
+    </div>
 
+    <label> Descrizione </label>
 
+    <textarea
+      [(ngModel)]="planner.description"
+      placeholder="Descrizione dettagliata del planner..."
+      required
+    >
+    </textarea>
 
-<label>
-
-Nome Planner
-
-</label>
-
-
-<input
-
-type="text"
-
-[(ngModel)]="planner.name"
-
-placeholder="Es. Rose Gold Luxury Planner"
-
-required>
-
-
-
-
-
-
-
-
-
-<label>
-
-Immagine Copertina
-
-</label>
-
-
-<input
-
-type="file"
-
-accept="image/*"
-
-(change)="onImageSelected($event)">
-
-
-
-
-
-
-
-
-
-
-<div
-
-class="preview"
-
-*ngIf="planner.image">
-
-
-<img
-
-[src]="planner.image"
-
-alt="Preview Planner">
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<label>
-
-Prezzo €
-
-</label>
-
-
-<input
-
-type="number"
-
-[(ngModel)]="planner.price"
-
-placeholder="14.99"
-
-min="0">
-
-
-
-
-
-
-
-
-
-
-
-<label>
-
-Categoria
-
-</label>
-
-
-<select
-
-[(ngModel)]="planner.category">
-
-
-
-<option value="">
-
-Seleziona categoria
-
-</option>
-
-
-<option value="Elegant">
-
-Elegant
-
-</option>
-
-
-<option value="Lifestyle">
-
-Lifestyle
-
-</option>
-
-
-<option value="Wellness">
-
-Wellness
-
-</option>
-
-
-<option value="Business">
-
-Business
-
-</option>
-
-
-</select>
-
-
-
-
-
-
-
-
-
-<label>
-
-Badge prodotto
-
-</label>
-
-
-<input
-
-type="text"
-
-[(ngModel)]="planner.badge"
-
-placeholder="PREMIUM / BEST SELLER">
-
-
-
-
-
-
-
-
-
-
-<label>
-
-File PDF Planner
-
-</label>
-
-
-<input
-
-type="file"
-
-accept="application/pdf"
-
-(change)="onPdfSelected($event)">
-
-
-
-
-
-
-
-
-
-<div
-
-class="pdf-box"
-
-*ngIf="pdfName">
-
-
-📄 PDF selezionato:
-
-
-<strong>
-
-{{pdfName}}
-
-</strong>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-
-
-<label>
-
-Descrizione
-
-</label>
-
-
-<textarea
-
-[(ngModel)]="planner.description"
-
-placeholder="Descrizione dettagliata del planner..."
-
-required>
-
-</textarea>
-
-
-
-
-
-
-
-
-
-<button
-
-(click)="savePlanner()">
-
-
-🚀 Pubblica Planner
-
-
-</button>
-
-
-
-
-
-
-</div>
-
-
-
+    <button (click)="savePlanner()">🚀 Pubblica Planner</button>
+  </div>
 </div>

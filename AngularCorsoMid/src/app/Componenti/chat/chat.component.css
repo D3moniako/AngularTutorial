@@ -1,171 +1,97 @@
-.chat-box{
+.chat-box {
+  max-width: 500px;
 
+  margin: 40px auto;
 
-max-width:500px;
+  background: white;
 
-margin:40px auto;
+  border-radius: 35px;
 
-background:white;
+  box-shadow: 0 20px 50px rgba(200, 120, 160, 0.2);
 
-border-radius:35px;
-
-box-shadow:
-
-0 20px 50px rgba(200,120,160,.2);
-
-overflow:hidden;
-
-
+  overflow: hidden;
 }
 
+.chat-header {
+  padding: 25px;
 
+  text-align: center;
 
-.chat-header{
+  font-size: 22px;
 
+  font-weight: 700;
 
-padding:25px;
+  background: linear-gradient(135deg, #ffd9e8, #eadcff);
 
-text-align:center;
-
-font-size:22px;
-
-font-weight:700;
-
-background:
-
-linear-gradient(
-135deg,
-#ffd9e8,
-#eadcff
-);
-
-
-color:#6b4b5c;
-
-
+  color: #6b4b5c;
 }
 
+.messages {
+  padding: 20px;
 
+  height: 350px;
 
-.messages{
-
-
-padding:20px;
-
-height:350px;
-
-overflow-y:auto;
-
-
+  overflow-y: auto;
 }
 
+.message {
+  background: #fff1f7;
 
+  padding: 15px;
 
-.message{
+  border-radius: 20px;
 
-
-background:#fff1f7;
-
-padding:15px;
-
-border-radius:20px;
-
-margin-bottom:15px;
-
-
+  margin-bottom: 15px;
 }
 
+.message.user {
+  background: #eadcff;
 
-
-.message.user{
-
-
-background:#eadcff;
-
-margin-left:60px;
-
-
+  margin-left: 60px;
 }
 
-
-
-.message p{
-
-margin:8px 0;
-
+.message p {
+  margin: 8px 0;
 }
 
+.message span {
+  font-size: 12px;
 
-
-.message span{
-
-
-font-size:12px;
-
-color:#999;
-
-
+  color: #999;
 }
 
+.chat-input {
+  display: flex;
 
+  padding: 15px;
 
-
-.chat-input{
-
-
-display:flex;
-
-padding:15px;
-
-gap:10px;
-
-
+  gap: 10px;
 }
 
+.chat-input input {
+  flex: 1;
 
+  border: none;
 
-.chat-input input{
+  background: #fff5fa;
 
+  padding: 15px;
 
-flex:1;
-
-border:none;
-
-background:#fff5fa;
-
-padding:15px;
-
-border-radius:30px;
-
-
+  border-radius: 30px;
 }
 
+.chat-input button {
+  border: none;
 
+  border-radius: 30px;
 
-.chat-input button{
+  padding: 15px 25px;
 
+  background: linear-gradient(135deg, #d98cad, #a979c9);
 
-border:none;
+  color: white;
 
-border-radius:30px;
+  font-weight: 700;
 
-padding:15px 25px;
-
-
-background:
-
-linear-gradient(
-135deg,
-#d98cad,
-#a979c9
-);
-
-
-color:white;
-
-font-weight:700;
-
-cursor:pointer;
-
-
+  cursor: pointer;
 }

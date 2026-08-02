@@ -1,21 +1,15 @@
 export interface ChatMessage {
+  id: number;
 
-  id:number;
+  userId: number;
 
-  userId:number;
+  userName: string;
 
-  userName:string;
+  sender: 'USER' | 'BOT' | 'ADMIN';
 
+  text: string;
 
-  sender:'USER' | 'BOT' | 'ADMIN';
+  date: Date;
 
-
-  text:string;
-
-
-  date:Date;
-
-
-  read:boolean;
-
+  read: boolean;
 }
