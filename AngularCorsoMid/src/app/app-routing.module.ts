@@ -155,10 +155,9 @@ const routes: Routes = [
 // =================================================
 
 {
- path:'products/:id',
- component:ProductsComponent
+ path:'product/:id',
+ redirectTo:'products/:id'
 },
-
 
 
 
@@ -249,7 +248,8 @@ canActivate:[AuthGuard]
 
 {
  path:'payment-success',
- component:PaymentSuccessComponent
+ component:PaymentSuccessComponent,
+ canActivate:[AuthGuard]
 },
 
 
@@ -464,7 +464,9 @@ routes,
 
 scrollPositionRestoration:'top',
 
-anchorScrolling:'enabled'
+anchorScrolling:'enabled',
+
+useHash:false
 
 }
 

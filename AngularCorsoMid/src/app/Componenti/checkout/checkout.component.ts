@@ -456,7 +456,7 @@ this.orderService.addOrder(order);
 // SIMULA RITORNO STRIPE
 // =====================================
 
-this.notificationService.add({
+/*this.notificationService.add({
 
 id:Date.now(),
 
@@ -473,7 +473,7 @@ date:new Date(),
 
 read:false
 
-});
+});*/
 
 
 

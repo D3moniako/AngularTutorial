@@ -10,7 +10,8 @@ import { Order } from '../../models/order';
 import { Payment } from '../../models/payment';
 
 
-
+import { NotificationCenterService } 
+from '../../services/notification-center.service';
 @Component({
 
 selector:'app-payment-success',
@@ -44,8 +45,9 @@ private paymentService:PaymentService,
 
 private cartService:CartService,
 
-private router:Router
+private router:Router,
 
+private  notificationCenterService :NotificationCenterService,
 ){}
 
 
@@ -337,7 +339,24 @@ if(!existing){
 
 
 this.orderService.addOrder(order);
+this.notificationCenterService.add({
 
+id:Date.now(),
+
+title:'Ordine completato',
+
+message:
+'Il tuo ordine #'+id+' è stato confermato. I tuoi planner sono disponibili.',
+
+icon:'📦',
+
+type:'ORDER',
+
+date:new Date(),
+
+read:false
+
+});
 
 }
 

@@ -32,7 +32,15 @@ Il tuo ordine:
 
 <div class="message">
 
+<span *ngIf="loading">
+⏳ Conferma pagamento in corso...
+</span>
+
+
+<span *ngIf="!loading">
 {{message}}
+</span>
+
 
 </div>
 

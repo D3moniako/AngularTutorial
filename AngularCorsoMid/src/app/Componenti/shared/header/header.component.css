@@ -449,29 +449,14 @@ flex-shrink:1;
 
 .account a{
 
-font-size:0;
+font-size:14px;
 
-padding:8px;
-
-}
-
-
-.account .login-button::before{
-
-content:"🔑";
-
-font-size:20px;
+padding:8px 10px;
 
 }
 
 
-.account .register-button::before{
 
-content:"✨";
-
-font-size:20px;
-
-}
 
 
 .account .profile-button::before{
