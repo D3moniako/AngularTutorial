@@ -1,0 +1,81 @@
+<div class="bot-container">
+
+
+  <div class="bot-header">
+
+    🌸 DreamCalendar AI
+
+  </div>
+
+
+
+
+  <div class="messages">
+
+
+    <div
+      *ngFor="let msg of messages"
+      class="message"
+      [ngClass]="msg.sender">
+
+
+      <strong>
+        {{msg.sender}}
+      </strong>
+
+
+      <p>
+        {{msg.text}}
+      </p>
+
+
+    </div>
+
+
+
+    <div
+      *ngIf="loading"
+      class="loading">
+
+      Il bot sta rispondendo...
+
+    </div>
+
+
+  </div>
+
+
+
+
+
+  <div class="input-area">
+
+
+    <input
+
+      type="text"
+
+      [(ngModel)]="userMessage"
+
+      (keyup.enter)="sendMessage()"
+
+      placeholder="Scrivi una domanda..."
+    >
+
+
+
+    <button
+
+      (click)="sendMessage()">
+
+      Invia
+
+    </button>
+
+
+
+  </div>
+
+
+
+</div>

@@ -42,7 +42,7 @@ import { PlannerService } from './services/planner.service';
 
 import { ComponenteProvaComponent } from './componente-prova/componente-prova.component';
 
-import { AboutComponent } from './about/about.component';
+import { AboutComponent } from './Componenti/about/about.component';
 
 // Componenti sito
 
@@ -107,6 +107,7 @@ import { NotificationDropdownComponent } from './Componenti/notification-dropdow
 import { ChatBoxComponent } from './chat/components/chat-box/chat-box.component';
 import { ChatComponent } from './Componenti/chat/chat.component';
 import { AdminChatComponent } from './Componenti/admin/admin-chat/admin-chat.component';
+import { BotComponent } from './bot/bot.component';
 
 @NgModule({
   declarations: [
@@ -172,6 +173,7 @@ import { AdminChatComponent } from './Componenti/admin/admin-chat/admin-chat.com
     ChatBoxComponent,
     ChatComponent,
     AdminChatComponent,
+    BotComponent,
   ],
 
   imports: [
