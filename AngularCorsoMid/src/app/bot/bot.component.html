@@ -3,9 +3,52 @@
 
   <div class="bot-header">
 
+
     🌸 DreamCalendar AI
 
+
+    <div *ngIf="isLogged">
+
+      Benvenuto {{username}} 👋
+
+    </div>
+
+
   </div>
+
+
+
+
+
+  <div 
+  *ngIf="!isLogged"
+  class="login-message">
+
+
+    🔒
+
+
+    <h3>
+      Accesso richiesto
+    </h3>
+
+
+    <p>
+      Devi effettuare il login per parlare con DreamCalendar AI.
+    </p>
+
+
+
+    <a routerLink="/login">
+      Accedi
+    </a>
+
+
+
+  </div>
+
+
+
 
 
 
@@ -13,33 +56,50 @@
   <div class="messages">
 
 
+
     <div
+
       *ngFor="let msg of messages"
+
       class="message"
+
       [ngClass]="msg.sender">
 
 
       <strong>
+
         {{msg.sender}}
+
       </strong>
 
 
+
       <p>
+
         {{msg.text}}
+
       </p>
 
 
+
     </div>
+
+
 
 
 
     <div
+
       *ngIf="loading"
+
       class="loading">
+
 
       Il bot sta rispondendo...
 
+
     </div>
+
 
 
   </div>
@@ -48,19 +108,33 @@
 
 
 
-  <div class="input-area">
+
+  <div
+
+  class="input-area"
+
+  *ngIf="isLogged">
+
+
+
 
 
     <input
 
+
       type="text"
+
 
       [(ngModel)]="userMessage"
 
+
       (keyup.enter)="sendMessage()"
 
+
       placeholder="Scrivi una domanda..."
+
     >
+
 
 
 
@@ -68,7 +142,9 @@
 
       (click)="sendMessage()">
 
+
       Invia
+
 
     </button>
 

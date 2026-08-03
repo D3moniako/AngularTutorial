@@ -134,3 +134,29 @@
   cursor:pointer;
 
 }
+.login-message {
+
+  text-align:center;
+
+  padding:30px;
+
+}
+
+
+.login-message a {
+
+  display:inline-block;
+
+  margin-top:15px;
+
+  padding:10px 25px;
+
+  border-radius:20px;
+
+  background:#c45bcf;
+
+  color:white;
+
+  text-decoration:none;
+
+}

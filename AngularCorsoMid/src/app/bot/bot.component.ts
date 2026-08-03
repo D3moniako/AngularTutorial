@@ -1,5 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { BotService } from './service/bot.service';
+
+import { UserService } from '../services/user.service';
+
+import { User } from '../models/user';
+
 
 
 @Component({
@@ -7,11 +13,10 @@ import { BotService } from './service/bot.service';
   templateUrl: './bot.component.html',
   styleUrls: ['./bot.component.css']
 })
-export class BotComponent {
+export class BotComponent implements OnInit {
 
 
   userMessage = '';
-
 
 
   messages: {
@@ -27,14 +32,117 @@ export class BotComponent {
 
 
 
+  currentUser: User | null = null;
+
+  username = '';
+
+  isLogged = false;
+
+
+
+
   constructor(
-    private botService: BotService
+
+    private botService: BotService,
+
+    private userService: UserService
+
   ) {}
 
 
 
 
+
+  ngOnInit(): void {
+
+
+    this.loadUser();
+
+
+
+    // aggiorna automaticamente se cambia login/logout
+
+    this.userService.user$.subscribe(user => {
+
+
+      this.currentUser = user;
+
+
+      this.loadUser();
+
+
+    });
+
+
+  }
+
+
+
+
+
+
+  loadUser(){
+
+
+    this.currentUser =
+      this.userService.getCurrentUser();
+
+
+
+    if(this.currentUser){
+
+
+      this.isLogged = true;
+
+
+      this.username =
+        this.currentUser.name;
+
+
+    }else{
+
+
+      this.isLogged = false;
+
+
+      this.username = '';
+
+    }
+
+
+  }
+
+
+
+
+
+
+
+
   async sendMessage() {
+
+
+
+    if(!this.isLogged){
+
+
+      this.messages.push({
+
+        sender:'BOT',
+
+        text:
+        '🔒 Devi effettuare il login per utilizzare DreamCalendar AI.'
+
+      });
+
+
+      return;
+
+
+    }
+
+
+
 
 
     if (!this.userMessage.trim()) {
@@ -45,16 +153,23 @@ export class BotComponent {
 
 
 
+
+
     const question = this.userMessage;
+
+
 
 
 
     this.messages.push({
 
-      sender: 'USER',
-      text: question
+      sender:'USER',
+
+      text:question
 
     });
+
+
 
 
 
@@ -64,24 +179,34 @@ export class BotComponent {
 
 
 
+
+
     try {
 
 
+
       const answer =
+
         await this.botService.askBot(question);
+
+
 
 
 
       this.messages.push({
 
-        sender: 'BOT',
-        text: answer
+        sender:'BOT',
+
+        text:answer
 
       });
 
 
 
+
+
     } catch(error) {
+
 
 
       console.error(error);
@@ -90,8 +215,10 @@ export class BotComponent {
 
       this.messages.push({
 
-        sender: 'BOT',
-        text: 'Errore nel collegamento con il servizio AI.'
+        sender:'BOT',
+
+        text:
+        'Errore nel collegamento con il servizio AI.'
 
       });
 
@@ -100,10 +227,14 @@ export class BotComponent {
 
 
 
+
+
     this.loading = false;
 
 
+
   }
+
 
 
 }
