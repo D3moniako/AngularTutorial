@@ -1,0 +1,26 @@
+<div class="notification-box">
+
+  <h3>
+    🔔 Notifiche
+  </h3>
+
+
+  <div 
+    class="notification"
+    *ngFor="let n of notifications"
+    (click)="markAsRead(n)"
+  >
+
+    <span>
+      {{n.message}}
+    </span>
+
+
+    <strong *ngIf="!n.read">
+      •
+    </strong>
+
+  </div>
+
+
+</div>

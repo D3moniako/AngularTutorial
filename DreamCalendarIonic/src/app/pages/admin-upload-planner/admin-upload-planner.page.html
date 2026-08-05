@@ -1,0 +1,89 @@
+<div class="upload-page">
+  <h1>➕ Carica Nuovo Planner</h1>
+
+  <p class="message" *ngIf="message">
+    {{ message }}
+  </p>
+
+  <div class="form-box">
+    <div class="info-box">
+      💡 Il planner pubblicato sarà disponibile nello Shop, dopo essere stato
+      salvato nel catalogo.
+    </div>
+
+    <label> Nome Planner </label>
+
+    <input
+      type="text"
+      [(ngModel)]="planner.name"
+      placeholder="Es. Rose Gold Luxury Planner"
+      required
+    />
+
+    <label> Immagine Copertina </label>
+
+    <input type="file" accept="image/*" (change)="onImageSelected($event)" />
+
+    <div class="preview" *ngIf="planner.image">
+      <img [src]="planner.image" alt="Preview Planner" />
+    </div>
+
+    <label> Prezzo € </label>
+
+    <input
+      type="number"
+      [(ngModel)]="planner.price"
+      placeholder="14.99"
+      min="0"
+    />
+
+    <label> Categoria </label>
+
+    <select [(ngModel)]="planner.category">
+      <option value="">Seleziona categoria</option>
+
+      <option value="Elegant">Elegant</option>
+
+      <option value="Lifestyle">Lifestyle</option>
+
+      <option value="Wellness">Wellness</option>
+
+      <option value="Business">Business</option>
+    </select>
+
+    <label> Badge prodotto </label>
+
+    <input
+      type="text"
+      [(ngModel)]="planner.badge"
+      placeholder="PREMIUM / BEST SELLER"
+    />
+
+    <label> File PDF Planner </label>
+
+    <input
+      type="file"
+      accept="application/pdf"
+      (change)="onPdfSelected($event)"
+    />
+
+    <div class="pdf-box" *ngIf="pdfName">
+      📄 PDF selezionato:
+
+      <strong>
+        {{ pdfName }}
+      </strong>
+    </div>
+
+    <label> Descrizione </label>
+
+    <textarea
+      [(ngModel)]="planner.description"
+      placeholder="Descrizione dettagliata del planner..."
+      required
+    >
+    </textarea>
+
+    <button (click)="savePlanner()">🚀 Pubblica Planner</button>
+  </div>
+</div>

@@ -1,0 +1,303 @@
+<ion-content class="planner-page">
+
+
+<!-- HERO -->
+
+<ion-card class="planner-hero">
+
+  <ion-card-content>
+
+    <h1>
+      🌸 Trova il Planner perfetto
+    </h1>
+
+    <p>
+      Organizza tempo, obiettivi e sogni con i nostri planner digitali.
+    </p>
+
+  </ion-card-content>
+
+</ion-card>
+
+
+
+
+<!-- SEARCH -->
+
+<ion-card class="tools">
+
+<ion-card-content>
+
+
+<ion-searchbar
+
+placeholder="🔍 Cerca planner..."
+
+[(ngModel)]="searchText"
+
+(ionInput)="applyFilter()"
+
+animated="true">
+
+</ion-searchbar>
+
+
+
+
+<div class="categories">
+
+<ion-chip
+
+*ngFor="let c of categories"
+
+(click)="filterCategory(c)"
+
+[class.active]="selectedCategory===c">
+
+{{c}}
+
+</ion-chip>
+
+
+</div>
+
+
+
+</ion-card-content>
+
+</ion-card>
+
+
+
+
+
+
+
+<!-- EMPTY -->
+
+<ion-card
+
+class="empty"
+
+*ngIf="filteredProducts.length===0">
+
+
+<ion-card-content>
+
+<h2>
+🌸 Nessun planner trovato
+</h2>
+
+</ion-card-content>
+
+</ion-card>
+
+
+
+
+
+
+
+<!-- PRODUCTS -->
+
+<ion-grid>
+
+
+<ion-row>
+
+
+
+<ion-col
+
+size="6"
+
+size-sm="6"
+
+size-md="6"
+
+size-lg="6"
+
+*ngFor="let p of filteredProducts">
+
+
+
+
+
+<ion-card class="product-card">
+
+
+
+
+
+<!-- FAVORITE -->
+
+<ion-button
+
+class="heart"
+
+fill="clear"
+
+(click)="toggleFavorite(p)">
+
+
+{{p.favorite ? '❤️':'🤍'}}
+
+
+</ion-button>
+
+
+
+
+
+
+<!-- IMAGE -->
+
+<img
+
+[src]="p.image"
+
+[alt]="p.name"
+
+loading="lazy">
+
+
+
+
+
+
+<ion-card-content>
+
+
+
+<ion-badge class="badge">
+
+{{p.badge}}
+
+</ion-badge>
+
+
+
+
+
+<h2>
+
+{{p.name}}
+
+</h2>
+
+
+
+
+
+<p class="description">
+
+{{p.description}}
+
+</p>
+
+
+
+
+
+
+
+<div class="rating">
+
+⭐ {{p.rating}}/5
+
+</div>
+
+
+
+
+
+
+<div class="price">
+
+{{p.price | currency:'EUR'}}
+
+</div>
+
+
+
+
+
+
+
+<div class="buttons">
+
+
+<ion-button
+
+fill="outline"
+
+[routerLink]="['/products',p.id]">
+
+👁
+
+</ion-button>
+
+
+
+
+<ion-button
+
+(click)="addCart(p)">
+
+🛒
+
+</ion-button>
+
+
+
+</div>
+
+
+
+</ion-card-content>
+
+
+
+</ion-card>
+
+
+
+</ion-col>
+
+
+</ion-row>
+
+
+</ion-grid>
+
+
+
+
+
+
+
+
+<!-- CART -->
+
+<div class="go-cart">
+
+
+<ion-button
+
+routerLink="/cart"
+
+expand="block">
+
+
+🛒 Vai al carrello
+
+
+</ion-button>
+
+
+</div>
+
+
+
+
+</ion-content>

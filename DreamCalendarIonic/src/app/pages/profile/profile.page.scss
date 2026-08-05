@@ -1,0 +1,840 @@
+ion-content.profile-page {
+
+  --background:#fffaf7;
+
+}
+
+
+/* =================================
+   CONTENITORE
+================================= */
+
+.profile-container {
+
+  width:92%;
+  max-width:1100px;
+
+  margin:40px auto;
+
+  background:white;
+
+  padding:40px;
+
+  border-radius:40px;
+
+  box-shadow:
+  0 15px 40px rgba(180,130,160,.20);
+
+}
+
+
+
+/* =================================
+ HEADER PROFILO
+================================= */
+
+
+.profile-header {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:35px;
+
+  padding-bottom:35px;
+
+  border-bottom:1px solid #f3dce8;
+
+}
+
+
+
+.avatar-area {
+
+  display:flex;
+
+  flex-direction:column;
+
+  align-items:center;
+
+  gap:15px;
+
+}
+
+
+
+
+.avatar {
+
+
+  width:160px;
+
+  height:160px;
+
+
+  border-radius:50%;
+
+
+  overflow:hidden;
+
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+
+  font-size:70px;
+
+
+  background:
+  linear-gradient(
+  135deg,
+  #ffdce9,
+  #e9ddff
+  );
+
+
+  box-shadow:
+  0 15px 35px rgba(200,130,170,.25);
+
+
+}
+
+
+
+.avatar img {
+
+
+  width:100%;
+
+  height:100%;
+
+
+  object-fit:cover;
+
+
+}
+
+
+
+
+.upload-avatar {
+
+
+  padding:12px 25px;
+
+
+  border-radius:30px;
+
+
+  background:
+  linear-gradient(
+  135deg,
+  #ffd8e8,
+  #e3d5ff
+  );
+
+
+  color:#674d5c;
+
+
+  font-weight:bold;
+
+
+  cursor:pointer;
+
+
+}
+
+
+
+.upload-avatar input {
+
+display:none;
+
+}
+
+
+
+/* =================================
+ TITOLO
+================================= */
+
+
+.profile-title h1 {
+
+
+font-family:"Playfair Display",serif;
+
+
+font-size:42px;
+
+
+color:#674d5c;
+
+
+}
+
+
+
+.profile-title p {
+
+
+color:#927383;
+
+
+font-size:18px;
+
+
+}
+
+
+
+.role-badge {
+
+
+display:inline-block;
+
+
+padding:10px 25px;
+
+
+border-radius:30px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#ffd6e7,
+#dfccff
+);
+
+
+font-weight:bold;
+
+
+color:#68485c;
+
+
+}
+
+
+
+
+
+/* =================================
+ SEZIONI
+================================= */
+
+
+.profile-section {
+
+
+margin-top:40px;
+
+
+}
+
+
+
+.profile-section h2 {
+
+
+font-family:"Playfair Display",serif;
+
+
+font-size:28px;
+
+
+color:#674d5c;
+
+
+margin-bottom:25px;
+
+
+}
+
+
+
+/* =================================
+ INFO
+================================= */
+
+
+.info-grid {
+
+
+display:grid;
+
+
+grid-template-columns:repeat(2,1fr);
+
+
+gap:20px;
+
+
+}
+
+
+
+.info-box {
+
+
+background:#fff6fa;
+
+
+padding:25px;
+
+
+border-radius:25px;
+
+
+display:flex;
+
+
+flex-direction:column;
+
+
+gap:10px;
+
+
+}
+
+
+
+.info-box span {
+
+
+color:#a77b91;
+
+
+}
+
+
+.info-box strong {
+
+
+color:#604554;
+
+
+}
+
+
+
+/* =================================
+ SICUREZZA
+================================= */
+
+
+.security-card {
+
+
+background:
+
+linear-gradient(
+135deg,
+#fff2f8,
+#f5efff
+);
+
+
+padding:25px;
+
+
+border-radius:30px;
+
+
+display:flex;
+
+
+justify-content:space-between;
+
+
+align-items:center;
+
+
+}
+
+
+
+.active,
+.off {
+
+
+padding:10px 25px;
+
+
+border-radius:30px;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+.active {
+
+
+background:#d7f5df;
+
+color:#34824a;
+
+
+}
+
+
+
+.off {
+
+
+background:#ffe1e1;
+
+color:#a34b4b;
+
+
+}
+
+
+
+
+
+/* =================================
+ ION INPUT
+================================= */
+
+
+.input-item {
+
+
+--background:#fff3f8;
+
+--border-radius:25px;
+
+--padding-start:15px;
+
+--inner-padding-end:15px;
+
+
+margin-bottom:10px;
+
+
+}
+
+
+
+ion-label {
+
+
+color:#927383!important;
+
+font-weight:600;
+
+
+}
+
+
+
+ion-input {
+
+
+--color:#60465c;
+
+
+}
+
+
+
+/* =================================
+ FORM
+================================= */
+
+
+.edit-form {
+
+
+display:flex;
+
+flex-direction:column;
+
+gap:15px;
+
+
+}
+
+
+
+
+/* =================================
+ PASSWORD
+================================= */
+
+
+.password-box {
+
+
+margin-top:25px;
+
+
+padding:30px;
+
+
+border-radius:35px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#fff3fa,
+#f3edff
+);
+
+
+}
+
+
+
+
+
+/* =================================
+ AVATAR EDITOR
+================================= */
+
+
+.avatar-editor {
+
+
+margin-top:30px;
+
+
+padding:30px;
+
+
+border-radius:35px;
+
+
+background:
+
+linear-gradient(
+135deg,
+#fff3fa,
+#f3edff
+);
+
+
+}
+
+
+
+.crop-preview {
+
+
+width:220px;
+
+height:220px;
+
+
+margin:20px auto;
+
+
+border-radius:50%;
+
+
+overflow:hidden;
+
+
+}
+
+
+
+.crop-preview img {
+
+
+width:100%;
+
+height:100%;
+
+
+object-fit:cover;
+
+
+}
+
+
+
+.crop-buttons {
+
+
+display:flex;
+
+
+justify-content:center;
+
+
+flex-wrap:wrap;
+
+
+gap:10px;
+
+
+}
+
+
+
+.crop-buttons button {
+
+
+border:none;
+
+
+width:45px;
+
+height:45px;
+
+
+border-radius:50%;
+
+
+background:#ffd8e8;
+
+
+}
+
+
+
+/* =================================
+ BUTTON
+================================= */
+
+
+ion-button {
+
+
+--border-radius:30px;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+.logout {
+
+
+--background:
+
+linear-gradient(
+135deg,
+#d889ad,
+#a879c8
+);
+
+
+}
+
+
+
+.admin-button {
+
+
+margin-top:25px;
+
+
+}
+
+
+
+/* =================================
+ MESSAGE
+================================= */
+
+
+.message {
+
+
+background:#e8f8ec;
+
+
+color:#34824a;
+
+
+padding:12px;
+
+
+border-radius:20px;
+
+
+text-align:center;
+
+
+}
+
+
+
+/* =================================
+ EMPTY
+================================= */
+
+
+.empty-profile {
+
+
+width:90%;
+
+
+max-width:450px;
+
+
+margin:80px auto;
+
+
+padding:40px;
+
+
+background:white;
+
+
+border-radius:35px;
+
+
+text-align:center;
+
+
+box-shadow:
+
+0 15px 40px rgba(180,130,160,.20);
+
+
+}
+
+
+
+.empty-profile a {
+
+
+color:#d583aa;
+
+
+font-weight:bold;
+
+
+}
+
+
+
+
+
+/* =================================
+ MOBILE
+================================= */
+
+
+@media(max-width:800px){
+
+
+.profile-container {
+
+
+padding:25px 20px;
+
+
+}
+
+
+
+.profile-header {
+
+
+flex-direction:column;
+
+
+text-align:center;
+
+
+}
+
+
+
+.profile-title h1 {
+
+
+font-size:32px;
+
+
+}
+
+
+
+.info-grid {
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+
+.security-card {
+
+
+flex-direction:column;
+
+
+gap:15px;
+
+
+}
+
+
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.profile-container {
+
+
+width:94%;
+
+
+border-radius:30px;
+
+
+}
+
+
+
+.avatar {
+
+
+width:130px;
+
+height:130px;
+
+
+}
+
+
+
+.profile-section h2 {
+
+
+font-size:24px;
+
+
+}
+
+
+}

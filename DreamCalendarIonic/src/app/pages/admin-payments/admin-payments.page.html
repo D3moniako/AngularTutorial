@@ -1,0 +1,337 @@
+<div class="admin-payments">
+  <!-- ==========================
+HEADER
+========================== -->
+
+  <header class="page-header">
+    <div>
+      <h1>💳 Gestione Pagamenti</h1>
+
+      <p>Monitoraggio transazioni, ordini e collegamento Stripe</p>
+    </div>
+
+    <div class="secure">🟢 Pagamenti operativi</div>
+  </header>
+
+  <!-- ==========================
+MESSAGGIO
+========================== -->
+
+  <p class="message" *ngIf="message">
+    {{ message }}
+  </p>
+
+  <!-- ==========================
+STATISTICHE
+========================== -->
+
+  <section class="stats">
+    <div class="stat-card">
+      <div class="icon">💳</div>
+
+      <div>
+        <span> Pagamenti totali </span>
+
+        <strong>
+          {{ totalPayments }}
+        </strong>
+
+        <p>Transazioni registrate</p>
+      </div>
+    </div>
+
+    <div class="stat-card">
+      <div class="icon">💰</div>
+
+      <div>
+        <span> Incasso completati </span>
+
+        <strong>
+          {{ totalAmount | currency: "EUR" }}
+        </strong>
+
+        <p>Solo pagamenti riusciti</p>
+      </div>
+    </div>
+
+    <div class="stat-card success">
+      <div class="icon">🟢</div>
+
+      <div>
+        <span> Completati </span>
+
+        <strong>
+          {{ completed }}
+        </strong>
+
+        <p>Pagamenti confermati</p>
+      </div>
+    </div>
+
+    <div class="stat-card pending">
+      <div class="icon">🟡</div>
+
+      <div>
+        <span> In attesa </span>
+
+        <strong>
+          {{ pending }}
+        </strong>
+
+        <p>Da verificare</p>
+      </div>
+    </div>
+
+    <div class="stat-card danger">
+      <div class="icon">🔴</div>
+
+      <div>
+        <span> Falliti </span>
+
+        <strong>
+          {{ failed }}
+        </strong>
+
+        <p>Problemi pagamento</p>
+      </div>
+    </div>
+
+    <div class="stat-card refund">
+      <div class="icon">↩️</div>
+
+      <div>
+        <span> Rimborsati </span>
+
+        <strong>
+          {{ refunded }}
+        </strong>
+
+        <p>Rimborsi effettuati</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================
+FILTRI
+========================== -->
+
+  <section class="filters">
+    <input
+      type="text"
+      placeholder="🔎 Cerca cliente, email, ID pagamento o ordine"
+      [(ngModel)]="searchText"
+      (input)="filterPayments()"
+    />
+
+    <select [(ngModel)]="selectedStatus" (change)="filterPayments()">
+      <option value="Tutti">Tutti gli stati</option>
+
+      <option value="COMPLETED">COMPLETATI</option>
+
+      <option value="PENDING">IN ATTESA</option>
+
+      <option value="FAILED">FALLITI</option>
+
+      <option value="REFUNDED">RIMBORSATI</option>
+    </select>
+  </section>
+
+  <!-- ==========================
+LISTA PAGAMENTI
+========================== -->
+
+  <section class="payments">
+    <div
+      class="payment-card"
+      *ngFor="let payment of filteredPayments; trackBy: trackByPayment"
+    >
+      <!-- HEADER PAGAMENTO -->
+
+      <div class="payment-header">
+        <div>
+          <h2>💳 Pagamento #{{ payment.id }}</h2>
+
+          <p>
+            Ordine:
+
+            <strong> #{{ payment.orderId }} </strong>
+          </p>
+        </div>
+
+        <span
+          class="status"
+          [class.completed]="payment.status === 'COMPLETED'"
+          [class.pending]="payment.status === 'PENDING'"
+          [class.failed]="payment.status === 'FAILED'"
+          [class.refunded]="payment.status === 'REFUNDED'"
+        >
+          {{ payment.status }}
+        </span>
+      </div>
+
+      <!-- CLIENTE -->
+
+      <div class="customer">
+        <h3>👤 Cliente</h3>
+
+        <p>
+          <strong> Nome: </strong>
+
+          <br />
+
+          {{ payment.customerName || "Non disponibile" }}
+        </p>
+
+        <p>
+          <strong> Email: </strong>
+
+          <br />
+
+          {{ payment.customerEmail || "Non disponibile" }}
+        </p>
+      </div>
+
+      <!-- INFO PAGAMENTO -->
+
+      <div class="payment-info">
+        <div>
+          <span> Importo </span>
+
+          <strong>
+            {{ payment.amount | currency: "EUR" }}
+          </strong>
+        </div>
+
+        <div>
+          <span> Metodo </span>
+
+          <strong>
+            {{ getMethod(payment) }}
+          </strong>
+        </div>
+
+        <div>
+          <span> Data pagamento </span>
+
+          <strong>
+            {{ payment.paymentDate | date: "dd/MM/yyyy HH:mm" }}
+          </strong>
+        </div>
+      </div>
+
+      <!-- ORDINE COLLEGATO -->
+
+      <div class="order-box" *ngIf="getOrder(payment) as order">
+        <h3>📦 Ordine collegato</h3>
+
+        <div class="order-details">
+          <p>
+            ID:
+
+            <strong> #{{ order.id }} </strong>
+          </p>
+
+          <p>
+            Cliente:
+
+            {{ order.customerName }}
+          </p>
+
+          <p>
+            Stato ordine:
+
+            <span>
+              {{ order.status }}
+            </span>
+          </p>
+
+          <p>
+            Prodotti acquistati:
+
+            <strong>
+              {{ order.products.length }}
+            </strong>
+          </p>
+
+          <p>
+            Totale ordine:
+
+            <strong>
+              {{ order.total | currency: "EUR" }}
+            </strong>
+          </p>
+        </div>
+
+        <div class="products-mini">
+          <div *ngFor="let product of order.products">
+            <img
+              *ngIf="product.image"
+              [src]="product.image"
+              [alt]="product.name"
+            />
+
+            <span>
+              {{ product.name }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- STRIPE -->
+
+      <div class="stripe-box">
+        <h3>🔐 Stripe</h3>
+
+        <div>
+          <label> Session ID </label>
+
+          <code>
+            {{ payment.sessionId || "In attesa collegamento Stripe" }}
+          </code>
+        </div>
+
+        <div>
+          <label> Payment Intent </label>
+
+          <code>
+            {{ payment.paymentIntentId || "Non disponibile" }}
+          </code>
+        </div>
+      </div>
+
+      <!-- AZIONI -->
+
+      <div class="actions">
+        <button
+          class="complete"
+          *ngIf="payment.status === 'PENDING'"
+          (click)="simulateComplete(payment)"
+        >
+          ✅ Completa pagamento
+        </button>
+
+        <button
+          class="refund"
+          *ngIf="payment.status === 'COMPLETED'"
+          (click)="simulateRefund(payment)"
+        >
+          ↩️ Rimborso
+        </button>
+
+        <button
+          class="disabled"
+          disabled
+          *ngIf="payment.status === 'FAILED' || payment.status === 'REFUNDED'"
+        >
+          Nessuna azione disponibile
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- VUOTO -->
+
+  <div class="empty" *ngIf="filteredPayments.length === 0">
+    📭 Nessun pagamento trovato
+  </div>
+</div>

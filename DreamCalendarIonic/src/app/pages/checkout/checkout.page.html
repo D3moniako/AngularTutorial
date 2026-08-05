@@ -1,0 +1,178 @@
+<div class="checkout-page">
+  <!-- ============================= -->
+  <!-- HEADER -->
+  <!-- ============================= -->
+
+  <section class="checkout-header">
+    <h1>🛒 Checkout</h1>
+
+    <p>Acquista i tuoi planner digitali e inizia subito a organizzarti 🌸</p>
+  </section>
+
+  <!-- ============================= -->
+  <!-- MESSAGGIO ERRORE GENERALE -->
+  <!-- ============================= -->
+
+  <p class="error" *ngIf="errorMessage">❌ {{ errorMessage }}</p>
+
+  <!-- ============================= -->
+  <!-- ORDINE COMPLETATO -->
+  <!-- ============================= -->
+
+  <section class="success" *ngIf="orderCompleted">
+    <div class="success-icon">🎉</div>
+
+    <h2>Ordine completato!</h2>
+
+    <p>
+      Pagamento ricevuto correttamente. 🎉 Stiamo preparando i tuoi planner
+      digitali. Li troverai nella sezione "I miei Planner".
+    </p>
+
+    <div class="order-number">
+      Numero ordine:
+
+      <strong> #{{ lastOrderId }} </strong>
+    </div>
+
+    <div class="success-buttons">
+      <a routerLink="/my-planners"> 📚 Vai ai miei Planner </a>
+
+      <a routerLink="/shop"> 🛍 Continua gli acquisti </a>
+    </div>
+  </section>
+
+  <!-- ============================= -->
+  <!-- CHECKOUT -->
+  <!-- ============================= -->
+
+  <section class="checkout-content" *ngIf="!orderCompleted">
+    <!-- ============================= -->
+    <!-- CARRELLO VUOTO -->
+    <!-- ============================= -->
+
+    <div class="empty-cart" *ngIf="cart.length === 0">
+      <h2>🛒 Carrello vuoto</h2>
+
+      <p>Non hai prodotti da acquistare.</p>
+
+      <a routerLink="/shop"> Vai allo Shop 🌸 </a>
+    </div>
+
+    <!-- ============================= -->
+    <!-- CONTENUTO ORDINE -->
+    <!-- ============================= -->
+
+    <div class="products" *ngIf="cart.length > 0">
+      <h2>📦 Riepilogo ordine</h2>
+
+      <div class="order-info">
+        <p>
+          Prodotti:
+
+          <strong>
+            {{ totalItems }}
+          </strong>
+        </p>
+
+        <p>
+          Totale:
+
+          <strong>
+            {{ total | currency: "EUR" }}
+          </strong>
+        </p>
+      </div>
+
+      <div class="checkout-item" *ngFor="let item of cart">
+        <div class="image">
+          <img
+            [src]="item.product.image"
+            [alt]="item.product.name"
+            loading="lazy"
+          />
+        </div>
+
+        <div class="details">
+          <h3>
+            {{ item.product.name }}
+          </h3>
+
+          <p>
+            Quantità:
+
+            {{ item.quantity }}
+          </p>
+
+          <p>
+            {{ item.product.description }}
+          </p>
+        </div>
+
+        <div class="price">
+          <strong>
+            {{ item.subtotal | currency: "EUR" }}
+          </strong>
+        </div>
+      </div>
+
+      <div class="total-box">
+        <h2>Totale ordine</h2>
+
+        <div class="total">
+          {{ total | currency: "EUR" }}
+        </div>
+      </div>
+    </div>
+
+    <!-- ============================= -->
+    <!-- DATI CLIENTE -->
+    <!-- ============================= -->
+
+    <div class="form" *ngIf="cart.length > 0">
+      <h2>👤 Dati cliente</h2>
+
+      <label> Nome completo </label>
+
+      <input
+        type="text"
+        placeholder="Inserisci nome"
+        [(ngModel)]="customer.name"
+        (input)="nameError = ''"
+        [class.input-error]="nameError"
+      />
+
+      <div class="field-error" *ngIf="nameError">⚠ {{ nameError }}</div>
+
+      <label> Email </label>
+
+      <input
+        type="email"
+        placeholder="Inserisci email"
+        [(ngModel)]="customer.email"
+        (input)="emailError = ''"
+        [class.input-error]="emailError"
+      />
+
+      <div class="field-error" *ngIf="emailError">⚠ {{ emailError }}</div>
+
+      <label> Indirizzo fatturazione </label>
+
+      <input
+        type="text"
+        placeholder="Inserisci indirizzo"
+        [(ngModel)]="customer.address"
+        (input)="addressError = ''"
+        [class.input-error]="addressError"
+      />
+
+      <div class="field-error" *ngIf="addressError">⚠ {{ addressError }}</div>
+
+      <button type="button" (click)="completeOrder()" [disabled]="loading">
+        <span *ngIf="!loading"> 💳 Conferma acquisto </span>
+
+        <span *ngIf="loading"> ⏳ Connessione pagamento... </span>
+      </button>
+    </div>
+  </section>
+</div>

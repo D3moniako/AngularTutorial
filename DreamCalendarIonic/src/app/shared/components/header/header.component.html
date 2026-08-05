@@ -1,0 +1,104 @@
+<ion-header>
+
+
+<ion-toolbar class="dream-toolbar">
+
+
+<ion-buttons slot="start">
+
+<ion-menu-button
+menu="main-menu">
+</ion-menu-button>
+
+</ion-buttons>
+
+
+
+
+<div class="logo">
+
+<div class="brand">
+🌸 DreamCalendar
+</div>
+
+<small>
+Digital Planner Boutique
+</small>
+
+</div>
+
+
+
+
+<ion-buttons slot="end">
+
+
+<ng-container *ngIf="!user">
+
+
+<ion-button
+fill="clear"
+(click)="goLogin()">
+
+🔑
+
+</ion-button>
+
+
+<ion-button
+fill="clear"
+(click)="goRegister()">
+
+✨
+
+</ion-button>
+
+
+<ion-button
+fill="clear"
+(click)="goCart()">
+
+🛒
+
+</ion-button>
+
+
+</ng-container>
+
+
+
+
+<ng-container *ngIf="user">
+
+
+<ion-button
+fill="clear"
+routerLink="/profile">
+
+🌸 {{user.name}}
+
+</ion-button>
+
+
+
+<ion-button
+fill="clear"
+(click)="logout()">
+
+🚪
+
+</ion-button>
+
+
+</ng-container>
+
+
+
+</ion-buttons>
+
+
+
+</ion-toolbar>
+
+
+</ion-header>
