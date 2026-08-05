@@ -1,0 +1,200 @@
+<div class="admin-planners">
+  <header class="page-header">
+    <div>
+      <h1>📅 Gestione Planner</h1>
+
+      <p>Amministrazione catalogo digitale DreamCalendar</p>
+    </div>
+
+    <div class="status">🟢 Catalogo attivo</div>
+  </header>
+
+  <!-- STATISTICHE -->
+
+  <section class="stats">
+    <div class="stat-card">
+      <span> 📚 Planner </span>
+
+      <strong>
+        {{ totalProducts }}
+      </strong>
+
+      <p>Prodotti pubblicati</p>
+    </div>
+
+    <div class="stat-card">
+      <span> ⭐ Premium </span>
+
+      <strong>
+        {{ premiumCount }}
+      </strong>
+
+      <p>Planner evidenziati</p>
+    </div>
+
+    <div class="stat-card">
+      <span> 💰 Prezzo medio </span>
+
+      <strong>
+        {{ averagePrice | currency: "EUR" }}
+      </strong>
+
+      <p>Valore catalogo</p>
+    </div>
+
+    <div class="stat-card">
+      <span> 🏷 Categorie </span>
+
+      <strong>
+        {{ categoryCount }}
+      </strong>
+
+      <p>Categorie disponibili</p>
+    </div>
+  </section>
+
+  <p class="message" *ngIf="message">
+    {{ message }}
+  </p>
+
+  <!-- FILTRI -->
+
+  <section class="filters">
+    <input
+      type="text"
+      placeholder="🔎 Cerca planner..."
+      [(ngModel)]="searchText"
+      (input)="filterProducts()"
+    />
+
+    <select [(ngModel)]="selectedCategory" (change)="filterProducts()">
+      <option *ngFor="let c of categories" [value]="c">
+        {{ c }}
+      </option>
+    </select>
+  </section>
+
+  <!-- FORM -->
+
+  <section class="form-box">
+    <h2>
+      {{ editing ? "✏️ Modifica Planner" : "➕ Nuovo Planner" }}
+    </h2>
+
+    <label> Nome Planner </label>
+
+    <input
+      type="text"
+      placeholder="Dream Life Planner"
+      [(ngModel)]="newPlanner.name"
+    />
+
+    <label> Immagine copertina </label>
+
+    <input
+      type="text"
+      placeholder="assets/images/calendar/planner.jpg"
+      [(ngModel)]="newPlanner.image"
+    />
+
+    <div class="preview" *ngIf="newPlanner.image">
+      <img [src]="newPlanner.image" [alt]="newPlanner.name" />
+    </div>
+
+    <label> Prezzo </label>
+
+    <input type="number" placeholder="14.99" [(ngModel)]="newPlanner.price" />
+
+    <label> Categoria </label>
+
+    <input
+      type="text"
+      placeholder="Lifestyle"
+      [(ngModel)]="newPlanner.category"
+    />
+
+    <label> Badge </label>
+
+    <input type="text" placeholder="PREMIUM" [(ngModel)]="newPlanner.badge" />
+
+    <label> File download PDF </label>
+
+    <input
+      type="text"
+      placeholder="assets/downloads/planner.pdf"
+      [(ngModel)]="newPlanner.downloadUrl"
+    />
+
+    <label> Descrizione </label>
+
+    <textarea
+      placeholder="Descrizione planner"
+      [(ngModel)]="newPlanner.description"
+    >
+    </textarea>
+
+    <div class="buttons">
+      <button (click)="savePlanner()">
+        💾
+
+        {{ editing ? "Salva modifiche" : "Pubblica Planner" }}
+      </button>
+
+      <button class="cancel" (click)="resetForm()">
+        ❌
+
+        {{ editing ? "Annulla" : "Pulisci" }}
+      </button>
+    </div>
+  </section>
+
+  <!-- LISTA -->
+
+  <section class="catalog">
+    <h2>📚 Catalogo Planner</h2>
+
+    <div class="grid">
+      <div class="planner-card" *ngFor="let p of filteredProducts">
+        <div class="image-box">
+          <img *ngIf="p.image" [src]="p.image" [alt]="p.name" />
+
+          <div class="empty-image" *ngIf="!p.image">📅</div>
+        </div>
+
+        <div class="content">
+          <h3>
+            {{ p.name }}
+          </h3>
+
+          <div class="price">
+            {{ p.price | currency: "EUR" }}
+          </div>
+
+          <p>🏷 {{ p.category }}</p>
+
+          <span class="badge">
+            {{ p.badge }}
+          </span>
+
+          <p class="description">
+            {{ p.description }}
+          </p>
+        </div>
+
+        <div class="card-buttons">
+          <button class="edit" (click)="editPlanner(p)">✏️ Modifica</button>
+
+          <button class="copy" (click)="duplicatePlanner(p)">📋 Copia</button>
+
+          <button class="delete" (click)="deletePlanner(p.id)">
+            🗑 Elimina
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="empty" *ngIf="filteredProducts.length === 0">
+    📭 Nessun planner trovato
+  </div>
+</div>

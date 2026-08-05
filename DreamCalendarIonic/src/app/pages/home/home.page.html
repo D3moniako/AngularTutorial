@@ -1,0 +1,791 @@
+
+<ion-content class="home-page">
+
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
+<!-- ========================= -->
+<!-- HERO -->
+<!-- ========================= -->
+
+<ion-grid class="hero">
+
+  <ion-row class="ion-align-items-center">
+
+    <!-- TESTO -->
+
+    <ion-col
+      size="12"
+      size-lg="6">
+
+
+      <ion-chip class="tag">
+
+        ✨ Planner digitali premium
+
+      </ion-chip>
+
+
+
+      <h1>
+
+        Il tuo tempo.
+        <br>
+
+        La tua ispirazione.
+        <br>
+
+        Il tuo planner.
+
+      </h1>
+
+
+
+      <p class="hero-text">
+
+        Organizza giornate, obiettivi e sogni
+        con planner eleganti creati per iPad,
+        GoodNotes e PDF.
+
+      </p>
+
+
+
+
+
+      <div class="hero-buttons">
+
+
+        <ion-button
+
+        routerLink="/planner"
+
+        class="primary-btn">
+
+          🛒 Scopri i Planner
+
+        </ion-button>
+
+
+
+
+        <ion-button
+
+        routerLink="/about"
+
+        fill="outline"
+
+        class="secondary-btn">
+
+          🌸 Il nostro mondo
+
+        </ion-button>
+
+
+
+      </div>
+
+
+
+
+
+      <div class="trust">
+
+
+        <ion-chip>
+
+          ✓ Download immediato
+
+        </ion-chip>
+
+
+
+        <ion-chip>
+
+          ✓ Compatibile iPad
+
+        </ion-chip>
+
+
+
+        <ion-chip>
+
+          ✓ Design esclusivo
+
+        </ion-chip>
+
+
+
+      </div>
+
+
+
+    </ion-col>
+
+
+
+
+
+
+
+    <!-- IPAD PREVIEW -->
+
+
+    <ion-col
+
+    size="12"
+
+    size-lg="6">
+
+
+      <div class="ipad-wrapper">
+
+
+        <ion-card class="ipad">
+
+
+          <div class="screen">
+
+
+            <h2>
+              2026
+            </h2>
+
+
+            <h3>
+              Dream Life Planner
+            </h3>
+
+
+
+
+            <div class="calendar-mini">
+
+
+              <span
+
+              *ngFor="let d of days">
+
+                {{d}}
+
+              </span>
+
+
+
+            </div>
+
+
+
+          </div>
+
+
+
+        </ion-card>
+
+
+
+      </div>
+
+
+
+    </ion-col>
+
+
+
+
+  </ion-row>
+
+
+</ion-grid>
+
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- STATISTICHE -->
+<!-- ========================= -->
+
+
+<ion-grid class="stats">
+
+
+<ion-row>
+
+
+<ion-col
+
+size="12"
+
+size-sm="4"
+
+*ngFor="let s of stats">
+
+
+<ion-card>
+
+
+<ion-card-content>
+
+
+<h2>
+
+{{s.number}}
+
+</h2>
+
+
+<p>
+
+{{s.label}}
+
+</p>
+
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+</ion-col>
+
+
+</ion-row>
+
+
+</ion-grid>
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- CATEGORIE -->
+<!-- ========================= -->
+
+
+<section class="categories">
+
+
+<h2>
+
+Scegli il tuo stile
+
+</h2>
+
+
+
+
+<div class="category-list">
+
+
+<ion-chip
+
+*ngFor="let c of categories"
+
+(click)="selectCategory(c.name)"
+
+[class.selected]="selectedCategory===c.name">
+
+
+{{c.icon}}
+
+{{c.name}}
+
+
+</ion-chip>
+
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- PRODOTTI -->
+<!-- ========================= -->
+
+
+<section class="products">
+
+
+<div class="section-title">
+
+
+<h2>
+
+✨ Digital Planner Collection
+
+</h2>
+
+
+<p>
+
+Planner creati per organizzare,
+creare e sognare.
+
+</p>
+
+
+
+</div>
+
+
+
+
+
+
+
+<ion-grid>
+
+
+<ion-row>
+
+
+<ion-col
+
+size="12"
+
+size-md="6"
+
+size-lg="3"
+
+*ngFor="let p of filteredProducts">
+
+
+
+
+
+<app-product-card
+
+[product]="p"
+
+[showFavorite]="true"
+
+[showCart]="true"
+
+[showDescription]="true"
+
+(addCart)="addCart($event)"
+
+(favorite)="toggleFavorite($event)"
+
+(openProduct)="openProduct($event)">
+
+
+</app-product-card>
+
+
+
+
+
+</ion-col>
+
+
+</ion-row>
+
+
+</ion-grid>
+
+
+
+</section>
+<!-- ========================= -->
+<!-- COME FUNZIONA -->
+<!-- ========================= -->
+
+
+<section class="steps">
+
+
+<h2>
+
+Come funziona
+
+</h2>
+
+
+
+
+<ion-grid>
+
+<ion-row>
+
+
+<ion-col
+size="12"
+size-md="4">
+
+<ion-card>
+
+<ion-card-content>
+
+<div class="step-number">
+1
+</div>
+
+<h3>
+Acquista
+</h3>
+
+<p>
+Scegli il planner perfetto.
+</p>
+
+</ion-card-content>
+
+</ion-card>
+
+</ion-col>
+
+
+
+<ion-col
+size="12"
+size-md="4">
+
+<ion-card>
+
+<ion-card-content>
+
+<div class="step-number">
+2
+</div>
+
+<h3>
+Scarica
+</h3>
+
+<p>
+Ricevi subito il file digitale.
+</p>
+
+</ion-card-content>
+
+</ion-card>
+
+</ion-col>
+
+
+
+<ion-col
+size="12"
+size-md="4">
+
+<ion-card>
+
+<ion-card-content>
+
+<div class="step-number">
+3
+</div>
+
+<h3>
+Organizza
+</h3>
+
+<p>
+Inizia una nuova routine.
+</p>
+
+</ion-card-content>
+
+</ion-card>
+
+</ion-col>
+
+
+</ion-row>
+
+</ion-grid>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- RECENSIONI -->
+<!-- ========================= -->
+
+
+<section class="reviews">
+
+
+<h2>
+
+💖 Le nostre clienti
+
+</h2>
+
+
+
+
+
+<ion-grid>
+
+
+<ion-row>
+
+
+<ion-col
+
+size="12"
+
+size-md="4"
+
+*ngFor="let r of reviews">
+
+
+
+<ion-card class="review-card">
+
+
+<ion-card-content>
+
+
+
+<h3>
+
+{{r.avatar}}
+
+{{r.name}}
+
+</h3>
+
+
+
+
+<div class="stars">
+
+★★★★★
+
+</div>
+
+
+
+
+<p>
+
+"{{r.text}}"
+
+</p>
+
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+
+</ion-col>
+
+
+</ion-row>
+
+
+</ion-grid>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- FAQ -->
+<!-- ========================= -->
+
+
+<section class="faq">
+
+
+<h2>
+
+Domande frequenti
+
+</h2>
+
+
+
+
+<ion-accordion-group>
+
+
+
+<ion-accordion
+
+*ngFor="let f of faq">
+
+
+<ion-item
+
+slot="header">
+
+
+<ion-label>
+
+{{f.q}}
+
+</ion-label>
+
+
+</ion-item>
+
+
+
+
+
+<div
+
+slot="content"
+
+class="faq-content">
+
+
+{{f.a}}
+
+
+
+</div>
+
+
+
+</ion-accordion>
+
+
+
+</ion-accordion-group>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ========================= -->
+<!-- NEWSLETTER -->
+<!-- ========================= -->
+
+
+<section class="newsletter">
+
+
+<ion-card>
+
+
+<ion-card-content>
+
+
+
+<h2>
+
+🎁 Ricevi un planner gratuito
+
+</h2>
+
+
+
+
+<p>
+
+Nuove collezioni,
+offerte e idee creative.
+
+</p>
+
+
+
+
+<ion-item>
+
+
+<ion-input
+
+type="email"
+
+placeholder="La tua email"
+
+[(ngModel)]="email">
+
+
+</ion-input>
+
+
+
+</ion-item>
+
+
+
+
+
+
+
+<ion-button
+
+expand="block"
+
+(click)="subscribe()">
+
+
+Iscrivimi ✨
+
+
+</ion-button>
+
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+
+</section>
+
+
+</ion-content>

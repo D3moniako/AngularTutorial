@@ -1,0 +1,257 @@
+<ion-content class="login-page">
+
+  <section class="login-box">
+
+
+    <!-- HEADER -->
+
+    <div class="login-header">
+
+      <h1>
+        🌸 Bentornato
+      </h1>
+
+      <p>
+        Accedi al tuo spazio personale DreamCalendar
+      </p>
+
+    </div>
+
+
+
+
+
+    <!-- EMAIL -->
+
+    <ion-item class="input-item">
+
+      <ion-label position="stacked">
+        📧 Email
+      </ion-label>
+
+
+      <ion-input
+
+        type="email"
+
+        placeholder="Inserisci la tua email"
+
+        [(ngModel)]="email"
+
+        (ionInput)="emailError=''"
+
+        (ionBlur)="checkEmail()">
+
+      </ion-input>
+
+
+    </ion-item>
+
+
+
+
+    <ion-text
+      color="danger"
+      class="field-error"
+      *ngIf="emailError">
+
+
+      ⚠ {{emailError}}
+
+
+    </ion-text>
+
+
+
+
+
+
+
+
+    <!-- PASSWORD -->
+
+
+    <ion-item class="input-item">
+
+
+      <ion-label position="stacked">
+
+        🔐 Password
+
+      </ion-label>
+
+
+
+      <ion-input
+
+
+        type="password"
+
+
+        placeholder="Inserisci la password"
+
+
+        [(ngModel)]="password"
+
+
+        (ionInput)="passwordError=''"
+
+
+        (ionBlur)="checkPassword()">
+
+
+      </ion-input>
+
+
+
+    </ion-item>
+
+
+
+
+    <ion-text
+
+      color="danger"
+
+      class="field-error"
+
+      *ngIf="passwordError">
+
+
+      ⚠ {{passwordError}}
+
+
+    </ion-text>
+
+
+
+
+
+
+
+
+
+    <!-- ERRORE LOGIN -->
+
+
+    <ion-card
+
+      class="error"
+
+      *ngIf="errorMessage">
+
+
+      <ion-card-content>
+
+
+        ❌ {{errorMessage}}
+
+
+      </ion-card-content>
+
+
+    </ion-card>
+
+
+
+
+
+
+
+
+
+
+    <!-- LOGIN BUTTON -->
+
+
+    <ion-button
+
+
+      expand="block"
+
+
+      class="login-button"
+
+
+      (click)="login()"
+
+
+      [disabled]="loading">
+
+
+
+      <ng-container *ngIf="!loading">
+
+
+        🔑 Accedi
+
+
+      </ng-container>
+
+
+
+
+
+      <ng-container *ngIf="loading">
+
+
+        <ion-spinner name="crescent"></ion-spinner>
+
+
+        Accesso...
+
+
+      </ng-container>
+
+
+
+    </ion-button>
+
+
+
+
+
+
+
+
+
+    <!-- REGISTER -->
+
+
+    <div class="register-link">
+
+
+      <p>
+
+        Non hai un account?
+
+      </p>
+
+
+
+      <ion-button
+
+
+        fill="clear"
+
+
+        routerLink="/register">
+
+
+        ✨ Registrati
+
+
+      </ion-button>
+
+
+
+    </div>
+
+
+
+
+
+  </section>
+
+
+</ion-content>

@@ -1,0 +1,46 @@
+<div class="notification-box">
+  <button class="bell" (click)="toggle()">
+    🔔
+
+    <span *ngIf="unread > 0" class="badge">
+      {{ unread }}
+    </span>
+  </button>
+
+  <div class="panel" *ngIf="open">
+    <header>
+      <h3>🔔 Notifiche</h3>
+
+      <button (click)="markAll()">Segna lette</button>
+    </header>
+
+    <div
+      class="notification"
+      *ngFor="let n of notifications"
+      (click)="read(n)"
+      [class.unread]="!n.read"
+    >
+      <div class="icon">
+        {{ n.icon }}
+      </div>
+
+      <div>
+        <strong>
+          {{ n.title }}
+        </strong>
+
+        <p>
+          {{ n.message }}
+        </p>
+
+        <small>
+          {{ n.date | date: "dd/MM/yyyy HH:mm" }}
+        </small>
+      </div>
+    </div>
+
+    <div class="empty" *ngIf="notifications.length === 0">
+      Nessuna notifica 🌸
+    </div>
+  </div>
+</div>

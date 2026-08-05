@@ -6,9 +6,13 @@
     "DreamCalendarIonic": {
       "projectType": "application",
       "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
+  "@schematics/angular:component": {
+    "style": "scss"
+  },
+  "@ionic/angular-toolkit:page": {
+    "styleext": "scss"
+  },
+
         "@schematics/angular:application": {
           "strict": true
         }
@@ -70,6 +74,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+                       "port": 4300
+                     },
           "configurations": {
             "production": {
               "browserTarget": "DreamCalendarIonic:build:production"

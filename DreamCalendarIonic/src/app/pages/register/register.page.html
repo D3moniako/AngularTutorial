@@ -1,0 +1,170 @@
+<ion-content class="register-page">
+
+  <section class="register-box">
+
+    <h1>
+      🌸 Crea il tuo account
+    </h1>
+
+    <p>
+      Inizia a creare e gestire i tuoi planner digitali
+    </p>
+
+
+    <!-- NOME -->
+
+    <ion-item class="input-item">
+
+      <ion-label position="stacked">
+        Nome completo
+      </ion-label>
+
+      <ion-input
+        type="text"
+        placeholder="Inserisci il tuo nome"
+        [(ngModel)]="user.name">
+      </ion-input>
+
+    </ion-item>
+
+
+
+    <!-- EMAIL -->
+
+    <ion-item class="input-item">
+
+      <ion-label position="stacked">
+        Email
+      </ion-label>
+
+      <ion-input
+        type="email"
+        placeholder="Inserisci la tua email"
+        [(ngModel)]="user.email">
+      </ion-input>
+
+    </ion-item>
+
+
+
+    <!-- TELEFONO -->
+
+    <ion-item class="input-item">
+
+      <ion-label position="stacked">
+        Telefono
+      </ion-label>
+
+      <ion-input
+        type="tel"
+        placeholder="Numero telefono"
+        [(ngModel)]="user.phone">
+      </ion-input>
+
+    </ion-item>
+
+
+
+    <!-- PASSWORD -->
+
+    <ion-item class="input-item">
+
+      <ion-label position="stacked">
+        Password
+      </ion-label>
+
+      <ion-input
+        type="password"
+        placeholder="Crea password"
+        [(ngModel)]="user.password">
+      </ion-input>
+
+    </ion-item>
+
+
+
+    <!-- CONFERMA PASSWORD -->
+
+    <ion-item class="input-item">
+
+      <ion-label position="stacked">
+        Conferma password
+      </ion-label>
+
+      <ion-input
+        type="password"
+        placeholder="Ripeti password"
+        [(ngModel)]="confirmPassword">
+      </ion-input>
+
+    </ion-item>
+
+
+
+    <!-- 2FA -->
+
+    <div class="two-factor">
+
+      <ion-checkbox
+        [(ngModel)]="user.twoFactorEnabled">
+      </ion-checkbox>
+
+
+      <span>
+        Attiva autenticazione a due fattori
+      </span>
+
+    </div>
+
+
+
+    <!-- ERRORE -->
+
+    <div
+      class="error"
+      *ngIf="errorMessage">
+
+      ❌ {{errorMessage}}
+
+    </div>
+
+
+
+    <!-- BUTTON -->
+
+    <ion-button
+      expand="block"
+      class="register-button"
+      (click)="register()"
+      [disabled]="loading">
+
+
+      <span *ngIf="!loading">
+        🌸 Registrati
+      </span>
+
+
+      <span *ngIf="loading">
+        ⏳ Creazione account...
+      </span>
+
+
+    </ion-button>
+
+
+
+    <p class="login-link">
+
+      Hai già un account?
+
+      <a routerLink="/login">
+        Accedi
+      </a>
+
+    </p>
+
+
+  </section>
+
+
+</ion-content>

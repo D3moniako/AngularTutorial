@@ -1,0 +1,80 @@
+.dream-footer {
+
+
+  ion-toolbar {
+
+    --background:#fff0f7;
+
+    --color:#674d5c;
+
+  }
+
+
+}
+
+
+.footer-content {
+
+
+  text-align:center;
+
+  padding:10px;
+
+
+}
+
+
+
+.brand {
+
+
+  font-family:"Playfair Display", serif;
+
+  font-size:22px;
+
+  color:#d889ad;
+
+  font-weight:bold;
+
+
+}
+
+
+
+.links {
+
+
+  display:flex;
+
+  justify-content:center;
+
+  flex-wrap:wrap;
+
+
+}
+
+
+
+.links ion-button {
+
+
+  --color:#674d5c;
+
+  font-size:13px;
+
+
+}
+
+
+
+.copyright {
+
+
+  font-size:12px;
+
+  color:#806878;
+
+  margin-top:5px;
+
+
+}

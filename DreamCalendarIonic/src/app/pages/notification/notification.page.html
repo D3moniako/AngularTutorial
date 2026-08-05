@@ -1,0 +1,26 @@
+<div class="notifications">
+  <div
+    *ngFor="let n of notifications"
+    class="notification"
+    [class.success]="n.type === 'success'"
+    [class.error]="n.type === 'error'"
+    [class.warning]="n.type === 'warning'"
+    [class.info]="n.type === 'info'"
+  >
+    <div class="icon">
+      <span *ngIf="n.type === 'success'"> ✅ </span>
+
+      <span *ngIf="n.type === 'error'"> ❌ </span>
+
+      <span *ngIf="n.type === 'warning'"> ⚠️ </span>
+
+      <span *ngIf="n.type === 'info'"> ℹ️ </span>
+    </div>
+
+    <div class="message">
+      {{ n.message }}
+    </div>
+
+    <button (click)="close(n.id)">✕</button>
+  </div>
+</div>

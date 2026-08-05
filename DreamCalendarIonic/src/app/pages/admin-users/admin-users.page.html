@@ -1,0 +1,166 @@
+<div class="admin-users">
+  <!-- HEADER -->
+
+  <header class="page-header">
+    <div>
+      <h1>👥 Gestione Utenti</h1>
+
+      <p>Controllo account, ruoli e sicurezza DreamCalendar</p>
+    </div>
+
+    <div class="online">🟢 Sistema utenti attivo</div>
+  </header>
+
+  <!-- MESSAGGIO -->
+
+  <p class="message" *ngIf="message">
+    {{ message }}
+  </p>
+
+  <!-- STATISTICHE -->
+
+  <section class="stats">
+    <div class="stat-card">
+      <div class="icon">👥</div>
+
+      <div>
+        <span> Utenti totali </span>
+
+        <strong>
+          {{ totalUsers }}
+        </strong>
+      </div>
+    </div>
+
+    <div class="stat-card admin">
+      <div class="icon">🛡️</div>
+
+      <div>
+        <span> Amministratori </span>
+
+        <strong>
+          {{ adminCount }}
+        </strong>
+      </div>
+    </div>
+
+    <div class="stat-card active">
+      <div class="icon">🟢</div>
+
+      <div>
+        <span> Account attivi </span>
+
+        <strong>
+          {{ activeCount }}
+        </strong>
+      </div>
+    </div>
+
+    <div class="stat-card blocked">
+      <div class="icon">🔒</div>
+
+      <div>
+        <span> Bloccati </span>
+
+        <strong>
+          {{ blockedCount }}
+        </strong>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTRI -->
+
+  <section class="filters">
+    <input
+      type="text"
+      placeholder="🔎 Cerca nome o email"
+      [(ngModel)]="searchText"
+      (input)="filterUsers()"
+    />
+
+    <select [(ngModel)]="selectedRole" (change)="filterUsers()">
+      <option value="Tutti">Tutti i ruoli</option>
+
+      <option value="ADMIN">ADMIN</option>
+
+      <option value="USER">USER</option>
+    </select>
+  </section>
+
+  <!-- TABELLA -->
+
+  <section class="table-box">
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+
+          <th>Email</th>
+
+          <th>Ruolo</th>
+
+          <th>Stato</th>
+
+          <th>Registrazione</th>
+
+          <th>Azioni</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let user of filteredUsers; trackBy: trackByUser">
+          <td class="name">
+            👤
+
+            {{ user.name }}
+          </td>
+
+          <td>
+            {{ user.email }}
+          </td>
+
+          <td>
+            <span class="role" [class.admin]="user.role === 'ADMIN'">
+              {{ user.role }}
+            </span>
+          </td>
+
+          <td>
+            <span
+              class="status"
+              [class.active]="user.enabled"
+              [class.blocked]="!user.enabled"
+            >
+              {{ user.enabled ? "Attivo" : "Bloccato" }}
+            </span>
+          </td>
+
+          <td>
+            {{ user.createdAt | date: "dd/MM/yyyy" }}
+          </td>
+
+          <td class="actions">
+            <button class="role-btn" (click)="changeRole(user)">
+              🔄 Ruolo
+            </button>
+
+            <button class="status-btn" (click)="toggleStatus(user.id)">
+              {{ user.enabled ? "🔒" : "🔓" }}
+
+              Stato
+            </button>
+
+            <button class="delete" (click)="deleteUser(user.id)">🗑</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- NESSUN RISULTATO -->
+
+  <div class="empty" *ngIf="filteredUsers.length === 0">
+    📭 Nessun utente trovato
+  </div>
+</div>

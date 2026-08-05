@@ -1,0 +1,55 @@
+ion-app {
+
+  height:100%;
+
+}
+
+
+
+.app-layout {
+
+  height:100vh;
+
+  display:flex;
+
+  flex-direction:column;
+
+}
+
+
+
+/* HEADER */
+
+app-header {
+
+  display:block;
+
+  flex:0 0 78px;
+
+}
+
+
+
+/* PAGINE */
+
+.main-content {
+
+  flex:1;
+
+  min-height:0;
+
+  overflow:hidden;
+
+  position:relative;
+
+}
+
+
+
+/* FOOTER */
+
+app-footer {
+
+  flex:0 0 auto;
+
+}

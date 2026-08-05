@@ -1,0 +1,84 @@
+.dream-toolbar{
+
+  --background:#ffffff;
+
+  --border-width:0;
+
+  --min-height:78px;
+
+  box-shadow:0 8px 25px rgba(190,130,160,.18);
+
+}
+
+
+
+.logo{
+  display:flex;
+  flex-direction:column;
+  pointer-events:none;
+}
+
+
+
+.brand{
+
+  font-family:"Playfair Display",serif;
+
+  font-size:28px;
+
+  color:#d889ad;
+
+}
+
+
+
+.logo small{
+
+  color:#888;
+
+  font-size:11px;
+
+}
+
+
+ion-button{
+
+  --color:#674d5c;
+
+}
+
+
+ion-menu-button{
+
+  --color:#d889ad;
+
+}
+
+
+
+@media(max-width:600px){
+
+
+.brand{
+
+font-size:20px;
+
+}
+
+
+.logo small{
+
+display:none;
+
+}
+
+
+}
+
+:host {
+
+  display:block;
+
+  height:78px;
+
+}

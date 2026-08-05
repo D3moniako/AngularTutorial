@@ -1,0 +1,711 @@
+<ion-content class="profile-page">
+
+
+<section *ngIf="user" class="profile-container">
+
+
+<!-- =========================
+     HEADER PROFILO
+========================= -->
+
+
+<div class="profile-header">
+
+
+  <div class="avatar-area">
+
+
+    <div class="avatar">
+
+
+      <img
+      *ngIf="user.avatar"
+      [src]="user.avatar"
+      alt="Avatar">
+
+
+      <span *ngIf="!user.avatar">
+        👤
+      </span>
+
+
+    </div>
+
+
+
+    <label class="upload-avatar">
+
+
+      📷 Cambia foto
+
+
+      <input
+      type="file"
+      accept="image/*"
+      (change)="changeAvatar($event)">
+
+
+    </label>
+
+
+  </div>
+
+
+
+
+
+  <div class="profile-title">
+
+
+    <h1>
+      🌸 {{user.name}}
+    </h1>
+
+
+    <p>
+      Benvenuto nel tuo spazio personale DreamCalendar
+    </p>
+
+
+
+    <span class="role-badge">
+
+      👑 {{user.role}}
+
+    </span>
+
+
+  </div>
+
+
+</div>
+
+
+
+
+
+<!-- =========================
+     CROP FOTO
+========================= -->
+
+
+<div
+class="avatar-editor"
+*ngIf="showCropper">
+
+
+<h3>
+Regola la foto
+</h3>
+
+
+
+<div class="crop-preview">
+
+
+<img
+[src]="imagePreview"
+[style.transform]="
+'translate('+positionX+'px,'+positionY+'px) scale('+zoom+')'
+">
+
+
+</div>
+
+
+
+
+
+<div class="crop-buttons">
+
+
+<ion-button
+fill="clear"
+(click)="decreaseZoom()">
+➖
+</ion-button>
+
+
+<ion-button
+fill="clear"
+(click)="increaseZoom()">
+➕
+</ion-button>
+
+
+<ion-button
+fill="clear"
+(click)="moveImage(-10,0)">
+⬅️
+</ion-button>
+
+
+<ion-button
+fill="clear"
+(click)="moveImage(10,0)">
+➡️
+</ion-button>
+
+
+<ion-button
+fill="clear"
+(click)="moveImage(0,-10)">
+⬆️
+</ion-button>
+
+
+<ion-button
+fill="clear"
+(click)="moveImage(0,10)">
+⬇️
+</ion-button>
+
+
+</div>
+
+
+
+
+<ion-button
+expand="block"
+(click)="saveAvatar()">
+
+💾 Salva foto
+
+</ion-button>
+
+
+
+
+<ion-button
+expand="block"
+fill="outline"
+(click)="cancelAvatar()">
+
+❌ Annulla
+
+</ion-button>
+
+
+</div>
+
+
+
+
+
+
+
+<!-- ADMIN -->
+
+
+<ion-button
+
+*ngIf="user.role?.toLowerCase()==='admin'"
+
+expand="block"
+
+routerLink="/admin/dashboard"
+
+class="admin-button">
+
+
+👑 Area Amministratore
+
+
+</ion-button>
+
+
+
+
+
+
+
+<!-- =========================
+     DATI PERSONALI
+========================= -->
+
+
+<section class="profile-section">
+
+
+<h2>
+👤 Informazioni personali
+</h2>
+
+
+
+
+<ion-grid>
+
+<ion-row>
+
+
+<ion-col size="12" size-md="6">
+
+
+<ion-card class="info-box">
+
+<ion-card-content>
+
+<span>
+📧 Email
+</span>
+
+<strong>
+{{user.email}}
+</strong>
+
+
+</ion-card-content>
+
+</ion-card>
+
+
+</ion-col>
+
+
+
+
+
+<ion-col
+size="12"
+size-md="6"
+*ngIf="user.phone">
+
+
+<ion-card class="info-box">
+
+<ion-card-content>
+
+
+<span>
+📱 Telefono
+</span>
+
+
+<strong>
+{{user.phone}}
+</strong>
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+</ion-col>
+
+
+
+
+
+<ion-col size="12" size-md="6">
+
+
+<ion-card class="info-box">
+
+
+<ion-card-content>
+
+
+<span>
+📅 Registrazione
+</span>
+
+
+<strong>
+{{user.createdAt | date:'dd/MM/yyyy'}}
+</strong>
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+</ion-col>
+
+
+
+
+
+<ion-col size="12" size-md="6">
+
+
+<ion-card class="info-box">
+
+
+<ion-card-content>
+
+
+<span>
+🟢 Stato account
+</span>
+
+
+<strong *ngIf="user.enabled">
+Attivo
+</strong>
+
+
+<strong *ngIf="!user.enabled">
+Disattivato
+</strong>
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+</ion-col>
+
+
+</ion-row>
+
+
+</ion-grid>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+     SICUREZZA
+========================= -->
+
+
+<section class="profile-section">
+
+
+<h2>
+🔐 Sicurezza
+</h2>
+
+
+
+<ion-card class="security-card">
+
+
+<ion-card-content>
+
+
+<p>
+Autenticazione a due fattori
+</p>
+
+
+
+<span
+[class.active]="user.twoFactorEnabled"
+[class.off]="!user.twoFactorEnabled">
+
+
+{{user.twoFactorEnabled ? 'Attiva ✅':'Non attiva'}}
+
+
+</span>
+
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- =========================
+     MODIFICA PROFILO
+========================= -->
+
+
+<section class="profile-section">
+
+
+<h2>
+✏️ Modifica profilo
+</h2>
+
+
+
+
+<div class="edit-form">
+
+
+
+<ion-item class="input-item">
+
+
+<ion-label position="stacked">
+Nome
+</ion-label>
+
+
+<ion-input
+[(ngModel)]="editName">
+</ion-input>
+
+
+</ion-item>
+
+
+
+
+
+<ion-item class="input-item">
+
+
+<ion-label position="stacked">
+Telefono
+</ion-label>
+
+
+<ion-input
+[(ngModel)]="editPhone">
+</ion-input>
+
+
+</ion-item>
+
+
+
+
+
+
+<ion-button
+expand="block"
+(click)="saveProfile()">
+
+💾 Salva modifiche
+
+</ion-button>
+
+
+
+
+
+<ion-text
+class="message"
+*ngIf="message">
+
+{{message}}
+
+</ion-text>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- =========================
+     ACCOUNT
+========================= -->
+
+
+<section class="profile-section actions">
+
+
+<h2>
+⚙️ Gestione account
+</h2>
+
+
+
+
+<ion-button
+expand="block"
+(click)="showPasswordBox=!showPasswordBox">
+
+
+🔑 Cambia password
+
+
+</ion-button>
+
+
+
+
+
+
+
+<div
+class="password-box"
+*ngIf="showPasswordBox">
+
+
+<h3>
+🔐 Modifica password
+</h3>
+
+
+
+
+
+<ion-item class="input-item">
+
+
+<ion-label position="stacked">
+Vecchia password
+</ion-label>
+
+
+<ion-input
+type="password"
+[(ngModel)]="oldPassword">
+</ion-input>
+
+
+</ion-item>
+
+
+
+
+
+<ion-item class="input-item">
+
+
+<ion-label position="stacked">
+Nuova password
+</ion-label>
+
+
+<ion-input
+type="password"
+[(ngModel)]="newPassword">
+</ion-input>
+
+
+</ion-item>
+
+
+
+
+
+<ion-item class="input-item">
+
+
+<ion-label position="stacked">
+Conferma password
+</ion-label>
+
+
+<ion-input
+type="password"
+[(ngModel)]="confirmPassword">
+</ion-input>
+
+
+</ion-item>
+
+
+
+
+
+<ion-button
+expand="block"
+(click)="savePassword()">
+
+
+💾 Salva password
+
+
+</ion-button>
+
+
+</div>
+
+
+
+
+
+
+
+
+<ion-button
+expand="block"
+class="logout"
+(click)="logout()">
+
+
+🚪 Esci dall'account
+
+
+</ion-button>
+
+
+
+</section>
+
+
+
+
+
+
+</section>
+
+
+
+
+
+
+
+<!-- =========================
+     UTENTE NON LOGGATO
+========================= -->
+
+
+<section
+*ngIf="!user"
+class="empty-profile">
+
+
+<h2>
+👋 Nessun utente collegato
+</h2>
+
+
+<p>
+Accedi per visualizzare il tuo profilo.
+</p>
+
+
+<ion-button
+routerLink="/login">
+
+Accedi
+
+</ion-button>
+
+
+</section>
+
+
+
+
+</ion-content>

@@ -433,4 +433,77 @@ export class PlannerService {
       this.saveProducts();
     }
   }
+
+
+  /// DOWNLOAD PLANNER USER
+
+  downloadPlanner(product: Product){
+
+ if(!product.downloadUrl){
+   console.log('Nessun file disponibile');
+   return;
+ }
+
+
+ const link =
+ document.createElement('a');
+
+
+ link.href =
+ product.downloadUrl;
+
+
+ link.download =
+ product.name + '.pdf';
+
+
+ link.click();
+
 }
+
+
+
+previewPlanner(product: Product){
+
+ console.log(
+   'Anteprima planner:',
+   product.name
+ );
+
+}
+
+getCategories(): string[] {
+
+ return [
+   'Tutti',
+   ...new Set(
+     this.products.map(
+       p=>p.category
+     )
+   )
+ ];
+
+}
+
+resetProducts(){
+
+ localStorage.removeItem(
+   this.ADMIN_KEY
+ );
+
+
+ localStorage.removeItem(
+   this.REVIEWS_KEY
+ );
+
+
+ localStorage.removeItem(
+   this.FAVORITES_KEY
+ );
+
+
+ location.reload();
+
+}
+}
+

@@ -1,0 +1,300 @@
+ion-content.login-page {
+
+  --background:#fffaf7;
+
+}
+
+
+
+.login-box {
+
+
+  width:90%;
+
+  max-width:420px;
+
+
+  margin:60px auto;
+
+
+  background:white;
+
+
+  padding:40px 30px;
+
+
+  border-radius:35px;
+
+
+  box-shadow:
+
+  0 15px 40px rgba(180,130,160,0.20);
+
+
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:18px;
+
+
+}
+
+
+
+/* TITOLO */
+
+
+.login-box h1 {
+
+
+  text-align:center;
+
+
+  color:#d583aa;
+
+
+  font-family:"Playfair Display",serif;
+
+
+  font-size:32px;
+
+
+  margin:0;
+
+
+}
+
+
+
+
+.login-box p {
+
+
+  text-align:center;
+
+
+  color:#927383;
+
+
+}
+
+
+
+
+
+/* INPUT */
+
+
+.input-item {
+
+
+  --background:#fff3f8;
+
+
+  --border-radius:25px;
+
+
+  --padding-start:15px;
+
+
+  --inner-padding-end:15px;
+
+
+  margin-bottom:10px;
+
+
+  border-radius:25px;
+
+
+}
+
+
+
+ion-label {
+
+
+  color:#927383 !important;
+
+
+  font-weight:600;
+
+
+}
+
+
+
+ion-input {
+
+
+  --color:#60465c;
+
+
+  --placeholder-color:#927383;
+
+
+  --placeholder-opacity:1;
+
+
+  min-height:45px;
+
+
+}
+
+
+
+
+ion-input::part(label){
+
+  color:#927383;
+
+}
+
+
+
+ion-input::part(native){
+
+  color:#60465c;
+
+}
+
+
+
+
+
+/* ERRORI CAMPO */
+
+
+.field-error {
+
+
+  color:#c62855;
+
+
+  font-size:13px;
+
+
+  margin-top:-12px;
+
+
+  margin-left:15px;
+
+
+}
+
+
+
+
+
+/* ERRORE GENERALE */
+
+
+.error {
+
+  margin-top:10px;
+
+  --background:#ffe5ec;
+
+  color:#b42345;
+
+  border-radius:20px;
+
+  text-align:center;
+
+}
+
+
+
+
+
+/* BUTTON */
+
+
+.login-button {
+
+
+  height:55px;
+
+
+  margin-top:10px;
+
+
+  font-weight:bold;
+
+
+  font-size:16px;
+
+
+
+  --background:
+
+  linear-gradient(
+
+    135deg,
+
+    #d889ad,
+
+    #a879c8
+
+  );
+
+
+  --border-radius:30px;
+
+
+}
+
+
+
+
+
+/* LINK */
+
+
+.register-link a {
+
+
+  color:#d583aa;
+
+
+  text-decoration:none;
+
+
+  font-weight:bold;
+
+
+}
+
+
+
+
+@media(max-width:600px){
+
+
+.login-box {
+
+
+  width:92%;
+
+
+  padding:30px 20px;
+
+
+}
+
+
+
+.login-box h1 {
+
+
+  font-size:26px;
+
+
+}
+
+
+}
+.login-header {
+  text-align:center;
+}

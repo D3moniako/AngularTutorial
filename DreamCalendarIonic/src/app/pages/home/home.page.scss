@@ -1,0 +1,712 @@
+:host {
+
+  display:block;
+
+  height:100%;
+
+}
+
+
+
+ion-content.home-page {
+
+  --background:#fff8fc;
+
+  color:#4a3040;
+
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+
+.hero {
+
+  padding:50px 6%;
+
+}
+
+
+
+.tag {
+
+  --background:#f9d9e8;
+
+  --color:#b05a83;
+
+  font-weight:600;
+
+  border-radius:30px;
+
+}
+
+
+
+.hero h1 {
+
+  font-family:"Playfair Display", serif;
+
+  font-size:clamp(35px,5vw,55px);
+
+  line-height:1.15;
+
+  color:#7b3858;
+
+  margin:25px 0;
+
+}
+
+
+
+.hero-text {
+
+  font-size:18px;
+
+  line-height:1.7;
+
+  color:#705766;
+
+  max-width:600px;
+
+}
+
+
+
+/* BOTTONI */
+
+
+.hero-buttons {
+
+  display:flex;
+
+  gap:15px;
+
+  flex-wrap:wrap;
+
+  margin:30px 0;
+
+}
+
+
+
+.primary-btn {
+
+  --background:linear-gradient(
+    135deg,
+    #d98ab0,
+    #b86b92
+  );
+
+  --border-radius:30px;
+
+  font-weight:bold;
+
+}
+
+
+
+.secondary-btn {
+
+  --border-radius:30px;
+
+  --color:#b05a83;
+
+  --border-color:#edbfd5;
+
+}
+
+
+
+/* TRUST */
+
+
+.trust {
+
+  display:flex;
+
+  gap:10px;
+
+  flex-wrap:wrap;
+
+}
+
+
+
+.trust ion-chip {
+
+  --background:#fff0f6;
+
+  --color:#8b6073;
+
+}
+
+
+
+
+
+/* =========================
+ IPAD
+========================= */
+
+
+.ipad-wrapper {
+
+ display:flex;
+
+ justify-content:center;
+
+}
+
+
+
+.ipad {
+
+ width:300px;
+
+ height:420px;
+
+ border-radius:40px;
+
+ background:#222;
+
+ padding:18px;
+
+ box-shadow:0 25px 60px rgba(0,0,0,.25);
+
+}
+
+
+
+.screen {
+
+ height:100%;
+
+ border-radius:30px;
+
+ background:linear-gradient(
+ 135deg,
+ #ffffff,
+ #ffeaf4
+ );
+
+ padding:30px;
+
+ text-align:center;
+
+}
+
+
+
+.screen h2 {
+
+ font-size:55px;
+
+ color:#b86b92;
+
+ margin:0;
+
+}
+
+
+
+.screen h3 {
+
+ color:#674d5c;
+
+ font-family:"Playfair Display",serif;
+
+}
+
+
+
+.calendar-mini {
+
+ display:grid;
+
+ grid-template-columns:repeat(7,1fr);
+
+ gap:7px;
+
+ margin-top:30px;
+
+}
+
+
+
+.calendar-mini span {
+
+ background:white;
+
+ padding:6px;
+
+ border-radius:10px;
+
+ font-size:12px;
+
+}
+
+
+
+/* =========================
+ STATS
+========================= */
+
+
+.stats {
+
+ padding:20px 6%;
+
+}
+
+
+
+.stats ion-card {
+
+ height:100%;
+
+ text-align:center;
+
+ border-radius:30px;
+
+ background:white;
+
+ box-shadow:0 15px 35px rgba(180,100,140,.12);
+
+}
+
+
+
+.stats h2 {
+
+ color:#c77b9c;
+
+ font-size:38px;
+
+}
+
+
+
+.stats p {
+
+ color:#765d6a;
+
+}
+
+
+
+/* =========================
+ CATEGORIE
+========================= */
+
+
+.categories {
+
+ padding:50px 6%;
+
+ text-align:center;
+
+}
+
+
+
+.categories h2 {
+
+ font-family:"Playfair Display",serif;
+
+ color:#674d5c;
+
+ font-size:35px;
+
+}
+
+
+
+.category-list {
+
+ display:flex;
+
+ justify-content:center;
+
+ gap:12px;
+
+ flex-wrap:wrap;
+
+}
+
+
+
+.category-list ion-chip {
+
+ --background:white;
+
+ --color:#80566b;
+
+ padding:10px 15px;
+
+ cursor:pointer;
+
+ box-shadow:0 5px 15px rgba(0,0,0,.08);
+
+}
+
+
+
+.category-list ion-chip.selected {
+
+ --background:#d98ab0;
+
+ --color:white;
+
+}
+
+
+
+
+
+/* =========================
+ PRODUCTS
+========================= */
+
+
+.products {
+
+ padding:40px 6%;
+
+}
+
+
+
+.section-title {
+
+ text-align:center;
+
+ margin-bottom:35px;
+
+}
+
+
+
+.section-title h2 {
+
+ font-family:"Playfair Display",serif;
+
+ color:#674d5c;
+
+ font-size:38px;
+
+}
+
+
+
+.section-title p {
+
+ color:#765d6a;
+
+}
+
+
+
+.products ion-col {
+
+ display:flex;
+
+}
+
+
+
+.products app-product-card {
+
+ width:100%;
+
+}
+
+
+
+
+
+/* =========================
+ STEPS
+========================= */
+
+
+.steps {
+
+ padding:60px 6%;
+
+ text-align:center;
+
+}
+
+
+
+.steps h2 {
+
+ font-family:"Playfair Display",serif;
+
+ color:#674d5c;
+
+}
+
+
+
+.steps ion-card {
+
+ height:100%;
+
+ border-radius:30px;
+
+ background:white;
+
+}
+
+
+
+.step-number {
+
+ width:50px;
+
+ height:50px;
+
+ margin:auto;
+
+ display:flex;
+
+ justify-content:center;
+
+ align-items:center;
+
+ border-radius:50%;
+
+ background:linear-gradient(
+ 135deg,
+ #d98ab0,
+ #a879c8
+ );
+
+ color:white;
+
+ font-size:22px;
+
+ font-weight:bold;
+
+}
+
+
+
+/* =========================
+ RECENSIONI
+========================= */
+
+
+.reviews {
+
+ padding:60px 6%;
+
+ text-align:center;
+
+}
+
+
+
+.review-card {
+
+ height:100%;
+
+ border-radius:30px;
+
+ box-shadow:0 15px 35px rgba(180,100,140,.12);
+
+}
+
+
+
+.stars {
+
+ color:#e4ad2d;
+
+ font-size:22px;
+
+}
+
+
+
+
+
+/* =========================
+ FAQ
+========================= */
+
+
+.faq {
+
+ padding:50px 6%;
+
+}
+
+
+
+.faq h2 {
+
+ font-family:"Playfair Display",serif;
+
+ color:#674d5c;
+
+ text-align:center;
+
+}
+
+
+
+ion-accordion {
+
+ background:white;
+
+ border-radius:20px;
+
+ margin-bottom:15px;
+
+ overflow:hidden;
+
+}
+
+
+
+.faq-content {
+
+ padding:20px;
+
+ color:#705766;
+
+}
+
+
+
+
+
+/* =========================
+ NEWSLETTER
+========================= */
+
+
+.newsletter {
+
+ padding:50px 6%;
+
+}
+
+
+
+.newsletter ion-card {
+
+ border-radius:35px;
+
+ background:linear-gradient(
+ 135deg,
+ #f9d7e8,
+ #ffffff
+ );
+
+ text-align:center;
+
+}
+
+
+
+.newsletter ion-input {
+
+ --background:white;
+
+ --border-radius:30px;
+
+ margin-bottom:20px;
+
+}
+
+
+
+.newsletter ion-button {
+
+ --background:linear-gradient(
+ 135deg,
+ #d98ab0,
+ #a879c8
+ );
+
+ --border-radius:30px;
+
+ font-weight:bold;
+
+}
+
+
+
+
+
+/* =========================
+ MOBILE
+========================= */
+
+
+@media(max-width:768px){
+
+
+.hero {
+
+ text-align:center;
+
+}
+
+
+
+.hero-buttons {
+
+ justify-content:center;
+
+}
+
+
+
+.hero-text {
+
+ margin:auto;
+
+}
+
+
+
+.ipad {
+
+ width:240px;
+
+ height:340px;
+
+}
+
+
+
+.section-title h2 {
+
+ font-size:30px;
+
+}
+
+
+
+.category-list {
+
+ justify-content:center;
+
+}
+
+
+
+.newsletter {
+
+ padding:30px 15px;
+
+}
+
+
+}

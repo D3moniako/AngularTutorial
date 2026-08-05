@@ -1,0 +1,209 @@
+ion-content.register-page {
+  --background: #fffaf7;
+}
+
+
+.register-box {
+
+  width: 90%;
+  max-width: 450px;
+
+  margin: 50px auto;
+
+  background: white;
+
+  padding: 40px 30px;
+
+  border-radius: 35px;
+
+  box-shadow:
+    0 15px 40px rgba(180,130,160,0.20);
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+}
+
+
+
+/* titolo */
+
+.register-box h1 {
+
+  text-align:center;
+
+  color:#d583aa;
+
+  font-family:"Playfair Display", serif;
+
+  font-size:32px;
+
+  margin:0;
+
+}
+
+
+
+/* descrizione */
+
+.register-box p {
+
+  text-align:center;
+
+  color:#927383;
+
+}
+
+
+
+/* input ionic */
+
+.input-item {
+
+  --background:#fff3f8;
+
+  --border-radius:25px;
+
+  --padding-start:15px;
+
+  --inner-padding-end:15px;
+
+  margin-bottom:10px;
+
+  border-radius:25px;
+
+}
+
+
+ion-label {
+
+  color:#927383 !important;
+
+  font-weight:600;
+
+}
+
+
+ion-input {
+
+  --color:#60465c;
+
+  --placeholder-color:#b79aaa;
+
+  min-height:45px;
+
+}
+
+/* checkbox */
+
+.two-factor {
+
+  display:flex;
+
+  align-items:center;
+
+  gap:12px;
+
+  color:#755b68;
+
+}
+
+
+
+ion-checkbox {
+
+  --size:22px;
+
+}
+
+
+
+/* errore */
+
+.error {
+
+  background:#ffe5ec;
+
+  color:#b42345;
+
+  border-radius:20px;
+
+  padding:12px;
+
+  text-align:center;
+
+}
+
+
+
+/* bottone */
+
+.register-button {
+
+  height:55px;
+
+  margin-top:10px;
+
+  font-weight:bold;
+
+  --background:
+    linear-gradient(
+      135deg,
+      #d889ad,
+      #a879c8
+    );
+
+  --border-radius:30px;
+
+}
+
+
+
+/* link */
+
+.login-link a {
+
+  color:#d583aa;
+
+  text-decoration:none;
+
+  font-weight:bold;
+
+}
+
+
+
+@media(max-width:600px){
+
+  .register-box {
+
+    width:92%;
+
+    padding:30px 20px;
+
+  }
+
+
+  .register-box h1 {
+
+    font-size:26px;
+
+  }
+
+}
+ion-input {
+  --color: #60465c;
+  --placeholder-color: #927383;
+  --placeholder-opacity: 1;
+}
+
+ion-input::part(label) {
+  color: #927383;
+  font-weight: 600;
+}
+
+ion-input::part(native) {
+  color: #60465c;
+}
