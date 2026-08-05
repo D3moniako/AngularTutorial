@@ -10,6 +10,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { ProductCardComponent } from './components/product-card/product-card.component';
 import { NotificationDropdownComponent } from './components/notification-dropdown/notification-dropdown.component';
 import { NotificationComponent } from './components/notification/notification.component';
+import { SideMenuComponent } from './components/side-menu/side-menu.component';
 
 
 @NgModule({
@@ -24,7 +25,9 @@ import { NotificationComponent } from './components/notification/notification.co
 
     NotificationDropdownComponent,
 
-    NotificationComponent
+    NotificationComponent,
+     SideMenuComponent,
+     
 
   ],
 
@@ -52,7 +55,8 @@ import { NotificationComponent } from './components/notification/notification.co
 
     NotificationDropdownComponent,
 
-    NotificationComponent
+    NotificationComponent,
+    SideMenuComponent
 
   ]
 

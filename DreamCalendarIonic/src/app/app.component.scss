@@ -1,14 +1,13 @@
 ion-app {
 
-  height:100%;
+  height:100vh;
 
 }
 
 
+#main-content {
 
-.app-layout {
-
-  height:100vh;
+  height:100%;
 
   display:flex;
 
@@ -18,38 +17,89 @@ ion-app {
 
 
 
-/* HEADER */
-
-app-header {
-
-  display:block;
-
-  flex:0 0 78px;
-
-}
-
-
-
-/* PAGINE */
-
-.main-content {
+.page-container {
 
   flex:1;
 
-  min-height:0;
-
-  overflow:hidden;
-
-  position:relative;
+  overflow:auto;
 
 }
 
 
 
-/* FOOTER */
+ion-menu {
 
-app-footer {
+  --width:280px;
 
-  flex:0 0 auto;
+  --background:#fffaf7;
+
+
+  ion-content {
+
+    --background:
+    linear-gradient(
+      180deg,
+      #fff0f7,
+      #f3ecff
+    );
+
+  }
+
+
+  ion-list {
+
+    background:transparent;
+
+    padding:10px;
+
+  }
+
+
+
+  ion-item {
+
+    --background:transparent;
+
+    --color:#674d5c;
+
+    --border-radius:18px;
+
+    --min-height:45px;
+
+    margin-bottom:5px;
+
+    font-weight:600;
+
+    font-size:15px;
+
+  }
+
+
+
+  ion-item:hover {
+
+    --background:
+    linear-gradient(
+      135deg,
+      #ffd8e8,
+      #e9ddff
+    );
+
+    --color:#d583aa;
+
+  }
+
+
+}
+
+
+html,
+body {
+
+ margin:0;
+
+ padding:0;
+
+ height:100%;
 
 }
