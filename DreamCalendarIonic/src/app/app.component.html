@@ -1,82 +1,26 @@
 <ion-app>
 
 
-  <ion-menu
-    menuId="main-menu"
-    contentId="main-content">
+<app-side-menu></app-side-menu>
 
 
-    <ion-content>
+<div id="main-content">
 
 
-      <ion-list>
+<app-header></app-header>
 
 
-        <ion-item routerLink="/home">
-          🏠 Home
-        </ion-item>
+<main class="page-container">
+
+<router-outlet></router-outlet>
+
+</main>
 
 
-        <ion-item routerLink="/planner">
-          📅 Planner
-        </ion-item>
+<app-footer></app-footer>
 
-
-        <ion-item routerLink="/shop">
-          🛒 Shop
-        </ion-item>
-
-
-        <ion-item routerLink="/products">
-          ✨ Prodotti
-        </ion-item>
-
-
-        <ion-item routerLink="/my-planners">
-          📚 I miei Planner
-        </ion-item>
-
-
-        <ion-item routerLink="/about">
-          🌸 Chi siamo
-        </ion-item>
-
-
-        <ion-item routerLink="/contact">
-          💌 Contatti
-        </ion-item>
-
-
-      </ion-list>
-
-
-    </ion-content>
-
-
-  </ion-menu>
-
-
-
-
-
-  <div class="app-layout">
-
-
-    <app-header></app-header>
-
-
-<div id="main-content" class="main-content">
-
-  <ion-router-outlet></ion-router-outlet>
 
 </div>
-
-
-
-    <app-footer></app-footer>
-
-
-  </div>
 
 
 </ion-app>
