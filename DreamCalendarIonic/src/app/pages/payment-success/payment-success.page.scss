@@ -1,0 +1,397 @@
+.payment-page {
+
+  --background:
+  linear-gradient(
+    135deg,
+    #ffd8ea,
+    #ddd2ff
+  );
+
+}
+
+
+
+.success-container {
+
+
+  min-height:100%;
+
+
+  display:flex;
+
+
+  justify-content:center;
+
+
+  align-items:center;
+
+
+  padding:25px;
+
+
+}
+
+
+
+
+.success-card {
+
+
+  width:100%;
+
+
+  max-width:520px;
+
+
+  border-radius:45px;
+
+
+  background:white;
+
+
+  text-align:center;
+
+
+  box-shadow:
+  0 25px 70px rgba(180,130,160,.25);
+
+
+  animation:zoom .6s ease;
+
+
+}
+
+
+
+
+
+
+.success-icon {
+
+
+  font-size:70px;
+
+
+  margin-bottom:15px;
+
+
+}
+
+
+
+
+
+
+
+h1 {
+
+
+  font-family:"Playfair Display",serif;
+
+
+  font-size:38px;
+
+
+  margin:10px 0;
+
+
+  background:
+  linear-gradient(
+  90deg,
+  #d63384,
+  #9b5de5
+  );
+
+
+  -webkit-background-clip:text;
+
+
+  color:transparent;
+
+
+}
+
+
+
+
+
+
+
+.subtitle {
+
+
+  color:#806775;
+
+
+  font-size:18px;
+
+
+}
+
+
+
+
+
+
+
+.order-box {
+
+
+  margin:25px 0;
+
+
+  padding:20px;
+
+
+  border-radius:30px;
+
+
+  background:#fff4fa;
+
+
+  display:flex;
+
+
+  flex-direction:column;
+
+
+  gap:8px;
+
+
+}
+
+
+
+.order-box span {
+
+
+  color:#927383;
+
+
+}
+
+
+
+.order-box strong {
+
+
+  font-size:26px;
+
+
+  color:#d63384;
+
+
+}
+
+
+
+
+
+
+
+
+.message {
+
+
+  margin:25px 0;
+
+
+  padding:20px;
+
+
+  border-radius:25px;
+
+
+  background:
+  linear-gradient(
+  135deg,
+  #ddffe9,
+  #f0fff6
+  );
+
+
+  color:#27804b;
+
+
+  font-weight:600;
+
+
+}
+
+
+
+
+
+.message span:first-child {
+
+
+ animation:pulse 1.2s infinite;
+
+
+}
+
+
+
+
+
+
+
+.planner-button {
+
+
+  height:58px;
+
+
+  font-size:17px;
+
+
+  font-weight:bold;
+
+
+  --border-radius:35px;
+
+
+  --background:
+  linear-gradient(
+  90deg,
+  #d63384,
+  #9b5de5
+  );
+
+
+}
+
+
+
+
+
+
+
+ion-button::part(native){
+
+
+  border-radius:35px;
+
+
+}
+
+
+
+
+
+
+
+
+@keyframes pulse {
+
+
+0% {
+
+opacity:1;
+
+}
+
+
+50% {
+
+opacity:.5;
+
+}
+
+
+100% {
+
+opacity:1;
+
+}
+
+
+}
+
+
+
+
+
+
+
+@keyframes zoom {
+
+
+from {
+
+
+opacity:0;
+
+
+transform:scale(.7);
+
+
+}
+
+
+
+to {
+
+
+opacity:1;
+
+
+transform:scale(1);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+
+@media(max-width:600px){
+
+
+.success-container {
+
+
+padding:15px;
+
+
+}
+
+
+
+.success-card {
+
+
+border-radius:35px;
+
+
+}
+
+
+
+h1 {
+
+
+font-size:28px;
+
+
+}
+
+
+
+.success-icon {
+
+
+font-size:55px;
+
+
+}
+
+
+
+}

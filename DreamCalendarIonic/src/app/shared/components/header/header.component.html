@@ -1,19 +1,25 @@
-<ion-header>
 
+
+<ion-header>
 
 <ion-toolbar class="dream-toolbar">
 
 
+<!-- MENU LATERALE -->
+
 <ion-buttons slot="start">
 
-<ion-menu-button
-menu="main-menu">
+<ion-menu-button menu="main-menu">
 </ion-menu-button>
 
 </ion-buttons>
 
 
 
+
+<!-- LOGO -->
+
+<ion-title>
 
 <div class="logo">
 
@@ -27,11 +33,18 @@ Digital Planner Boutique
 
 </div>
 
+</ion-title>
 
 
+
+
+
+<!-- AZIONI UTENTE -->
 
 <ion-buttons slot="end">
 
+
+<!-- UTENTE NON LOGGATO -->
 
 <ng-container *ngIf="!user">
 
@@ -45,6 +58,7 @@ fill="clear"
 </ion-button>
 
 
+
 <ion-button
 fill="clear"
 (click)="goRegister()">
@@ -54,31 +68,26 @@ fill="clear"
 </ion-button>
 
 
-<ion-button
-fill="clear"
-(click)="goCart()">
-
-🛒
-
-</ion-button>
-
-
 </ng-container>
 
 
 
+
+
+
+<!-- UTENTE LOGGATO -->
 
 <ng-container *ngIf="user">
 
 
 <ion-button
 fill="clear"
-routerLink="/profile">
+routerLink="/profile"
+class="profile-button">
 
-🌸 {{user.name}}
+🌸
 
 </ion-button>
-
 
 
 <ion-button
@@ -90,7 +99,23 @@ fill="clear"
 </ion-button>
 
 
+
 </ng-container>
+
+
+
+
+
+<!-- CARRELLO -->
+
+<ion-button
+fill="clear"
+(click)="goCart()">
+
+🛒
+
+</ion-button>
+
 
 
 
@@ -102,3 +127,8 @@ fill="clear"
 
 
 </ion-header>
+
+<!-- CAMPANELLA FLOATING -->
+<app-notification-dropdown
+*ngIf="user">
+</app-notification-dropdown>

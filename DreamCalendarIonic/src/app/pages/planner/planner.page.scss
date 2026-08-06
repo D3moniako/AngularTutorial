@@ -1,19 +1,23 @@
 ion-content.planner-page {
 
-  --background: #fffaf7;
+  --background:#fffaf7;
 
 }
 
 
 
-/* ========================= */
-/* HERO */
-/* ========================= */
+/* =========================
+   HERO
+========================= */
 
 
 .planner-hero {
 
-  margin:20px;
+  width:calc(100% - 32px);
+
+  max-width:1200px;
+
+  margin:20px auto;
 
   border-radius:40px;
 
@@ -24,40 +28,32 @@ ion-content.planner-page {
     #e9dcff
   );
 
+  text-align:center;
 
   box-shadow:
   0 20px 45px rgba(180,120,150,.18);
 
-
-  text-align:center;
-
 }
-
 
 
 .planner-hero h1 {
 
-
-  font-family:"Playfair Display", serif;
-
-  font-size:clamp(30px,5vw,55px);
+  font-family:"Playfair Display",serif;
 
   color:#674d5c;
 
-  margin-bottom:15px;
+  font-size:clamp(30px,5vw,55px);
 
 }
 
 
-
 .planner-hero p {
-
 
   color:#765d6a;
 
   font-size:18px;
 
-  line-height:1.6;
+  line-height:1.5;
 
 }
 
@@ -66,33 +62,31 @@ ion-content.planner-page {
 
 
 
-
-/* ========================= */
-/* SEARCH */
-/* ========================= */
+/* =========================
+   SEARCH
+========================= */
 
 
 .tools {
 
+  width:calc(100% - 32px);
 
-  margin:25px 20px;
+  max-width:1200px;
+
+  margin:25px auto;
 
   border-radius:35px;
 
   background:white;
 
-
   box-shadow:
-
   0 15px 35px rgba(180,120,150,.12);
-
 
 }
 
 
 
 ion-searchbar {
-
 
   --background:#fff8fb;
 
@@ -104,16 +98,7 @@ ion-searchbar {
 
 
 
-
-
-
-/* ========================= */
-/* CATEGORIE */
-/* ========================= */
-
-
 .categories {
-
 
   display:flex;
 
@@ -127,8 +112,7 @@ ion-searchbar {
 
 
 
-ion-chip {
-
+.categories ion-chip {
 
   background:#fff0f6;
 
@@ -140,8 +124,7 @@ ion-chip {
 
 
 
-ion-chip.active {
-
+.categories ion-chip.active {
 
   background:#d889ad;
 
@@ -155,24 +138,36 @@ ion-chip.active {
 
 
 
+/* =========================
+   GRID SHOP
+========================= */
 
 
-/* ========================= */
-/* GRID */
-/* ========================= */
+.products-grid {
 
+  width:100%;
 
-ion-grid {
+  max-width:1400px;
 
+  margin:auto;
 
-  padding:20px;
+  padding:10px 16px;
 
 }
 
 
 
-ion-col {
+.products-grid ion-row {
 
+  margin:0;
+
+}
+
+
+
+.products-grid ion-col {
+
+  display:flex;
 
   padding:8px;
 
@@ -184,42 +179,44 @@ ion-col {
 
 
 
-
-/* ========================= */
-/* CARD */
-/* ========================= */
+/* =========================
+   CARD PRODOTTO
+========================= */
 
 
 .product-card {
 
-  height:100%;
+  width:100%;
 
   margin:0;
 
-  border-radius:35px;
-
-  overflow:hidden;
+  border-radius:32px;
 
   background:white;
 
-  box-shadow:
-  0 20px 45px rgba(180,120,150,.15);
+  overflow:hidden;
 
-  position:relative;
+
+  box-shadow:
+
+  0 15px 40px rgba(180,120,150,.15);
+
 
   display:flex;
 
   flex-direction:column;
 
+  position:relative;
+
 }
+
+
 
 
 
 .product-card:hover {
 
-
-  transform:translateY(-6px);
-
+  transform:translateY(-5px);
 
 }
 
@@ -228,53 +225,31 @@ ion-col {
 
 
 
-
-/* IMMAGINE */
-
-
-.product-card img {
-
-
-  width:100%;
-
-
-  height:220px;
-
-
-  object-fit:contain;
-
-
-  background:#fff;
-
-  padding:10px;
-
-}
-
-
-
-
-
-
-
-/* CUORE */
+/* =========================
+   CUORE
+========================= */
 
 
 .heart {
 
-
   position:absolute;
 
+  top:10px;
 
-  top:5px;
+  right:10px;
 
-  right:5px;
-
-
-  z-index:10;
+  z-index:5;
 
 
-  font-size:26px;
+  width:42px;
 
+  height:42px;
+
+
+  --border-radius:50%;
+
+
+  font-size:22px;
 
 }
 
@@ -284,31 +259,63 @@ ion-col {
 
 
 
-/* BADGE */
+/* =========================
+   IMMAGINE
+========================= */
+
+
+.product-card > img {
+
+  width:100%;
+
+  height:210px;
+
+  object-fit:contain;
+
+  padding:15px;
+
+}
+
+
+
+
+
+
+
+/* =========================
+   CONTENUTO
+========================= */
+
+
+.product-card ion-card-content {
+
+  flex:1;
+
+  display:flex;
+
+  flex-direction:column;
+
+  padding:18px;
+
+}
+
 
 
 .badge {
 
+  align-self:flex-start;
 
   background:#ffe0ed;
 
-
   color:#c56b92;
-
 
   border-radius:20px;
 
-
-  padding:7px 14px;
-
+  padding:6px 12px;
 
   font-weight:bold;
 
-
 }
-
-
-
 
 
 
@@ -316,23 +323,22 @@ ion-col {
 
 .product-card h2 {
 
-
-  margin-top:15px;
-
-
   font-family:"Playfair Display",serif;
-
-
-  font-size:22px;
-
 
   color:#674d5c;
 
+  font-size:21px;
+
+  margin:15px 0;
+
+  min-height:45px;
+
+
+  display:flex;
+
+  align-items:center;
 
 }
-
-
-
 
 
 
@@ -344,12 +350,7 @@ ion-col {
 
   font-size:14px;
 
-  line-height:1.5;
-
-
-  min-height:45px;
-
-  overflow:hidden;
+  line-height:1.4;
 
 
   display:-webkit-box;
@@ -358,59 +359,38 @@ ion-col {
 
   -webkit-box-orient:vertical;
 
+  overflow:hidden;
+
 }
 
 
 
 
-
-
-
-/* ========================= */
-/* RATING */
-/* ========================= */
 
 
 .rating {
 
-
-  margin-top:15px;
-
+  margin-top:auto;
 
   color:#b96b8c;
 
-
   font-weight:bold;
-
 
 }
 
 
 
-
-
-
-
-
-/* ========================= */
-/* PREZZO */
-/* ========================= */
 
 
 .price {
 
-
   margin:15px 0;
 
-
-  font-size:30px;
-
+  font-size:28px;
 
   font-weight:bold;
 
-
   color:#d27da1;
-
 
 }
 
@@ -420,16 +400,12 @@ ion-col {
 
 
 
-
-
-/* ========================= */
-/* BUTTONS */
-/* ========================= */
+/* =========================
+   BOTTONI CARD
+========================= */
 
 
 .buttons {
-
-  margin-top:auto;
 
   display:flex;
 
@@ -441,15 +417,39 @@ ion-col {
 
 .buttons ion-button {
 
-
   flex:1;
-
-
-  --border-radius:30px;
-
 
   height:45px;
 
+  --border-radius:30px;
+
+}
+
+
+
+.buttons ion-button::part(native){
+
+  height:45px;
+
+  min-height:45px;
+
+  border-radius:30px;
+
+}
+
+
+
+.buttons ion-button:last-child {
+
+  --background:
+
+  linear-gradient(
+    135deg,
+    #d889ad,
+    #a879c8
+  );
+
+  --color:white;
 
 }
 
@@ -459,53 +459,41 @@ ion-col {
 
 
 
-
-/* ========================= */
-/* EMPTY */
-/* ========================= */
-
-
-.empty {
-
-
-  margin:30px;
-
-
-  border-radius:35px;
-
-
-  text-align:center;
-
-
-  background:white;
-
-
-}
-
-
-
-
-
-
-
-
-
-/* ========================= */
-/* CART BUTTON */
-/* ========================= */
+/* =========================
+   CARRELLO FINALE
+========================= */
 
 
 .go-cart {
 
+  width:100%;
 
-  padding:30px 20px 80px;
+  max-width:1200px;
 
+  margin:30px auto;
+
+  padding:20px 16px 80px;
+
+  box-sizing:border-box;
 
 }
 
 
 
 .go-cart ion-button {
+
+  display:block;
+
+  width:100%;
+
+  max-width:100%;
+
+  height:55px;
+
+  margin:0 auto;
+
+
+  --border-radius:30px;
 
 
   --background:
@@ -517,181 +505,186 @@ ion-col {
   );
 
 
-  --border-radius:35px;
-
+  font-size:16px;
 
   font-weight:bold;
 
-
 }
 
 
 
+.go-cart ion-button::part(native) {
 
 
+  width:100%;
 
+  max-width:100%;
 
-
-
-/* ========================= */
-/* TABLET */
-/* ========================= */
-
-
-@media(max-width:768px){
-
-
-.product-card img {
-
-
- height:180px;
-
-
-}
-
-
-
-.product-card h2 {
-
-
- font-size:20px;
-
-
-}
-
-
-
-.price {
-
-
- font-size:25px;
-
-
-}
-
-
-
-}
-
-
-
-
-
-
-
-
-
-
-/* ========================= */
-/* MOBILE */
-/* ========================= */
-
-
-@media(max-width:450px){
-
-
-ion-grid {
-
-
- padding:10px;
-
-}
-
-
-
-ion-col {
-
-
- padding:5px;
-
-}
-
-
-
-.product-card {
-
-  display:flex;
-
- border-radius:25px;
-
-
-}
-
-
-
-.product-card img {
-
-
- height:150px;
-
-
-}
-
-
-
-.product-card h2 {
-
- min-height:55px;
-
- display:flex;
-
- align-items:center;
-
-}
-
-
-
-.description {
-
-
- display:none;
-
-
-}
-
-
-
-.price {
-
-
- font-size:22px;
-
-
-}
-
-
-
-.buttons ion-button {
-
-
- --padding-start:8px;
-
- --padding-end:8px;
-
-
-}
-
-
-
-}
-
-.product-card ion-card-content {
-
-  flex:1;
-
-  display:flex;
-
-  flex-direction:column;
-
-}
-
-.rating {
-
-  margin-top:auto;
-
-}
-.product-card h2 {
+  height:55px;
 
   min-height:55px;
+
+
+  border-radius:30px;
+
+
+  padding-left:15px;
+
+  padding-right:15px;
+
+  box-sizing:border-box;
+
+}
+
+
+
+/* =========================
+   TABLET
+========================= */
+
+
+@media(min-width:768px){
+
+
+  .products-grid ion-col {
+
+    flex:0 0 50%;
+
+    max-width:50%;
+
+  }
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+
+@media(max-width:600px){
+
+
+  .products-grid {
+
+    padding:5px;
+
+  }
+
+
+
+  .products-grid ion-col {
+
+    flex:0 0 50%;
+
+    max-width:50%;
+
+    padding:5px;
+
+  }
+
+
+
+  .product-card {
+
+    border-radius:25px;
+
+  }
+
+
+
+  .product-card > img {
+
+    height:140px;
+
+    padding:8px;
+
+  }
+
+
+
+  .product-card ion-card-content {
+
+    padding:12px;
+
+  }
+
+
+
+  .product-card h2 {
+
+    font-size:17px;
+
+    min-height:40px;
+
+  }
+
+
+
+  .description {
+
+    display:none;
+
+  }
+
+
+
+  .price {
+
+    font-size:22px;
+
+  }
+
+
+
+  .buttons ion-button {
+
+    height:40px;
+
+    font-size:14px;
+
+  }
+
+
+
+  .buttons ion-button::part(native){
+
+    height:40px;
+
+    min-height:40px;
+
+  }
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+   TELEFONI PICCOLI
+========================= */
+
+
+@media(max-width:360px){
+
+
+  .products-grid ion-col {
+
+    flex:0 0 100%;
+
+    max-width:100%;
+
+  }
+
 
 }

@@ -1,0 +1,615 @@
+.my-planners-page {
+
+  --background:#fffaf7;
+
+}
+
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero {
+
+  padding:40px 20px;
+
+  text-align:center;
+
+  background:
+  linear-gradient(
+    135deg,
+    #ffd5e8,
+    #ddd0ff
+  );
+
+  border-radius:0 0 50px 50px;
+
+
+  .hero-icon {
+
+    font-size:60px;
+
+    margin-bottom:15px;
+
+  }
+
+
+  h1 {
+
+    font-size:32px;
+
+    font-family:"Playfair Display", serif;
+
+    color:white;
+
+    margin-bottom:10px;
+
+  }
+
+
+  p {
+
+    color:#806579;
+
+    font-size:16px;
+
+  }
+
+}
+
+
+
+
+
+/* =========================
+   STATISTICHE
+========================= */
+
+
+.stats {
+
+
+  display:grid;
+
+  grid-template-columns:repeat(3,1fr);
+
+  gap:15px;
+
+  margin-top:30px;
+
+
+
+  ion-card {
+
+
+    margin:0;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    background:white;
+
+
+    box-shadow:
+
+    0 15px 35px rgba(200,150,190,.25);
+
+
+  }
+
+
+
+
+  ion-card-content {
+
+
+    padding:20px 10px;
+
+
+  }
+
+
+
+  span {
+
+    font-size:35px;
+
+  }
+
+
+
+
+  h2 {
+
+
+    font-size:30px;
+
+    margin:10px 0;
+
+    color:#d86b9b;
+
+
+  }
+
+
+
+
+  p {
+
+    margin:0;
+
+    color:#806579;
+
+  }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   STRUMENTI
+========================= */
+
+
+.tools {
+
+
+  padding:25px 20px;
+
+
+
+  ion-searchbar {
+
+
+    --background:#fff0f7;
+
+    --border-radius:40px;
+
+    --color:#806579;
+
+  }
+
+
+}
+
+
+
+
+
+.categories {
+
+
+  display:flex;
+
+  gap:10px;
+
+  overflow-x:auto;
+
+  margin-top:15px;
+
+
+  ion-button {
+
+
+    --background:#ffe1ef;
+
+    --color:#a95780;
+
+    --border-radius:30px;
+
+    min-width:90px;
+
+
+  }
+
+
+
+
+
+  .active {
+
+
+    --background:#df79aa;
+
+    --color:white;
+
+
+  }
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   MESSAGGIO DOWNLOAD
+========================= */
+
+
+.message {
+
+
+  margin:20px;
+
+  border-radius:30px;
+
+  background:#e2fff0;
+
+  color:#39926a;
+
+  text-align:center;
+
+  font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   GRID PLANNER
+========================= */
+
+
+.planner-grid {
+
+
+  padding:20px;
+
+
+  display:grid;
+
+
+  grid-template-columns:1fr;
+
+
+  gap:25px;
+
+
+
+
+  app-product-card {
+
+
+    width:100%;
+
+
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   MODALE ANTEPRIMA
+========================= */
+
+
+ion-modal {
+
+
+  --border-radius:35px;
+
+
+}
+
+
+
+
+.preview-content {
+
+
+  text-align:center;
+
+
+
+  img {
+
+
+    width:90%;
+
+    max-height:350px;
+
+    object-fit:contain;
+
+    border-radius:30px;
+
+    margin:20px auto;
+
+
+  }
+
+
+
+
+  h2 {
+
+
+    color:#674d5c;
+
+    font-family:"Playfair Display",serif;
+
+
+  }
+
+
+
+  p {
+
+
+    color:#806579;
+
+
+  }
+
+
+
+}
+
+
+
+
+.preview-actions {
+
+
+  margin-top:20px;
+
+
+
+  ion-button {
+
+
+    --border-radius:30px;
+
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   SICUREZZA
+========================= */
+
+
+.security {
+
+
+  margin:30px 20px;
+
+  padding:25px;
+
+
+  background:#fff0f7;
+
+
+  border-radius:35px;
+
+
+  text-align:center;
+
+
+
+  h2 {
+
+    color:#d86b9b;
+
+  }
+
+
+
+  p {
+
+    color:#806579;
+
+  }
+
+
+
+  div {
+
+
+    line-height:2;
+
+    color:#806579;
+
+
+  }
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   SUPPORTO
+========================= */
+
+
+.help {
+
+
+  margin:30px 20px;
+
+  padding:25px;
+
+
+  background:white;
+
+
+  border-radius:35px;
+
+
+  text-align:center;
+
+
+  box-shadow:
+
+  0 10px 25px rgba(200,150,190,.15);
+
+
+
+  h2 {
+
+
+    color:#674d5c;
+
+
+  }
+
+
+
+
+  p {
+
+
+    color:#806579;
+
+
+  }
+
+
+
+
+  ion-button {
+
+
+    --color:#d86b9b;
+
+
+  }
+
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   FOOTER
+========================= */
+
+
+footer {
+
+
+  padding:30px;
+
+  text-align:center;
+
+  color:#d86b9b;
+
+  font-size:18px;
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+   TABLET / DESKTOP
+========================= */
+
+
+@media(min-width:768px){
+
+
+  .planner-grid {
+
+
+    grid-template-columns:
+    repeat(3,1fr);
+
+
+  }
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+   MOBILE
+========================= */
+
+
+@media(max-width:700px){
+
+
+  .stats {
+
+
+    grid-template-columns:1fr;
+
+
+  }
+
+
+
+
+  .hero h1 {
+
+
+    font-size:27px;
+
+
+  }
+
+
+
+}

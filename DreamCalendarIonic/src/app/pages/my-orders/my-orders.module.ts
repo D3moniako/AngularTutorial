@@ -8,13 +8,28 @@ import { MyOrdersPageRoutingModule } from './my-orders-routing.module';
 
 import { MyOrdersPage } from './my-orders.page';
 
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MyOrdersPageRoutingModule
-  ],
-  declarations: [MyOrdersPage]
+
+imports: [
+
+CommonModule,
+
+FormsModule,
+
+IonicModule,
+
+MyOrdersPageRoutingModule
+
+],
+
+
+declarations: [
+
+MyOrdersPage
+
+]
+
 })
+
 export class MyOrdersPageModule {}

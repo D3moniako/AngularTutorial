@@ -1,23 +1,113 @@
-<div class="success-page">
-  <div class="box">
-    <h1>🎉 Pagamento completato</h1>
+<ion-content class="payment-page">
 
-    <p>Grazie per il tuo acquisto.</p>
+  <section class="success-container">
 
-    <p>
-      Il tuo ordine:
 
-      <strong> #{{ orderId }} </strong>
-    </p>
+    <ion-card class="success-card">
 
-    <div class="message">
-      <span *ngIf="loading"> ⏳ Conferma pagamento in corso... </span>
 
-      <span *ngIf="!loading">
-        {{ message }}
-      </span>
-    </div>
+      <ion-card-content>
 
-    <button (click)="goPlanner()">📚 Vai ai miei Planner</button>
-  </div>
-</div>
+
+        <!-- ICONA -->
+
+        <div class="success-icon">
+
+          🎉
+
+        </div>
+
+
+
+        <h1>
+          Pagamento completato
+        </h1>
+
+
+
+        <p class="subtitle">
+
+          Grazie per il tuo acquisto.
+
+        </p>
+
+
+
+
+        <div class="order-box">
+
+
+          <span>
+
+            Il tuo ordine
+
+          </span>
+
+
+          <strong>
+
+            #{{orderId}}
+
+          </strong>
+
+
+        </div>
+
+
+
+
+
+        <div class="message">
+
+
+          <span *ngIf="loading">
+
+            ⏳ Conferma pagamento in corso...
+
+          </span>
+
+
+
+          <span *ngIf="!loading">
+
+            {{message}}
+
+          </span>
+
+
+        </div>
+
+
+
+
+
+
+
+        <ion-button
+
+          expand="block"
+
+          class="planner-button"
+
+          (click)="goPlanner()">
+
+
+          📚 Vai ai miei Planner
+
+
+        </ion-button>
+
+
+
+      </ion-card-content>
+
+
+
+    </ion-card>
+
+
+
+  </section>
+
+
+</ion-content>

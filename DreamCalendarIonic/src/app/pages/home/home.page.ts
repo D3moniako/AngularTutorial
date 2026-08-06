@@ -4,6 +4,10 @@ import { Router } from '@angular/router';
 import { PlannerService } from '../../core/services/planner.service';
 import { CartService } from '../../core/services/cart.service';
 import { NotificationService } from '../../core/services/notification.service';
+import { NotificationCenterService } from '../../core/services/notification-center.service';
+
+
+
 import { UserService } from '../../core/services/user.service';
 
 import { Product } from '../../core/models/product';
@@ -167,8 +171,9 @@ export class HomePage implements OnInit {
 
     private userService:UserService,
 
-    private router:Router
+    private router:Router,
 
+    private  notificationCenterService:NotificationCenterService,
   ){}
 
 
@@ -218,35 +223,46 @@ export class HomePage implements OnInit {
 
 
 
-  addCart(product:Product){
+addCart(product: Product) {
 
 
-    if(!this.userService.isLogged()){
-
-
-      this.notificationService.warning(
-        MESSAGES.SHOP.LOGIN_REQUIRED
-      );
-
-
-      this.router.navigate(['/login']);
-
-      return;
-
-    }
-
-
-    this.cartService.add(product);
-
-
-    this.notificationService.success(
-      '🛒 '+product.name+' aggiunto'
-    );
-
-  }
+  this.cartService.add(product);
 
 
 
+  // NOTIFICA CAMPANELLA
+
+  this.notificationCenterService.add({
+
+    id: Date.now(),
+
+    title:'Carrello aggiornato',
+
+    message:
+    product.name + ' aggiunto al carrello',
+
+    icon:'🛒',
+
+    type:'SYSTEM',
+
+    date:new Date(),
+
+    read:false
+
+  });
+
+
+
+  // TOAST TEMPORANEO
+
+  this.notificationService.success(
+
+    '🛒 ' + product.name + ' aggiunto'
+
+  );
+
+
+}
 
 
 

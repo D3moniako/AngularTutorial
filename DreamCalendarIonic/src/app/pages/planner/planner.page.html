@@ -100,7 +100,7 @@ class="empty"
 
 <!-- PRODUCTS -->
 
-<ion-grid>
+<ion-grid class="products-grid">
 
 
 <ion-row>
@@ -111,154 +111,35 @@ class="empty"
 
 size="6"
 
-size-sm="6"
 
 size-md="6"
-
-size-lg="6"
 
 *ngFor="let p of filteredProducts">
 
 
+<app-product-card
 
+[product]="p"
 
+[showFavorite]="true"
 
-<ion-card class="product-card">
+[showCart]="true"
 
+[showDescription]="true"
 
 
+(addCart)="addCart($event)"
 
 
-<!-- FAVORITE -->
+(favorite)="toggleFavorite($event)"
 
-<ion-button
 
-class="heart"
+(openProduct)="openProduct($event)">
 
-fill="clear"
 
-(click)="toggleFavorite(p)">
+</app-product-card>
 
 
-{{p.favorite ? '❤️':'🤍'}}
-
-
-</ion-button>
-
-
-
-
-
-
-<!-- IMAGE -->
-
-<img
-
-[src]="p.image"
-
-[alt]="p.name"
-
-loading="lazy">
-
-
-
-
-
-
-<ion-card-content>
-
-
-
-<ion-badge class="badge">
-
-{{p.badge}}
-
-</ion-badge>
-
-
-
-
-
-<h2>
-
-{{p.name}}
-
-</h2>
-
-
-
-
-
-<p class="description">
-
-{{p.description}}
-
-</p>
-
-
-
-
-
-
-
-<div class="rating">
-
-⭐ {{p.rating}}/5
-
-</div>
-
-
-
-
-
-
-<div class="price">
-
-{{p.price | currency:'EUR'}}
-
-</div>
-
-
-
-
-
-
-
-<div class="buttons">
-
-
-<ion-button
-
-fill="outline"
-
-[routerLink]="['/products',p.id]">
-
-👁
-
-</ion-button>
-
-
-
-
-<ion-button
-
-(click)="addCart(p)">
-
-🛒
-
-</ion-button>
-
-
-
-</div>
-
-
-
-</ion-card-content>
-
-
-
-</ion-card>
 
 
 
@@ -283,17 +164,11 @@ fill="outline"
 
 
 <ion-button
-
-routerLink="/cart"
-
-expand="block">
-
+routerLink="/cart">
 
 🛒 Vai al carrello
 
-
 </ion-button>
-
 
 </div>
 

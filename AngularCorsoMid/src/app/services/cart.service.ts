@@ -6,127 +6,598 @@ import { Product } from '../models/product';
 
 import { CartItem } from '../models/cart-item';
 
+import { UserService } from './user.service';
+
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  private items: CartItem[] = this.loadCart();
 
-  private cartSubject = new BehaviorSubject<CartItem[]>([...this.items]);
 
-  cart$ = this.cartSubject.asObservable();
 
-  constructor() {}
+  private items: CartItem[] = [];
+
+
+
+  private cartSubject =
+  new BehaviorSubject<CartItem[]>([]);
+
+
+
+  cart$ =
+  this.cartSubject.asObservable();
+
+
+
+
+
+  constructor(
+    private userService: UserService
+  ){
+
+
+    this.loadCart();
+
+
+  }
+
+
+
+
+
+
+
+
+
+  private getCartKey(): string | null {
+
+
+
+    const user =
+    this.userService.getCurrentUser();
+
+
+
+    if(!user){
+
+
+      return null;
+
+
+    }
+
+
+
+
+    return 'cart_' + user.email;
+
+
+
+  }
+
+
+
+
+
+
+
+
 
   add(product: Product) {
-    const existing = this.items.find((item) => item.product.id === product.id);
 
-    if (existing) {
+
+
+    const key =
+    this.getCartKey();
+
+
+
+    // nessun utente loggato
+
+    if(!key){
+
+
+      return;
+
+
+    }
+
+
+
+
+
+
+    const existing =
+    this.items.find(
+
+      item =>
+
+      item.product.id === product.id
+
+    );
+
+
+
+
+
+    if(existing){
+
+
+
       existing.quantity++;
 
-      existing.subtotal = existing.quantity * existing.product.price;
-    } else {
+
+
+      existing.subtotal =
+
+      existing.quantity *
+
+      existing.product.price;
+
+
+
+    }
+
+    else {
+
+
+
       this.items.push({
+
+
+
         id: Date.now(),
 
-        product: { ...product },
 
-        quantity: 1,
 
-        subtotal: product.price,
+        product:{...product},
+
+
+
+        quantity:1,
+
+
+
+        subtotal:product.price
+
+
+
       });
+
+
+
     }
 
-    this.update();
-  }
 
-  remove(id: number) {
-    this.items = this.items.filter((item) => item.id !== id);
+
+
 
     this.update();
+
+
+
   }
 
-  increase(item: CartItem) {
+
+
+
+
+
+
+
+
+  remove(id:number){
+
+
+
+    this.items =
+
+    this.items.filter(
+
+      item => item.id !== id
+
+    );
+
+
+
+    this.update();
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  increase(item:CartItem){
+
+
+
     item.quantity++;
 
-    item.subtotal = item.quantity * item.product.price;
+
+
+    item.subtotal =
+
+    item.quantity *
+
+    item.product.price;
+
+
 
     this.update();
+
+
+
   }
 
-  decrease(item: CartItem) {
-    if (item.quantity > 1) {
+
+
+
+
+
+
+
+
+  decrease(item:CartItem){
+
+
+
+    if(item.quantity > 1){
+
+
+
       item.quantity--;
 
-      item.subtotal = item.quantity * item.product.price;
+
+
+      item.subtotal =
+
+      item.quantity *
+
+      item.product.price;
+
+
 
       this.update();
-    } else {
-      this.remove(item.id);
+
+
+
     }
+
+    else {
+
+
+
+      this.remove(item.id);
+
+
+    }
+
+
+
   }
 
-  clear() {
-    this.items = [];
 
-    // elimina completamente il carrello salvato
 
-    localStorage.removeItem('cart');
 
-    // aggiorna tutti i componenti collegati
+
+
+
+
+
+  clear(){
+
+
+
+    const key =
+
+    this.getCartKey();
+
+
+
+
+    if(key){
+
+
+
+      localStorage.removeItem(key);
+
+
+
+    }
+
+
+
+
+    this.items=[];
+
+
 
     this.cartSubject.next([]);
+
+
+
+
   }
+
+
+
+
+
+
+
+
 
   getCart(): CartItem[] {
-    return [...this.items];
+
+
+
+    return [
+
+      ...this.items
+
+    ];
+
+
+
   }
+
+
+
+
+
+
+
+
 
   getItems(): CartItem[] {
-    return [...this.items];
+
+
+
+    return [
+
+      ...this.items
+
+    ];
+
+
+
   }
 
-  getTotal(): number {
+
+
+
+
+
+
+
+
+  getTotal():number {
+
+
+
     return this.items.reduce(
-      (total, item) => total + item.subtotal,
 
-      0,
+
+      (total,item)=>
+
+      total + item.subtotal,
+
+
+      0
+
+
     );
+
+
+
   }
 
-  getCount(): number {
+
+
+
+
+
+
+
+
+  getCount():number {
+
+
+
     return this.items.reduce(
-      (total, item) => total + item.quantity,
 
-      0,
+
+      (total,item)=>
+
+      total + item.quantity,
+
+
+      0
+
+
     );
+
+
+
   }
 
-  private update() {
+
+
+
+
+
+
+
+
+  private update(){
+
+
+
     this.saveCart();
 
-    this.cartSubject.next([...this.items]);
-  }
 
-  private saveCart() {
-    localStorage.setItem(
-      'cart',
 
-      JSON.stringify(this.items),
+    this.cartSubject.next(
+
+
+      [
+
+        ...this.items
+
+      ]
+
+
     );
+
+
+
   }
 
-  private loadCart(): CartItem[] {
-    try {
-      const data = localStorage.getItem('cart');
 
-      if (!data) {
-        return [];
+
+
+
+
+
+
+
+  private saveCart(){
+
+
+
+    const key =
+
+    this.getCartKey();
+
+
+
+
+    if(!key){
+
+
+      return;
+
+
+    }
+
+
+
+
+    localStorage.setItem(
+
+
+      key,
+
+
+      JSON.stringify(this.items)
+
+
+
+    );
+
+
+
+  }
+
+
+
+
+
+
+
+
+
+  private loadCart(){
+
+
+
+    const key =
+
+    this.getCartKey();
+
+
+
+
+
+    if(!key){
+
+
+      this.items=[];
+
+
+      return;
+
+
+    }
+
+
+
+
+
+
+    try {
+
+
+
+      const data =
+
+      localStorage.getItem(key);
+
+
+
+
+      if(data){
+
+
+
+        this.items =
+
+        JSON.parse(data);
+
+
+
+        this.cartSubject.next(
+
+          [
+
+            ...this.items
+
+          ]
+
+        );
+
+
+
       }
 
-      return JSON.parse(data);
-    } catch {
-      return [];
+
+
     }
+
+    catch {
+
+
+
+      this.items=[];
+
+
+
+    }
+
+
+
   }
+
+
+
+
 }

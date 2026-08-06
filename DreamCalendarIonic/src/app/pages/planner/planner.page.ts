@@ -1,9 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { PlannerService } from '../../core/services/planner.service';
 import { CartService } from '../../core/services/cart.service';
 
+import { NotificationService } from '../../core/services/notification.service';
+import { NotificationCenterService } from '../../core/services/notification-center.service';
+
+import { UserService } from '../../core/services/user.service';
+
 import { Product } from '../../core/models/product';
+
 
 
 @Component({
@@ -12,6 +19,7 @@ import { Product } from '../../core/models/product';
   styleUrls: ['./planner.page.scss'],
 })
 export class PlannerPage implements OnInit {
+
 
 
   products: Product[] = [];
@@ -42,22 +50,44 @@ export class PlannerPage implements OnInit {
 
 
 
+
   constructor(
+
 
     private plannerService: PlannerService,
 
-    private cartService: CartService
+
+    private cartService: CartService,
+
+
+    private notificationService: NotificationService,
+
+
+    private notificationCenterService: NotificationCenterService,
+
+
+    private userService: UserService,
+
+
+    private router: Router
+
 
   ) {}
 
 
 
 
+
+
   ngOnInit() {
+
 
     this.loadProducts();
 
+
   }
+
+
 
 
 
@@ -65,13 +95,17 @@ export class PlannerPage implements OnInit {
 
   private loadProducts(){
 
+
     this.products =
     this.plannerService.getProducts();
 
 
     this.applyFilter();
 
+
   }
+
+
 
 
 
@@ -80,11 +114,16 @@ export class PlannerPage implements OnInit {
 
   filterCategory(category:string){
 
+
     this.selectedCategory = category;
+
 
     this.applyFilter();
 
+
   }
+
+
 
 
 
@@ -94,6 +133,7 @@ export class PlannerPage implements OnInit {
   applyFilter(){
 
 
+
     const text =
     this.searchText
     .toLowerCase()
@@ -101,33 +141,45 @@ export class PlannerPage implements OnInit {
 
 
 
+
     this.filteredProducts =
+
     this.products.filter(product=>{
 
 
       const categoryOk =
 
+
       this.selectedCategory === 'Tutti'
 
+
       ||
+
 
       product.category === this.selectedCategory;
 
 
 
 
+
+
       const searchOk =
+
 
       !text
 
+
       ||
+
 
       product.name
       .toLowerCase()
       .includes(text)
 
 
+
       ||
+
 
       product.description
       .toLowerCase()
@@ -136,13 +188,20 @@ export class PlannerPage implements OnInit {
 
 
 
+
+
       return categoryOk && searchOk;
+
 
 
     });
 
 
+
   }
+
+
+
 
 
 
@@ -152,12 +211,98 @@ export class PlannerPage implements OnInit {
   addCart(product:Product){
 
 
+
+    // controllo login
+
+    if(!this.userService.isLogged()){
+
+
+
+      this.notificationService.warning(
+
+        '🔐 Devi effettuare il login per aggiungere prodotti'
+
+      );
+
+
+
+      this.router.navigate(['/login']);
+
+
+
+      return;
+
+
+
+    }
+
+
+
+
+
+
+    // aggiunge al carrello
+
     this.cartService.add(product);
 
 
-    alert(
-      '🛒 ' + product.name + ' aggiunto al carrello'
+
+
+
+
+    // notifica campanella
+
+    this.notificationCenterService.add({
+
+
+
+      id:Date.now(),
+
+
+
+      title:'Carrello aggiornato',
+
+
+
+      message:
+
+      product.name + ' aggiunto al carrello',
+
+
+
+      icon:'🛒',
+
+
+
+      type:'SYSTEM',
+
+
+
+      date:new Date(),
+
+
+
+      read:false
+
+
+
+    });
+
+
+
+
+
+
+    // toast
+
+    this.notificationService.success(
+
+
+      '🛒 ' + product.name + ' aggiunto'
+
+
     );
+
 
 
   }
@@ -167,20 +312,58 @@ export class PlannerPage implements OnInit {
 
 
 
+
+
+
   toggleFavorite(product:Product){
+
 
 
     this.plannerService.toggleFavorite(product);
 
 
 
+
     this.products =
+
     this.plannerService.getProducts();
 
 
 
+
     this.filteredProducts =
+
     [...this.products];
+
+
+
+  }
+
+
+
+
+
+
+
+
+  openProduct(product:Product){
+
+
+
+    this.router.navigate([
+
+
+
+      '/products',
+
+
+
+      product.id
+
+
+
+    ]);
+
 
 
   }

@@ -408,9 +408,32 @@ ion-content.home-page {
 
 
 
+/* =========================
+PRODUCT GRID
+========================= */
+
+
+.products ion-grid {
+
+  padding:0;
+
+}
+
+
+
+.products ion-row {
+
+  row-gap:25px;
+
+}
+
+
+
 .products ion-col {
 
- display:flex;
+  flex:0 0 100%;
+
+  max-width:100%;
 
 }
 
@@ -418,7 +441,9 @@ ion-content.home-page {
 
 .products app-product-card {
 
- width:100%;
+  display:block;
+
+  width:100%;
 
 }
 
@@ -708,5 +733,27 @@ ion-accordion {
 
 }
 
+
+}
+.products ion-row {
+
+  margin-left:-10px;
+  margin-right:-10px;
+
+}
+
+
+.products ion-col {
+
+  padding:10px;
+
+  display:flex;
+
+}
+
+
+.products app-product-card {
+
+  width:100%;
 
 }

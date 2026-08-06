@@ -22,7 +22,7 @@ export class NotificationCenterService {
   add(notification: Notification) {
     this.notifications.unshift(notification);
 
-    this.subject.next(this.notifications);
+    this.subject.next([...this.notifications]);
   }
 
   markAsRead(id: number) {

@@ -522,6 +522,44 @@ private saveProducts() {
 
     }   
 
+// ===============================
+// MY PLANNERS UTENTE
+// ===============================
+
+
+private readonly MY_PLANNERS_KEY = 'myPlanners';
+
+
+getMyPlanners(): any[] {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        this.MY_PLANNERS_KEY
+      );
+
+
+    if(saved){
+
+      return JSON.parse(saved);
+
+    }
+
+
+  } catch {
+
+    console.log(
+      'Errore caricamento my planners'
+    );
+
+  }
+
+
+  return [];
+
+}
+
 resetProducts(){
 
  localStorage.removeItem(

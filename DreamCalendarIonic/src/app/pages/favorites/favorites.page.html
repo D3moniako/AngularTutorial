@@ -1,0 +1,406 @@
+<ion-content fullscreen>
+
+<div class="favorites-page">
+
+
+<!-- HEADER -->
+
+<section class="favorites-header">
+
+<h1>
+❤️ I tuoi Planner preferiti
+</h1>
+
+<p>
+Gestisci i tuoi planner salvati,
+acquistati e ancora da scoprire.
+</p>
+
+
+<div class="favorite-counter">
+
+❤️
+
+<strong>
+{{favorites.length}}
+</strong>
+
+planner salvati
+
+</div>
+
+</section>
+
+
+
+<!-- MESSAGGIO -->
+
+<div 
+class="message"
+*ngIf="message">
+
+{{message}}
+
+</div>
+
+
+
+<!-- STRUMENTI -->
+
+<section class="tools">
+
+
+<ion-searchbar
+
+placeholder="Cerca nei preferiti..."
+
+[(ngModel)]="searchText">
+
+</ion-searchbar>
+
+
+
+<div class="categories">
+
+
+<ion-button
+
+fill="clear"
+
+*ngFor="let c of categories"
+
+(click)="selectCategory(c)"
+
+[class.active]="selectedCategory===c">
+
+{{c}}
+
+</ion-button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ACQUISTATI -->
+
+<section
+
+class="favorite-section"
+
+*ngIf="filteredPurchased.length">
+
+
+<h2>
+📦 I tuoi planner acquistati
+</h2>
+
+
+
+<div class="favorites-grid">
+
+
+
+<ion-card
+
+class="favorite-card purchased"
+
+*ngFor="let p of filteredPurchased">
+
+
+
+<div class="image-box">
+
+<ion-img
+
+[src]="p.image">
+
+</ion-img>
+
+
+<div class="owned-badge">
+
+✅ Possiedi già
+
+</div>
+
+
+</div>
+
+
+
+<ion-card-content>
+
+
+<span class="badge">
+
+{{p.category}}
+
+</span>
+
+
+<h2>
+{{p.name}}
+</h2>
+
+
+<p>
+{{p.description}}
+</p>
+
+
+
+<div class="price">
+
+{{p.price | currency:'EUR'}}
+
+</div>
+
+
+<div class="rating">
+
+⭐ ⭐ ⭐ ⭐ ⭐
+
+</div>
+
+
+
+<div class="card-actions">
+
+
+<ion-button
+
+fill="outline"
+
+[routerLink]="['/products',p.id]">
+
+👁 Apri
+
+</ion-button>
+
+
+
+<ion-button
+
+color="danger"
+
+(click)="remove(p)">
+
+💔
+
+</ion-button>
+
+
+</div>
+
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- DISPONIBILI -->
+
+
+<section
+
+class="favorite-section"
+
+*ngIf="filteredAvailable.length">
+
+
+<h2>
+
+🛒 Planner da acquistare
+
+</h2>
+
+
+
+<div class="favorites-grid">
+
+
+<ion-card
+
+class="favorite-card"
+
+*ngFor="let p of filteredAvailable">
+
+
+
+<div class="image-box">
+
+<ion-img
+
+[src]="p.image">
+
+</ion-img>
+
+
+</div>
+
+
+
+<ion-card-content>
+
+
+
+<span class="badge">
+
+{{p.category}}
+
+</span>
+
+
+
+<h2>
+
+{{p.name}}
+
+</h2>
+
+
+
+<p>
+
+{{p.description}}
+
+</p>
+
+
+
+<div class="price">
+
+{{p.price | currency:'EUR'}}
+
+</div>
+
+
+
+<div class="card-actions">
+
+
+<ion-button
+
+fill="outline"
+
+[routerLink]="['/products',p.id]">
+
+Dettagli
+
+</ion-button>
+
+
+
+<ion-button
+
+(click)="addCart(p)">
+
+🛒
+
+</ion-button>
+
+
+
+<ion-button
+
+color="danger"
+
+fill="clear"
+
+(click)="remove(p)">
+
+❤️
+
+</ion-button>
+
+
+</div>
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- VUOTO -->
+
+
+<section
+
+class="empty"
+
+*ngIf="favorites.length===0">
+
+
+<div>
+
+🌸
+
+</div>
+
+
+<h2>
+
+Nessun preferito
+
+</h2>
+
+
+<p>
+
+Salva i planner che ami
+
+</p>
+
+
+
+<ion-button
+
+routerLink="/products">
+
+Vai allo Shop
+
+</ion-button>
+
+
+
+</section>
+
+
+
+</div>
+
+
+</ion-content>

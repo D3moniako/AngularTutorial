@@ -1,308 +1,397 @@
+<ion-header translucent="true">
+  <ion-toolbar>
+
+    <ion-title>
+      📦 I miei ordini
+    </ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+
 <div class="orders-page">
-  <!-- ============================= -->
-  <!-- HEADER PAGINA -->
-  <!-- ============================= -->
+
+  <!-- HERO -->
 
   <section class="orders-hero">
-    <div class="hero-content">
-      <div class="hero-icon">📦</div>
 
-      <div>
-        <h1>I miei ordini</h1>
-
-        <p>
-          Tieni sotto controllo acquisti, pagamenti e download dei tuoi planner
-          digitali.
-        </p>
-      </div>
+    <div class="hero-icon">
+      📦
     </div>
+
+    <h1>I miei ordini</h1>
+
+    <p>
+      Tieni sotto controllo acquisti, pagamenti e download
+      dei tuoi planner DreamCalendar.
+    </p>
+
   </section>
 
-  <!-- ============================= -->
+
   <!-- STATISTICHE -->
-  <!-- ============================= -->
 
-  <section class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-icon">🛒</div>
+  <div class="stats-grid">
 
-      <div>
-        <h2>
-          {{ orders.length }}
-        </h2>
+    <ion-card class="stat-card">
 
-        <span> Ordini totali </span>
-      </div>
-    </div>
+      <ion-card-content>
 
-    <div class="stat-card">
-      <div class="stat-icon">💳</div>
+        <div class="stat-icon">🛒</div>
 
-      <div>
-        <h2>
-          {{ totalSpent | currency: "EUR" }}
-        </h2>
+        <h2>{{orders.length}}</h2>
 
-        <span> Totale speso </span>
-      </div>
-    </div>
+        <p>Ordini totali</p>
 
-    <div class="stat-card">
-      <div class="stat-icon">⭐</div>
+      </ion-card-content>
 
-      <div>
-        <h2>
-          {{ downloadCount }}
-        </h2>
+    </ion-card>
 
-        <span> Planner acquistati </span>
-      </div>
-    </div>
 
-    <div class="stat-card">
-      <div class="stat-icon">📥</div>
+    <ion-card class="stat-card">
 
-      <div>
-        <h2>
-          {{ availableDownloads }}
-        </h2>
+      <ion-card-content>
 
-        <span> Download disponibili </span>
-      </div>
-    </div>
-  </section>
+        <div class="stat-icon">💳</div>
 
-  <!-- ============================= -->
-  <!-- FILTRI -->
-  <!-- ============================= -->
+        <h2>{{totalSpent | currency:'EUR'}}</h2>
 
-  <!-- ============================= -->
-  <!-- FILTRI -->
-  <!-- ============================= -->
+        <p>Totale speso</p>
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <ion-card class="stat-card">
+
+      <ion-card-content>
+
+        <div class="stat-icon">⭐</div>
+
+        <h2>{{downloadCount}}</h2>
+
+        <p>Planner acquistati</p>
+
+      </ion-card-content>
+
+    </ion-card>
+
+
+    <ion-card class="stat-card">
+
+      <ion-card-content>
+
+        <div class="stat-icon">📥</div>
+
+        <h2>{{availableDownloads}}</h2>
+
+        <p>Download disponibili</p>
+
+      </ion-card-content>
+
+    </ion-card>
+
+  </div>
+
+
+
+  <!-- RICERCA -->
 
   <section class="filters">
-    <div class="search-box">
-      <input
-        type="text"
-        placeholder="Cerca ordine..."
-        [(ngModel)]="searchText"
-        (input)="applyFilters()"
-      />
-    </div>
+
+    <ion-searchbar
+
+      placeholder="Cerca ordine..."
+
+      [(ngModel)]="searchText"
+
+      (ionInput)="applyFilters()">
+
+    </ion-searchbar>
+
 
     <div class="filter-buttons">
-      <button
-        [class.active]="filter === 'ALL'"
-        (click)="filter = 'ALL'; applyFilters()"
-      >
+
+      <ion-button
+
+        fill="clear"
+
+        [class.active]="filter==='ALL'"
+
+        (click)="filter='ALL';applyFilters()">
+
         Tutti
-      </button>
 
-      <button
-        [class.active]="filter === 'PAGATO'"
-        (click)="filter = 'PAGATO'; applyFilters()"
-      >
+      </ion-button>
+
+
+      <ion-button
+
+        fill="clear"
+
+        [class.active]="filter==='PAGATO'"
+
+        (click)="filter='PAGATO';applyFilters()">
+
         Pagati
-      </button>
 
-      <button
-        [class.active]="filter === 'IN_ATTESA'"
-        (click)="filter = 'IN_ATTESA'; applyFilters()"
-      >
+      </ion-button>
+
+
+      <ion-button
+
+        fill="clear"
+
+        [class.active]="filter==='IN_ATTESA'"
+
+        (click)="filter='IN_ATTESA';applyFilters()">
+
         Attesa
-      </button>
 
-      <button
-        [class.active]="filter === 'ANNULLATO'"
-        (click)="filter = 'ANNULLATO'; applyFilters()"
-      >
+      </ion-button>
+
+
+      <ion-button
+
+        fill="clear"
+
+        [class.active]="filter==='ANNULLATO'"
+
+        (click)="filter='ANNULLATO';applyFilters()">
+
         Annullati
-      </button>
+
+      </ion-button>
+
     </div>
+
   </section>
 
-  <!-- ============================= -->
+
+
   <!-- NESSUN ORDINE -->
-  <!-- ============================= -->
 
-  <section class="empty" *ngIf="filteredOrders.length === 0">
-    <div>📭</div>
+  <section
 
-    <h2>Nessun ordine trovato</h2>
+    class="empty"
 
-    <p>Quando acquisterai un planner comparirà qui.</p>
+    *ngIf="filteredOrders.length===0">
 
-    <a routerLink="/shop"> Scopri i planner </a>
+    <ion-icon
+      name="cube-outline"
+      size="large">
+    </ion-icon>
+
+    <h2>
+      Nessun ordine trovato
+    </h2>
+
+    <p>
+      Quando acquisterai un planner comparirà qui.
+    </p>
+
   </section>
 
-  <!-- ============================= -->
-  <!-- TIMELINE ORDINI -->
-  <!-- ============================= -->
 
-  <section class="timeline" *ngIf="filteredOrders.length > 0">
-    <div
-      class="order-line"
-      *ngFor="let order of filteredOrders; let i = index"
-      [style.animationDelay]="i * 150 + 'ms'"
-    >
-      <div class="timeline-point">
-        <span>
-          {{ i + 1 }}
-        </span>
-      </div>
 
-      <div class="order-card">
-        <header>
-          <div>
-            <h2>Ordine #{{ order.id }}</h2>
+  <!-- LISTA ORDINI -->
 
-            <p>
-              {{ order.purchaseDate | date: "dd/MM/yyyy HH:mm" }}
-            </p>
-          </div>
+  <section
 
-          <div
-            class="status"
-            [class.paid]="order.status === 'PAGATO'"
-            [class.wait]="order.status === 'IN_ATTESA'"
-            [class.cancel]="order.status === 'ANNULLATO'"
-          >
-            <span *ngIf="order.status === 'PAGATO'"> ✔ Pagato </span>
+    class="timeline"
 
-            <span *ngIf="order.status === 'IN_ATTESA'"> ⏳ In attesa </span>
+    *ngIf="filteredOrders.length>0">
 
-            <span *ngIf="order.status === 'ANNULLATO'"> ✖ Annullato </span>
-          </div>
-        </header>
+    <ion-card
 
-        <div class="payment-progress">
-          <div class="step active">
-            <div>🛒</div>
+      class="order-card"
 
-            <span>Creato</span>
-          </div>
+      *ngFor="let order of filteredOrders">
 
-          <div class="line" [class.active]="order.status === 'PAGATO'"></div>
+      <ion-card-header>
 
-          <div class="step" [class.active]="order.status === 'PAGATO'">
-            <div>💳</div>
+        <ion-card-title>
 
-            <span>Pagamento</span>
-          </div>
+          Ordine #{{order.id}}
 
-          <div class="line" [class.active]="order.status === 'PAGATO'"></div>
+        </ion-card-title>
 
-          <div class="step" [class.active]="order.downloadAvailable">
-            <div>📥</div>
+        <ion-card-subtitle>
 
-            <span>Download</span>
-          </div>
-        </div>
+          {{order.purchaseDate | date:'dd/MM/yyyy HH:mm'}}
 
-        <div class="order-info">
-          <div>
-            <label> Cliente </label>
+        </ion-card-subtitle>
 
-            <strong>
-              {{ order.customerName }}
-            </strong>
-          </div>
+      </ion-card-header>
 
-          <div>
-            <label> Email </label>
 
-            <strong>
-              {{ order.customerEmail }}
-            </strong>
-          </div>
+      <ion-card-content>
 
-          <div>
-            <label> Totale </label>
+        <ion-chip color="primary">
 
-            <strong class="price">
-              {{ order.total | currency: "EUR" }}
-            </strong>
-          </div>
-        </div>
+          <ion-label>
 
-        <div class="products">
-          <h3>Planner acquistati</h3>
+            {{order.status}}
 
-          <div class="product-item" *ngFor="let product of order.products">
-            <img [src]="product.image" [alt]="product.name" />
+          </ion-label>
 
-            <div>
-              <h4>
-                {{ product.name }}
-              </h4>
+        </ion-chip>
+
+
+        <h3>
+
+          Planner acquistati
+
+        </h3>
+
+
+        <ion-list lines="none">
+
+          <ion-item
+
+            *ngFor="let product of order.products">
+
+            <ion-thumbnail slot="start">
+
+              <img [src]="product.image">
+
+            </ion-thumbnail>
+
+            <ion-label>
+
+              <h2>
+
+                {{product.name}}
+
+              </h2>
 
               <p>
-                {{ product.description }}
-              </p>
-            </div>
 
-            <a [routerLink]="['/products', product.id]"> Dettagli </a>
-          </div>
+                {{product.description}}
+
+              </p>
+
+            </ion-label>
+
+          </ion-item>
+
+        </ion-list>
+
+
+        <div class="actions">
+
+          <ion-button
+
+            *ngIf="order.downloadAvailable"
+
+            expand="block"
+
+            (click)="downloadOrder(order)">
+
+            ⬇ Scarica Planner
+
+          </ion-button>
+
+
+          <ion-button
+
+            fill="outline"
+
+            expand="block"
+
+            (click)="openDetails(order)">
+
+            👁 Dettagli
+
+          </ion-button>
+
         </div>
 
-        <footer>
-          <button
-            class="download"
-            *ngIf="order.downloadAvailable"
-            (click)="downloadOrder(order)"
-          >
-            ⬇ Scarica planner
-          </button>
+      </ion-card-content>
 
-          <button class="details" (click)="openDetails(order)">
-            👁 Dettagli
-          </button>
-        </footer>
-      </div>
-    </div>
+    </ion-card>
+
   </section>
 
-  <!-- ============================= -->
-  <!-- MODALE DETTAGLI -->
-  <!-- ============================= -->
-
-  <div class="modal" *ngIf="selectedOrder">
-    <div class="modal-box">
-      <button class="close" (click)="closeDetails()">×</button>
-
-      <h2>Dettaglio ordine #{{ selectedOrder.id }}</h2>
-
-      <div class="modal-row">
-        <span> Data </span>
-
-        <strong>
-          {{ selectedOrder.purchaseDate | date }}
-        </strong>
-      </div>
-
-      <div class="modal-row">
-        <span> Pagamento </span>
-
-        <strong>
-          {{ selectedOrder.status }}
-        </strong>
-      </div>
-
-      <div class="modal-row">
-        <span> Importo </span>
-
-        <strong>
-          {{ selectedOrder.total | currency: "EUR" }}
-        </strong>
-      </div>
-
-      <h3>Prodotti</h3>
-
-      <ul>
-        <li *ngFor="let p of selectedOrder.products">
-          {{ p.name }}
-        </li>
-      </ul>
-    </div>
-  </div>
 </div>
+
+
+
+<!-- MODALE -->
+
+<ion-modal
+
+  [isOpen]="selectedOrder!=null"
+
+  (didDismiss)="closeDetails()">
+
+  <ng-template>
+
+    <ion-header>
+
+      <ion-toolbar>
+
+        <ion-title>
+
+          Dettaglio ordine
+
+        </ion-title>
+
+        <ion-buttons slot="end">
+
+          <ion-button (click)="closeDetails()">
+
+            Chiudi
+
+          </ion-button>
+
+        </ion-buttons>
+
+      </ion-toolbar>
+
+    </ion-header>
+
+
+    <ion-content class="ion-padding">
+
+      <ng-container *ngIf="selectedOrder">
+
+        <h2>
+
+          Ordine #{{selectedOrder.id}}
+
+        </h2>
+
+        <p>
+
+          Stato:
+          <strong>
+
+            {{selectedOrder.status}}
+
+          </strong>
+
+        </p>
+
+        <p>
+
+          Totale:
+          <strong>
+
+            {{selectedOrder.total | currency:'EUR'}}
+
+          </strong>
+
+        </p>
+
+      </ng-container>
+
+    </ion-content>
+
+  </ng-template>
+
+</ion-modal>
+
+</ion-content>

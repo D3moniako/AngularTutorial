@@ -44,6 +44,7 @@ export class ProductCardComponent {
 
 
 
+
   // eventi
 
   @Output() addCart = new EventEmitter<Product>();

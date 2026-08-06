@@ -1,151 +1,593 @@
-<div class="page">
-  <header>
-    <div class="logo">🌸 DreamCalendar</div>
+<ion-header>
 
-    <nav>
-      <a routerLink="/"> 🏠 Home </a>
+  <ion-toolbar>
 
-      <a routerLink="/shop"> 🛒 Shop </a>
-    </nav>
-  </header>
+    <ion-title>
+      🌸 DreamCalendar
+    </ion-title>
 
-  <section class="hero">
-    <h1>📚 I miei Planner Digitali</h1>
+  </ion-toolbar>
 
-    <p>
-      I tuoi acquisti sempre disponibili. Scarica, aggiorna e utilizza i tuoi
-      planner ovunque.
-    </p>
+</ion-header>
 
-    <div class="stats">
-      <div class="stat-card">
-        <span>📚</span>
 
-        <h2>
-          {{ planners.length }}
-        </h2>
 
-        <p>Planner acquistati</p>
-      </div>
 
-      <div class="stat-card">
-        <span>⬇️</span>
 
-        <h2>
-          {{ totalDownloads }}
-        </h2>
+<ion-content class="my-planners-page" fullscreen>
 
-        <p>Download effettuati</p>
-      </div>
 
-      <div class="stat-card">
-        <span>📅</span>
 
-        <h2>
-          {{ currentYear }}
-        </h2>
+<!-- HERO -->
 
-        <p>Anno licenza</p>
-      </div>
-    </div>
-  </section>
+<section class="hero">
 
-  <section class="tools">
-    <input
-      type="text"
-      placeholder="🔍 Cerca nei tuoi planner..."
-      [(ngModel)]="searchText"
-    />
 
-    <div class="categories">
-      <button
-        *ngFor="let c of categories"
-        (click)="selectCategory(c)"
-        [class.active]="selectedCategory === c"
-      >
-        {{ c }}
-      </button>
-    </div>
-  </section>
-
-  <div class="message" *ngIf="downloadMessage">
-    {{ downloadMessage }}
-  </div>
-
-  <section class="planner-grid">
-    <app-product-card
-      *ngFor="let p of filteredPlanners"
-      [product]="p.product"
-      mode="owned"
-      [showFavorite]="true"
-      [showCart]="false"
-      [showDescription]="false"
-      [purchaseDate]="p.purchaseDate"
-      [version]="p.version"
-      [size]="p.size"
-      [downloads]="p.downloads"
-      (favorite)="toggleFavorite($event)"
-      (download)="download(p)"
-      (preview)="preview(p)"
-      (openProduct)="openProduct($event)"
-    >
-    </app-product-card>
-  </section>
-
-  <!-- ========================= -->
-  <!-- ANTEPRIMA PDF -->
-  <!-- ========================= -->
-
-  <div class="preview-modal" *ngIf="plannerSelected">
-    <div class="modal">
-      <button class="close" (click)="closePreview()">✕</button>
-
-      <img [src]="plannerSelected.product.image" class="preview-image" />
-
-      <h2>
-        {{ plannerSelected.product.name }}
-      </h2>
-
-      <p>Anteprima del tuo planner digitale premium.</p>
-
-      <div class="preview-actions">
-        <button (click)="download(plannerSelected)">⬇ Scarica PDF</button>
-
-        <a target="_blank" [href]="plannerSelected.pdfPreview"> 📄 Apri PDF </a>
-      </div>
-    </div>
-  </div>
-
-  <section class="security">
-    <h2>🔐 Licenza digitale</h2>
-
-    <p>
-      Questo planner è associato al tuo account. Puoi scaricarlo ogni volta che
-      vuoi.
-    </p>
-
-    <div>
-      ✔ Acquisto verificato
-
-      <br />
-
-      ✔ Download illimitati
-
-      <br />
-
-      ✔ Aggiornamenti futuri inclusi
-    </div>
-  </section>
-
-  <section class="help">
-    <h2>Hai bisogno di aiuto?</h2>
-
-    <p>
-      Problemi con download, file o acquisti? Il nostro supporto è disponibile.
-    </p>
-
-    <a routerLink="/contact"> 💌 Contattaci </a>
-  </section>
-
-  <footer>🌸 DreamCalendar</footer>
+<div class="hero-icon">
+📚
 </div>
+
+
+<h1>
+I miei Planner Digitali
+</h1>
+
+
+<p>
+I tuoi acquisti sempre disponibili.
+Scarica, aggiorna e utilizza i tuoi planner ovunque.
+</p>
+
+
+
+
+
+<div class="stats">
+
+
+
+<ion-card>
+
+<ion-card-content>
+
+<span>
+📚
+</span>
+
+
+<h2>
+{{planners.length}}
+</h2>
+
+
+<p>
+Planner acquistati
+</p>
+
+
+</ion-card-content>
+
+</ion-card>
+
+
+
+
+
+
+<ion-card>
+
+<ion-card-content>
+
+<span>
+⬇️
+</span>
+
+
+<h2>
+{{totalDownloads}}
+</h2>
+
+
+<p>
+Download effettuati
+</p>
+
+
+</ion-card-content>
+
+</ion-card>
+
+
+
+
+
+
+
+
+<ion-card>
+
+<ion-card-content>
+
+<span>
+📅
+</span>
+
+
+<h2>
+{{currentYear}}
+</h2>
+
+
+<p>
+Anno licenza
+</p>
+
+
+</ion-card-content>
+
+</ion-card>
+
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- STRUMENTI -->
+
+
+<section class="tools">
+
+
+<ion-searchbar
+
+placeholder="🔍 Cerca nei tuoi planner..."
+
+[(ngModel)]="searchText"
+>
+
+</ion-searchbar>
+
+
+
+
+
+
+<div class="categories">
+
+
+<ion-button
+
+fill="clear"
+
+*ngFor="let c of categories"
+
+(click)="selectCategory(c)"
+
+[class.active]="selectedCategory===c">
+
+{{c}}
+
+</ion-button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- MESSAGGIO DOWNLOAD -->
+
+
+<ion-card
+
+class="message"
+
+*ngIf="downloadMessage">
+
+
+<ion-card-content>
+
+{{downloadMessage}}
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+
+
+
+
+
+
+
+<!-- PLANNER GRID -->
+
+
+<section class="planner-grid">
+
+
+
+<app-product-card
+
+
+*ngFor="let p of filteredPlanners"
+
+
+
+[product]="p.product"
+
+
+
+mode="owned"
+
+
+
+[showFavorite]="true"
+
+
+
+[showCart]="false"
+
+
+
+[showDescription]="false"
+
+
+
+[purchaseDate]="p.purchaseDate"
+
+
+
+[version]="p.version"
+
+
+
+[size]="p.size"
+
+
+
+[downloads]="p.downloads"
+
+
+
+(favorite)="toggleFavorite($event)"
+
+
+
+(download)="download(p)"
+
+
+
+(preview)="preview(p)"
+
+
+
+(openProduct)="openProduct($event)"
+
+
+>
+
+</app-product-card>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- ANTEPRIMA PDF -->
+
+
+<ion-modal
+
+[isOpen]="plannerSelected !== null"
+
+(didDismiss)="closePreview()">
+
+
+
+<ng-template>
+
+
+<ion-header>
+
+<ion-toolbar>
+
+
+<ion-title>
+
+Anteprima Planner
+
+</ion-title>
+
+
+
+<ion-buttons slot="end">
+
+
+<ion-button
+
+(click)="closePreview()">
+
+Chiudi
+
+</ion-button>
+
+
+</ion-buttons>
+
+
+</ion-toolbar>
+
+</ion-header>
+
+
+
+
+
+
+<ion-content class="ion-padding">
+
+
+
+<div
+
+*ngIf="plannerSelected"
+
+class="preview-content">
+
+
+
+
+
+
+<img
+
+[src]="plannerSelected.product.image"
+
+class="preview-image">
+
+
+
+
+
+
+
+<h2>
+
+{{plannerSelected.product.name}}
+
+</h2>
+
+
+
+
+
+
+<p>
+
+Anteprima del tuo planner digitale premium.
+
+</p>
+
+
+
+
+
+
+
+
+<div class="preview-actions">
+
+
+
+<ion-button
+
+expand="block"
+
+(click)="download(plannerSelected!)">
+
+
+⬇ Scarica PDF
+
+
+</ion-button>
+
+
+
+
+
+
+
+<ion-button
+
+expand="block"
+
+fill="outline"
+
+(click)="openPdf(plannerSelected!)">
+
+
+📄 Apri PDF
+
+
+</ion-button>
+
+
+
+</div>
+
+
+
+
+
+
+</div>
+
+
+</ion-content>
+
+
+
+</ng-template>
+
+
+</ion-modal>
+
+
+
+
+
+
+
+
+
+<!-- SICUREZZA -->
+
+
+<section class="security">
+
+
+<h2>
+
+🔐 Licenza digitale
+
+</h2>
+
+
+
+
+<p>
+
+Questo planner è associato al tuo account.
+Puoi scaricarlo ogni volta che vuoi.
+
+</p>
+
+
+
+
+
+<div>
+
+
+✔ Acquisto verificato
+
+
+<br>
+
+
+✔ Download illimitati
+
+
+<br>
+
+
+✔ Aggiornamenti futuri inclusi
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<!-- SUPPORTO -->
+
+
+<section class="help">
+
+
+<h2>
+
+Hai bisogno di aiuto?
+
+</h2>
+
+
+
+
+<p>
+
+Problemi con download, file o acquisti?
+Il nostro supporto è disponibile.
+
+</p>
+
+
+
+
+
+
+<ion-button
+
+routerLink="/contact"
+
+fill="clear">
+
+
+💌 Contattaci
+
+
+</ion-button>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<footer>
+
+
+🌸 DreamCalendar
+
+
+</footer>
+
+
+
+
+
+</ion-content>

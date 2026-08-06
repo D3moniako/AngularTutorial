@@ -1,178 +1,489 @@
-<div class="checkout-page">
-  <!-- ============================= -->
-  <!-- HEADER -->
-  <!-- ============================= -->
+<ion-content class="checkout-page">
 
-  <section class="checkout-header">
-    <h1>🛒 Checkout</h1>
 
-    <p>Acquista i tuoi planner digitali e inizia subito a organizzarti 🌸</p>
-  </section>
+<!-- HEADER -->
 
-  <!-- ============================= -->
-  <!-- MESSAGGIO ERRORE GENERALE -->
-  <!-- ============================= -->
+<section class="checkout-header">
 
-  <p class="error" *ngIf="errorMessage">❌ {{ errorMessage }}</p>
+<h1>
+🛒 Checkout
+</h1>
 
-  <!-- ============================= -->
-  <!-- ORDINE COMPLETATO -->
-  <!-- ============================= -->
+<p>
+Acquista i tuoi planner digitali e inizia subito a organizzarti 🌸
+</p>
 
-  <section class="success" *ngIf="orderCompleted">
-    <div class="success-icon">🎉</div>
+</section>
 
-    <h2>Ordine completato!</h2>
 
-    <p>
-      Pagamento ricevuto correttamente. 🎉 Stiamo preparando i tuoi planner
-      digitali. Li troverai nella sezione "I miei Planner".
-    </p>
 
-    <div class="order-number">
-      Numero ordine:
 
-      <strong> #{{ lastOrderId }} </strong>
-    </div>
+<!-- ERRORE -->
 
-    <div class="success-buttons">
-      <a routerLink="/my-planners"> 📚 Vai ai miei Planner </a>
+<ion-card
+class="error-card"
+*ngIf="errorMessage">
 
-      <a routerLink="/shop"> 🛍 Continua gli acquisti </a>
-    </div>
-  </section>
+<ion-card-content>
 
-  <!-- ============================= -->
-  <!-- CHECKOUT -->
-  <!-- ============================= -->
+❌ {{errorMessage}}
 
-  <section class="checkout-content" *ngIf="!orderCompleted">
-    <!-- ============================= -->
-    <!-- CARRELLO VUOTO -->
-    <!-- ============================= -->
+</ion-card-content>
 
-    <div class="empty-cart" *ngIf="cart.length === 0">
-      <h2>🛒 Carrello vuoto</h2>
+</ion-card>
 
-      <p>Non hai prodotti da acquistare.</p>
 
-      <a routerLink="/shop"> Vai allo Shop 🌸 </a>
-    </div>
 
-    <!-- ============================= -->
-    <!-- CONTENUTO ORDINE -->
-    <!-- ============================= -->
 
-    <div class="products" *ngIf="cart.length > 0">
-      <h2>📦 Riepilogo ordine</h2>
 
-      <div class="order-info">
-        <p>
-          Prodotti:
 
-          <strong>
-            {{ totalItems }}
-          </strong>
-        </p>
 
-        <p>
-          Totale:
+<!-- ORDINE COMPLETATO -->
 
-          <strong>
-            {{ total | currency: "EUR" }}
-          </strong>
-        </p>
-      </div>
+<ion-card
+class="success-card"
+*ngIf="orderCompleted">
 
-      <div class="checkout-item" *ngFor="let item of cart">
-        <div class="image">
-          <img
-            [src]="item.product.image"
-            [alt]="item.product.name"
-            loading="lazy"
-          />
-        </div>
 
-        <div class="details">
-          <h3>
-            {{ item.product.name }}
-          </h3>
+<ion-card-content>
 
-          <p>
-            Quantità:
 
-            {{ item.quantity }}
-          </p>
-
-          <p>
-            {{ item.product.description }}
-          </p>
-        </div>
-
-        <div class="price">
-          <strong>
-            {{ item.subtotal | currency: "EUR" }}
-          </strong>
-        </div>
-      </div>
-
-      <div class="total-box">
-        <h2>Totale ordine</h2>
-
-        <div class="total">
-          {{ total | currency: "EUR" }}
-        </div>
-      </div>
-    </div>
-
-    <!-- ============================= -->
-    <!-- DATI CLIENTE -->
-    <!-- ============================= -->
-
-    <div class="form" *ngIf="cart.length > 0">
-      <h2>👤 Dati cliente</h2>
-
-      <label> Nome completo </label>
-
-      <input
-        type="text"
-        placeholder="Inserisci nome"
-        [(ngModel)]="customer.name"
-        (input)="nameError = ''"
-        [class.input-error]="nameError"
-      />
-
-      <div class="field-error" *ngIf="nameError">⚠ {{ nameError }}</div>
-
-      <label> Email </label>
-
-      <input
-        type="email"
-        placeholder="Inserisci email"
-        [(ngModel)]="customer.email"
-        (input)="emailError = ''"
-        [class.input-error]="emailError"
-      />
-
-      <div class="field-error" *ngIf="emailError">⚠ {{ emailError }}</div>
-
-      <label> Indirizzo fatturazione </label>
-
-      <input
-        type="text"
-        placeholder="Inserisci indirizzo"
-        [(ngModel)]="customer.address"
-        (input)="addressError = ''"
-        [class.input-error]="addressError"
-      />
-
-      <div class="field-error" *ngIf="addressError">⚠ {{ addressError }}</div>
-
-      <button type="button" (click)="completeOrder()" [disabled]="loading">
-        <span *ngIf="!loading"> 💳 Conferma acquisto </span>
-
-        <span *ngIf="loading"> ⏳ Connessione pagamento... </span>
-      </button>
-    </div>
-  </section>
+<div class="success-icon">
+🎉
 </div>
+
+
+<h2>
+Ordine completato!
+</h2>
+
+
+<p>
+Pagamento ricevuto correttamente.
+I tuoi planner saranno disponibili nella sezione "I miei Planner".
+</p>
+
+
+
+<div class="order-number">
+
+Numero ordine:
+
+<strong>
+#{{lastOrderId}}
+</strong>
+
+
+</div>
+
+
+
+
+<ion-button
+expand="block"
+routerLink="/my-planners">
+
+📚 Vai ai miei Planner
+
+</ion-button>
+
+
+
+<ion-button
+expand="block"
+fill="outline"
+routerLink="/shop">
+
+🛍 Continua acquisti
+
+</ion-button>
+
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+
+
+
+
+
+<!-- CHECKOUT -->
+
+<div
+class="checkout-container"
+*ngIf="!orderCompleted">
+
+
+
+
+
+
+<!-- CARRELLO VUOTO -->
+
+
+<ion-card
+class="empty-cart"
+*ngIf="cart.length===0">
+
+
+<ion-card-content>
+
+
+<h2>
+🛒 Carrello vuoto
+</h2>
+
+
+<p>
+Non hai prodotti da acquistare.
+</p>
+
+
+
+<ion-button
+routerLink="/shop">
+
+Vai allo Shop 🌸
+
+</ion-button>
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+
+
+
+
+
+
+<!-- PRODOTTI -->
+
+
+
+<ion-card
+class="products-card"
+*ngIf="cart.length>0">
+
+
+<ion-card-header>
+
+<ion-card-title>
+📦 Riepilogo ordine
+</ion-card-title>
+
+
+</ion-card-header>
+
+
+
+<ion-card-content>
+
+
+
+<div class="order-info">
+
+<p>
+Prodotti:
+<strong>
+{{totalItems}}
+</strong>
+</p>
+
+
+<p>
+Totale:
+<strong>
+{{total | currency:'EUR'}}
+</strong>
+</p>
+
+</div>
+
+
+
+
+
+<ion-list lines="none">
+
+
+<ion-item
+*ngFor="let item of cart">
+
+
+<ion-thumbnail slot="start">
+
+<img
+[src]="item.product.image">
+
+</ion-thumbnail>
+
+
+
+<ion-label>
+
+
+<h2>
+{{item.product.name}}
+</h2>
+
+
+<p>
+Quantità:
+{{item.quantity}}
+</p>
+
+
+<p>
+{{item.product.description}}
+</p>
+
+
+
+</ion-label>
+
+
+
+<strong class="price">
+
+{{item.subtotal | currency:'EUR'}}
+
+</strong>
+
+
+
+</ion-item>
+
+
+
+</ion-list>
+
+
+
+
+
+<div class="total-box">
+
+<h2>
+Totale ordine
+</h2>
+
+
+<div class="total">
+
+{{total | currency:'EUR'}}
+
+</div>
+
+
+</div>
+
+
+
+</ion-card-content>
+
+</ion-card>
+
+
+
+
+
+
+
+
+
+<!-- DATI CLIENTE -->
+
+
+
+<ion-card
+class="form-card"
+*ngIf="cart.length>0">
+
+
+
+<ion-card-header>
+
+<ion-card-title>
+👤 Dati cliente
+</ion-card-title>
+
+</ion-card-header>
+
+
+
+
+<ion-card-content>
+
+
+
+
+<ion-item
+class="input-item">
+
+<ion-label position="stacked">
+
+Nome completo
+
+</ion-label>
+
+
+<ion-input
+
+placeholder="Inserisci nome"
+
+[(ngModel)]="customer.name"
+
+>
+
+</ion-input>
+
+
+</ion-item>
+
+
+<div
+class="field-error"
+*ngIf="nameError">
+
+⚠ {{nameError}}
+
+</div>
+
+
+
+
+
+
+
+
+<ion-item
+class="input-item">
+
+<ion-label position="stacked">
+
+Email
+
+</ion-label>
+
+
+<ion-input
+
+type="email"
+
+placeholder="Inserisci email"
+
+[(ngModel)]="customer.email">
+
+</ion-input>
+
+
+</ion-item>
+
+
+<div
+class="field-error"
+*ngIf="emailError">
+
+⚠ {{emailError}}
+
+</div>
+
+
+
+
+
+
+
+<ion-item
+class="input-item">
+
+
+<ion-label position="stacked">
+
+Indirizzo fatturazione
+
+</ion-label>
+
+
+<ion-input
+
+placeholder="Inserisci indirizzo"
+
+[(ngModel)]="customer.address">
+
+</ion-input>
+
+
+</ion-item>
+
+
+
+
+<div
+class="field-error"
+*ngIf="addressError">
+
+⚠ {{addressError}}
+
+</div>
+
+
+
+
+
+
+
+<ion-button
+
+expand="block"
+
+class="pay-button"
+
+(click)="completeOrder()"
+
+[disabled]="loading">
+
+
+<span *ngIf="!loading">
+
+💳 Conferma acquisto
+
+</span>
+
+
+
+<span *ngIf="loading">
+
+⏳ Connessione pagamento...
+
+</span>
+
+
+</ion-button>
+
+
+
+
+
+</ion-card-content>
+
+
+</ion-card>
+
+
+
+
+
+</div>
+
+
+
+</ion-content>

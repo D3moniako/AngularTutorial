@@ -114,14 +114,14 @@ const routes: Routes = [
   // =========================
   // I MIEI PLANNER
   // =========================
-/*
+
   {
     path:'my-planners',
     loadChildren: () =>
       import('./pages/my-planners/my-planners.module')
       .then(m => m.MyPlannersPageModule)
   },
-*/
+
 
 
 
@@ -130,14 +130,14 @@ const routes: Routes = [
   // =========================
   // I MIEI ORDINI
   // =========================
-/*
+
   {
     path:'my-orders',
     loadChildren: () =>
       import('./pages/my-orders/my-orders.module')
       .then(m => m.MyOrdersPageModule)
   },
-*/
+
 
 
 
@@ -157,21 +157,26 @@ const routes: Routes = [
 
 
 
+  {
+    path: 'favorites',
+    loadChildren: () => import('./pages/favorites/favorites.module').then( m => m.FavoritesPageModule)
+  }
 
+,
 
 
 
   // =========================
   // CHECKOUT
   // =========================
-/*
+
   {
     path:'checkout',
     loadChildren: () =>
       import('./pages/checkout/checkout.module')
       .then(m => m.CheckoutPageModule)
   },
-*/
+
 
 
 
@@ -181,14 +186,14 @@ const routes: Routes = [
   // =========================
   // PAGAMENTO RIUSCITO
   // =========================
-/*
+
   {
     path:'payment-success',
     loadChildren: () =>
       import('./pages/payment-success/payment-success.module')
       .then(m => m.PaymentSuccessPageModule)
   },
-*/
+
 
 
 
@@ -298,8 +303,7 @@ const routes: Routes = [
   {
     path:'**',
     redirectTo:''
-  }
-
+  },
 
 ];
 

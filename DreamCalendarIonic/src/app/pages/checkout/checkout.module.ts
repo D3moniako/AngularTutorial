@@ -8,13 +8,28 @@ import { CheckoutPageRoutingModule } from './checkout-routing.module';
 
 import { CheckoutPage } from './checkout.page';
 
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    CheckoutPageRoutingModule
-  ],
-  declarations: [CheckoutPage]
+
+imports: [
+
+CommonModule,
+
+FormsModule,
+
+IonicModule,
+
+CheckoutPageRoutingModule
+
+],
+
+
+declarations: [
+
+CheckoutPage
+
+]
+
 })
+
 export class CheckoutPageModule {}

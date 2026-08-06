@@ -1,41 +1,29 @@
 ion-content.product-page {
 
-  --background: #fffaf7;
+  --background:#fffaf7;
 
 }
 
 
+/* =========================
+ CONTENITORE
+========================= */
 
-/* ==========================
-   CARD GENERALI
-========================== */
 
+.product-container {
 
-ion-card {
+  width:100%;
 
-  border-radius: 40px;
+  max-width:1400px;
 
-  background: white;
+  margin:auto;
 
-  box-shadow:
-  0 15px 40px rgba(180,130,160,.18);
-
-  margin: 25px auto;
+  padding:20px;
 
 }
-
-
-
-/* ==========================
-   PRODOTTO PRINCIPALE
-========================== */
 
 
 .product-main {
-
-  max-width:1200px;
-
-  margin:auto;
 
   align-items:center;
 
@@ -43,33 +31,52 @@ ion-card {
 
 
 
+/* =========================
+ CARD
+========================= */
 
-/* ==========================
-   IMMAGINE
-========================== */
+
+.gallery,
+.info,
+.reviews,
+.details-box,
+.related,
+.not-found {
+
+  border-radius:35px;
+
+  background:white;
+
+  box-shadow:
+  0 15px 40px rgba(180,130,160,.16);
+
+  overflow:hidden;
+
+}
+
+
+
+/* =========================
+ GALLERY
+========================= */
 
 
 .gallery {
 
-  padding:35px;
+ padding:30px;
 
 }
-
 
 
 .gallery img {
 
+ width:100%;
 
-  width:100%;
+ height:520px;
 
-  max-height:600px;
+ object-fit:contain;
 
-  object-fit:contain;
-
-  border-radius:35px;
-
-  display:block;
-
+ border-radius:30px;
 
 }
 
@@ -77,65 +84,55 @@ ion-card {
 
 
 
-
-/* ==========================
-   INFO
-========================== */
+/* =========================
+ INFO
+========================= */
 
 
 .info {
 
-
-  padding:25px;
+ padding:25px;
 
 }
-
 
 
 
 .badge {
 
+ --background:#ffe0ed;
 
-  --background:#ffe0ed;
+ --color:#c56b92;
 
-  --color:#c56b92;
+ font-weight:bold;
 
-  font-weight:bold;
-
-  padding:10px 15px;
-
+ padding:8px 14px;
 
 }
-
 
 
 
 
 .info h1 {
 
+ font-family:"Playfair Display",serif;
 
-  font-family:"Playfair Display", serif;
+ font-size:42px;
 
-  font-size:45px;
+ line-height:1.2;
 
-  color:#674d5c;
+ color:#674d5c;
 
-  margin:20px 0;
-
+ margin:18px 0;
 
 }
 
 
 
-
-
 .stars {
 
+ font-size:22px;
 
-  font-size:22px;
-
-  margin-bottom:20px;
-
+ margin-bottom:15px;
 
 }
 
@@ -145,13 +142,11 @@ ion-card {
 
 .description {
 
+ color:#755b68;
 
-  color:#755b68;
+ font-size:16px;
 
-  font-size:17px;
-
-  line-height:1.7;
-
+ line-height:1.6;
 
 }
 
@@ -159,33 +154,27 @@ ion-card {
 
 
 
-
-/* ==========================
-   CARATTERISTICHE
-========================== */
+/* =========================
+ CARATTERISTICHE
+========================= */
 
 
 .features-list {
 
+ background:transparent;
 
-  margin-top:25px;
-
+ margin-top:20px;
 
 }
-
 
 
 .features-list ion-item {
 
+ --background:transparent;
 
-  --background:transparent;
+ --color:#604554;
 
-  --color:#604554;
-
-  font-weight:500;
-
-  margin-bottom:5px;
-
+ font-size:15px;
 
 }
 
@@ -193,51 +182,45 @@ ion-card {
 
 
 
-
-/* ==========================
-   PREZZO
-========================== */
+/* =========================
+ PREZZO
+========================= */
 
 
 .price {
 
 
-  font-size:40px;
+ font-size:36px;
 
-  font-weight:bold;
+ color:#d27da1;
 
-  color:#d27da1;
+ font-weight:700;
 
-  margin:25px 0;
+ margin:20px 0;
 
 
 }
 
 
 
-
-
-
-/* ==========================
-   AZIONI
-========================== */
+/* =========================
+ AZIONI
+========================= */
 
 
 .actions {
 
 
-  display:flex;
+ display:flex;
 
-  align-items:center;
+ align-items:center;
 
-  gap:15px;
+ gap:12px;
 
-  flex-wrap:wrap;
+ width:100%;
 
 
 }
-
-
 
 
 
@@ -246,35 +229,19 @@ ion-card {
 .quantity-box {
 
 
-  display:flex;
+ height:55px;
 
-  align-items:center;
+ display:flex;
 
-  justify-content:center;
+ align-items:center;
 
-  background:#fff3f8;
+ justify-content:center;
 
-  border-radius:40px;
+ background:#fff3f8;
 
-  padding:5px 15px;
+ border-radius:30px;
 
-
-}
-
-
-
-
-
-.quantity-box span {
-
-
-  font-size:22px;
-
-  font-weight:bold;
-
-  min-width:35px;
-
-  text-align:center;
+ padding:0 10px;
 
 
 }
@@ -286,33 +253,82 @@ ion-card {
 .quantity-box ion-button {
 
 
-  --color:#d889ad;
+ --color:#d889ad;
 
-  font-size:25px;
+ width:40px;
+
+ height:40px;
 
 
 }
 
 
 
+.quantity-box span {
+
+
+ min-width:35px;
+
+ text-align:center;
+
+ font-size:20px;
+
+ font-weight:bold;
+
+
+}
+
+
+
+
+
+/* =========================
+ CARRELLO
+========================= */
 
 
 .cart-button {
 
 
-  flex:1;
+ flex:1;
 
-  --background:
-  linear-gradient(
-  135deg,
-  #d889ad,
-  #a879c8
-  );
+ height:55px;
+
+ min-height:55px;
+
+ font-size:16px;
+
+ font-weight:bold;
 
 
-  --border-radius:35px;
+ --background:
 
-  font-weight:bold;
+ linear-gradient(
+ 135deg,
+ #d889ad,
+ #a879c8
+ );
+
+
+ --border-radius:30px;
+
+
+}
+
+
+
+.cart-button::part(native){
+
+
+ height:55px;
+
+ min-height:55px;
+
+ border-radius:30px;
+
+ padding-left:25px;
+
+ padding-right:25px;
 
 
 }
@@ -320,19 +336,21 @@ ion-card {
 
 
 
+
+
+/* =========================
+ PREFERITO
+========================= */
 
 
 .fav {
 
 
-  --border-radius:50%;
+ width:55px;
 
-  width:55px;
+ height:55px;
 
-  height:55px;
-
-  --color:#d27da1;
-
+ --border-radius:50%;
 
 }
 
@@ -340,87 +358,16 @@ ion-card {
 
 
 
-
-
-/* ==========================
-   DETTAGLI
-========================== */
-
-
-.details-box {
-
-
-  max-width:1000px;
-
-  padding:35px;
-
-  text-align:center;
-
-
-  background:
-
-  linear-gradient(
-  135deg,
-  #ffe5ef,
-  #f0e7ff
-  );
-
-
-}
-
-
-
-
-
-.details-box ion-card-title {
-
-
-  font-family:"Playfair Display",serif;
-
-  color:#674d5c;
-
-  font-size:30px;
-
-
-}
-
-
-
-
-
-
-.details-box ion-col {
-
-
-  background:white;
-
-  margin:10px;
-
-  padding:25px;
-
-  border-radius:25px;
-
-  font-weight:bold;
-
-  color:#674d5c;
-
-
-}
-
-
-
-
-
-
-/* ==========================
-   RECENSIONI
-========================== */
+/* =========================
+ RECENSIONI
+========================= */
 
 
 .reviews {
 
+ margin-top:25px;
 
-  max-width:1000px;
+ padding:10px;
 
 }
 
@@ -429,12 +376,13 @@ ion-card {
 .review-card {
 
 
-  padding:25px;
+ border-radius:25px;
 
-  border-radius:30px;
+ padding:20px;
 
-  box-shadow:
-  0 10px 30px rgba(180,130,160,.12);
+ margin-bottom:15px;
+
+ background:#fffafc;
 
 
 }
@@ -444,7 +392,7 @@ ion-card {
 .review-card strong {
 
 
-  color:#bb678d;
+ color:#bb678d;
 
 
 }
@@ -454,9 +402,9 @@ ion-card {
 .review-card p {
 
 
-  color:#755b68;
+ color:#755b68;
 
-  line-height:1.6;
+ line-height:1.5;
 
 
 }
@@ -465,66 +413,43 @@ ion-card {
 
 
 
-
-/* ==========================
-   FORM RECENSIONE
-========================== */
+/* =========================
+ FORM
+========================= */
 
 
 .add-review {
 
 
-  margin-top:35px;
+ margin-top:25px;
 
-  padding:30px;
+ padding:25px;
 
-  border-radius:35px;
+ border-radius:30px;
 
 
-  background:
+ background:
 
-  linear-gradient(
-  135deg,
-  #fff0f7,
-  #f3ecff
-  );
+ linear-gradient(
+ 135deg,
+ #fff0f7,
+ #f3ecff
+ );
 
 
 }
-
-
 
 
 .add-review ion-textarea {
 
 
-  background:white;
+ background:white;
 
-  border-radius:25px;
+ border-radius:20px;
 
-  margin:20px 0;
+ padding:15px;
 
-  padding:15px;
-
-
-}
-
-
-
-
-
-.add-review ion-button {
-
-
-  --background:
-  linear-gradient(
-  135deg,
-  #d889ad,
-  #a879c8
-  );
-
-
-  --border-radius:35px;
+ margin:15px 0;
 
 
 }
@@ -534,38 +459,114 @@ ion-card {
 
 
 
-/* ==========================
-   CORRELATI
-========================== */
+
+/* =========================
+ DETTAGLI
+========================= */
+
+
+.details-box {
+
+
+ margin-top:30px;
+
+ text-align:center;
+
+
+ background:
+
+ linear-gradient(
+ 135deg,
+ #ffe5ef,
+ #f0e7ff
+ );
+
+
+}
+
+
+
+.details-box ion-card-title {
+
+
+ font-family:"Playfair Display",serif;
+
+ font-size:28px;
+
+ color:#674d5c;
+
+}
+
+
+
+
+
+.details-box ion-col {
+
+
+ margin:8px;
+
+ padding:22px;
+
+ border-radius:22px;
+
+ background:white;
+
+ color:#674d5c;
+
+ font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+
+/* =========================
+ CORRELATI
+========================= */
 
 
 .related {
 
+ margin-top:30px;
 
-  max-width:1200px;
-
-
-}
-
-
-
-.related ion-card-title {
-
-
-  color:#674d5c;
-
-  font-family:"Playfair Display",serif;
+ margin-bottom:50px;
 
 
 }
 
 
 
+.related ion-col {
+
+ display:flex;
+
+ padding:8px;
+
+}
 
 
-/* ==========================
-   MOBILE
-========================== */
+
+.related app-product-card {
+
+ width:100%;
+
+}
+
+
+
+
+
+
+
+/* =========================
+ TABLET
+========================= */
 
 
 @media(max-width:900px){
@@ -573,9 +574,7 @@ ion-card {
 
 .info h1 {
 
-
-font-size:35px;
-
+ font-size:34px;
 
 }
 
@@ -583,11 +582,7 @@ font-size:35px;
 
 .actions {
 
-
-flex-direction:column;
-
-align-items:stretch;
-
+ flex-wrap:wrap;
 
 }
 
@@ -596,7 +591,7 @@ align-items:stretch;
 .cart-button {
 
 
-width:100%;
+ min-width:220px;
 
 
 }
@@ -604,15 +599,21 @@ width:100%;
 
 }
 
+
+
+
+
+/* =========================
+ MOBILE
+========================= */
 
 
 @media(max-width:600px){
 
 
-ion-card {
+.product-container {
 
-
-border-radius:30px;
+ padding:10px;
 
 }
 
@@ -620,9 +621,15 @@ border-radius:30px;
 
 .gallery {
 
+ padding:20px;
 
-padding:20px;
+}
 
+
+
+.gallery img {
+
+ height:300px;
 
 }
 
@@ -630,9 +637,15 @@ padding:20px;
 
 .info {
 
+ padding:20px;
 
-padding:20px;
+}
 
+
+
+.info h1 {
+
+ font-size:30px;
 
 }
 
@@ -640,19 +653,79 @@ padding:20px;
 
 .price {
 
+ font-size:30px;
 
-font-size:32px;
+}
+
+
+
+/* azioni verticali */
+
+
+.actions {
+
+ flex-direction:column;
+
+ align-items:stretch;
+
+}
+
+
+
+.quantity-box {
+
+ width:100%;
+
+}
+
+
+
+.cart-button {
+
+
+ width:100%;
+
+ height:55px;
 
 
 }
 
 
 
-.details-box ion-col {
+.fav {
+
+ align-self:center;
+
+}
 
 
-margin:5px;
 
+
+/* correlati 2 colonne */
+
+
+.related ion-col {
+
+ flex:0 0 50%;
+
+ max-width:50%;
+
+
+}
+
+
+}
+
+
+
+@media(max-width:350px){
+
+
+.related ion-col {
+
+ flex:0 0 100%;
+
+ max-width:100%;
 
 }
 

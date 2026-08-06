@@ -6,8 +6,7 @@ import { loadStripe, Stripe } from '@stripe/stripe-js';
 
 import { Payment } from '../models/payment';
 
-import { environment } from '../../environments/environment';
-
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })

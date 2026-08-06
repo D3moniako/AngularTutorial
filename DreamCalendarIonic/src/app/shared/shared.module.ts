@@ -52,11 +52,12 @@ import { SideMenuComponent } from './components/side-menu/side-menu.component';
     FooterComponent,
 
     ProductCardComponent,
+    
 
     NotificationDropdownComponent,
 
     NotificationComponent,
-    SideMenuComponent
+    SideMenuComponent,
 
   ]
 

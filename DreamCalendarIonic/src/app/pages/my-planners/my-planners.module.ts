@@ -8,13 +8,34 @@ import { MyPlannersPageRoutingModule } from './my-planners-routing.module';
 
 import { MyPlannersPage } from './my-planners.page';
 
+import { SharedModule } from '../../shared/shared.module';
+
+
+
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    MyPlannersPageRoutingModule
-  ],
-  declarations: [MyPlannersPage]
+
+imports: [
+
+ CommonModule,
+
+ FormsModule,
+
+ IonicModule,
+
+ MyPlannersPageRoutingModule,
+
+ SharedModule
+
+],
+
+
+declarations: [
+
+ MyPlannersPage
+
+]
+
+
 })
+
 export class MyPlannersPageModule {}

@@ -2,16 +2,17 @@
 
   <section class="register-box">
 
+
     <h1>
       🌸 Crea il tuo account
     </h1>
+
 
     <p>
       Inizia a creare e gestire i tuoi planner digitali
     </p>
 
 
-    <!-- NOME -->
 
     <ion-item class="input-item">
 
@@ -29,7 +30,6 @@
 
 
 
-    <!-- EMAIL -->
 
     <ion-item class="input-item">
 
@@ -47,7 +47,6 @@
 
 
 
-    <!-- TELEFONO -->
 
     <ion-item class="input-item">
 
@@ -65,7 +64,7 @@
 
 
 
-    <!-- PASSWORD -->
+
 
     <ion-item class="input-item">
 
@@ -83,7 +82,7 @@
 
 
 
-    <!-- CONFERMA PASSWORD -->
+
 
     <ion-item class="input-item">
 
@@ -101,7 +100,7 @@
 
 
 
-    <!-- 2FA -->
+
 
     <div class="two-factor">
 
@@ -118,7 +117,7 @@
 
 
 
-    <!-- ERRORE -->
+
 
     <div
       class="error"
@@ -130,12 +129,16 @@
 
 
 
-    <!-- BUTTON -->
+
 
     <ion-button
+
       expand="block"
+
       class="register-button"
+
       (click)="register()"
+
       [disabled]="loading">
 
 
@@ -153,6 +156,8 @@
 
 
 
+
+
     <p class="login-link">
 
       Hai già un account?
@@ -161,7 +166,9 @@
         Accedi
       </a>
 
+
     </p>
+
 
 
   </section>

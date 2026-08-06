@@ -1,74 +1,7 @@
-// sidebar laterale senza non funziona 
-ion-menu {
+/* =========================
+RESET GLOBALE
+========================= */
 
-  --background:#fffaf7;
-
-
-  ion-content {
-
-    --background:
-    linear-gradient(
-      180deg,
-      #fff0f7,
-      #f3ecff
-    );
-
-  }
-
-
-  ion-list {
-
-    background:transparent;
-
-    padding:10px;
-
-  }
-
-
-
-  ion-item {
-
-    --background:transparent;
-
-    --color:#674d5c;
-
-    --border-radius:18px;
-
-    --min-height:45px;
-
-    margin-bottom:5px;
-
-    font-weight:600;
-
-    font-size:15px;
-
-  }
-
-
-
-  ion-item:hover,
-  ion-item.active {
-
-    --background:
-    linear-gradient(
-      135deg,
-      #ffd8e8,
-      #e9ddff
-    );
-
-    --color:#d583aa;
-
-  }
-
-
-
-  ion-icon {
-
-    color:#d889ad;
-
-  }
-
-}
 
 html,
 body {
@@ -77,33 +10,50 @@ body {
 
   padding:0;
 
+  width:100%;
+
+  height:100%;
+
+  font-family:"Poppins", Arial, sans-serif;
+
+}
+
+
+
+ion-app {
+
   height:100%;
 
 }
 
-ion-menu {
-  --width: 280px;
+
+
+/* =========================
+TEMA GENERALE
+========================= */
+
+
+:root {
+
+  --dream-pink:#d889ad;
+
+  --dream-purple:#ddd0ff;
+
+  --dream-text:#674d5c;
+
+  --dream-background:#fff7fb;
+
 }
-.app-layout {
-
-  min-height:100vh;
-
-  display:flex;
-
-  flex-direction:column;
-
-}
 
 
-main {
 
-  flex:1;
+/* =========================
+SCROLL
+========================= */
 
-}
-ion-router-outlet {
 
-  display:block;
+ion-content {
 
-  height:100%;
+  --background:var(--dream-background);
 
 }

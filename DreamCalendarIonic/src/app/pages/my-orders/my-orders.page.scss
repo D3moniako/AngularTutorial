@@ -1,0 +1,741 @@
+.orders-page {
+
+  width:100%;
+
+  max-width:1200px;
+
+  margin:auto;
+
+  padding:20px 15px 60px;
+
+  overflow-x:hidden;
+
+}
+
+
+/* =========================
+ HERO
+========================= */
+
+
+.orders-hero {
+
+
+  background:
+  linear-gradient(
+    135deg,
+    #ffdce9,
+    #ebe0ff
+  );
+
+
+  border-radius:40px;
+
+
+  padding:35px 20px;
+
+
+  text-align:center;
+
+
+  box-shadow:
+  0 15px 40px rgba(180,130,160,.18);
+
+
+}
+
+
+
+.hero-icon {
+
+
+  font-size:55px;
+
+
+}
+
+
+
+.orders-hero h1 {
+
+
+  margin:10px 0;
+
+
+  font-family:"Playfair Display",serif;
+
+
+  color:#674d5c;
+
+
+  font-size:clamp(28px,5vw,42px);
+
+
+}
+
+
+
+.orders-hero p {
+
+
+  color:#806775;
+
+
+  line-height:1.5;
+
+
+  margin:0 auto;
+
+
+  max-width:600px;
+
+
+}
+
+
+
+
+
+/* =========================
+ STATISTICHE
+========================= */
+
+
+.stats-grid {
+
+
+  display:grid;
+
+
+  grid-template-columns:
+  repeat(4,1fr);
+
+
+  gap:15px;
+
+
+  margin:25px 0;
+
+
+}
+
+
+
+
+
+.stat-card {
+
+
+  margin:0;
+
+
+  border-radius:30px;
+
+
+  text-align:center;
+
+
+  background:white;
+
+
+  box-shadow:
+  0 12px 30px rgba(180,130,160,.12);
+
+
+}
+
+
+
+
+.stat-icon {
+
+
+  font-size:35px;
+
+
+}
+
+
+
+.stat-card h2 {
+
+
+  color:#d27da1;
+
+
+  font-size:25px;
+
+
+  margin:10px 0;
+
+
+}
+
+
+
+.stat-card p {
+
+
+  color:#806775;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ FILTRI
+========================= */
+
+
+.filters {
+
+
+  background:white;
+
+
+  padding:20px;
+
+
+  border-radius:35px;
+
+
+  box-shadow:
+  0 15px 35px rgba(180,130,160,.12);
+
+
+}
+
+
+
+
+ion-searchbar {
+
+
+  --background:#fff7fb;
+
+  --border-radius:30px;
+
+}
+
+
+
+
+
+.filter-buttons {
+
+
+  display:flex;
+
+
+  gap:8px;
+
+
+  overflow-x:auto;
+
+
+  padding-top:15px;
+
+
+}
+
+
+
+.filter-buttons ion-button {
+
+
+  flex-shrink:0;
+
+
+  --color:#806775;
+
+
+}
+
+
+
+.filter-buttons .active {
+
+
+  --background:#d889ad;
+
+  --color:white;
+
+  border-radius:30px;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ EMPTY
+========================= */
+
+
+.empty {
+
+
+  margin:30px 0;
+
+
+  padding:40px 20px;
+
+
+  background:white;
+
+
+  border-radius:35px;
+
+
+  text-align:center;
+
+
+}
+
+
+
+.empty h2 {
+
+
+ color:#674d5c;
+
+
+}
+
+
+
+.empty p {
+
+
+ color:#806775;
+
+
+}
+
+
+
+
+
+
+/* =========================
+ ORDINI
+========================= */
+
+
+.timeline {
+
+
+ margin-top:30px;
+
+
+}
+
+
+
+
+.order-card {
+
+
+ margin:0 0 25px;
+
+
+ width:100%;
+
+
+ border-radius:35px;
+
+
+ background:white;
+
+
+ box-shadow:
+ 0 15px 40px rgba(180,130,160,.15);
+
+
+ overflow:hidden;
+
+
+}
+
+
+
+
+
+ion-card-title {
+
+
+ color:#674d5c;
+
+
+ font-family:"Playfair Display",serif;
+
+
+}
+
+
+
+
+ion-card-subtitle {
+
+
+ color:#927383;
+
+
+}
+
+
+
+
+
+
+
+ion-chip {
+
+
+ margin-bottom:15px;
+
+
+}
+
+
+
+.order-card h3 {
+
+
+ color:#674d5c;
+
+
+ margin-top:15px;
+
+
+}
+
+
+
+
+
+
+ion-item {
+
+
+ --background:#fff8fb;
+
+
+ --border-radius:20px;
+
+
+ margin-bottom:10px;
+
+
+}
+
+
+
+
+
+ion-thumbnail {
+
+
+ width:60px;
+
+
+ height:60px;
+
+
+}
+
+
+
+
+
+ion-thumbnail img {
+
+
+ width:100%;
+
+
+ height:100%;
+
+
+ object-fit:contain;
+
+
+}
+
+
+
+
+
+
+
+.actions {
+
+
+ display:flex;
+
+
+ flex-direction:column;
+
+
+ gap:10px;
+
+
+ margin-top:20px;
+
+
+}
+
+
+
+.actions ion-button {
+
+
+ --border-radius:30px;
+
+
+ height:50px;
+
+
+ font-weight:bold;
+
+
+}
+
+
+
+
+
+
+
+
+
+/* =========================
+ MODALE
+========================= */
+
+
+ion-modal {
+
+
+ --border-radius:35px;
+
+
+}
+
+
+
+ion-modal ion-content {
+
+
+ --background:#fffaf7;
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ TABLET
+========================= */
+
+
+@media(max-width:900px){
+
+
+.stats-grid {
+
+
+grid-template-columns:
+repeat(2,1fr);
+
+
+}
+
+
+}
+
+
+
+
+
+
+
+/* =========================
+ MOBILE
+========================= */
+
+
+@media(max-width:600px){
+
+
+.orders-page {
+
+
+padding:15px 10px 50px;
+
+
+}
+
+
+
+
+
+.orders-hero {
+
+
+border-radius:30px;
+
+
+padding:30px 15px;
+
+
+}
+
+
+
+
+
+.stats-grid {
+
+
+grid-template-columns:1fr 1fr;
+
+
+gap:10px;
+
+
+}
+
+
+
+
+
+.stat-card {
+
+
+border-radius:25px;
+
+
+}
+
+
+
+
+
+.filters {
+
+
+padding:15px;
+
+
+border-radius:30px;
+
+
+}
+
+
+
+
+
+.order-card {
+
+
+border-radius:25px;
+
+
+}
+
+
+
+
+
+ion-card-header {
+
+
+padding:20px 15px;
+
+
+}
+
+
+
+
+
+ion-card-content {
+
+
+padding:15px;
+
+
+}
+
+
+
+
+ion-item {
+
+
+--padding-start:8px;
+
+
+}
+
+
+
+ion-label h2 {
+
+
+font-size:16px;
+
+
+}
+
+
+
+ion-label p {
+
+
+font-size:13px;
+
+
+}
+
+
+
+
+
+}
+
+
+
+
+
+/* TELEFONI MOLTO PICCOLI */
+
+
+@media(max-width:360px){
+
+
+.stats-grid {
+
+
+grid-template-columns:1fr;
+
+
+}
+
+
+}

@@ -1,0 +1,124 @@
+:host {
+
+  display:block;
+
+}
+
+
+/* =========================
+SIDEBAR
+========================= */
+
+ion-menu {
+
+  --width:280px;
+  --background:#fffaf7;
+
+
+}
+
+
+
+/* =========================
+CONTENT
+========================= */
+
+
+ion-content {
+
+  --background:
+  linear-gradient(
+    180deg,
+    #fff0f7,
+    #f3ecff
+  );
+
+}
+
+
+
+/* =========================
+LIST
+========================= */
+
+
+ion-list {
+
+  background:transparent;
+
+  padding:15px;
+
+}
+
+
+
+/* =========================
+ITEMS
+========================= */
+
+
+ion-item {
+
+  --background:transparent;
+  --color:#674d5c;
+
+  --border-radius:20px;
+
+  --min-height:50px;
+
+
+  margin-bottom:8px;
+
+  font-weight:600;
+
+  font-size:15px;
+
+}
+
+
+
+/* =========================
+HOVER
+========================= */
+
+
+ion-item:hover {
+
+  --background:
+  linear-gradient(
+    135deg,
+    #ffd8e8,
+    #e9ddff
+  );
+
+
+  --color:#d583aa;
+
+}
+
+
+
+/* =========================
+MENU HEADER
+========================= */
+
+
+ion-menu ion-toolbar {
+
+  --background:#fff0f7;
+
+  --color:#674d5c;
+
+}
+
+
+
+ion-menu ion-title {
+
+  font-family:"Playfair Display",serif;
+
+  color:#d889ad;
+
+  font-weight:bold;
+
+}

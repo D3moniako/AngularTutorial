@@ -114,5 +114,8 @@
       }
     }
   },
+   "cli": {
+    "defaultCollection": "@ionic/angular-toolkit"
+  },
   "defaultProject": "DreamCalendarIonic"
 }

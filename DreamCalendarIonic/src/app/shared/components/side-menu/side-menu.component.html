@@ -23,6 +23,12 @@ contentId="main-content">
 <ion-list>
 
 
+
+<!-- ================= -->
+<!-- MENU PUBBLICO -->
+<!-- ================= -->
+
+
 <ion-item
 button
 (click)="navigate('/')">
@@ -60,6 +66,140 @@ button
 ✉️ Contatti
 
 </ion-item>
+
+
+
+
+<!-- ================= -->
+<!-- UTENTE NON LOGGATO -->
+<!-- ================= -->
+
+
+<ng-container *ngIf="!user">
+
+
+<ion-item
+button
+(click)="navigate('/login')">
+
+🔐 Login
+
+</ion-item>
+
+
+
+<ion-item
+button
+(click)="navigate('/register')">
+
+✨ Registrati
+
+</ion-item>
+
+
+</ng-container>
+
+
+
+
+
+
+
+<!-- ================= -->
+<!-- UTENTE LOGGATO -->
+<!-- ================= -->
+
+
+<ng-container *ngIf="user">
+
+
+
+<ion-item
+button
+(click)="navigate('/favorites')">
+
+❤️ Preferiti
+
+</ion-item>
+
+
+
+
+<ion-item
+button
+(click)="navigate('/my-planners')">
+
+📚 I miei Planner
+
+</ion-item>
+
+
+
+
+
+<ion-item
+button
+(click)="navigate('/my-orders')">
+
+📦 I miei Ordini
+
+</ion-item>
+
+
+
+
+
+<ion-item
+button
+(click)="navigate('/profile')">
+
+👤 Profilo
+
+</ion-item>
+
+
+
+
+
+<ion-item
+button
+(click)="navigate('/cart')">
+
+🛒 Carrello
+
+</ion-item>
+
+
+
+
+
+<!-- ADMIN FUTURO -->
+
+<ion-item
+*ngIf="user.role === 'ADMIN'"
+button
+(click)="navigate('/dashboard')">
+
+⚙️ Dashboard Admin
+
+</ion-item>
+
+
+
+
+
+<ion-item
+button
+(click)="logout()">
+
+🚪 Logout
+
+</ion-item>
+
+
+
+</ng-container>
+
 
 
 

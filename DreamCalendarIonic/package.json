@@ -25,6 +25,7 @@
     "@capacitor/keyboard": "^4.1.1",
     "@capacitor/status-bar": "^4.1.1",
     "@ionic/angular": "^6.7.5",
+    "@stripe/stripe-js": "^9.13.0",
     "ionicons": "^7.4.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",

@@ -1,7 +1,7 @@
 <ion-content class="product-page">
 
 
-<!-- NON TROVATO -->
+<!-- PRODOTTO NON TROVATO -->
 
 <ion-card
 class="not-found"
@@ -34,7 +34,8 @@ Torna allo shop
 <!-- PRODOTTO -->
 
 <ion-grid
-*ngIf="product">
+*ngIf="product"
+class="product-container">
 
 
 <ion-row
@@ -44,20 +45,16 @@ class="product-main">
 
 <!-- IMMAGINE -->
 
-
 <ion-col
 size="12"
-size-md="6">
+size-lg="6">
 
 
-<ion-card
-class="gallery">
-
+<ion-card class="gallery">
 
 <img
 [src]="product.image"
 [alt]="product.name">
-
 
 </ion-card>
 
@@ -69,25 +66,21 @@ class="gallery">
 
 
 
-<!-- INFO -->
-
+<!-- INFORMAZIONI -->
 
 <ion-col
 size="12"
-size-md="6">
+size-lg="6">
 
 
-<ion-card
-class="info">
-
+<ion-card class="info">
 
 
 <ion-card-content>
 
 
 
-<ion-chip
-class="badge">
+<ion-chip class="badge">
 
 {{product.badge}}
 
@@ -98,11 +91,8 @@ class="badge">
 
 
 <h1>
-
 {{product.name}}
-
 </h1>
-
 
 
 
@@ -110,9 +100,7 @@ class="badge">
 <div class="stars">
 
 <span
-*ngFor="
-let star of [].constructor(product.rating)
-">
+*ngFor="let star of [].constructor(product.rating)">
 
 ⭐
 
@@ -136,9 +124,7 @@ let star of [].constructor(product.rating)
 
 
 
-
-<ion-list
-class="features-list">
+<ion-list class="features-list">
 
 
 <ion-item>
@@ -157,9 +143,8 @@ class="features-list">
 
 
 <ion-item>
-✓ Utilizzabile PDF
+✓ Formato PDF
 </ion-item>
-
 
 
 </ion-list>
@@ -175,6 +160,7 @@ class="features-list">
 {{product.price | currency:'EUR'}}
 
 </h2>
+
 
 
 
@@ -200,11 +186,8 @@ fill="clear"
 
 
 <span>
-
 {{quantity}}
-
 </span>
-
 
 
 
@@ -217,19 +200,16 @@ fill="clear"
 </ion-button>
 
 
-
 </div>
 
 
 
 
 
+
 <ion-button
-
 class="cart-button"
-
 expand="block"
-
 (click)="addCart()">
 
 🛒 Aggiungi al carrello
@@ -242,24 +222,16 @@ expand="block"
 
 
 <ion-button
-
 fill="outline"
-
 class="fav"
-
 (click)="toggleFavorite()">
 
-
 {{product.favorite ? '❤️':'🤍'}}
-
 
 </ion-button>
 
 
-
 </div>
-
-
 
 
 </ion-card-content>
@@ -267,14 +239,27 @@ class="fav"
 
 </ion-card>
 
+
+</ion-col>
+
+
+</ion-row>
+
+
+
+
+
+
+
 <!-- RECENSIONI -->
 
 
-<ion-card
+<ion-row>
 
-class="reviews"
+<ion-col size="12">
 
-*ngIf="product">
+
+<ion-card class="reviews">
 
 
 <ion-card-header>
@@ -290,20 +275,19 @@ class="reviews"
 
 
 
-
 <ion-card-content>
 
 
 
 <ion-card
-
 class="review-card"
-
 *ngFor="let review of product.reviews">
 
 
 <strong>
+
 👤 {{review.user}}
+
 </strong>
 
 
@@ -312,7 +296,6 @@ class="review-card"
 {{review.comment}}
 
 </p>
-
 
 
 <div>
@@ -329,9 +312,7 @@ class="review-card"
 
 
 <ion-text
-*ngIf="
-!product.reviews ||
-product.reviews.length===0">
+*ngIf="!product.reviews || product.reviews.length===0">
 
 Ancora nessuna recensione 🌸
 
@@ -342,9 +323,6 @@ Ancora nessuna recensione 🌸
 
 
 
-<!-- FORM -->
-
-
 
 <div
 class="add-review"
@@ -352,9 +330,7 @@ class="add-review"
 
 
 <h3>
-
 Lascia la tua recensione
-
 </h3>
 
 
@@ -363,12 +339,13 @@ Lascia la tua recensione
 <ion-item>
 
 <ion-select
-
 [(ngModel)]="newReview.rating">
+
 
 <ion-select-option value="5">
 ⭐⭐⭐⭐⭐
 </ion-select-option>
+
 
 <ion-select-option value="4">
 ⭐⭐⭐⭐
@@ -398,6 +375,8 @@ Lascia la tua recensione
 
 
 
+
+
 <ion-textarea
 
 placeholder="Scrivi il tuo commento"
@@ -405,6 +384,7 @@ placeholder="Scrivi il tuo commento"
 [(ngModel)]="newReview.comment">
 
 </ion-textarea>
+
 
 
 
@@ -426,32 +406,28 @@ Invia recensione 🌸
 </ion-card-content>
 
 
-
 </ion-card>
 
-</ion-col>
 
+</ion-col>
 
 </ion-row>
 
 
-</ion-grid>
 
 
 
 
 
+<!-- DETTAGLI -->
 
 
+<ion-row>
 
-<!-- CARATTERISTICHE -->
+<ion-col size="12">
 
 
-<ion-card
-
-class="details-box"
-
-*ngIf="product">
+<ion-card class="details-box">
 
 
 <ion-card-header>
@@ -462,9 +438,7 @@ Perché scegliere questo planner
 
 </ion-card-title>
 
-
 </ion-card-header>
-
 
 
 
@@ -474,23 +448,32 @@ Perché scegliere questo planner
 
 
 <ion-col size="6" size-md="3">
+
 📅 Calendario
+
 </ion-col>
 
 
 <ion-col size="6" size-md="3">
+
 🎯 Obiettivi
+
 </ion-col>
 
 
 <ion-col size="6" size-md="3">
+
 ✏️ Note creative
+
 </ion-col>
 
 
 <ion-col size="6" size-md="3">
+
 💎 Design premium
+
 </ion-col>
+
 
 
 </ion-row>
@@ -501,15 +484,9 @@ Perché scegliere questo planner
 </ion-card>
 
 
+</ion-col>
 
-
-
-
-
-
-
-
-
+</ion-row>
 
 
 
@@ -520,11 +497,14 @@ Perché scegliere questo planner
 <!-- CORRELATI -->
 
 
-<ion-card
-
-class="related"
-
+<ion-row
 *ngIf="relatedProducts.length">
+
+
+<ion-col size="12">
+
+
+<ion-card class="related">
 
 
 <ion-card-header>
@@ -547,7 +527,7 @@ Potrebbero piacerti anche 🌸
 
 <ion-col
 
-size="12"
+size="6"
 
 size-md="4"
 
@@ -582,10 +562,17 @@ mode="shop"
 </ion-grid>
 
 
-
 </ion-card>
 
 
+</ion-col>
+
+
+</ion-row>
+
+
+
+</ion-grid>
 
 
 </ion-content>
