@@ -7,4 +7,5 @@ export const environment = {
   geminiApiKey: '',
 
   stripePublishableKey:'miaChiave',
+  
 };

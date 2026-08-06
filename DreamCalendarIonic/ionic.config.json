@@ -1,5 +1,7 @@
 {
   "name": "DreamCalendarIonic",
-  "integrations": {},
-  "type": "angular"
+  "type": "angular",
+  "integrations": {
+    "capacitor": {}
+  }
 }
