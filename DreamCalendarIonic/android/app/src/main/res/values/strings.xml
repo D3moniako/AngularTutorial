@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">DreamCalendarIonic</string>
+    <string name="title_activity_main">DreamCalendarIonic</string>
+    <string name="package_name">com.dreamcalendar.app</string>
+    <string name="custom_url_scheme">com.dreamcalendar.app</string>
+</resources>

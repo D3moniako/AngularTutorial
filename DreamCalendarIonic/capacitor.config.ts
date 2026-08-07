@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.dreamcalendar.app',
   appName: 'DreamCalendarIonic',
-  webDir: 'www',
+  webDir: 'dist/dream-calendar-ionic',
   bundledWebRuntime: false
 };
 
